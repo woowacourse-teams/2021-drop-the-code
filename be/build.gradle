@@ -1,7 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '2.5.2'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'org.asciidoctor.convert' version '1.5.8'
+    id "org.asciidoctor.jvm.convert" version "3.2.0"
     id 'java'
 }
 
@@ -17,6 +17,13 @@ ext {
     set('snippetsDir', file("build/generated-snippets"))
 }
 
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    asciidoctorExtensions
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -25,6 +32,7 @@ dependencies {
     testImplementation 'com.h2database:h2:1.4.199'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 }
 
 test {
@@ -32,7 +40,24 @@ test {
     useJUnitPlatform()
 }
 
-asciidoctor {
+asciidoctor { // 1
+    configurations 'asciidoctorExtensions'
+    // 문서화되는 과정을 로그로 보여준다
+    logDocuments true
+    // 입력 값으로 snippets 디렉토리 설정하기
     inputs.dir snippetsDir
+    attributes 'docs': file('src/docs/asciidoc')
+    // task를 test task에 의존하게 만들어 문서가 생성되기 전에 테스트가 실행된다
     dependsOn test
+}
+
+task copyDocument(type: Copy) { // 2
+    dependsOn asciidoctor
+    // 추후 추가
+    from file("build/generated-snippets/controllerName")
+    into file("src/main/resources/static/docs")
+}
+
+build {
+    dependsOn copyDocument
 }

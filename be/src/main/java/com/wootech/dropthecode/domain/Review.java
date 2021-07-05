@@ -24,7 +24,7 @@ public class Review extends BaseEntity {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Progress progress = Progress.ON_GOING;
+    private final Progress progress = Progress.ON_GOING;
 
     protected Review() {
     }

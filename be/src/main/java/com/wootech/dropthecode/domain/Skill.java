@@ -1,8 +1,8 @@
 package com.wootech.dropthecode.domain;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.*;
 
 @Entity
 public class Skill {
@@ -14,7 +14,7 @@ public class Skill {
     private String name;
 
     @OneToMany(mappedBy = "skill")
-    private List<TeacherSkill> teachers = new ArrayList<>();
+    private final List<TeacherSkill> teachers = new ArrayList<>();
 
     protected Skill() {
     }

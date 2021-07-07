@@ -1,3 +1,8 @@
+import { ThemeProvider } from "styled-components";
+
+import GlobalStyle from "../src/components/GlobalStyle/GlobalStyle";
+import { THEME } from "../src/utils/constants/theme";
+
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
   controls: {
@@ -6,4 +11,14 @@ export const parameters = {
       date: /Date$/,
     },
   },
+  layout: "centered",
 };
+
+export const decorators = [
+  (Story) => (
+    <ThemeProvider theme={THEME}>
+      <GlobalStyle />
+      <Story />
+    </ThemeProvider>
+  ),
+];

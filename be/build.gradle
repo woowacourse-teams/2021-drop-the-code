@@ -1,8 +1,8 @@
 plugins{
     id 'org.springframework.boot' version '2.5.2'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'org.asciidoctor.jvm.convert' version '3.3.2'
     id 'java'
+    id "org.asciidoctor.jvm.convert" version "3.3.2"
 }
 
 group = 'com.wootech'
@@ -10,24 +10,16 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 repositories {
-    mavenLocal()
     mavenCentral()
 }
 
-tasks.withType(JavaCompile) {
-    options.encoding = "UTF-8"
+configurations {
+    jsondoclet
 }
 
 ext {
-    snippetsDir = file("$buildDir/generated-snippets")
+    snippetsDir = file('build/generated-snippets')
     javadocJsonDir = file("$buildDir/generated-javadoc-json")
-}
-
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-    jsondoclet
 }
 
 dependencies {
@@ -52,43 +44,36 @@ task jsonDoclet(type: Javadoc, dependsOn: compileJava) {
     source = sourceSets.main.allJava
     classpath = sourceSets.main.compileClasspath
     destinationDir = javadocJsonDir
-    options.docletpath = configurations.jsondoclet.files as List
-    options.doclet = "capital.scalable.restdocs.jsondoclet.ExtractDocumentationAsJsonDoclet"
+    options.docletpath = configurations.jsondoclet.files.asType(List)
+    options.doclet = 'capital.scalable.restdocs.jsondoclet.ExtractDocumentationAsJsonDoclet'
     options.memberLevel = JavadocMemberLevel.PACKAGE
 }
 
 test {
-    print("execute test\n")
-    systemProperty "org.springframework.restdocs.outputDir", snippetsDir
-    systemProperty "org.springframework.restdocs.javadocJsonDir", javadocJsonDir
+    systemProperty 'org.springframework.restdocs.outputDir', snippetsDir
+    systemProperty 'org.springframework.restdocs.javadocJsonDir', javadocJsonDir
+
+    dependsOn jsonDoclet
 
     useJUnitPlatform()
+    outputs.dir snippetsDir
 }
 
-asciidoctor { // 1
-    print("execute asciidoctor\n")
-    sourceDir = file("src/docs")
-    outputDir = file("$buildDir/generated-docs")
-
-    attributes "source-highlighter": "highlightjs", "snippets": snippetsDir
-
-    // 문서화되는 과정을 로그로 보여준다
-    logDocuments true
+asciidoctor {
+    inputs.dir snippetsDir
+    dependsOn test
 }
 
-task copyDocument(type: Copy) { // 2
-    print("execute copyDocument\n")
+asciidoctor.doFirst {
+    delete file('src/main/resources/static/docs')
+}
+
+task copyDocument(type: Copy) {
     dependsOn asciidoctor
-    // 추후 추가
-    from file("${asciidoctor.outputDir}")
+    from file("build/docs/asciidoc")
     into file("src/main/resources/static/docs")
 }
 
 build {
-    clean
-    jsonDoclet
-    asciidoctor
-    test
-    asciidoctor
-    copyDocument
+    dependsOn copyDocument
 }

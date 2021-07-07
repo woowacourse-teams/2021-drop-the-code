@@ -1,7 +1,7 @@
-plugins {
+plugins{
     id 'org.springframework.boot' version '2.5.2'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id "org.asciidoctor.jvm.convert" version "3.2.0"
+    id 'org.asciidoctor.jvm.convert' version '3.3.2'
     id 'java'
 }
 
@@ -10,18 +10,24 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
 ext {
-    set('snippetsDir', file("build/generated-snippets"))
+    snippetsDir = file("$buildDir/generated-snippets")
+    javadocJsonDir = file("$buildDir/generated-javadoc-json")
 }
 
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
-    asciidoctorExtensions
+    jsondoclet
 }
 
 dependencies {
@@ -36,32 +42,52 @@ dependencies {
     testImplementation 'com.h2database:h2:1.4.199'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-    asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+
+    // Spring Auto REST Docs
+    testImplementation 'capital.scalable:spring-auto-restdocs-core:2.0.11'
+    jsondoclet "capital.scalable:spring-auto-restdocs-json-doclet:2.0.11"
+}
+
+task jsonDoclet(type: Javadoc, dependsOn: compileJava) {
+    source = sourceSets.main.allJava
+    classpath = sourceSets.main.compileClasspath
+    destinationDir = javadocJsonDir
+    options.docletpath = configurations.jsondoclet.files as List
+    options.doclet = "capital.scalable.restdocs.jsondoclet.ExtractDocumentationAsJsonDoclet"
+    options.memberLevel = JavadocMemberLevel.PACKAGE
 }
 
 test {
-    outputs.dir snippetsDir
-    useJUnitPlatform()
+    systemProperty "org.springframework.restdocs.outputDir", snippetsDir
+    systemProperty "org.springframework.restdocs.javadocJsonDir", javadocJsonDir
+
+    dependsOn jsonDoclet
+
+    // task를 test task에 의존하게 만들어 문서가 생성되기 전에 테스트가 실행된다
+    dependsOn asciidoctor
 }
 
 asciidoctor { // 1
-    configurations 'asciidoctorExtensions'
+    sourceDir = file("src/docs")
+    outputDir = file("$buildDir/generated-docs")
+
+    attributes "source-highlighter": "highlightjs", "snippets": snippetsDir
+
     // 문서화되는 과정을 로그로 보여준다
     logDocuments true
-    // 입력 값으로 snippets 디렉토리 설정하기
-    inputs.dir snippetsDir
-    attributes 'docs': file('src/docs/asciidoc')
-    // task를 test task에 의존하게 만들어 문서가 생성되기 전에 테스트가 실행된다
-    dependsOn test
 }
 
 task copyDocument(type: Copy) { // 2
     dependsOn asciidoctor
     // 추후 추가
-    from file("build/generated-snippets/controllerName")
+    from file("${asciidoctor.outputDir}")
     into file("src/main/resources/static/docs")
 }
 
 build {
+    dependsOn copyDocument
+}
+
+bootJar {
     dependsOn copyDocument
 }

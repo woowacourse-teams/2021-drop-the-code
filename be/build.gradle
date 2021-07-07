@@ -54,6 +54,7 @@ test {
     systemProperty 'org.springframework.restdocs.javadocJsonDir', javadocJsonDir
 
     dependsOn jsonDoclet
+    useJUnitPlatform()
 
     useJUnitPlatform()
     outputs.dir snippetsDir

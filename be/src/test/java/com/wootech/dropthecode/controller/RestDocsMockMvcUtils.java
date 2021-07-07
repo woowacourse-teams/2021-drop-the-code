@@ -1,7 +1,16 @@
 package com.wootech.dropthecode.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.nio.charset.StandardCharsets;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wootech.dropthecode.exception.GlobalExceptionHandler;
+
+import org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.http.HttpDocumentation;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
@@ -9,6 +18,7 @@ import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
 import org.springframework.restdocs.snippet.Snippet;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 import capital.scalable.restdocs.AutoDocumentation;
 
@@ -19,16 +29,32 @@ import static capital.scalable.restdocs.response.ResponseModifyingPreprocessors.
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 
+@Import(HttpEncodingAutoConfiguration.class)
 public class RestDocsMockMvcUtils {
 
     private static final String PUBLIC_AUTHORIZATION = "Resource is public.";
     public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    public static MockMvc restDocsMockMvc(RestDocumentationContextProvider provider, Object... controllers) {
+    @TestConfiguration
+    private static class Advice {
+
+        @Bean
+        public static GlobalExceptionHandler handler() {
+            return new GlobalExceptionHandler();
+        }
+
+        @Bean
+        public static CharacterEncodingFilter filter() {
+            return new CharacterEncodingFilter("UTF-8", true);
+        }
+    }
+
+    public static MockMvc successRestDocsMockMvc(RestDocumentationContextProvider provider, Object... controllers) {
         return MockMvcBuilders.standaloneSetup(controllers)
+                              .addFilters(Advice.filter())
+                              .setControllerAdvice(Advice.handler())
                               .alwaysDo(prepareJackson(OBJECT_MAPPER))
                               .alwaysDo(restDocumentation())
-
                               /*
                                    RestDocumentationContextProvider 은 RestDocumentationContext 에 접근하기 위한 인터페이스.
                                    RestDocumentationContext 은 문서화할 API 문서를 캡슐화한 클래스.
@@ -81,6 +107,25 @@ public class RestDocsMockMvcUtils {
                                       ))
                               .build();
     }
+
+    public static MockMvc failRestDocsMockMvc(RestDocumentationContextProvider provider, Object... controllers) {
+            return MockMvcBuilders.standaloneSetup(controllers)
+                                  .addFilters(Advice.filter())
+                                  .setControllerAdvice(Advice.handler())
+                                  .alwaysDo(prepareJackson(OBJECT_MAPPER))
+                                  .alwaysDo(restDocumentation())
+                                  .apply(documentationConfiguration(provider)
+                                          .uris()
+                                          .withScheme("http")
+                                          .withHost("localhost")
+                                          .withPort(8080)
+                                          .and()
+                                          .snippets()
+                                          .withDefaults(
+                                                  HttpDocumentation.httpResponse()
+                                          ))
+                                  .build();
+        }
 
     private static RestDocumentationResultHandler restDocumentation(Snippet... snippets) {
         return MockMvcRestDocumentation

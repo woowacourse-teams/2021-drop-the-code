@@ -23,6 +23,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 public abstract class RestApiDocumentTest {
 
     protected MockMvc restDocsMockMvc;
+    protected MockMvc failRestDocsMockMvc;
 
     @Autowired
     protected ObjectMapper objectMapper;
@@ -35,6 +36,7 @@ public abstract class RestApiDocumentTest {
 
     @BeforeEach
     void setUp(RestDocumentationContextProvider provider) {
-        this.restDocsMockMvc = RestDocsMockMvcUtils.restDocsMockMvc(provider, memberController, reviewController);
+        this.restDocsMockMvc = RestDocsMockMvcUtils.successRestDocsMockMvc(provider, memberController, reviewController);
+        this.failRestDocsMockMvc = RestDocsMockMvcUtils.failRestDocsMockMvc(provider, memberController, reviewController);
     }
 }

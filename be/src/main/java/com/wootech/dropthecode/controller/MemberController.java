@@ -8,14 +8,13 @@ import javax.validation.Valid;
 
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class MemberController {
+
+    public static final String jsonUtf8 = "application/json;charset=utf-8";
 
     /**
      * OAuth 인증 코드를 이용하여 인증 토큰을 반환한다.
@@ -53,7 +52,7 @@ public class MemberController {
      * <p>
      * 인증 토큰 반환에 성공하면 지정한 redirectUrl 로 리다이렉트 시킨다.
      */
-    @PostMapping("/teachers")
+    @PostMapping(value = "/teachers")
     public ResponseEntity<Void> registerTeacher(@Valid @RequestBody TeacherRegistrationRequest teacherRegistrationRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -71,7 +70,7 @@ public class MemberController {
     public ResponseEntity<Void> findAllTeacher(
             @RequestParam(required = false) List<String> skills,
             @RequestParam(required = false) Integer career,
-            @RequestParam int limit,
+            @RequestParam Integer limit,
             @RequestParam int page) {
         return ResponseEntity.ok().build();
     }

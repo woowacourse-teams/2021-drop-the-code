@@ -58,16 +58,15 @@ task jsonDoclet(type: Javadoc, dependsOn: compileJava) {
 }
 
 test {
+    print("execute test\n")
     systemProperty "org.springframework.restdocs.outputDir", snippetsDir
     systemProperty "org.springframework.restdocs.javadocJsonDir", javadocJsonDir
 
-    dependsOn jsonDoclet
-
-    // task를 test task에 의존하게 만들어 문서가 생성되기 전에 테스트가 실행된다
-    dependsOn asciidoctor
+    useJUnitPlatform()
 }
 
 asciidoctor { // 1
+    print("execute asciidoctor\n")
     sourceDir = file("src/docs")
     outputDir = file("$buildDir/generated-docs")
 
@@ -78,6 +77,7 @@ asciidoctor { // 1
 }
 
 task copyDocument(type: Copy) { // 2
+    print("execute copyDocument\n")
     dependsOn asciidoctor
     // 추후 추가
     from file("${asciidoctor.outputDir}")
@@ -85,9 +85,10 @@ task copyDocument(type: Copy) { // 2
 }
 
 build {
-    dependsOn copyDocument
-}
-
-bootJar {
-    dependsOn copyDocument
+    clean
+    jsonDoclet
+    asciidoctor
+    test
+    asciidoctor
+    copyDocument
 }

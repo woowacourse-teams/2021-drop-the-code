@@ -4,19 +4,11 @@ import java.util.Arrays;
 
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.RestDocumentationContextProvider;
-import org.springframework.restdocs.RestDocumentationExtension;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import static capital.scalable.restdocs.misc.AuthorizationSnippet.documentAuthorization;
 import static com.wootech.dropthecode.controller.RestDocsMockMvcUtils.OBJECT_MAPPER;
@@ -27,19 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.cookie;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
-@WebMvcTest(MemberController.class)
-public class AutoMemberControllerTest {
-
-    @Autowired
-    private MemberController memberController;
-
-    private MockMvc restDocsMockMvc;
-
-    @BeforeEach
-    void setUp(RestDocumentationContextProvider provider) {
-        this.restDocsMockMvc = RestDocsMockMvcUtils.restDocsMockMvc(provider, memberController);
-    }
+public class AutoMemberControllerTest extends RestApiDocumentTest {
 
     @DisplayName("")
     @Test
@@ -78,9 +58,9 @@ public class AutoMemberControllerTest {
     @Test
     void findAllTeacherTest() throws Exception {
         this.restDocsMockMvc.perform(get("/teachers").param("skills", "Java", "Spring")
-                                                      .param("career", "3")
-                                                      .param("limit", "10")
-                                                      .param("page", "5"))
+                                                     .param("career", "3")
+                                                     .param("limit", "10")
+                                                     .param("page", "5"))
                             .andExpect(status().isOk())
                             .andDo(print());
     }

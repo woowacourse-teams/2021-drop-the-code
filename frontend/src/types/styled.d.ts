@@ -8,6 +8,11 @@ declare module "styled-components" {
         active: string;
         text: string;
       };
+      white: {
+        normal: string;
+        active: string;
+        text: string;
+      };
     };
   }
 }

@@ -1,8 +1,6 @@
 ifndef::snippets[]
 :snippets: ./build/generated-snippets
 endif::[]
-
-= REST API Document
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
@@ -10,6 +8,8 @@ endif::[]
 :toclevels: 3
 :sectlinks:
 :docinfo: shared-head
+
+= REST API Document
 
 [[introduction]]
 == Introduction

@@ -1,6 +1,7 @@
 package com.wootech.dropthecode.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
@@ -73,5 +74,32 @@ public class MemberController {
             @RequestParam Integer limit,
             @RequestParam int page) {
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/skills")
+    public ResponseEntity<List<TechSpec>> skills() {
+        List<TechSpec> techSpecs = new ArrayList<>();
+        techSpecs.add(new TechSpec("java", new String[]{"Spring", "Servlet"}));
+        techSpecs.add(new TechSpec("javaScript", new String[]{"Vue", "Angular"}));
+        techSpecs.add(new TechSpec("C", new String[]{"OpenGL", "Unity"}));
+        return ResponseEntity.ok().body(techSpecs);
+    }
+
+    static class TechSpec {
+        private final String language;
+        private final String[] skills;
+
+        public TechSpec(String language, String[] skills) {
+            this.language = language;
+            this.skills = skills;
+        }
+
+        public String getLanguage() {
+            return language;
+        }
+
+        public String[] getSkills() {
+            return skills;
+        }
     }
 }

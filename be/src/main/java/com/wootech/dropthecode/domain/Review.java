@@ -22,10 +22,10 @@ public class Review extends BaseEntity {
     @Column(nullable = false)
     private String prUrl;
 
+    // 선생이 리뷰 완료 버튼을 누르기 까지 경과한 시간(일)
+    private Long elapsedTime;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private final Progress progress = Progress.ON_GOING;
-
-    protected Review() {
-    }
 }

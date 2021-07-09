@@ -12,8 +12,8 @@ public class TeacherProfile extends BaseEntity {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
     @Lob
+    @Column(nullable = false)
     private String content;
 
     @Column(nullable = false)
@@ -23,7 +23,7 @@ public class TeacherProfile extends BaseEntity {
     private Member member;
 
     @OneToMany(mappedBy = "teacherProfile")
-    private List<TeacherLanguage> languages = new ArrayList<>();
+    private final List<TeacherLanguage> languages = new ArrayList<>();
 
     @OneToMany(mappedBy = "teacherProfile")
     private final List<TeacherSkill> skills = new ArrayList<>();

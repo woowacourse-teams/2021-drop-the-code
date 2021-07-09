@@ -13,11 +13,12 @@ public class Member extends BaseEntity {
     @Column(nullable = false)
     private String imageUrl;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role = Role.STUDENT;
 
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_member_to_teacherProfile"))
     @OneToOne
+    @JoinColumn(foreignKey = @ForeignKey(name = "fk_member_to_teacherProfile"))
     private TeacherProfile teacherProfile;
 
     protected Member() {

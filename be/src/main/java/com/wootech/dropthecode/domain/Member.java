@@ -14,7 +14,7 @@ public class Member extends BaseEntity {
     private String imageUrl;
 
     @Column(nullable = false)
-    private final boolean isTeacher = false;
+    private Role role = Role.STUDENT;
 
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_member_to_teacherProfile"))
     @OneToOne

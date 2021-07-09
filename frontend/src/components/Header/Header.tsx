@@ -2,12 +2,12 @@ import { ReactNode } from "react";
 
 import styled from "styled-components";
 
-import { LAYOUT } from '../../utils/constants/size';
-import { COLOR_TYPE } from '../../utils/constants/theme';
-import { FlexSpaceBetween } from '../shared/Flexbox/Flexbox';
+import { LAYOUT } from "../../utils/constants/size";
+import { COLOR_TYPE } from "../../utils/constants/theme";
+import { FlexSpaceBetween } from "../shared/Flexbox/Flexbox";
 
 interface InnerProps {
-  themeColor?: COLOR_TYPE;  
+  themeColor?: COLOR_TYPE;
 }
 
 const Inner = styled.header<InnerProps>`
@@ -16,7 +16,7 @@ const Inner = styled.header<InnerProps>`
   height: 4rem;
   display: flex;
   justify-content: center;
-`
+`;
 
 export interface Props extends InnerProps {
   title?: ReactNode;
@@ -24,16 +24,16 @@ export interface Props extends InnerProps {
 }
 
 const Header = ({ title, children }: Props) => {
-
   return (
     <Inner>
-      <FlexSpaceBetween css={{ maxWidth: LAYOUT.LG, width: '100%', height: '100%', alignItems: 'center', padding: '0 30px'}}>
+      <FlexSpaceBetween
+        css={{ maxWidth: LAYOUT.LG, width: "100%", height: "100%", alignItems: "center", padding: "0 30px" }}
+      >
         {title}
-        <div>
-          {children}
-        </div>
+        <div>{children}</div>
       </FlexSpaceBetween>
     </Inner>
-  )
-}
+  );
+};
+
 export default Header;

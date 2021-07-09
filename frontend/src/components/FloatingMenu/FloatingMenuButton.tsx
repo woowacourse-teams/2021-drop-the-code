@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from "react";
+import { ReactNode, useState } from "react";
 
 import styled from "styled-components";
 
@@ -32,12 +32,6 @@ const Menu = styled.div`
   z-index: ${Z_INDEX.FLOATING_MENU};
 `;
 
-interface FloatingMenuButtonContextProps {
-  close: () => void;
-}
-
-const FloatingMenuButtonContext = createContext<FloatingMenuButtonContextProps | null>(null);
-
 export interface Props extends Omit<Omit<ButtonProps, "active">, "onClick"> {
   contents?: (props: () => void) => ReactNode;
 }
@@ -57,24 +51,22 @@ const FloatingMenuButton = ({ contents, children, ...props }: Props) => {
   };
 
   return (
-    <FloatingMenuButtonContext.Provider value={{ close }}>
-      <Inner>
-        <Button
-          onClick={() => {
-            setOpen(!isOpen);
-          }}
-          {...props}
-        >
-          {children}
-        </Button>
-        {isOpen && (
-          <>
-            <Dimmed onClick={dimmedClick} />
-            <Menu>{contents && contents(close)}</Menu>
-          </>
-        )}
-      </Inner>
-    </FloatingMenuButtonContext.Provider>
+    <Inner>
+      <Button
+        onClick={() => {
+          setOpen(!isOpen);
+        }}
+        {...props}
+      >
+        {children}
+      </Button>
+      {isOpen && (
+        <>
+          <Dimmed onClick={dimmedClick} />
+          <Menu>{contents && contents(close)}</Menu>
+        </>
+      )}
+    </Inner>
   );
 };
 

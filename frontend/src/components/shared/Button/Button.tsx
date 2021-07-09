@@ -15,11 +15,13 @@ interface InnerProps {
   themeColor?: COLOR_TYPE;
   shape?: keyof typeof SHAPE;
   outline?: boolean;
+  active?: boolean;
 }
 
 const Inner = styled.button<InnerProps>`
   color: ${({ theme, themeColor = "primary" }) => theme.color[themeColor].text};
-  background-color: ${({ theme, themeColor = "primary" }) => theme.color[themeColor].normal};
+  background-color: ${({ theme, themeColor = "primary", active = false }) =>
+    active ? theme.color[themeColor].active : theme.color[themeColor].normal};
   border-radius: ${({ shape = "rounded" }) => SHAPE[shape]};
   transition: background-color 0.1s ease-in-out;
   padding: 0.625rem;

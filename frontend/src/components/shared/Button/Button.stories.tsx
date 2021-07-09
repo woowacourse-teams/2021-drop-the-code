@@ -7,14 +7,23 @@ export default {
   component: Button,
 } as Meta;
 
-const Template: Story<Props> = (args) => (
-  <Button {...args}>
-    <a>111</a>
-  </Button>
-);
+const BasicTemplate: Story<Props> = (args) => <Button {...args} />;
 
-export const Basic = Template.bind({});
+export const Basic = BasicTemplate.bind({});
 
 Basic.args = {
+  children: "내용물",
+};
+
+const ToggleTemplate: Story<Props> = (args) => (
+  <>
+    <Button {...args} themeColor={"white"} active={false} />
+    <Button {...args} themeColor={"white"} active={true} />
+  </>
+);
+
+export const Toggle = ToggleTemplate.bind({});
+
+Toggle.args = {
   children: "내용물",
 };

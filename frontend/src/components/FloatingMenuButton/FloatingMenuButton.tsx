@@ -44,7 +44,6 @@ const FloatingMenuButton = ({ contents, children, ...props }: Props) => {
   };
 
   const dimmedClick: React.MouseEventHandler = ({ target, currentTarget }) => {
-    console.log(target, currentTarget);
     if (target !== currentTarget) return;
 
     close();

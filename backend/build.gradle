@@ -75,6 +75,10 @@ task copyDocument(type: Copy) {
     into file("src/main/resources/static/docs")
 }
 
-build {
+check {
     dependsOn copyDocument
+}
+
+jar {
+    enabled = false
 }

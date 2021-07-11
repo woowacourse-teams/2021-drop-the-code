@@ -2,23 +2,20 @@ import { ReactNode } from "react";
 
 import styled from "styled-components";
 
+import { COLOR } from "../../utils/constants/color";
 import { LAYOUT } from "../../utils/constants/size";
-import { COLOR_TYPE } from "../../utils/constants/theme";
 import { Flex, FlexSpaceBetween } from "../shared/Flexbox/Flexbox";
 
-interface InnerProps {
-  themeColor?: COLOR_TYPE;
-}
-
-const Inner = styled.header<InnerProps>`
-  background-color: ${({ theme, themeColor = "primary" }) => theme.color[themeColor].normal};
+const Inner = styled.header`
+  background-color: ${({ theme }) => theme.color.white.normal};
   width: 100%;
   height: 4rem;
+  box-shadow: 0 0 30px rgb(0 0 0 / 0.2);
 `;
 
-export interface Props extends InnerProps {
-  title?: ReactNode;
+export interface Props {
   children?: ReactNode;
+  rightChildren?: ReactNode;
 }
 
 const NavBar = styled.nav`
@@ -26,22 +23,41 @@ const NavBar = styled.nav`
   justify-content: center;
   width: 100%;
   height: 100%;
+`;
 
-  a:not(:first-child),
+const RightChildren = styled(Flex)`
+  a {
+    color: ${({ theme }) => theme.color.white.text};
+    border-radius: ${({ theme }) => theme.shape.rounded};
+    transition: background-color 0.1s ease-in-out;
+    padding: 0.625rem;
+
+    margin-right: 0.625rem;
+
+    :hover {
+      box-shadow: 0 0 5px ${COLOR.GRAY_500};
+    }
+
+    :active {
+      background-color: ${({ theme }) => theme.color.white.active};
+    }
+  }
+
+  a,
   button {
-    margin-left: 1.875rem;
+    font-weight: 500;
   }
 `;
 
-const Navigation = ({ title, children }: Props) => {
+const Navigation = ({ rightChildren, children }: Props) => {
   return (
     <Inner>
       <NavBar>
         <FlexSpaceBetween
           css={{ maxWidth: LAYOUT.LG, width: "100%", height: "100%", alignItems: "center", padding: "0 30px" }}
         >
-          {title}
-          <Flex>{children}</Flex>
+          {children}
+          <RightChildren>{rightChildren}</RightChildren>
         </FlexSpaceBetween>
       </NavBar>
     </Inner>

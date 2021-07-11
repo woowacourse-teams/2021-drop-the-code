@@ -6,6 +6,7 @@ import Logo from "./assets/logo.svg";
 import PrivateRoute from "./components/AuthRoute/PrivateRoute";
 import GlobalStyle from "./components/GlobalStyle/GlobalStyle";
 import Navigation from "./components/Navigation/Navigation";
+import Button from "./components/shared/Button/Button";
 import { FlexCenter } from "./components/shared/Flexbox/Flexbox";
 import { NAV_MENU, PATH, ROUTE } from "./utils/constants/route";
 import { THEME } from "./utils/constants/theme";
@@ -18,26 +19,25 @@ const App = () => {
       <GlobalStyle />
       <BrowserRouter>
         <Navigation
-          title={
-            <h1>
-              <Link to={PATH.MAIN}>
-                <FlexCenter>
-                  <Logo width={30} height={30} />
-                  <p>코드봐줘</p>
-                </FlexCenter>
-              </Link>
-            </h1>
+          rightChildren={
+            <>
+              {NAV_MENU.filter(({ isPrivate }) => isPrivate === isAuthenticated).map(({ to, children }) => (
+                <NavLink key={to} to={to}>
+                  {children}
+                </NavLink>
+              ))}
+              {!isAuthenticated && <Button themeColor="white">로그인</Button>}
+              {isAuthenticated && <Button themeColor="white">로그아웃</Button>}
+            </>
           }
         >
-          <>
-            {NAV_MENU.filter(({ isPrivate }) => isPrivate === isAuthenticated).map(({ to, children }) => (
-              <NavLink key={to} to={to}>
-                {children}
-              </NavLink>
-            ))}
-            {!isAuthenticated && <button>로그인</button>}
-            {isAuthenticated && <button>로그아웃</button>}
-          </>
+          <h1>
+            <Link to={PATH.MAIN}>
+              <FlexCenter>
+                <Logo width={115} height={30} />
+              </FlexCenter>
+            </Link>
+          </h1>
         </Navigation>
         <Switch>
           {ROUTE.map(({ path, Component, isPrivate }) =>

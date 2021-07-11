@@ -7,17 +7,18 @@ import { COLOR } from "../../utils/constants/color";
 const GlobalStyle = createGlobalStyle`
   ${normalize}
   ${reset}
-
+  
   html {
     font-family: 'Spoqa Han Sans Neo', 'sans-serif'; 
   }
 
   button {
     border: none;
+    cursor: pointer;
   }
 
   header, a {
-    color: ${COLOR.WHITE};
+    color: ${COLOR.BLACK};
   }
 
   a {
@@ -25,6 +26,7 @@ const GlobalStyle = createGlobalStyle`
     align-items: center;
     text-decoration: none;
   }
+
 `;
 
 export default GlobalStyle;

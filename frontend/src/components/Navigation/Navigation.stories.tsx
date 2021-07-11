@@ -1,13 +1,13 @@
 import { Story, Meta } from "@storybook/react";
 
-import Header, { Props } from "./Header";
+import Navigation, { Props } from "./Navigation";
 
 export default {
-  title: "components/Header",
-  component: Header,
+  title: "components/Navigation",
+  component: Navigation,
 } as Meta;
 
-const Template: Story<Props> = (args) => <Header {...args} />;
+const Template: Story<Props> = (args) => <Navigation {...args} />;
 
 export const Basic = Template.bind({});
 

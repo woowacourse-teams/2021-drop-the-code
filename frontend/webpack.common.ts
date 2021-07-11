@@ -25,7 +25,8 @@ const config: webpack.Configuration = {
       },
     ],
   },
-  plugins: [new HtmlWebpackPlugin({ template: "public/index.html" })],
+  resolve: { extensions: [".js", ".ts", ".tsx"] },
+  plugins: [new HtmlWebpackPlugin({ template: "public/index.html", favicon: "public/favicon.ico" })],
 };
 
 export default config;

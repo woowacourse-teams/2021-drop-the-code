@@ -1,4 +1,3 @@
-import Logout from "../../pages/Logout/Logout";
 import Main from "../../pages/Main/Main";
 import ReviwerDetail from "../../pages/ReviewerDetail/ReviewerDetail";
 import ReviewerRegister from "../../pages/ReviewerRegister/ReviewerRegister";
@@ -21,8 +20,6 @@ export const ROUTE: RouteShape[] = [
   { path: PATH.REVIEWER_REGISTER, Component: ReviewerRegister, isPrivate: true },
   { path: PATH.REVIEW_HISTORY, Component: ReviewHistory, isPrivate: true },
   { path: PATH.REVIEW_REQUEST, Component: ReviewRequest, isPrivate: true },
-  { path: PATH.LOGOUT, Component: Logout, isPrivate: true },
-  { path: PATH.LOGOUT, Component: Logout, isPrivate: true },
 ];
 
 export const NAV_MENU: NavMenuShape[] = [

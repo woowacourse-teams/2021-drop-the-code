@@ -20,8 +20,22 @@ const config: webpack.Configuration = {
         },
       },
       {
-        test: /\.png/,
+        test: /\.(png|jpg|jpeg|gif)$/i,
         type: "asset/resource",
+      },
+      {
+        test: /\.svg?$/,
+        use: [
+          {
+            loader: "@svgr/webpack",
+            options: {
+              prettier: false,
+            },
+          },
+        ],
+        issuer: {
+          and: [/\.(ts|tsx|js|jsx|md|mdx)$/],
+        },
       },
     ],
   },

@@ -4,7 +4,7 @@ import ReviwerDetail from "../../pages/ReviewerDetail/ReviewerDetail";
 import ReviewerRegister from "../../pages/ReviewerRegister/ReviewerRegister";
 import ReviewHistory from "../../pages/ReviewHistory/ReviewHistory";
 import ReviewRequest from "../../pages/ReviewRequest/ReviewRequest";
-import { RouteShape } from "../../types/route";
+import { RouteShape, NavMenuShape } from "../../types/route";
 
 export const PATH = {
   MAIN: "/",
@@ -23,4 +23,9 @@ export const ROUTE: RouteShape[] = [
   { path: PATH.REVIEW_REQUEST, Component: ReviewRequest, isPrivate: true },
   { path: PATH.LOGOUT, Component: Logout, isPrivate: true },
   { path: PATH.LOGOUT, Component: Logout, isPrivate: true },
+];
+
+export const NAV_MENU: NavMenuShape[] = [
+  { to: PATH.REVIEWER_REGISTER, children: "✏️리뷰어등록하기", isPrivate: true },
+  { to: PATH.REVIEW_HISTORY, children: "📑히스토리", isPrivate: true },
 ];

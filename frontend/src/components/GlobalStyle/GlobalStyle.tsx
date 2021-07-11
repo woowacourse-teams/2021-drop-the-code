@@ -8,6 +8,10 @@ const GlobalStyle = createGlobalStyle`
   ${normalize}
   ${reset}
 
+  html {
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif'; 
+  }
+
   button {
     border: none;
   }

@@ -74,7 +74,7 @@ const Main = () => {
           />
         ))}
       </div>
-      <FlexCenter css={{ marginBottom: "1.25rem" }}>
+      <FlexCenter css={{ marginBottom: "2.5rem" }}>
         <Button themeColor="transParent" hover={false} css={{ fontWeight: 600 }}>
           더보기
         </Button>

@@ -51,14 +51,14 @@ const ReviewerCard = ({
       <Avatar imageUrl={avatarUrl} width="6.25rem" height="6.25rem" shape="rounded" css={{ marginRight: "1.875rem" }} />
       <FlexSpaceBetween css={{ flexDirection: "column", flex: 1 }}>
         <ChipWrapper>
-          <Chip color={COLOR.WHITE} backgroundColor={COLOR.INDIGO_400}>
+          <Chip color={COLOR.WHITE} backgroundColor={COLOR.GRAY_450}>
             <p>{career}년 이내 경력</p>
           </Chip>
-          <Chip color={COLOR.WHITE} backgroundColor={COLOR.PURPLE_400}>
+          <Chip color={COLOR.WHITE} backgroundColor={COLOR.GRAY_470}>
             <p>누적 리뷰 {reviewCount}회</p>
           </Chip>
           {averageResponseTime && (
-            <Chip color={COLOR.WHITE} backgroundColor={COLOR.YELLOW_400}>
+            <Chip color={COLOR.WHITE} backgroundColor={COLOR.BLUE_250}>
               <p>평균 {averageResponseTime}일내 리뷰</p>
             </Chip>
           )}

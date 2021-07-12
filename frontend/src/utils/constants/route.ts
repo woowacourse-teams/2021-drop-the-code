@@ -11,7 +11,6 @@ export const PATH = {
   REVIEWER_REGISTER: "/reviewer/register",
   REVIEW_HISTORY: "/review/history",
   REVIEW_REQUEST: "/review/request/:reviewerId",
-  LOGOUT: "/logout",
 };
 
 export const ROUTE: RouteShape[] = [

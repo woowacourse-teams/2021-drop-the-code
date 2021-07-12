@@ -15,7 +15,7 @@ public class Member extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role = Role.STUDENT;
+    private final Role role = Role.STUDENT;
 
     @OneToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_member_to_teacherProfile"))

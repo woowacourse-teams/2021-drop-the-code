@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/reviews")
 public class ReviewController {
 
+    /**
+     * @title 리뷰 생성
+     */
     @PostMapping
     public ResponseEntity<Void> create(@RequestBody @Valid ReviewCreateRequest reviewCreateRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -27,6 +30,7 @@ public class ReviewController {
 
     /**
      * @param id 학생 id
+     * @title 내가 받은 리뷰 목록 조회
      */
     @GetMapping("/student/{id}")
     public ResponseEntity<ReviewsResponse> showStudentReviews(@PathVariable Long id) {
@@ -50,6 +54,7 @@ public class ReviewController {
 
     /**
      * @param id 선생님 id
+     * @title 내가 리뷰한 리뷰 목록 조회
      */
     @GetMapping("/teacher/{id}")
     public ResponseEntity<ReviewsResponse> showTeacherReviews(@PathVariable Long id) {
@@ -73,6 +78,7 @@ public class ReviewController {
 
     /**
      * @param id 리뷰 id
+     * @title 리뷰 상세 조회
      */
     @GetMapping("/{id}")
     public ResponseEntity<ReviewResponse> showReviewDetail(@PathVariable Long id) {
@@ -87,6 +93,7 @@ public class ReviewController {
 
     /**
      * @param id 리뷰 id
+     * @title 리뷰 상태 업데이트
      */
     @PatchMapping("/{id}")
     public ResponseEntity<Void> changeProgress(@PathVariable Long id) {

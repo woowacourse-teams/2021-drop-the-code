@@ -5,7 +5,7 @@ endif::[]
 :icons: font
 :source-highlighter: highlightjs
 :toc: left
-:toclevels: 3
+:toclevels: 2
 :sectlinks:
 :docinfo: shared-head
 
@@ -25,12 +25,8 @@ endif::[]
 
 |===
 | 환경 | Domain
-
-| 개발서버
-| `https://aaaaaaaaaaa`
-
 | 운영서버
-| `https://aaaaaaaaaaa`
+| `https://www.dropthecode.p-e.kr/`
 |===
 
 === Exception
@@ -47,36 +43,32 @@ endif::[]
 
 == Member API
 
-include::{snippets}/auto-member-controller-test/oauth-test/auto-section.adoc[]
+include::{snippets}/member-controller-test/oauth-test/auto-section.adoc[]
 
-[[teacher-list]]
-=== 선생님 목록 조회
+*AccessToken과 유저 정보를 가져올 때 필수 requestParam이 없을 때의 응답*
 
-include::{snippets}/auto-member-controller-test/find-all-teacher-test/auto-section.adoc[]
+include::{snippets}/member-controller-test/oauth-fail-test/http-response.adoc[]
+
+include::{snippets}/member-controller-test/register-teacher-test/auto-section.adoc[]
+
+*필드 값이 하나라도 들어있지 않을 때의 응답*
+
+include::{snippets}/member-controller-test/register-teacher-fail-test/http-response.adoc[]
+
+include::{snippets}/member-controller-test/find-all-teacher-test/auto-section.adoc[]
+
+*필수 필드 값이 없을 때의 응답*
+
+include::{snippets}/member-controller-test/find-all-teacher-fail-test/http-response.adoc[]
 
 == Review API
 
-[[new-reivew]]
-=== 새로운 리뷰 생성
-
 include::{snippets}/review-controller-test/new-review/auto-section.adoc[]
-
-[[student-review-list]]
-=== 내가 요청한 리뷰 목록 조회
 
 include::{snippets}/review-controller-test/student-reviews/auto-section.adoc[]
 
-[[teacher-review-list]]
-=== 내가 리뷰한 목록 조회
-
 include::{snippets}/review-controller-test/teacher-reviews/auto-section.adoc[]
 
-[[review-detail]]
-=== 리뷰 상세 조회
-
 include::{snippets}/review-controller-test/review-detail/auto-section.adoc[]
-
-[[change-progress]]
-=== 리뷰 상태 변경
 
 include::{snippets}/review-controller-test/change-review-progress/auto-section.adoc[]

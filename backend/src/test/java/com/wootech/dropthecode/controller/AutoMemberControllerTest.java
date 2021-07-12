@@ -73,11 +73,11 @@ public class AutoMemberControllerTest extends RestApiDocumentTest {
                             .andDo(print());
     }
 
-//    @DisplayName("리뷰어로 이미 등록되어 있는 사용자가 리뷰어 등록을 할 경우 실패")
-//    @Test
-//    void duplicateTeacherFailTest() {
-//
-//    }
+    //    @DisplayName("리뷰어로 이미 등록되어 있는 사용자가 리뷰어 등록을 할 경우 실패")
+    //    @Test
+    //    void duplicateTeacherFailTest() {
+    //
+    //    }
 
     protected RequestPostProcessor userToken() {
         return request -> {
@@ -106,7 +106,7 @@ public class AutoMemberControllerTest extends RestApiDocumentTest {
                         .param("career", "3")
                         .param("limit", "")
                         .param("page", "5"))
-                                    .andExpect(status().isBadRequest())
-                                    .andDo(print());
+                .andExpect(status().isBadRequest())
+                .andDo(print());
     }
 }

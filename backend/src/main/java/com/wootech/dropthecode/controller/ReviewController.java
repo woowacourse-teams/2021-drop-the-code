@@ -10,6 +10,7 @@ import com.wootech.dropthecode.dto.response.ProfileResponse;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
 import com.wootech.dropthecode.dto.response.ReviewsResponse;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,11 @@ public class ReviewController {
      * @title 내가 받은 리뷰 목록 조회
      */
     @GetMapping("/student/{id}")
-    public ResponseEntity<ReviewsResponse> showStudentReviews(@PathVariable Long id) {
+    public ResponseEntity<ReviewsResponse> showStudentReviews(@PathVariable Long id, @RequestHeader HttpHeaders headers) {
+        if (headers.get(HttpHeaders.AUTHORIZATION) == null) {
+            return ResponseEntity.status(401).build();
+        }
+
         ProfileResponse firstTeacher = new ProfileResponse(1L, "user1", "image1");
         ProfileResponse firstStudent = new ProfileResponse(2L, "user2", "image2");
 
@@ -96,7 +101,11 @@ public class ReviewController {
      * @title 리뷰 상태 업데이트
      */
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> changeProgress(@PathVariable Long id) {
+    public ResponseEntity<Void> changeProgress(@PathVariable Long id, @RequestHeader HttpHeaders headers) {
+        if (headers.get(HttpHeaders.AUTHORIZATION) == null) {
+            return ResponseEntity.status(401).build();
+        }
+
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

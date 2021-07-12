@@ -7,12 +7,10 @@ import com.wootech.dropthecode.dto.TechSpec;
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
 
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static capital.scalable.restdocs.misc.AuthorizationSnippet.documentAuthorization;
 import static com.wootech.dropthecode.controller.RestDocsMockMvcUtils.OBJECT_MAPPER;
 import static org.hamcrest.Matchers.any;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -69,11 +67,11 @@ public class MemberControllerTest extends RestApiDocumentTest {
         TeacherRegistrationRequest request =
                 new TeacherRegistrationRequest(null, 3, "백엔드 개발자입니다.", "환영합니다.");
 
-        this.restDocsMockMvc.perform(post("/teachers").with(userToken())
-                                                      .content(OBJECT_MAPPER.writeValueAsString(request))
-                                                      .contentType(MediaType.APPLICATION_JSON))
-                            .andExpect(status().isBadRequest())
-                            .andDo(print());
+        this.failRestDocsMockMvc.perform(post("/teachers").with(userToken())
+                                                          .content(OBJECT_MAPPER.writeValueAsString(request))
+                                                          .contentType(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isBadRequest())
+                                .andDo(print());
     }
 
     //    @DisplayName("리뷰어로 이미 등록되어 있는 사용자가 리뷰어 등록을 할 경우 실패")
@@ -81,13 +79,6 @@ public class MemberControllerTest extends RestApiDocumentTest {
     //    void duplicateTeacherFailTest() {
     //
     //    }
-
-    protected RequestPostProcessor userToken() {
-        return request -> {
-            request.addHeader("Authorization", "Bearer aaa.bbb.ccc");
-            return documentAuthorization(request, "User jwt token required.");
-        };
-    }
 
     @DisplayName("리뷰어 목록 조회 테스트 - 성공")
     @Test

@@ -65,10 +65,22 @@ include::{snippets}/member-controller-test/find-all-teacher-fail-test/http-respo
 
 include::{snippets}/review-controller-test/new-review/auto-section.adoc[]
 
+*필수 필드 값이 없을 때의 응답*
+
+include::{snippets}/review-controller-test/new-review-fail-if-field-is-null-test/http-response.adoc[]
+
 include::{snippets}/review-controller-test/student-reviews/auto-section.adoc[]
+
+*Authorization Header 가 없을 때의 응답*
+
+include::{snippets}/review-controller-test/student-reviews-fail-if-authorization-header-not-exists/http-response.adoc[]
 
 include::{snippets}/review-controller-test/teacher-reviews/auto-section.adoc[]
 
 include::{snippets}/review-controller-test/review-detail/auto-section.adoc[]
 
 include::{snippets}/review-controller-test/change-review-progress/auto-section.adoc[]
+
+*Authorization Header 가 없을 때의 응답*
+
+include::{snippets}/review-controller-test/change-review-progress-fail-if-authorization-header-not-exists/http-response.adoc[]

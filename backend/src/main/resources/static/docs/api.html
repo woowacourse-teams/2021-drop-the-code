@@ -620,9 +620,11 @@ Set-Cookie: imageUrl=s3://fafi.jpg</code></pre>
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 400 Bad Request
 Content-Type: application/json;charset=UTF-8
 
-{
-  "message" : "code parameter is missing"
-}</code></pre>
+[
+  {
+    "message" : "code parameter is missing"
+  }
+]</code></pre>
 </div>
 </div>
 </div>
@@ -660,19 +662,19 @@ Content-Type: application/json;charset=UTF-8
 <td class="tableblock halign-left valign-top"><p class="tableblock">techSpecs</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Array[Object]</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">선생님 기술 경력.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">선생님 테크 스펙.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">techSpecs[].language</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">선생님 프로그래밍 언어.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">techSpecs[].skills</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Array[String]</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">선생님 기술 스택.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">career</p></td>
@@ -711,10 +713,15 @@ Content-Type: application/json;charset=UTF-8
 Authorization: Bearer aaa.bbb.ccc
 
 {
-  "techSpecs" : [ {
-    "language" : "java",
-    "skills" : [ "Spring", "Servlet" ]
-  } ],
+  "techSpecs" : [
+    {
+      "language" : "java",
+      "skills" : [
+        "Spring",
+        "Servlet"
+      ]
+    }
+  ],
   "career" : 3,
   "title" : "백엔드 개발자입니다.",
   "content" : "환영합니다."
@@ -737,9 +744,11 @@ Authorization: Bearer aaa.bbb.ccc
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 400 Bad Request
 Content-Type: application/json;charset=UTF-8
 
-{
-  "message" : "[techSpecs](은)는 must not be empty 입력된 값은: [null] 입니다."
-}</code></pre>
+[
+  {
+    "message" : "[techSpecs](은)는 빈 값은 허용되지 않습니다. 입력된 값은: [null] 입니다."
+  }
+]</code></pre>
 </div>
 </div>
 </div>
@@ -829,9 +838,11 @@ Content-Type: application/json;charset=UTF-8
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 400 Bad Request
 Content-Type: application/json;charset=UTF-8
 
-{
-  "message" : "limit parameter is missing"
-}</code></pre>
+[
+  {
+    "message" : "limit parameter is missing"
+  }
+]</code></pre>
 </div>
 </div>
 </div>
@@ -915,7 +926,7 @@ Content-Type: application/json;charset=UTF-8
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /reviews HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+Authorization: Bearer aaa.bbb.ccc
 
 {
   "studentId" : 1,
@@ -933,6 +944,27 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 201 Created
 Location: /reviews/1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>필수 필드 값이 없을 때의 응답</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+
+[
+  {
+    "message" : "[title](은)는 빈 값은 허용되지 않습니다. 입력된 값은: [ ] 입니다."
+  },
+  {
+    "message" : "[studentId](은)는 빈 값은 허용되지 않습니다. 입력된 값은: [null] 입니다."
+  },
+  {
+    "message" : "[teacherId](은)는 빈 값은 허용되지 않습니다. 입력된 값은: [null] 입니다."
+  }
+]</code></pre>
 </div>
 </div>
 </div>
@@ -1080,7 +1112,7 @@ Location: /reviews/1</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /reviews/student/1 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</code></pre>
+Authorization: Bearer aaa.bbb.ccc</code></pre>
 </div>
 </div>
 </div>
@@ -1092,38 +1124,49 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 Content-Type: application/json;charset=UTF-8
 
 {
-  "reviews" : [ {
-    "id" : 1,
-    "title" : "title1",
-    "content" : "content1",
-    "progress" : "ON_GOING",
-    "teacherProfile" : {
+  "reviews" : [
+    {
       "id" : 1,
-      "name" : "user1",
-      "imageUrl" : "image1"
+      "title" : "title1",
+      "content" : "content1",
+      "progress" : "ON_GOING",
+      "teacherProfile" : {
+        "id" : 1,
+        "name" : "user1",
+        "imageUrl" : "image1"
+      },
+      "studentProfile" : {
+        "id" : 2,
+        "name" : "user2",
+        "imageUrl" : "image2"
+      }
     },
-    "studentProfile" : {
+    {
       "id" : 2,
-      "name" : "user2",
-      "imageUrl" : "image2"
+      "title" : "title2",
+      "content" : "content2",
+      "progress" : "ON_GOING",
+      "teacherProfile" : {
+        "id" : 1,
+        "name" : "user1",
+        "imageUrl" : "image1"
+      },
+      "studentProfile" : {
+        "id" : 3,
+        "name" : "user3",
+        "imageUrl" : "image3"
+      }
     }
-  }, {
-    "id" : 2,
-    "title" : "title2",
-    "content" : "content2",
-    "progress" : "ON_GOING",
-    "teacherProfile" : {
-      "id" : 1,
-      "name" : "user1",
-      "imageUrl" : "image1"
-    },
-    "studentProfile" : {
-      "id" : 3,
-      "name" : "user3",
-      "imageUrl" : "image3"
-    }
-  } ]
+  ]
 }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Authorization Header 가 없을 때의 응답</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 401 Unauthorized</code></pre>
 </div>
 </div>
 </div>
@@ -1282,37 +1325,40 @@ Content-Type: application/json;charset=UTF-8
 Content-Type: application/json;charset=UTF-8
 
 {
-  "reviews" : [ {
-    "id" : 1,
-    "title" : "title1",
-    "content" : "content1",
-    "progress" : "ON_GOING",
-    "teacherProfile" : {
+  "reviews" : [
+    {
       "id" : 1,
-      "name" : "user1",
-      "imageUrl" : "image1"
+      "title" : "title1",
+      "content" : "content1",
+      "progress" : "ON_GOING",
+      "teacherProfile" : {
+        "id" : 1,
+        "name" : "user1",
+        "imageUrl" : "image1"
+      },
+      "studentProfile" : {
+        "id" : 2,
+        "name" : "user2",
+        "imageUrl" : "image2"
+      }
     },
-    "studentProfile" : {
+    {
       "id" : 2,
-      "name" : "user2",
-      "imageUrl" : "image2"
+      "title" : "title2",
+      "content" : "content2",
+      "progress" : "ON_GOING",
+      "teacherProfile" : {
+        "id" : 1,
+        "name" : "user1",
+        "imageUrl" : "image1"
+      },
+      "studentProfile" : {
+        "id" : 3,
+        "name" : "user3",
+        "imageUrl" : "image3"
+      }
     }
-  }, {
-    "id" : 2,
-    "title" : "title2",
-    "content" : "content2",
-    "progress" : "ON_GOING",
-    "teacherProfile" : {
-      "id" : 1,
-      "name" : "user1",
-      "imageUrl" : "image1"
-    },
-    "studentProfile" : {
-      "id" : 3,
-      "name" : "user3",
-      "imageUrl" : "image3"
-    }
-  } ]
+  ]
 }</code></pre>
 </div>
 </div>
@@ -1534,7 +1580,7 @@ Content-Type: application/json;charset=UTF-8
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PATCH /reviews/1 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</code></pre>
+Authorization: Bearer aaa.bbb.ccc</code></pre>
 </div>
 </div>
 </div>
@@ -1545,6 +1591,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 204 No Content</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p><strong>Authorization Header 가 없을 때의 응답</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 401 Unauthorized</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1553,7 +1607,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2021-07-12 13:24:04 +0900
+Last updated 2021-07-12 19:14:48 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

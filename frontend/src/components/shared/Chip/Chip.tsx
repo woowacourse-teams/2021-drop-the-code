@@ -2,8 +2,8 @@ import { HTMLAttributes } from "react";
 
 import styled from "styled-components";
 
-import { SHAPE_TYPE } from "../../types/styled";
-import { FlexCenter } from "../shared/Flexbox/Flexbox";
+import { SHAPE_TYPE } from "../../../types/styled";
+import { FlexCenter } from "../Flexbox/Flexbox";
 
 interface InnerProps {
   color: string;

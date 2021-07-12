@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { COLOR } from "../../utils/constants/color";
-import Chip from "../Chip/Chip";
 import Avatar from "../shared/Avatar/Avatar";
+import Chip from "../shared/Chip/Chip";
 import { Flex, FlexSpaceBetween } from "../shared/Flexbox/Flexbox";
 
 export interface Props {

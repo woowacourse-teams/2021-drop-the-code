@@ -1,11 +1,11 @@
 import { Story, Meta } from "@storybook/react";
 
-import { COLOR } from "../../utils/constants/color";
+import { COLOR } from "../../../utils/constants/color";
 
 import Chip, { Props } from "./Chip";
 
 export default {
-  title: "components/Chip",
+  title: "components/shared/Chip",
   component: Chip,
 } as Meta;
 

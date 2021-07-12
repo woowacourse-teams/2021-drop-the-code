@@ -35,20 +35,30 @@ const Title = styled.p`
   font-weight: 600;
 `;
 
-const ReviewerCard = ({ id, avatarUrl, career, reviewCount, averageResponseTime, title, languages, skills }: Props) => (
-  <Inner>
-    <Link to={`/reviewer/${id}`}>
+const ReviewerCard = ({
+  id,
+  avatarUrl,
+  career,
+  reviewCount,
+  averageResponseTime,
+  title,
+  languages,
+  skills,
+  ...props
+}: Props) => (
+  <Link to={`/reviewer/${id}`}>
+    <Inner {...props}>
       <Avatar imageUrl={avatarUrl} width="6.25rem" height="6.25rem" shape="rounded" css={{ marginRight: "1.875rem" }} />
       <FlexSpaceBetween css={{ flexDirection: "column", flex: 1 }}>
         <ChipWrapper>
-          <Chip color={COLOR.WHITE} backgroundColor={COLOR.BLUE_400}>
+          <Chip color={COLOR.WHITE} backgroundColor={COLOR.INDIGO_400}>
             <p>{career}년 이내 경력</p>
           </Chip>
-          <Chip color={COLOR.WHITE} backgroundColor={COLOR.PURPLE_300}>
+          <Chip color={COLOR.WHITE} backgroundColor={COLOR.PURPLE_400}>
             <p>누적 리뷰 {reviewCount}회</p>
           </Chip>
           {averageResponseTime && (
-            <Chip color={COLOR.WHITE} backgroundColor={COLOR.YELLOW_200}>
+            <Chip color={COLOR.WHITE} backgroundColor={COLOR.YELLOW_400}>
               <p>평균 {averageResponseTime}일내 리뷰</p>
             </Chip>
           )}
@@ -60,8 +70,8 @@ const ReviewerCard = ({ id, avatarUrl, career, reviewCount, averageResponseTime,
           <p>{[...languages, ...skills].join(" • ")}</p>
         </Flex>
       </FlexSpaceBetween>
-    </Link>
-  </Inner>
+    </Inner>
+  </Link>
 );
 
 export default ReviewerCard;

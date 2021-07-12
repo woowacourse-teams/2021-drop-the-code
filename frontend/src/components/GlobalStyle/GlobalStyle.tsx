@@ -12,6 +12,10 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Spoqa Han Sans Neo', 'sans-serif'; 
   }
 
+  * {
+    box-sizing: border-box;
+  }
+
   button {
     border: none;
     cursor: pointer;

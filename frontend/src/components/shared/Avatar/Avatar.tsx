@@ -2,17 +2,20 @@ import { ImgHTMLAttributes } from "react";
 
 import styled from "styled-components";
 
+import { SHAPE_TYPE } from "../../../types/styled";
+
 interface InnerProps {
   imageUrl?: string;
   description?: string;
   width?: string;
   height?: string;
+  shape?: keyof SHAPE_TYPE;
 }
 
 const Inner = styled.img<InnerProps>`
   ${({ width }) => (width ? `width: ${width}` : "")};
   ${({ height }) => (height ? `height: ${height}` : "")};
-  border-radius: 15px;
+  ${({ theme, shape = "circle" }) => `border-radius: ${theme.shape[shape]}`};
 `;
 
 export type Props = ImgHTMLAttributes<HTMLImageElement> & InnerProps;

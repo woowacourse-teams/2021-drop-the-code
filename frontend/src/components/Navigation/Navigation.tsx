@@ -27,6 +27,7 @@ const NavBar = styled.nav`
 
 const RightChildren = styled(Flex)`
   a {
+    align-items: center;
     color: ${({ theme }) => theme.color.white.text};
     border-radius: ${({ theme }) => theme.shape.rounded};
     transition: background-color 0.1s ease-in-out;

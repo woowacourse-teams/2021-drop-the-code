@@ -23,7 +23,6 @@ const GlobalStyle = createGlobalStyle`
 
   a {
     display: flex;
-    align-items: center;
     text-decoration: none;
   }
 

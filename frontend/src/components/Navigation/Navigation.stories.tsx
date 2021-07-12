@@ -12,6 +12,6 @@ const Template: Story<Props> = (args) => <Navigation {...args} />;
 export const Basic = Template.bind({});
 
 Basic.args = {
-  title: <div>로고</div>,
-  children: "내용물",
+  children: <div>로고</div>,
+  rightChildren: "내용물",
 };

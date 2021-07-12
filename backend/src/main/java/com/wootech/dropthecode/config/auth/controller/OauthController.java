@@ -2,6 +2,7 @@ package com.wootech.dropthecode.config.auth.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wootech.dropthecode.config.auth.dto.AuthorizationCode;
 import com.wootech.dropthecode.config.auth.dto.LoginResponse;
 import com.wootech.dropthecode.config.auth.dto.TokenRequest;
 
@@ -24,29 +25,29 @@ public class OauthController {
     @Value("${oauth2.github.client_secret}")
     private String clientSecret;
 
+    private final ObjectMapper objectMapper;
+
+    public OauthController(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
     @PostMapping("/login/oauth")
-    public ResponseEntity<LoginResponse> login(@RequestBody String authorizationCode) throws JsonProcessingException {
+    public ResponseEntity<LoginResponse> login(@RequestBody AuthorizationCode authorizationCode) throws JsonProcessingException {
         // TODO: client_id, client_secret, authorizationCode를 이용해서 토큰 요청하기
-
-        System.out.println("== authorization code");
-        System.out.println(authorizationCode);
-
-        TokenRequest tokenRequest = new TokenRequest("2df558c8c24539ce442e", "d0604607fe6f824754442fffbc8a2ab932ebd964", authorizationCode);
+        TokenRequest tokenRequest = new TokenRequest(clientId, clientSecret, authorizationCode.getAuthorizationCode());
 
         WebClient client = WebClient.builder()
                                     .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                                     .build();
 
-        ObjectMapper objectMapper = new ObjectMapper();
         String jsonString = objectMapper.writeValueAsString(tokenRequest);
-        String token2 = client.post()
-                              .uri("https://github.com/login/oauth/access_token")
-                              .accept(MediaType.APPLICATION_JSON)
-                              .body(BodyInserters.fromValue(jsonString))
-                              .retrieve()
-                              .bodyToMono(String.class).block();
 
-        System.out.println(token2);
+        String accessToken = client.post()
+                                   .uri("https://github.com/login/oauth/access_token")
+                                   .accept(MediaType.APPLICATION_JSON)
+                                   .body(BodyInserters.fromValue(jsonString))
+                                   .retrieve()
+                                   .bodyToMono(String.class).block();
 
         // TODO: access token으로 name, email, avatar_url 요청
 

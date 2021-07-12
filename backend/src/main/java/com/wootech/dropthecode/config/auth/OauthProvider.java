@@ -14,8 +14,8 @@ public enum OauthProvider {
     public static String getTokenRequestUrl(String providerName) {
         String capitalProviderName = providerName.toUpperCase();
         return Arrays.stream(values())
-              .filter(provider -> provider.name().equals(capitalProviderName))
-              .findFirst()
-              .orElseThrow(IllegalArgumentException::new).tokenRequestUrl;
+                     .filter(provider -> provider.name().equals(capitalProviderName))
+                     .findFirst()
+                     .orElseThrow(IllegalArgumentException::new).tokenRequestUrl;
     }
 }

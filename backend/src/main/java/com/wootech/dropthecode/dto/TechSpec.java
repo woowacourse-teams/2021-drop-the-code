@@ -1,9 +1,15 @@
 package com.wootech.dropthecode.dto;
 
 import java.util.List;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 public class TechSpec {
+
+    @NotBlank
     private String language;
+
+    @NotEmpty
     private List<String> skills;
 
     public TechSpec() {

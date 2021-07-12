@@ -1,13 +1,43 @@
+import { useEffect, useState } from "react";
+
+import { techSpec as mockTechSpec } from "../../__mock__/filter";
 import { reviewers } from "../../__mock__/reviewers";
 import FloatingMenuButton from "../../components/FloatingMenuButton/FloatingMenuButton";
 import ReviewerCard from "../../components/Reviewer/ReviewerCard";
 import Button from "../../components/shared/Button/Button";
 import { Flex, FlexEnd, FlexAlignCenter, FlexCenter } from "../../components/shared/Flexbox/Flexbox";
 import Select from "../../components/shared/Select/Select";
+import { TechSpec } from "../../types/reviewer";
 import { COLOR } from "../../utils/constants/color";
 import { LAYOUT } from "../../utils/constants/size";
 
 const Main = () => {
+  const [filterLanguage, setFilterLanguage] = useState<string | null>(null);
+  const [filterSkills, setFilterSkills] = useState<string[]>([]);
+
+  // TODO: api 요청 받아서 처리하기
+  const [techSpec, setTechSpec] = useState<TechSpec[]>(mockTechSpec);
+
+  useEffect(() => {
+    if (filterSkills.length === 0) {
+      const skills = techSpec.find(({ language }) => language === filterLanguage)?.skills;
+
+      // await api(language, skills)
+      // setTechSpec()
+
+      return;
+    }
+
+    // await api
+    // setTechSpec()
+  }, []);
+
+  useEffect(() => {
+    if (techSpec.length === 0) return;
+
+    setFilterLanguage(techSpec[0].language);
+  }, [techSpec]);
+
   return (
     <main css={{ maxWidth: LAYOUT.LG, margin: "0 auto" }}>
       <Flex css={{ flexDirection: "column", width: "100%" }}>
@@ -17,30 +47,47 @@ const Main = () => {
             <Flex css={{ margin: "0.3125rem 0" }}>
               <FlexAlignCenter css={{ width: "5rem", fontWeight: 500 }}>언어</FlexAlignCenter>
               <ul css={{ display: "flex" }}>
-                <li css={{ marginRight: "0.375rem" }}>
-                  <Button themeColor="transParent">java</Button>
-                </li>
-                <li>
-                  <Button active themeColor="transParent">
-                    javascript
-                  </Button>
-                </li>
+                {techSpec.map(({ language }) => (
+                  <li key={language} css={{ marginRight: "0.375rem" }}>
+                    <Button
+                      themeColor="transParent"
+                      active={language === filterLanguage}
+                      onClick={() => {
+                        setFilterLanguage(language);
+                        setFilterSkills([]);
+                      }}
+                    >
+                      {language}
+                    </Button>
+                  </li>
+                ))}
               </ul>
             </Flex>
             <Flex css={{ margin: "0.625rem 0" }}>
               <FlexAlignCenter css={{ width: "5rem", fontWeight: 500 }}>기술 스택</FlexAlignCenter>
               <ul css={{ display: "flex" }}>
-                <li>
-                  <Button active themeColor="transParent" css={{ marginRight: "0.1875rem" }}>
-                    react
-                  </Button>
-                </li>
-                <li>
-                  <Button themeColor="transParent">vue</Button>
-                </li>
-                <li>
-                  <Button themeColor="transParent">angular</Button>
-                </li>
+                {techSpec
+                  .find(({ language }) => language === filterLanguage)
+                  ?.skills.map((skill) => (
+                    <li key={skill}>
+                      <Button
+                        active={filterSkills.includes(skill)}
+                        themeColor="transParent"
+                        css={{ marginRight: "0.1875rem" }}
+                        onClick={() => {
+                          if (filterSkills.includes(skill)) {
+                            setFilterSkills(filterSkills.filter((filterSkill) => filterSkill !== skill));
+
+                            return;
+                          }
+
+                          setFilterSkills([...filterSkills, skill]);
+                        }}
+                      >
+                        {skill}
+                      </Button>
+                    </li>
+                  ))}
               </ul>
             </Flex>
           </Flex>

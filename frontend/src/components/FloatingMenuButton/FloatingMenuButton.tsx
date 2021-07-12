@@ -32,7 +32,7 @@ const Menu = styled.div`
   z-index: ${Z_INDEX.FLOATING_MENU};
 `;
 
-export interface Props extends Omit<Omit<ButtonProps, "active">, "onClick"> {
+export interface Props extends Omit<ButtonProps, "active" | "onClick"> {
   contents?: (props: () => void) => ReactNode;
 }
 

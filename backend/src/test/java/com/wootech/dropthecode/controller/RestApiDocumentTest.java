@@ -1,9 +1,6 @@
 package com.wootech.dropthecode.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wootech.dropthecode.controller.MemberController;
-import com.wootech.dropthecode.controller.RestDocsMockMvcUtils;
-import com.wootech.dropthecode.controller.ReviewController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

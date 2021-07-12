@@ -1,7 +1,5 @@
 package com.wootech.dropthecode.controller;
 
-import java.nio.charset.StandardCharsets;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wootech.dropthecode.exception.GlobalExceptionHandler;
 
@@ -9,8 +7,6 @@ import org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfig
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.http.HttpDocumentation;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
@@ -109,23 +105,23 @@ public class RestDocsMockMvcUtils {
     }
 
     public static MockMvc failRestDocsMockMvc(RestDocumentationContextProvider provider, Object... controllers) {
-            return MockMvcBuilders.standaloneSetup(controllers)
-                                  .addFilters(Advice.filter())
-                                  .setControllerAdvice(Advice.handler())
-                                  .alwaysDo(prepareJackson(OBJECT_MAPPER))
-                                  .alwaysDo(restDocumentation())
-                                  .apply(documentationConfiguration(provider)
-                                          .uris()
-                                          .withScheme("http")
-                                          .withHost("localhost")
-                                          .withPort(8080)
-                                          .and()
-                                          .snippets()
-                                          .withDefaults(
-                                                  HttpDocumentation.httpResponse()
-                                          ))
-                                  .build();
-        }
+        return MockMvcBuilders.standaloneSetup(controllers)
+                              .addFilters(Advice.filter())
+                              .setControllerAdvice(Advice.handler())
+                              .alwaysDo(prepareJackson(OBJECT_MAPPER))
+                              .alwaysDo(restDocumentation())
+                              .apply(documentationConfiguration(provider)
+                                      .uris()
+                                      .withScheme("http")
+                                      .withHost("localhost")
+                                      .withPort(8080)
+                                      .and()
+                                      .snippets()
+                                      .withDefaults(
+                                              HttpDocumentation.httpResponse()
+                                      ))
+                              .build();
+    }
 
     private static RestDocumentationResultHandler restDocumentation(Snippet... snippets) {
         return MockMvcRestDocumentation

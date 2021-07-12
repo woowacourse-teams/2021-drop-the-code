@@ -6,9 +6,15 @@ import javax.validation.constraints.NotEmpty;
 
 public class TechSpec {
 
+    /**
+     * 선생님 프로그래밍 언어
+     */
     @NotBlank
     private String language;
 
+    /**
+     * 선생님 기술 스택
+     */
     @NotEmpty
     private List<String> skills;
 

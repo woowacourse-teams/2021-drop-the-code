@@ -11,7 +11,7 @@ import com.wootech.dropthecode.dto.TechSpec;
 public class TeacherRegistrationRequest {
 
     /**
-     * 선생님 기술 경력
+     * 선생님 테크 스펙
      */
     @NotEmpty
     private List<TechSpec> techSpecs;

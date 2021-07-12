@@ -30,6 +30,10 @@ dependencies {
     // log
     implementation 'net.rakugakibox.spring.boot:logback-access-spring-boot-starter:2.7.1'
 
+    // webClient
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.projectreactor:reactor-spring:1.0.1.RELEASE'
+
     runtimeOnly 'mysql:mysql-connector-java'
     testImplementation 'com.h2database:h2:1.4.199'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

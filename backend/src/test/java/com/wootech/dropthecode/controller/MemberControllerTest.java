@@ -1,7 +1,9 @@
 package com.wootech.dropthecode.controller;
 
 import java.util.Arrays;
+import java.util.List;
 
+import com.wootech.dropthecode.dto.TechSpec;
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
 
 import org.springframework.http.MediaType;
@@ -19,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.cookie;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class AutoMemberControllerTest extends RestApiDocumentTest {
+public class MemberControllerTest extends RestApiDocumentTest {
 
     @DisplayName("AccessToken과 유저 정보를 가져오는 테스트")
     @Test
@@ -37,21 +39,22 @@ public class AutoMemberControllerTest extends RestApiDocumentTest {
     @DisplayName("AccessToken과 유저 정보를 가져올 때 필수 requestParam이 없을 때 실패하는 테스트")
     @Test
     void oauthFailTest() throws Exception {
-        this.restDocsMockMvc.perform(get("/login/oauth").param("code", "1234"))
-                            .andExpect(status().isBadRequest())
-                            .andDo(print());
+        this.failRestDocsMockMvc.perform(get("/login/oauth").param("code", "1234"))
+                                .andExpect(status().isBadRequest())
+                                .andDo(print());
 
-        this.restDocsMockMvc.perform(get("/login/oauth").param("redirectUrl", "/main"))
-                            .andExpect(status().isBadRequest())
-                            .andDo(print());
+        this.failRestDocsMockMvc.perform(get("/login/oauth").param("redirectUrl", "/main"))
+                                .andExpect(status().isBadRequest())
+                                .andDo(print());
     }
 
 
     @DisplayName("리뷰어 등록 테스트 - 성공")
     @Test
     void registerTeacherTest() throws Exception {
+        List<TechSpec> techSpecs = Arrays.asList(new TechSpec("java", Arrays.asList("Spring", "Servlet")));
         TeacherRegistrationRequest request
-                = new TeacherRegistrationRequest(Arrays.asList("java", "spring"), 3, "백엔드 개발자입니다.", "환영합니다.");
+                = new TeacherRegistrationRequest(techSpecs, 3, "백엔드 개발자입니다.", "환영합니다.");
 
         this.restDocsMockMvc.perform(post("/teachers").with(userToken())
                                                       .content(OBJECT_MAPPER.writeValueAsString(request))

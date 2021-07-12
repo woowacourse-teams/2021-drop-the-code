@@ -6,13 +6,15 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
+import com.wootech.dropthecode.dto.TechSpec;
+
 public class TeacherRegistrationRequest {
 
     /**
      * 선생님 기술 경력
      */
     @NotEmpty
-    private List<String> skills;
+    private List<TechSpec> techSpecs;
 
     /**
      * 선생님 연차
@@ -36,18 +38,18 @@ public class TeacherRegistrationRequest {
     public TeacherRegistrationRequest() {
     }
 
-    public TeacherRegistrationRequest(List<String> skills, int career, String title, String content) {
-        this.skills = skills;
+    public TeacherRegistrationRequest(List<TechSpec> techSpecs, Integer career, String title, String content) {
+        this.techSpecs = techSpecs;
         this.career = career;
         this.title = title;
         this.content = content;
     }
 
-    public List<String> getSkills() {
-        return skills;
+    public List<TechSpec> getTechSpecs() {
+        return techSpecs;
     }
 
-    public int getCareer() {
+    public Integer getCareer() {
         return career;
     }
 

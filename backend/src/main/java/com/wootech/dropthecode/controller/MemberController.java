@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import com.wootech.dropthecode.dto.TechSpec;
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
 
 import org.springframework.http.HttpHeaders;
@@ -78,27 +79,9 @@ public class MemberController {
     @GetMapping("/skills")
     public ResponseEntity<List<TechSpec>> skills() {
         List<TechSpec> techSpecs = new ArrayList<>();
-        techSpecs.add(new TechSpec("java", new String[]{"Spring", "Servlet"}));
-        techSpecs.add(new TechSpec("javaScript", new String[]{"Vue", "Angular"}));
-        techSpecs.add(new TechSpec("C", new String[]{"OpenGL", "Unity"}));
+        techSpecs.add(new TechSpec("java", Arrays.asList("Spring", "Servlet")));
+        techSpecs.add(new TechSpec("javaScript", Arrays.asList("Vue", "Angular")));
+        techSpecs.add(new TechSpec("C", Arrays.asList("OpenGL", "Unity")));
         return ResponseEntity.ok().body(techSpecs);
-    }
-
-    static class TechSpec {
-        private final String language;
-        private final String[] skills;
-
-        public TechSpec(String language, String[] skills) {
-            this.language = language;
-            this.skills = skills;
-        }
-
-        public String getLanguage() {
-            return language;
-        }
-
-        public String[] getSkills() {
-            return skills;
-        }
     }
 }

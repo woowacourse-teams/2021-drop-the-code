@@ -3,14 +3,13 @@ package com.wootech.dropthecode.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wootech.dropthecode.exception.GlobalExceptionHandler;
 
-import org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Import;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.http.HttpDocumentation;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
+import org.springframework.restdocs.operation.preprocess.ContentModifyingOperationPreprocessor;
 import org.springframework.restdocs.snippet.Snippet;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -25,30 +24,39 @@ import static capital.scalable.restdocs.response.ResponseModifyingPreprocessors.
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 
-@Import(HttpEncodingAutoConfiguration.class)
 public class RestDocsMockMvcUtils {
 
     private static final String PUBLIC_AUTHORIZATION = "Resource is public.";
     public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     @TestConfiguration
-    private static class Advice {
+    private static class MockMvcConfig {
 
         @Bean
-        public static GlobalExceptionHandler handler() {
+        public static GlobalExceptionHandler controllerAdvice() {
             return new GlobalExceptionHandler();
         }
 
         @Bean
-        public static CharacterEncodingFilter filter() {
+        public static CharacterEncodingFilter utf8Filter() {
             return new CharacterEncodingFilter("UTF-8", true);
+        }
+
+        @Bean
+        public static PrettyPrintingUtils prettyPrintingUtils() {
+            return new PrettyPrintingUtils();
+        }
+
+        @Bean
+        public static ContentModifyingOperationPreprocessor prettyPrintPreProcessor() {
+            return new ContentModifyingOperationPreprocessor(prettyPrintingUtils());
         }
     }
 
     public static MockMvc successRestDocsMockMvc(RestDocumentationContextProvider provider, Object... controllers) {
         return MockMvcBuilders.standaloneSetup(controllers)
-                              .addFilters(Advice.filter())
-                              .setControllerAdvice(Advice.handler())
+                              .addFilters(MockMvcConfig.utf8Filter())
+                              .setControllerAdvice(MockMvcConfig.controllerAdvice())
                               .alwaysDo(prepareJackson(OBJECT_MAPPER))
                               .alwaysDo(restDocumentation())
                               /*
@@ -106,8 +114,8 @@ public class RestDocsMockMvcUtils {
 
     public static MockMvc failRestDocsMockMvc(RestDocumentationContextProvider provider, Object... controllers) {
         return MockMvcBuilders.standaloneSetup(controllers)
-                              .addFilters(Advice.filter())
-                              .setControllerAdvice(Advice.handler())
+                              .addFilters(MockMvcConfig.utf8Filter())
+                              .setControllerAdvice(MockMvcConfig.controllerAdvice())
                               .alwaysDo(prepareJackson(OBJECT_MAPPER))
                               .alwaysDo(restDocumentation())
                               .apply(documentationConfiguration(provider)
@@ -129,7 +137,7 @@ public class RestDocsMockMvcUtils {
                         preprocessRequest(
 
                                 // RestDocs 스니펫 이름 설정 및 Request 와 Response 를 정리하여 출력
-                                prettyPrint(),
+                                MockMvcConfig.prettyPrintPreProcessor(),
 
                                 // 지정 헤더를 제외한 스니펫을 생성
                                 removeHeaders("Host", "Content-Length")
@@ -137,7 +145,7 @@ public class RestDocsMockMvcUtils {
                         preprocessResponse(
                                 replaceBinaryContent(),
                                 limitJsonArrayLength(OBJECT_MAPPER),
-                                prettyPrint(),
+                                MockMvcConfig.prettyPrintPreProcessor(),
                                 removeHeaders("Content-Length")
                         ),
                         snippets

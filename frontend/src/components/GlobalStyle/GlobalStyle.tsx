@@ -7,9 +7,16 @@ import { COLOR } from "../../utils/constants/color";
 const GlobalStyle = createGlobalStyle`
   ${normalize}
   ${reset}
-  
+
+  @font-face {
+    font-family: 'IBMPlexSansKR-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
   html {
-    font-family: 'Spoqa Han Sans Neo', 'sans-serif'; 
+    font-family: 'IBMPlexSansKR-Regular', 'sans-serif'; 
   }
 
   * {

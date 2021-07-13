@@ -25,4 +25,17 @@ public class TokenResponse {
     public String getTokenType() {
         return tokenType;
     }
+
+    public String getTokenWithType() {
+        return tokenType + " " + accessToken;
+    }
+
+    @Override
+    public String toString() {
+        return "TokenResponse{" +
+                "accessToken='" + accessToken + '\'' +
+                ", scope='" + scope + '\'' +
+                ", tokenType='" + tokenType + '\'' +
+                '}';
+    }
 }

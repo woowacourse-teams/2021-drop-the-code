@@ -1,9 +1,6 @@
 package com.wootech.dropthecode.config.auth.controller;
 
-import com.wootech.dropthecode.config.auth.dto.AuthorizationCode;
-import com.wootech.dropthecode.config.auth.dto.LoginResponse;
-import com.wootech.dropthecode.config.auth.dto.TokenRequest;
-import com.wootech.dropthecode.config.auth.dto.TokenResponse;
+import com.wootech.dropthecode.config.auth.dto.*;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -39,6 +36,13 @@ public class OauthController {
                                              .bodyToMono(TokenResponse.class).block();
 
         // TODO: access token으로 name, email, avatar_url 요청
+        MemberProfileResponse profileResponse = WebClient.create()
+                                                       .get()
+                                                       .uri("https://api.github.com/user")
+                                                       .header("Authorization", accessToken.getTokenWithType())
+                                                       .retrieve()
+                                                       .bodyToMono(MemberProfileResponse.class)
+                                                       .block();
 
         // TODO: 받아온 정보로 회원가입 or 로그인 -> JWT 토큰 생성
 

@@ -17,4 +17,24 @@ public class LoginResponse {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
 }

@@ -9,6 +9,7 @@ interface InnerProps {
   themeColor?: keyof COLOR_TYPE;
   shape?: keyof SHAPE_TYPE;
   outline?: boolean;
+  hover?: boolean;
   active?: boolean;
 }
 
@@ -21,10 +22,12 @@ const Inner = styled.button<InnerProps>`
   padding: 0.625rem;
   ${({ outline }) => (outline ? `outline: 1px solid ${COLOR.WHITE}` : "")}
 
-  :hover {
-    box-shadow: 0 0 5px ${COLOR.GRAY_500};
-  }
-
+  ${({ hover = true }) =>
+    hover &&
+    `:hover {
+        box-shadow: 0 0 5px ${COLOR.GRAY_500};
+      }`}
+  
   :active {
     background-color: ${({ theme, themeColor = "primary" }) => theme.color[themeColor].active};
   }

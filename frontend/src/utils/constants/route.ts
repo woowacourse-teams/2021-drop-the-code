@@ -11,7 +11,6 @@ export const PATH = {
   REVIEWER_REGISTER: "/reviewer/register",
   REVIEW_HISTORY: "/review/history",
   REVIEW_REQUEST: "/review/request/:reviewerId",
-  LOGOUT: "/logout",
 };
 
 export const ROUTE: RouteShape[] = [
@@ -23,6 +22,6 @@ export const ROUTE: RouteShape[] = [
 ];
 
 export const NAV_MENU: NavMenuShape[] = [
-  { to: PATH.REVIEWER_REGISTER, children: "리뷰어등록하기", isPrivate: true },
+  { to: PATH.REVIEWER_REGISTER, children: "리뷰어 등록하기", isPrivate: true },
   { to: PATH.REVIEW_HISTORY, children: "히스토리", isPrivate: true },
 ];

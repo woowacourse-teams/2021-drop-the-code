@@ -6,9 +6,8 @@ export interface COLOR_TYPE {
     active: string;
     text: string;
   };
-  white: {
+  transParent: {
     normal: string;
-    active: string;
     text: string;
   };
 }

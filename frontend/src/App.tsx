@@ -26,8 +26,16 @@ const App = () => {
                   {children}
                 </NavLink>
               ))}
-              {!isAuthenticated && <Button themeColor="white">로그인</Button>}
-              {isAuthenticated && <Button themeColor="white">로그아웃</Button>}
+              {!isAuthenticated && (
+                <Button themeColor="transParent" hover={false}>
+                  로그인
+                </Button>
+              )}
+              {isAuthenticated && (
+                <Button themeColor="transParent" hover={false}>
+                  로그아웃
+                </Button>
+              )}
             </>
           }
         >
@@ -46,7 +54,7 @@ const App = () => {
                 <Component />
               </PrivateRoute>
             ) : (
-              <Route key={path} path={path}>
+              <Route key={path} path={path} exact>
                 <Component />
               </Route>
             )

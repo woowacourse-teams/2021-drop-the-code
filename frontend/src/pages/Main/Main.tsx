@@ -106,18 +106,17 @@ const Main = () => {
         </Select>
       </div>
       <div css={{ margin: "1.25rem 0 2rem 0" }}>
-        {reviewers.map(({ id, avatarUrl, career, reviewCount, averageResponseTime, title, languages, skills }) => (
+        {reviewers.map(({ id, imageUrl, career, reviewCount, averageResponseTime, title, techSpec }) => (
           <ReviewerCard
             key={id}
             id={id}
-            avatarUrl={avatarUrl}
+            imageUrl={imageUrl}
             career={career}
             reviewCount={reviewCount}
             averageResponseTime={averageResponseTime}
             title={title}
-            languages={languages}
-            skills={skills}
-            css={{ marginBottom: "10px" }}
+            techSpec={techSpec}
+            css={{ marginBottom: "0.625rem" }}
           />
         ))}
       </div>

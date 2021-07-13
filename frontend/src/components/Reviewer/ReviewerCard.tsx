@@ -2,21 +2,11 @@ import { Link } from "react-router-dom";
 
 import styled from "styled-components";
 
+import { Reviewer } from "../../types/reviewer";
 import { COLOR } from "../../utils/constants/color";
 import Avatar from "../shared/Avatar/Avatar";
 import Chip from "../shared/Chip/Chip";
 import { Flex, FlexSpaceBetween } from "../shared/Flexbox/Flexbox";
-
-export interface Props {
-  id: number;
-  avatarUrl: string;
-  career: number;
-  reviewCount: number;
-  averageResponseTime: number | null;
-  title: string;
-  languages: string[];
-  skills: string[];
-}
 
 const Inner = styled(Flex)`
   width: 100%;
@@ -37,18 +27,17 @@ const Title = styled.p`
 
 const ReviewerCard = ({
   id,
-  avatarUrl,
+  imageUrl,
   career,
   reviewCount,
   averageResponseTime,
   title,
-  languages,
-  skills,
+  techSpec,
   ...props
-}: Props) => (
+}: Reviewer) => (
   <Link to={`/reviewer/${id}`}>
     <Inner {...props}>
-      <Avatar imageUrl={avatarUrl} width="6.25rem" height="6.25rem" shape="rounded" css={{ marginRight: "1.875rem" }} />
+      <Avatar imageUrl={imageUrl} width="6.25rem" height="6.25rem" shape="rounded" css={{ marginRight: "1.875rem" }} />
       <FlexSpaceBetween css={{ flexDirection: "column", flex: 1 }}>
         <ChipWrapper>
           <Chip color={COLOR.WHITE} backgroundColor={COLOR.GRAY_450}>
@@ -67,7 +56,12 @@ const ReviewerCard = ({
           <Title>{title}</Title>
         </Flex>
         <Flex>
-          <p>{[...languages, ...skills].join(" • ")}</p>
+          <p>
+            {[
+              ...techSpec.map(({ language }) => language),
+              ...([] as string[]).concat(...techSpec.map(({ skills }) => skills)),
+            ].join(" • ")}
+          </p>
         </Flex>
       </FlexSpaceBetween>
     </Inner>

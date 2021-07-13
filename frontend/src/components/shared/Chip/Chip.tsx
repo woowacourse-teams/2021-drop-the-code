@@ -16,7 +16,6 @@ const Inner = styled(FlexCenter)<InnerProps>`
   padding: 0.5rem;
   color: ${({ color }) => color};
   background-color: ${({ backgroundColor }) => backgroundColor};
-  font-weight: 600;
 `;
 
 export type Props = HTMLAttributes<HTMLDivElement> & InnerProps;

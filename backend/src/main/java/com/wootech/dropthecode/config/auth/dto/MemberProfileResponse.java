@@ -1,15 +1,25 @@
 package com.wootech.dropthecode.config.auth.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.wootech.dropthecode.domain.Member;
+import com.wootech.dropthecode.domain.Role;
 
 public class MemberProfileResponse {
+    private Long id;
     private String name;
     private String email;
-
     @JsonProperty("avatar_url")
     private String avatarUrl;
 
     public MemberProfileResponse() {
+    }
+
+    public Member toMember() {
+        return new Member(id, email, name, avatarUrl, Role.STUDENT, null);
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -22,14 +32,5 @@ public class MemberProfileResponse {
 
     public String getAvatarUrl() {
         return avatarUrl;
-    }
-
-    @Override
-    public String toString() {
-        return "MemberProfileResponse{" +
-                "name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", avatarUrl='" + avatarUrl + '\'' +
-                '}';
     }
 }

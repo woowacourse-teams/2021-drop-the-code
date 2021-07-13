@@ -4,6 +4,8 @@ import javax.persistence.*;
 
 @Entity
 public class Member extends BaseEntity {
+    private Long oauthId;
+
     @Column(nullable = false)
     private String email;
 
@@ -15,12 +17,45 @@ public class Member extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private final Role role = Role.STUDENT;
+    private Role role;
 
     @OneToOne
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_member_to_teacherProfile"))
     private TeacherProfile teacherProfile;
 
     protected Member() {
+    }
+
+    public Member(Long oauthId, String email, String name, String imageUrl, Role role, TeacherProfile teacherProfile) {
+        this.oauthId = oauthId;
+        this.email = email;
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.role = role;
+        this.teacherProfile = teacherProfile;
+    }
+
+    public Long getOauthId() {
+        return oauthId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public TeacherProfile getTeacherProfile() {
+        return teacherProfile;
     }
 }

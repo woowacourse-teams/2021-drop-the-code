@@ -52,10 +52,10 @@ const FloatingMenuButton = ({ contents, children, ...props }: Props) => {
   return (
     <Inner>
       <Button
+        {...props}
         onClick={() => {
           setOpen(!isOpen);
         }}
-        {...props}
       >
         {children}
       </Button>

@@ -8,7 +8,7 @@ import { COLOR } from "../../../utils/constants/color";
 interface InnerProps {
   themeColor?: keyof COLOR_TYPE;
   shape?: keyof SHAPE_TYPE;
-  outline?: boolean;
+  border?: boolean;
   hover?: boolean;
   active?: boolean;
 }
@@ -20,14 +20,14 @@ const Inner = styled.button<InnerProps>`
   border-radius: ${({ theme, shape = "rounded" }) => theme.shape[shape]};
   transition: background-color 0.1s ease-in-out;
   padding: 0.625rem;
-  ${({ outline }) => (outline ? `outline: 1px solid ${COLOR.WHITE}` : "")}
+  ${({ border }) => border && `border: 1px solid ${COLOR.BLACK};`}
 
   ${({ hover = true }) =>
     hover &&
     `:hover {
         box-shadow: 0 0 5px ${COLOR.GRAY_500};
       }`}
-  
+
   :active {
     background-color: ${({ theme, themeColor = "primary" }) => theme.color[themeColor].active};
   }

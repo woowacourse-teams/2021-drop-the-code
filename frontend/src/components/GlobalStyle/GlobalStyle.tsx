@@ -29,7 +29,6 @@ const GlobalStyle = createGlobalStyle`
     display: flex;
     text-decoration: none;
   }
-
 `;
 
 export default GlobalStyle;

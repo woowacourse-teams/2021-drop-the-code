@@ -36,7 +36,7 @@ export interface Props extends Omit<ButtonProps, "active" | "onClick"> {
   contents?: (props: () => void) => ReactNode;
 }
 
-const FloatingMenuButton = ({ contents, children, ...props }: Props) => {
+const MenuItemButton = ({ contents, children, ...props }: Props) => {
   const [isOpen, setOpen] = useState(false);
 
   const close = () => {
@@ -69,4 +69,4 @@ const FloatingMenuButton = ({ contents, children, ...props }: Props) => {
   );
 };
 
-export default FloatingMenuButton;
+export default MenuItemButton;

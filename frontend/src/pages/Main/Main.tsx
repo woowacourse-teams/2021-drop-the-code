@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { techSpec as mockTechSpec } from "../../__mock__/filter";
 import { reviewers } from "../../__mock__/reviewers";
 import CareerPicker from "../../components/CareerPicker/CareerPicker";
-import FloatingMenuButton from "../../components/FloatingMenuButton/FloatingMenuButton";
+import MenuItemButton from "../../components/MenuItemButton/MenuItemButton";
 import ReviewerCard from "../../components/Reviewer/ReviewerCard";
 import Button from "../../components/shared/Button/Button";
 import { Flex, FlexEnd, FlexAlignCenter, FlexCenter } from "../../components/shared/Flexbox/Flexbox";
@@ -95,7 +95,7 @@ const Main = () => {
           </Flex>
           <FlexEnd css={{ flexDirection: "column" }}>
             <div css={{ marginBottom: "0.625rem" }}>
-              <FloatingMenuButton
+              <MenuItemButton
                 themeColor="transParent"
                 border
                 contents={(close) => (
@@ -109,7 +109,7 @@ const Main = () => {
                 )}
               >
                 경력
-              </FloatingMenuButton>
+              </MenuItemButton>
             </div>
           </FlexEnd>
         </Flex>

@@ -1,4 +1,4 @@
-package com.wootech.dropthecode.config.auth;
+package com.wootech.dropthecode.config.auth.util;
 
 import java.util.Date;
 
@@ -17,6 +17,9 @@ public class JwtTokenProvider {
 
     @Value("${jwt.refresh-token.expire-length}")
     private long refreshTokenValidityInMilliseconds;
+
+    private JwtTokenProvider() {
+    }
 
     public String createAccessToken(String payload) {
         return createToken(payload, accessTokenValidityInMilliseconds);

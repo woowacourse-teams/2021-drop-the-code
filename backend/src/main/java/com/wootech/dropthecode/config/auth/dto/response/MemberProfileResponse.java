@@ -1,4 +1,4 @@
-package com.wootech.dropthecode.config.auth.dto;
+package com.wootech.dropthecode.config.auth.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.wootech.dropthecode.domain.Member;

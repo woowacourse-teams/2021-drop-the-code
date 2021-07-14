@@ -1,4 +1,4 @@
-package com.wootech.dropthecode.config.auth.dto;
+package com.wootech.dropthecode.config.auth.dto.request;
 
 public class AuthorizationRequest {
     private String providerName;

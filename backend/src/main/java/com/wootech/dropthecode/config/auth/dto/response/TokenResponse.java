@@ -1,4 +1,4 @@
-package com.wootech.dropthecode.config.auth.dto;
+package com.wootech.dropthecode.config.auth.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -28,14 +28,5 @@ public class TokenResponse {
 
     public String getTokenWithType() {
         return tokenType + " " + accessToken;
-    }
-
-    @Override
-    public String toString() {
-        return "TokenResponse{" +
-                "accessToken='" + accessToken + '\'' +
-                ", scope='" + scope + '\'' +
-                ", tokenType='" + tokenType + '\'' +
-                '}';
     }
 }

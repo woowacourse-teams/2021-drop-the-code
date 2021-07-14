@@ -12,4 +12,7 @@ export const THEME: DefaultTheme = {
     pill: "6.25rem",
     circle: "100%",
   },
+  zIndex: {
+    modal: 99,
+  },
 };

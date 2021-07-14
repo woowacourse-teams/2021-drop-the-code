@@ -22,5 +22,8 @@ declare module "styled-components" {
   export interface DefaultTheme {
     color: COLOR_SHAPE;
     shape: SHAPE_TYPE;
+    zIndex: {
+      modal: number;
+    };
   }
 }

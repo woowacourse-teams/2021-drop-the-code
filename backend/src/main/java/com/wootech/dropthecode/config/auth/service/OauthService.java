@@ -1,8 +1,10 @@
 package com.wootech.dropthecode.config.auth.service;
 
+import com.wootech.dropthecode.config.auth.domain.InMemoryProviderRepository;
+import com.wootech.dropthecode.config.auth.domain.OauthProvider;
+import com.wootech.dropthecode.config.auth.dto.response.LoginResponse;
+import com.wootech.dropthecode.config.auth.dto.response.MemberProfileResponse;
 import com.wootech.dropthecode.config.auth.util.JwtTokenProvider;
-import com.wootech.dropthecode.config.auth.dto.LoginResponse;
-import com.wootech.dropthecode.config.auth.dto.MemberProfileResponse;
 import com.wootech.dropthecode.config.auth.util.RedisUtil;
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.repository.MemberRepository;
@@ -12,11 +14,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class OauthService {
     private final MemberRepository memberRepository;
+    private final InMemoryProviderRepository inMemoryProviderRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisUtil redisUtil;
 
-    public OauthService(MemberRepository memberRepository, JwtTokenProvider jwtTokenProvider, RedisUtil redisUtil) {
+    public OauthService(MemberRepository memberRepository, InMemoryProviderRepository inMemoryProviderRepository,
+                        JwtTokenProvider jwtTokenProvider, RedisUtil redisUtil) {
         this.memberRepository = memberRepository;
+        this.inMemoryProviderRepository = inMemoryProviderRepository;
         this.jwtTokenProvider = jwtTokenProvider;
         this.redisUtil = redisUtil;
     }
@@ -34,5 +39,9 @@ public class OauthService {
         redisUtil.setData(String.valueOf(member.getId()), refreshToken);
 
         return new LoginResponse(member.getName(), member.getEmail(), member.getImageUrl(), accessToken, refreshToken);
+    }
+
+    public OauthProvider findOauthProvider(String providerName) {
+        return inMemoryProviderRepository.findByProviderName(providerName);
     }
 }

@@ -22,4 +22,16 @@ public class Skill extends BaseEntity {
 
     protected Skill() {
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<TeacherSkill> getTeachers() {
+        return teachers;
+    }
+
+    public List<LanguageSkill> getLanguages() {
+        return languages;
+    }
 }

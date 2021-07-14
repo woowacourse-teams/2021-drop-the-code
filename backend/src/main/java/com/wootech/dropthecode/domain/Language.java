@@ -19,4 +19,19 @@ public class Language extends BaseEntity {
 
     @OneToMany(mappedBy = "language")
     private final List<TeacherLanguage> teachers = new ArrayList<>();
+
+    public String getName() {
+        return name;
+    }
+
+    public Language() {
+    }
+
+    public List<LanguageSkill> getSkills() {
+        return skills;
+    }
+
+    public List<TeacherLanguage> getTeachers() {
+        return teachers;
+    }
 }

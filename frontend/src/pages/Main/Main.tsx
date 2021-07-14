@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 
 import { techSpec as mockTechSpec } from "../../__mock__/filter";
 import { reviewers } from "../../__mock__/reviewers";
-import FloatingMenuButton from "../../components/FloatingMenuButton/FloatingMenuButton";
+import CareerPicker from "../../components/CareerPicker/CareerPicker";
+import MenuItemButton from "../../components/MenuItemButton/MenuItemButton";
 import ReviewerCard from "../../components/Reviewer/ReviewerCard";
 import Button from "../../components/shared/Button/Button";
 import { Flex, FlexEnd, FlexAlignCenter, FlexCenter } from "../../components/shared/Flexbox/Flexbox";
@@ -14,6 +15,7 @@ import { LAYOUT } from "../../utils/constants/size";
 const Main = () => {
   const [filterLanguage, setFilterLanguage] = useState<string | null>(null);
   const [filterSkills, setFilterSkills] = useState<string[]>([]);
+  const [filterCareer, setFilterCareer] = useState(0);
 
   // TODO: api 요청 받아서 처리하기
   const [techSpec, setTechSpec] = useState<TechSpec[]>(mockTechSpec);
@@ -30,7 +32,7 @@ const Main = () => {
 
     // await api
     // setTechSpec()
-  }, []);
+  }, [filterLanguage, filterSkills, filterCareer]);
 
   useEffect(() => {
     if (techSpec.length === 0) return;
@@ -93,7 +95,21 @@ const Main = () => {
           </Flex>
           <FlexEnd css={{ flexDirection: "column" }}>
             <div css={{ marginBottom: "0.625rem" }}>
-              <FloatingMenuButton>경력</FloatingMenuButton>
+              <MenuItemButton
+                themeColor="transParent"
+                border
+                contents={(close) => (
+                  <CareerPicker
+                    filterCareer={filterCareer}
+                    onSetFilterCareer={(career) => {
+                      setFilterCareer(career);
+                      close();
+                    }}
+                  />
+                )}
+              >
+                경력
+              </MenuItemButton>
             </div>
           </FlexEnd>
         </Flex>

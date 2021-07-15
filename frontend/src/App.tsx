@@ -4,6 +4,7 @@ import { ThemeProvider } from "styled-components";
 
 import Logo from "./assets/logo.svg";
 import PrivateRoute from "./components/AuthRoute/PrivateRoute";
+import GithubOAuth from "./components/GithubOAuth/GithubOAuth";
 import GlobalStyle from "./components/GlobalStyle/GlobalStyle";
 import Navigation from "./components/Navigation/Navigation";
 import Button from "./components/shared/Button/Button";
@@ -27,12 +28,12 @@ const App = () => {
                 </NavLink>
               ))}
               {!isAuthenticated && (
-                <Button themeColor="transParent" hover={false}>
+                <Button themeColor="secondary" hover={false}>
                   로그인
                 </Button>
               )}
               {isAuthenticated && (
-                <Button themeColor="transParent" hover={false}>
+                <Button themeColor="secondary" hover={false}>
                   로그아웃
                 </Button>
               )}
@@ -59,6 +60,7 @@ const App = () => {
               </Route>
             )
           )}
+          <GithubOAuth />
         </Switch>
       </BrowserRouter>
     </ThemeProvider>

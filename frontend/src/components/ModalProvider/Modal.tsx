@@ -31,7 +31,7 @@ const Dimmed = styled.div`
 `;
 
 const Contents = styled.div`
-  z-index: ${({ theme }) => theme.zIndex.modal};
+  z-index: ${({ theme }) => theme.common.zIndex.modal};
 `;
 
 const Modal = ({ children }: Props) => {

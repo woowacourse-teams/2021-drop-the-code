@@ -25,16 +25,16 @@ const components: Components = {
   chip: {
     primary: {
       bg: COLOR.PURPLE_600,
-      color: COLOR.WHITE,
+      color: COLOR.BLACK,
     },
-    career: { bg: COLOR.GRAY_450, color: COLOR.WHITE },
+    career: { bg: COLOR.RED_350, color: COLOR.BLACK },
     count: {
-      bg: COLOR.GRAY_470,
-      color: COLOR.WHITE,
+      bg: COLOR.GREEN_350,
+      color: COLOR.BLACK,
     },
     averageResponse: {
-      bg: COLOR.PINK_400,
-      color: COLOR.WHITE,
+      bg: COLOR.TEAL_350,
+      color: COLOR.BLACK,
     },
   },
 };

@@ -1,6 +1,7 @@
 import { Story, Meta } from "@storybook/react";
 
 import useModalContext from "../../hooks/useModalContext";
+import GithubOAuth from "../OAuth/GithubOAuth";
 import Button from "../shared/Button/Button";
 
 import ModalProvider, { Props } from "./ModalProvider";
@@ -20,7 +21,7 @@ const TestButton = () => {
   return (
     <Button
       onClick={() => {
-        open(<div css={{ width: "150px", height: "150px", backgroundColor: "#fff" }}>모달 컨텐츠</div>);
+        open(<GithubOAuth />);
       }}
     >
       모달 열기

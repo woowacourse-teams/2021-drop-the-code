@@ -2,3 +2,6 @@ node_modules
 
 dist
 storybook-static
+
+.env.development
+.env.production

@@ -30,6 +30,7 @@ const GlobalStyle = createGlobalStyle`
 
   header, a {
     color: ${COLOR.BLACK};
+    cursor: pointer;
   }
 
   a {

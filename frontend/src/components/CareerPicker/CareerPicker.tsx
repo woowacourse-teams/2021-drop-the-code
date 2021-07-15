@@ -20,7 +20,7 @@ const Inner = styled(FlexCenter)`
 const Career = styled.input`
   width: 92%;
   cursor: pointer;
-  background-color: transparent;
+  background-color: secondary;
   -webkit-appearance: none;
 
   ::-webkit-slider-runnable-track {
@@ -32,7 +32,7 @@ const Career = styled.input`
     margin-top: -10px;
     width: 15px;
     height: 20px;
-    background: ${({ theme }) => theme.color.primary.normal};
+    background: ${({ theme }) => theme.common.color.primary};
     border-radius: 3px;
     cursor: pointer;
     -webkit-appearance: none;

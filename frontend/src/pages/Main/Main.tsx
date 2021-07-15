@@ -52,7 +52,7 @@ const Main = () => {
                 {techSpec.map(({ language }) => (
                   <li key={language} css={{ marginRight: "0.375rem" }}>
                     <Button
-                      themeColor="transParent"
+                      themeColor="secondary"
                       active={language === filterLanguage}
                       onClick={() => {
                         setFilterLanguage(language);
@@ -74,7 +74,7 @@ const Main = () => {
                     <li key={skill}>
                       <Button
                         active={filterSkills.includes(skill)}
-                        themeColor="transParent"
+                        themeColor="secondary"
                         css={{ marginRight: "0.1875rem" }}
                         onClick={() => {
                           if (filterSkills.includes(skill)) {
@@ -96,7 +96,7 @@ const Main = () => {
           <FlexEnd css={{ flexDirection: "column" }}>
             <div css={{ marginBottom: "0.625rem" }}>
               <MenuItemButton
-                themeColor="transParent"
+                themeColor="secondary"
                 border
                 contents={(close) => (
                   <CareerPicker
@@ -137,7 +137,7 @@ const Main = () => {
         ))}
       </div>
       <FlexCenter css={{ marginBottom: "2.5rem" }}>
-        <Button themeColor="transParent" hover={false} css={{ fontWeight: 600 }}>
+        <Button themeColor="secondary" hover={false} css={{ fontWeight: 600 }}>
           더보기
         </Button>
       </FlexCenter>

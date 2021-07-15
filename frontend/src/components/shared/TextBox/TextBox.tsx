@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, PropsWithChildren } from "react";
 
 import styled from "styled-components";
 
@@ -8,8 +8,8 @@ import { Flex } from "../Flexbox/Flexbox";
 const Inner = styled(Flex)`
   flex-direction: column;
   width: 100%;
-  padding: 20px;
-  box-shadow: 13px 13px 35px 5px rgb(0 0 0 / 20%);
+  padding: 1.25rem;
+  box-shadow: 0.8125rem 0.8125rem 2.1875rem 0.3125rem rgb(0 0 0 / 20%);
 `;
 
 const Title = styled.div`
@@ -25,15 +25,14 @@ const Description = styled.div`
 `;
 
 export interface Props {
-  title: ReactNode;
-  description: ReactNode;
+  titleChildren: ReactNode;
 }
 
-const ReviewerTextbox = ({ title, description, ...props }: Props) => {
+const ReviewerTextbox = ({ titleChildren, children, ...props }: PropsWithChildren<Props>) => {
   return (
     <Inner {...props}>
-      <Title>{title}</Title>
-      <Description>{description}</Description>
+      <Title>{titleChildren}</Title>
+      <Description>{children}</Description>
     </Inner>
   );
 };

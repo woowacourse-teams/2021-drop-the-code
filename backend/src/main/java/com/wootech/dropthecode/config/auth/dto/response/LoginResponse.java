@@ -1,5 +1,8 @@
 package com.wootech.dropthecode.config.auth.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties("refreshToken")
 public class LoginResponse {
     private String name;
     private String email;

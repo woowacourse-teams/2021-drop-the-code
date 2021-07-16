@@ -3,9 +3,13 @@ package com.wootech.dropthecode.config.auth.controller;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Map;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import com.wootech.dropthecode.config.auth.domain.OauthAttributes;
 import com.wootech.dropthecode.config.auth.domain.OauthProvider;
+import com.wootech.dropthecode.config.auth.domain.UserProfile;
 import com.wootech.dropthecode.config.auth.dto.request.AuthorizationRequest;
 import com.wootech.dropthecode.config.auth.dto.response.LoginResponse;
 import com.wootech.dropthecode.config.auth.dto.response.TokenResponse;
@@ -33,19 +37,19 @@ public class OauthController {
     }
 
     @PostMapping("/login/oauth")
-    public ResponseEntity<LoginResponse> login(HttpServletRequest request, @RequestBody AuthorizationRequest authorizationRequest) {
+    public ResponseEntity<LoginResponse> login(HttpServletRequest request, HttpServletResponse response,
+                                               @RequestBody AuthorizationRequest authorizationRequest) {
         OauthProvider oauthProvider = oauthService.findOauthProvider(authorizationRequest.getProviderName());
+
         TokenResponse accessToken = getToken(request, authorizationRequest, oauthProvider);
+
         Map<String, Object> oauthUserProfile = getUserProfile(oauthProvider, accessToken);
+        UserProfile userProfile = OauthAttributes.extract(authorizationRequest.getProviderName(), oauthUserProfile);
 
-        // TODO map 돌면서 필요한 정보 바인딩 -> oauth에 맞게
-        // OauthAttributes attributes = OauthAttributes.of(authorizationRequest.getProviderName(), oauthInformation);
+        LoginResponse loginResponse = oauthService.login(userProfile);
 
-        // TODO: 받아온 정보로 회원가입 or 로그인 -> JWT 토큰 생성
-        // LoginResponse loginResponse = oauthService.login(attributes);
-
-        // return ResponseEntity.ok().body(loginResponse);
-        return ResponseEntity.ok().build();
+        response.addCookie(createCookie("refreshToken", loginResponse.getRefreshToken()));
+        return ResponseEntity.ok().body(loginResponse);
     }
 
     private TokenResponse getToken(HttpServletRequest request, AuthorizationRequest authorizationRequest, OauthProvider oauthProvider) {
@@ -89,5 +93,13 @@ public class OauthController {
                         .retrieve()
                         .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
                         .block();
+    }
+
+    private Cookie createCookie(String key, String value) {
+        Cookie cookie = new Cookie(key, value);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        return cookie;
     }
 }

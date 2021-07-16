@@ -9,14 +9,12 @@ import io.jsonwebtoken.*;
 
 @Component
 public class JwtTokenProvider {
-    @Value("${jwt.token.secret-key}")
-    private String secretKey;
-
     @Value("${jwt.access-token.expire-length}")
     private long accessTokenValidityInMilliseconds;
-
     @Value("${jwt.refresh-token.expire-length}")
     private long refreshTokenValidityInMilliseconds;
+    @Value("${jwt.token.secret-key}")
+    private String secretKey;
 
     private JwtTokenProvider() {
     }
@@ -25,8 +23,8 @@ public class JwtTokenProvider {
         return createToken(payload, accessTokenValidityInMilliseconds);
     }
 
-    public String createRefreshToken(String payload) {
-        return createToken(payload, refreshTokenValidityInMilliseconds);
+    public String createRefreshToken() {
+        return createToken("", refreshTokenValidityInMilliseconds);
     }
 
     public String createToken(String payload, long expireLength) {

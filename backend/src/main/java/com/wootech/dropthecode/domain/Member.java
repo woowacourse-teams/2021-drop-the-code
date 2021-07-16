@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 public class Member extends BaseEntity {
-    private Long oauthId;
+    private String oauthId;
 
     @Column(nullable = false)
     private String email;
@@ -26,16 +26,16 @@ public class Member extends BaseEntity {
     protected Member() {
     }
 
-    public Member(Long oauthId, String email, String name, String imageUrl, Role role, TeacherProfile teacherProfile) {
+    public Member(String oauthId, String name, String email, String imageUrl, Role role, TeacherProfile teacherProfile) {
         this.oauthId = oauthId;
-        this.email = email;
         this.name = name;
+        this.email = email;
         this.imageUrl = imageUrl;
         this.role = role;
         this.teacherProfile = teacherProfile;
     }
 
-    public Long getOauthId() {
+    public String getOauthId() {
         return oauthId;
     }
 

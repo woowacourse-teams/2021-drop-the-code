@@ -7,5 +7,5 @@ import com.wootech.dropthecode.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
-    Optional<Member> findByOauthId(Long id);
+    Optional<Member> findByOauthId(String id);
 }

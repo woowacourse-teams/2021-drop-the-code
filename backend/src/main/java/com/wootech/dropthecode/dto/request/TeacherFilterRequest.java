@@ -11,6 +11,11 @@ public class TeacherFilterRequest {
     public TeacherFilterRequest() {
     }
 
+    public TeacherFilterRequest(TechSpec techSpec, Integer career) {
+        this.techSpec = techSpec;
+        this.career = career;
+    }
+
     public TechSpec getTechSpec() {
         return techSpec;
     }

@@ -14,6 +14,7 @@ import com.wootech.dropthecode.dto.response.TeacherPaginationResponse;
 import com.wootech.dropthecode.service.TeacherService;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -75,7 +76,7 @@ public class MemberController {
      * @title 리뷰어 목록 조회
      */
     @GetMapping("/teachers")
-    public ResponseEntity<TeacherPaginationResponse> findAllTeacher(@ModelAttribute("filter") TeacherFilterRequest teacherFilterRequest, Pageable pageable) {
+    public ResponseEntity<TeacherPaginationResponse> findAllTeacher(@ModelAttribute("filter") TeacherFilterRequest teacherFilterRequest, @PageableDefault Pageable pageable) {
         return ResponseEntity.ok(teacherService.findAll(teacherFilterRequest, pageable));
     }
 

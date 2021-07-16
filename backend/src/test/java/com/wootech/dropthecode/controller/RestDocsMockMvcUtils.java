@@ -5,6 +5,9 @@ import com.wootech.dropthecode.exception.GlobalExceptionHandler;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
+import org.springframework.data.web.SortArgumentResolver;
+import org.springframework.data.web.SortHandlerMethodArgumentResolver;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.http.HttpDocumentation;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
@@ -59,6 +62,8 @@ public class RestDocsMockMvcUtils {
                               .setControllerAdvice(MockMvcConfig.controllerAdvice())
                               .alwaysDo(prepareJackson(OBJECT_MAPPER))
                               .alwaysDo(restDocumentation())
+                              .setCustomArgumentResolvers(new SortHandlerMethodArgumentResolver())
+                              .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
                               /*
                                    RestDocumentationContextProvider 은 RestDocumentationContext 에 접근하기 위한 인터페이스.
                                    RestDocumentationContext 은 문서화할 API 문서를 캡슐화한 클래스.

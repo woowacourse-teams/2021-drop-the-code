@@ -1,7 +1,9 @@
 package com.wootech.dropthecode.controller;
 
 import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
+import com.wootech.dropthecode.service.TeacherService;
 
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -17,6 +19,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class ReviewControllerTest extends RestApiDocumentTest {
     private static final String JWT_TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+
+    @MockBean
+    private TeacherService teacherService;
 
     @Test
     @DisplayName("새로운 리뷰 등록")

@@ -18,7 +18,8 @@ import static capital.scalable.restdocs.misc.AuthorizationSnippet.documentAuthor
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @WebMvcTest(controllers = {
         MemberController.class,
-        ReviewController.class
+        ReviewController.class,
+        LanguageController.class
 })
 public abstract class RestApiDocumentTest {
 
@@ -34,10 +35,13 @@ public abstract class RestApiDocumentTest {
     @Autowired
     private ReviewController reviewController;
 
+    @Autowired
+    private LanguageController languageController;
+
     @BeforeEach
     void setUp(RestDocumentationContextProvider provider) {
-        this.restDocsMockMvc = RestDocsMockMvcUtils.successRestDocsMockMvc(provider, memberController, reviewController);
-        this.failRestDocsMockMvc = RestDocsMockMvcUtils.failRestDocsMockMvc(provider, memberController, reviewController);
+        this.restDocsMockMvc = RestDocsMockMvcUtils.successRestDocsMockMvc(provider, memberController, reviewController, languageController);
+        this.failRestDocsMockMvc = RestDocsMockMvcUtils.failRestDocsMockMvc(provider, memberController, reviewController, languageController);
     }
 
     protected RequestPostProcessor userToken() {

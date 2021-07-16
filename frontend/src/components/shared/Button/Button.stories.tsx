@@ -17,8 +17,8 @@ Basic.args = {
 
 const ToggleTemplate: Story<Props> = (args) => (
   <>
-    <Button {...args} themeColor={"white"} active={false} />
-    <Button {...args} themeColor={"white"} active={true} />
+    <Button {...args} themeColor="secondary" active={false} />
+    <Button {...args} themeColor="secondary" active={true} />
   </>
 );
 

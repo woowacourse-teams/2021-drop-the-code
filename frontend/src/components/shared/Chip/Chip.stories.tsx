@@ -16,5 +16,4 @@ export const Basic = Template.bind({});
 Basic.args = {
   children: <p>3년 이내 경력</p>,
   color: COLOR.WHITE,
-  backgroundColor: COLOR.BLACK,
 };

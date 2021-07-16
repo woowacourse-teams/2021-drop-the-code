@@ -41,14 +41,51 @@ endif::[]
 | `권한 없음`
 |===
 
+[[overview-pagination]]
+=== Pagination
+
+페이지네이션 설정 파라미터
+
+.Request parameters
+[cols="2,2,2,7"]
+|===
+| Path | Type | Optional | Description
+
+| page
+| Integer
+| true
+| 현재 페이지 수, 입력하지 않을 경우 1로 설정
+
+| size
+| Integer
+| true
+| 페이지에 보여줄 아이템 개수, 입력하지 않을 경우 10으로 설정
+
+| sort
+| String
+| true
+| 정렬하려면 `property,property(,ASC\|DESC)` 와 같은 형식으로 입력해주세요.
+
+사용 가능한 정렬 기준 +
+- career: 연차 +
+- sumReviewCount: 리뷰 개수 총합 +
+- averageReviewTime: 리뷰 평균 시간
+
+예시는 다음과 같습니다. +
+- /teachers?language=javascript&career=3&sort=career,desc +
+- /teachers?language=javascript&career=3&sort=sumReviewCount,desc +
+- /teachers?language=javascript&career=3&sort=averageReviewTime,asc +
+
+
+|===
+
 == Login API
+
 include::{snippets}/oauth-controller-test/login-with-github/auto-section.adoc[]
 
 == Member API
 
 *AccessToken과 유저 정보를 가져올 때 필수 requestParam이 없을 때의 응답*
-
-include::{snippets}/member-controller-test/oauth-fail-test/http-response.adoc[]
 
 include::{snippets}/member-controller-test/register-teacher-test/auto-section.adoc[]
 
@@ -66,10 +103,22 @@ include::{snippets}/member-controller-test/find-all-teacher-fail-test/http-respo
 
 include::{snippets}/review-controller-test/new-review/auto-section.adoc[]
 
+*필수 필드 값이 없을 때의 응답*
+
+include::{snippets}/review-controller-test/new-review-fail-if-field-is-null-test/http-response.adoc[]
+
 include::{snippets}/review-controller-test/student-reviews/auto-section.adoc[]
+
+*Authorization Header 가 없을 때의 응답*
+
+include::{snippets}/review-controller-test/student-reviews-fail-if-authorization-header-not-exists/http-response.adoc[]
 
 include::{snippets}/review-controller-test/teacher-reviews/auto-section.adoc[]
 
 include::{snippets}/review-controller-test/review-detail/auto-section.adoc[]
 
 include::{snippets}/review-controller-test/change-review-progress/auto-section.adoc[]
+
+*Authorization Header 가 없을 때의 응답*
+
+include::{snippets}/review-controller-test/change-review-progress-fail-if-authorization-header-not-exists/http-response.adoc[]

@@ -1,5 +1,9 @@
 package com.wootech.dropthecode.exception;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -11,11 +15,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleBindingException(MethodArgumentNotValidException e, BindingResult bindingResult) {
+    public ResponseEntity<List<ErrorResponse>> handleBindingException(MethodArgumentNotValidException e, BindingResult bindingResult) {
 
-        StringBuilder builder = new StringBuilder();
+        List<ErrorResponse> errorResponses = new ArrayList<>();
 
         for (FieldError fieldError : bindingResult.getFieldErrors()) {
+            StringBuilder builder = new StringBuilder();
             builder.append("[");
             builder.append(fieldError.getField());
             builder.append("](은)는 ");
@@ -23,15 +28,15 @@ public class GlobalExceptionHandler {
             builder.append(" 입력된 값은: [");
             builder.append(fieldError.getRejectedValue());
             builder.append("] 입니다.");
+            errorResponses.add(new ErrorResponse(builder.toString()));
         }
 
-        String message = builder.toString();
-        return ResponseEntity.badRequest().body(new ErrorResponse(message));
+        return ResponseEntity.badRequest().body(errorResponses);
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    public ResponseEntity<ErrorResponse> handleMissingParams(MissingServletRequestParameterException e) {
+    public ResponseEntity<List<ErrorResponse>> handleMissingParams(MissingServletRequestParameterException e) {
         String name = e.getParameterName() + " parameter is missing";
-        return ResponseEntity.badRequest().body(new ErrorResponse(name));
+        return ResponseEntity.badRequest().body(Collections.singletonList(new ErrorResponse(name)));
     }
 }

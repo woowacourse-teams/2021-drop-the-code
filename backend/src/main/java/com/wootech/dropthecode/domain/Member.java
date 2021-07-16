@@ -1,5 +1,6 @@
 package com.wootech.dropthecode.domain;
 
+import java.util.List;
 import javax.persistence.*;
 
 @Entity
@@ -19,9 +20,14 @@ public class Member extends BaseEntity {
     @Column(nullable = false)
     private Role role;
 
-    @OneToOne
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_member_to_teacherProfile"))
+    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
     private TeacherProfile teacherProfile;
+
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
+    private List<Review> reviewsAsTeacher;
+
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
+    private List<Review> reviewsAsStudent;
 
     protected Member() {
     }
@@ -57,5 +63,13 @@ public class Member extends BaseEntity {
 
     public TeacherProfile getTeacherProfile() {
         return teacherProfile;
+    }
+
+    public List<Review> getReviewsAsTeacher() {
+        return reviewsAsTeacher;
+    }
+
+    public List<Review> getReviewsAsStudent() {
+        return reviewsAsStudent;
     }
 }

@@ -1,3 +1,4 @@
+import OAuthReceiver from "../../components/OAuth/OAuthReceiver";
 import Main from "../../pages/Main/Main";
 import ReviwerDetail from "../../pages/ReviewerDetail/ReviewerDetail";
 import ReviewerRegister from "../../pages/ReviewerRegister/ReviewerRegister";
@@ -11,18 +12,19 @@ export const PATH = {
   REVIEWER_REGISTER: "/reviewer/register",
   REVIEW_HISTORY: "/review/history",
   REVIEW_REQUEST: "/review/request/:reviewerId",
-  LOGOUT: "/logout",
+  REDIRECT_OAUTH: "/redirect/oauth",
 };
 
 export const ROUTE: RouteShape[] = [
-  { path: PATH.MAIN, Component: Main, isPrivate: false },
-  { path: PATH.REVIWER_DETAIL, Component: ReviwerDetail, isPrivate: false },
-  { path: PATH.REVIEWER_REGISTER, Component: ReviewerRegister, isPrivate: true },
-  { path: PATH.REVIEW_HISTORY, Component: ReviewHistory, isPrivate: true },
-  { path: PATH.REVIEW_REQUEST, Component: ReviewRequest, isPrivate: true },
+  { path: PATH.MAIN, Component: Main, isPrivate: false, exact: true },
+  { path: PATH.REVIWER_DETAIL, Component: ReviwerDetail, isPrivate: false, exact: true },
+  { path: PATH.REVIEWER_REGISTER, Component: ReviewerRegister, isPrivate: true, exact: true },
+  { path: PATH.REVIEW_HISTORY, Component: ReviewHistory, isPrivate: true, exact: true },
+  { path: PATH.REVIEW_REQUEST, Component: ReviewRequest, isPrivate: true, exact: true },
+  { path: PATH.REDIRECT_OAUTH, Component: OAuthReceiver, isPrivate: false, exact: true },
 ];
 
 export const NAV_MENU: NavMenuShape[] = [
-  { to: PATH.REVIEWER_REGISTER, children: "리뷰어등록하기", isPrivate: true },
+  { to: PATH.REVIEWER_REGISTER, children: "리뷰어 등록하기", isPrivate: true },
   { to: PATH.REVIEW_HISTORY, children: "히스토리", isPrivate: true },
 ];

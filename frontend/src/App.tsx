@@ -12,7 +12,7 @@ import { NAV_MENU, PATH, ROUTE } from "./utils/constants/route";
 import { THEME } from "./utils/constants/theme";
 
 const App = () => {
-  const isAuthenticated = true;
+  const isAuthenticated = false;
 
   return (
     <ThemeProvider theme={THEME}>
@@ -26,8 +26,16 @@ const App = () => {
                   {children}
                 </NavLink>
               ))}
-              {!isAuthenticated && <Button themeColor="white">로그인</Button>}
-              {isAuthenticated && <Button themeColor="white">로그아웃</Button>}
+              {!isAuthenticated && (
+                <Button themeColor="secondary" hover={false}>
+                  로그인
+                </Button>
+              )}
+              {isAuthenticated && (
+                <Button themeColor="secondary" hover={false}>
+                  로그아웃
+                </Button>
+              )}
             </>
           }
         >
@@ -40,13 +48,19 @@ const App = () => {
           </h1>
         </Navigation>
         <Switch>
-          {ROUTE.map(({ path, Component, isPrivate }) =>
+          {ROUTE.map(({ path, Component, isPrivate, exact }) =>
             isPrivate ? (
-              <PrivateRoute isAuthenticated={isAuthenticated} key={path} redirectTo={PATH.MAIN}>
+              <PrivateRoute
+                isAuthenticated={isAuthenticated}
+                key={path}
+                path={path}
+                redirectTo={PATH.MAIN}
+                exact={exact}
+              >
                 <Component />
               </PrivateRoute>
             ) : (
-              <Route key={path} path={path}>
+              <Route key={path} path={path} exact={exact}>
                 <Component />
               </Route>
             )

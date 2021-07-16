@@ -2,7 +2,7 @@ package com.wootech.dropthecode.config.auth.dto.request;
 
 public class AuthorizationRequest {
     private String providerName;
-    private String authorizationCode;
+    private String code;
 
     public AuthorizationRequest() {
     }
@@ -11,7 +11,7 @@ public class AuthorizationRequest {
         return providerName;
     }
 
-    public String getAuthorizationCode() {
-        return authorizationCode;
+    public String getCode() {
+        return code;
     }
 }

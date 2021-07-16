@@ -30,9 +30,6 @@ public class JwtTokenProvider {
     }
 
     public String createToken(String payload, long expireLength) {
-        System.out.println("%%%%");
-        System.out.println(expireLength);
-
         Claims claims = Jwts.claims().setSubject(payload);
         Date now = new Date();
         Date validity = new Date(now.getTime() + expireLength);

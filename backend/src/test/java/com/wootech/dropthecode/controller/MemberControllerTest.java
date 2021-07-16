@@ -106,7 +106,7 @@ public class MemberControllerTest extends RestApiDocumentTest {
 
         given(teacherService.findAll(isA(TeacherFilterRequest.class), isA(Pageable.class))).willReturn(response);
         this.restDocsMockMvc
-                .perform(get("/teachers?skills=Java&skills=Spring&career=3&size=10&sort=career,desc&page=5")
+                .perform(get("/teachers?language=java&skills=spring&career=3&page=5&size=10&sort=career,desc")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json(OBJECT_MAPPER.writeValueAsString(response)))

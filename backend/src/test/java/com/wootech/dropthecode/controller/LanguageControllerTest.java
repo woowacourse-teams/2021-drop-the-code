@@ -42,7 +42,7 @@ public class LanguageControllerTest extends RestApiDocumentTest {
 
     @Test
     @DisplayName("언어/기술 스택 목록 조회 - 성공")
-    void studentReviews() throws Exception {
+    void findAllLanguages() throws Exception {
         List<LanguageSkillsResponse> response = asList(
                 new LanguageSkillsResponse(new LanguageResponse(1L, "java"), asList(new SkillResponse(1L, "spring"), new SkillResponse(2L, "jpa"))),
                 new LanguageSkillsResponse(new LanguageResponse(2L, "javascript"), asList(new SkillResponse(3L, "vue"), new SkillResponse(4L, "react")))

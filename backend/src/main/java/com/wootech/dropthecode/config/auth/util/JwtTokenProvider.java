@@ -9,11 +9,11 @@ import io.jsonwebtoken.*;
 
 @Component
 public class JwtTokenProvider {
-    @Value("${jwt.access-token.expire-length}")
+    @Value("${jwt.access-token.expire-length:10000}")
     private long accessTokenValidityInMilliseconds;
-    @Value("${jwt.refresh-token.expire-length}")
+    @Value("${jwt.refresh-token.expire-length:10000}")
     private long refreshTokenValidityInMilliseconds;
-    @Value("${jwt.token.secret-key}")
+    @Value("${jwt.token.secret-key:secret-key}")
     private String secretKey;
 
     private JwtTokenProvider() {

@@ -48,7 +48,7 @@ public class OauthService {
         String accessToken = jwtTokenProvider.createAccessToken(String.valueOf(member.getId()));
         String refreshToken = jwtTokenProvider.createRefreshToken();
 
-        redisUtil.setData(String.valueOf(member.getId()), refreshToken);
+//        redisUtil.setData(String.valueOf(member.getId()), refreshToken);
 
         return new LoginResponse(member.getName(), member.getEmail(), member.getImageUrl(), accessToken, refreshToken);
     }

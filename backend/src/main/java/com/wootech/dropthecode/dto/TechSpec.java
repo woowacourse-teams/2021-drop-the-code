@@ -16,7 +16,6 @@ public class TechSpec {
     /**
      * 선생님 기술 스택
      */
-    @NotEmpty
     private List<String> skills = new ArrayList<>();
 
     public TechSpec() {

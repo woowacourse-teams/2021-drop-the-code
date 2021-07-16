@@ -19,14 +19,14 @@ public class TeacherProfile extends BaseEntity {
     @Column(nullable = false)
     private int career;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_teacherProfile_to_member"))
     private Member member;
 
-    @OneToMany(mappedBy = "teacherProfile")
+    @OneToMany(mappedBy = "teacherProfile", fetch = FetchType.LAZY)
     private final List<TeacherLanguage> languages = new ArrayList<>();
 
-    @OneToMany(mappedBy = "teacherProfile")
+    @OneToMany(mappedBy = "teacherProfile", fetch = FetchType.LAZY)
     private final List<TeacherSkill> skills = new ArrayList<>();
 
     private final Integer sumReviewCount = 0;

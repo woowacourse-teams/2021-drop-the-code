@@ -4,11 +4,11 @@ import javax.persistence.*;
 
 @Entity
 public class Review extends BaseEntity {
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "fk_review_to_teacher"))
     private Member teacher;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "fk_review_to_student"))
     private Member student;
 

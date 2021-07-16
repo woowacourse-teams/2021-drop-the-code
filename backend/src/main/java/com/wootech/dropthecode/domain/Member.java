@@ -18,13 +18,13 @@ public class Member extends BaseEntity {
     @Column(nullable = false)
     private final Role role = Role.STUDENT;
 
-    @OneToOne(mappedBy = "member")
+    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
     private TeacherProfile teacherProfile;
 
-    @OneToMany(mappedBy = "teacher")
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
     private List<Review> reviewsAsTeacher;
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
     private List<Review> reviewsAsStudent;
 
     protected Member() {

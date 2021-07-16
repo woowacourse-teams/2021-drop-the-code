@@ -4,8 +4,14 @@ import com.wootech.dropthecode.dto.TechSpec;
 
 public class TeacherFilterRequest {
 
+    /**
+     * 선생님 기술 스펙
+     */
     private TechSpec techSpec = new TechSpec();
 
+    /**
+     * 선생님 연차
+     */
     private Integer career;
 
     public TeacherFilterRequest() {

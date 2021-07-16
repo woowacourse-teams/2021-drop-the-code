@@ -79,17 +79,17 @@ endif::[]
 
 |===
 
+== Login API
+
+include::{snippets}/oauth-controller-test/login-with-github/auto-section.adoc[]
+
 == Language API
 
 include::{snippets}/language-controller-test/find-all-languages/auto-section.adoc[]
 
 == Member API
 
-include::{snippets}/member-controller-test/oauth-test/auto-section.adoc[]
-
 *AccessToken과 유저 정보를 가져올 때 필수 requestParam이 없을 때의 응답*
-
-include::{snippets}/member-controller-test/oauth-fail-test/http-response.adoc[]
 
 include::{snippets}/member-controller-test/register-teacher-test/auto-section.adoc[]
 

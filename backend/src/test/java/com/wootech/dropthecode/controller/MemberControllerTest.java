@@ -22,13 +22,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static com.wootech.dropthecode.controller.RestDocsMockMvcUtils.OBJECT_MAPPER;
-import static org.hamcrest.Matchers.any;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(MemberController.class)
 public class MemberControllerTest extends RestApiDocumentTest {
@@ -44,32 +44,6 @@ public class MemberControllerTest extends RestApiDocumentTest {
         this.restDocsMockMvc = RestDocsMockMvcUtils.successRestDocsMockMvc(provider, memberController);
         this.failRestDocsMockMvc = RestDocsMockMvcUtils.failRestDocsMockMvc(provider, memberController);
     }
-
-    @DisplayName("AccessToken과 유저 정보를 가져오는 테스트")
-    @Test
-    void oauthTest() throws Exception {
-        this.restDocsMockMvc.perform(get("/login/oauth").param("code", "1234")
-                                                        .param("redirectUrl", "/main"))
-                            .andExpect(status().isFound())
-                            .andExpect(cookie().value("jwt", any(String.class)))
-                            .andExpect(cookie().value("name", any(String.class)))
-                            .andExpect(cookie().value("email", any(String.class)))
-                            .andExpect(cookie().value("imageUrl", any(String.class)))
-                            .andDo(print());
-    }
-
-    @DisplayName("AccessToken과 유저 정보를 가져올 때 필수 requestParam이 없을 때 실패하는 테스트")
-    @Test
-    void oauthFailTest() throws Exception {
-        this.failRestDocsMockMvc.perform(get("/login/oauth").param("code", "1234"))
-                                .andExpect(status().isBadRequest())
-                                .andDo(print());
-
-        this.failRestDocsMockMvc.perform(get("/login/oauth").param("redirectUrl", "/main"))
-                                .andExpect(status().isBadRequest())
-                                .andDo(print());
-    }
-
 
     @DisplayName("리뷰어 등록 테스트 - 성공")
     @Test

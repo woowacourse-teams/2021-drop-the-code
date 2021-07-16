@@ -5,6 +5,8 @@ import javax.persistence.*;
 
 @Entity
 public class Member extends BaseEntity {
+    private String oauthId;
+
     @Column(nullable = false)
     private String email;
 
@@ -16,7 +18,7 @@ public class Member extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private final Role role = Role.STUDENT;
+    private Role role;
 
     @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
     private TeacherProfile teacherProfile;
@@ -28,6 +30,19 @@ public class Member extends BaseEntity {
     private List<Review> reviewsAsStudent;
 
     protected Member() {
+    }
+
+    public Member(String oauthId, String name, String email, String imageUrl, Role role, TeacherProfile teacherProfile) {
+        this.oauthId = oauthId;
+        this.name = name;
+        this.email = email;
+        this.imageUrl = imageUrl;
+        this.role = role;
+        this.teacherProfile = teacherProfile;
+    }
+
+    public String getOauthId() {
+        return oauthId;
     }
 
     public String getEmail() {

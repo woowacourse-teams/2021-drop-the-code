@@ -7,11 +7,19 @@ import com.wootech.dropthecode.dto.response.LanguageSkillsResponse;
 import com.wootech.dropthecode.dto.response.SkillResponse;
 import com.wootech.dropthecode.service.LanguageService;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.restdocs.RestDocumentationExtension;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import static com.wootech.dropthecode.controller.RestDocsMockMvcUtils.OBJECT_MAPPER;
 import static java.util.Arrays.asList;
@@ -21,9 +29,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@WebMvcTest(LanguageController.class)
 public class LanguageControllerTest extends RestApiDocumentTest {
+
+    @Autowired
+    private LanguageController languageController;
+
     @MockBean
     private LanguageService languageService;
+
+    @BeforeEach
+    void setUp(RestDocumentationContextProvider provider) {
+        this.restDocsMockMvc = RestDocsMockMvcUtils.successRestDocsMockMvc(provider, languageController);
+        this.failRestDocsMockMvc = RestDocsMockMvcUtils.failRestDocsMockMvc(provider, languageController);
+    }
 
     @Test
     @DisplayName("언어/기술 스택 목록 조회 - 성공")

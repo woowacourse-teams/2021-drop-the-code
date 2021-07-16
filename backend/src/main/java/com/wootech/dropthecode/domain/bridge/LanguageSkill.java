@@ -21,4 +21,12 @@ public class LanguageSkill extends BaseEntity {
 
     protected LanguageSkill() {
     }
+
+    public Skill getSkill() {
+        return skill;
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
 }

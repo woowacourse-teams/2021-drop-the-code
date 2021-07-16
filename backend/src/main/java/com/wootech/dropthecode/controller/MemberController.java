@@ -72,16 +72,4 @@ public class MemberController {
             @RequestParam int page) {
         return ResponseEntity.ok().build();
     }
-
-    /**
-     * @title 언어 및 기술 목록 조히
-     */
-    @GetMapping("/skills")
-    public ResponseEntity<List<TechSpec>> skills() {
-        List<TechSpec> techSpecs = new ArrayList<>();
-        techSpecs.add(new TechSpec("java", Arrays.asList("Spring", "Servlet")));
-        techSpecs.add(new TechSpec("javaScript", Arrays.asList("Vue", "Angular")));
-        techSpecs.add(new TechSpec("C", Arrays.asList("OpenGL", "Unity")));
-        return ResponseEntity.ok().body(techSpecs);
-    }
 }

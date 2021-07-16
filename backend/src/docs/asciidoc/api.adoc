@@ -79,6 +79,10 @@ endif::[]
 
 |===
 
+== Language API
+
+include::{snippets}/language-controller-test/find-all-languages/auto-section.adoc[]
+
 == Member API
 
 include::{snippets}/member-controller-test/oauth-test/auto-section.adoc[]

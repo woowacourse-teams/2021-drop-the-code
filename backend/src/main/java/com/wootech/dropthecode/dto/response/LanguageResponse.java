@@ -3,8 +3,15 @@ package com.wootech.dropthecode.dto.response;
 import com.wootech.dropthecode.domain.Language;
 
 public class LanguageResponse {
+
+    /**
+     * 프로그래밍 언어 Id
+     */
     private final Long id;
 
+    /**
+     * 프로그래밍 언어 이름
+     */
     private final String name;
 
     public LanguageResponse(Long id, String name) {

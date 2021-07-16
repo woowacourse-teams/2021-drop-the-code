@@ -4,10 +4,26 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties("refreshToken")
 public class LoginResponse {
+    /**
+     * 사용자 이름
+     */
     private String name;
+
+    /**
+     * 사용자 이메일
+     */
     private String email;
+
+    /**
+     * 사용자 프로필 이미지 주소
+     */
     private String imageUrl;
+
+    /**
+     * access token
+     */
     private String accessToken;
+
     private String refreshToken;
 
     public LoginResponse() {

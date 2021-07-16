@@ -20,36 +20,6 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     /**
-     * OAuth 인증 코드를 이용하여 인증 토큰을 반환한다.
-     * <p>
-     * 인증 토큰 반환에 성공하면 지정한 redirectUrl 로 리다이렉트 시킨다.
-     *
-     * @param code        Authorization code
-     * @param redirectUrl Redirect URL
-     * @title AccessToken 가져오기
-     */
-    @GetMapping("/login/oauth")
-    public ResponseEntity<Void> oauth(
-            @RequestParam(value = "code") String code,
-            @RequestParam(value = "redirectUrl") String redirectUrl,
-            HttpServletResponse response) throws IOException {
-
-        List<ResponseCookie> cookies = Arrays.asList(
-                ResponseCookie.from("jwt", "aaa.bbb.ccc").build(),
-                ResponseCookie.from("name", "fafi").build(),
-                ResponseCookie.from("email", "test@email.com").build(),
-                ResponseCookie.from("imageUrl", "s3://fafi.jpg").build()
-        );
-
-        HttpHeaders httpHeaders = new HttpHeaders();
-        cookies.forEach(cookie -> httpHeaders.add(HttpHeaders.SET_COOKIE, cookie.toString()));
-
-        response.sendRedirect(redirectUrl);
-
-        return ResponseEntity.status(302).headers(httpHeaders).build();
-    }
-
-    /**
      * @title 리뷰어 등록
      */
     @PostMapping(value = "/teachers")

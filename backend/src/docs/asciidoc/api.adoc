@@ -41,9 +41,10 @@ endif::[]
 | `권한 없음`
 |===
 
-== Member API
+== Login API
+include::{snippets}/oauth-controller-test/login-with-github/auto-section.adoc[]
 
-include::{snippets}/member-controller-test/oauth-test/auto-section.adoc[]
+== Member API
 
 *AccessToken과 유저 정보를 가져올 때 필수 requestParam이 없을 때의 응답*
 

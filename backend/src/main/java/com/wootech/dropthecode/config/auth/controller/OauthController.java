@@ -24,6 +24,9 @@ public class OauthController {
         this.oauthService = oauthService;
     }
 
+    /**
+     * @title 로그인
+     */
     @PostMapping("/login/oauth")
     public ResponseEntity<LoginResponse> login(HttpServletRequest request, HttpServletResponse response,
                                                @RequestBody AuthorizationRequest authorizationRequest) {

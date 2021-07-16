@@ -10,7 +10,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TeacherProfileRepository extends JpaRepository<TeacherProfile, Long> {
 
-    Page<TeacherProfile> findAllByLanguagesLanguageNameAndSkillsSkillNameInAndCareerGreaterThanEqual(Pageable pageable, String languageName, List<String> skills, Integer career);
-
-    Page<TeacherProfile> findAllByLanguagesLanguageNameAndCareerGreaterThanEqual(Pageable pageable, String languageName, Integer career);
+    Page<TeacherProfile> findDistinctAllByLanguagesLanguageNameAndSkillsSkillNameInAndCareerGreaterThanEqual(Pageable pageable, String languageName, List<String> skills, Integer career);
 }

@@ -17,23 +17,25 @@ import org.springframework.stereotype.Service;
 public class TeacherService {
 
     private final TeacherProfileRepository teacherProfileRepository;
+    private final List<String> defaultSkills;
 
-    public TeacherService(TeacherProfileRepository teacherProfileRepository) {
+    public TeacherService(TeacherProfileRepository teacherProfileRepository, List<String> defaultSkills) {
         this.teacherProfileRepository = teacherProfileRepository;
+        this.defaultSkills = defaultSkills;
     }
 
     public TeacherPaginationResponse findAll(TeacherFilterRequest teacherFilterRequest, Pageable pageable) {
-        Page<TeacherProfile> teacherProfilePage;
-        if (teacherFilterRequest.getTechSpec().getSkills().isEmpty()) {
-            teacherProfilePage = teacherProfileRepository.findAllByLanguagesLanguageNameAndCareerGreaterThanEqual(pageable, teacherFilterRequest
-                    .getTechSpec()
-                    .getLanguage(), teacherFilterRequest.getCareer());
-        } else {
-            teacherProfilePage = teacherProfileRepository.findAllByLanguagesLanguageNameAndSkillsSkillNameInAndCareerGreaterThanEqual(pageable, teacherFilterRequest
-                            .getTechSpec()
-                            .getLanguage(),
-                    teacherFilterRequest.getTechSpec().getSkills(), teacherFilterRequest.getCareer());
+        List<String> skills = teacherFilterRequest.getTechSpec().getSkills();
+        if (skills.isEmpty()) {
+            skills = defaultSkills;
         }
+
+        Page<TeacherProfile> teacherProfilePage =
+                teacherProfileRepository.findDistinctAllByLanguagesLanguageNameAndSkillsSkillNameInAndCareerGreaterThanEqual(
+                        pageable,
+                        teacherFilterRequest.getTechSpec().getLanguage(),
+                        skills,
+                        teacherFilterRequest.getCareer());
 
         final List<TeacherProfileResponse> teacherProfiles = teacherProfilePage.stream()
                                                                                .map(TeacherProfileResponse::from)

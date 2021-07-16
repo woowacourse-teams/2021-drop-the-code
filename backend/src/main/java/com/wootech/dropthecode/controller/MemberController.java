@@ -69,11 +69,8 @@ public class MemberController {
     }
 
     /**
-     * @param `skills 선생님 기술 스택
-     * @param career  선생님 경력 연차
-     * @param limit   한 페이지에 보여줄 선생님 수
-     * @param page    현재 페이지 번호
      * @title 리뷰어 목록 조회
+     * @see <a href="https://www.dropthecode.p-e.kr/docs/api.html/#paging">페이지네이션 문서</a>
      */
     @GetMapping("/teachers")
     public ResponseEntity<TeacherPaginationResponse> findAllTeacher(@ModelAttribute("filter") TeacherFilterRequest teacherFilterRequest, @PageableDefault Pageable pageable) {
@@ -81,7 +78,7 @@ public class MemberController {
     }
 
     @ModelAttribute("filter")
-    public TeacherFilterRequest filter(TechSpec techSpec, @RequestParam(defaultValue = "0") Integer career) {
+    public TeacherFilterRequest filter(@ModelAttribute TechSpec techSpec, @RequestParam(defaultValue = "0") Integer career) {
         TeacherFilterRequest teacherFilterRequest = new TeacherFilterRequest();
         teacherFilterRequest.setTechSpec(techSpec);
         teacherFilterRequest.setCareer(career);

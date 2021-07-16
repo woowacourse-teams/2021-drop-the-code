@@ -14,6 +14,7 @@ public class ProfileResponse {
      */
     private String imageUrl;
 
+
     public ProfileResponse() {
     }
 

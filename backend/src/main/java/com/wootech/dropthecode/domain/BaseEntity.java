@@ -23,4 +23,16 @@ public abstract class BaseEntity {
 
     protected BaseEntity() {
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
 }

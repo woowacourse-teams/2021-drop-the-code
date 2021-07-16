@@ -1,5 +1,7 @@
 package com.wootech.dropthecode.dto.response;
 
+import com.wootech.dropthecode.domain.Skill;
+
 public class SkillResponse {
     private final Long id;
 
@@ -8,6 +10,10 @@ public class SkillResponse {
     public SkillResponse(Long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public static SkillResponse from(Skill skill) {
+        return new SkillResponse(skill.getId(), skill.getName());
     }
 
     public Long getId() {

@@ -70,7 +70,7 @@ public class MemberController {
 
     /**
      * @title 리뷰어 목록 조회
-     * @see <a href="https://www.dropthecode.p-e.kr/docs/api.html/#paging">페이지네이션 문서</a>
+     * @see <a href="https://www.dropthecode.p-e.kr/docs/api.html/#overview-pagination">페이지네이션 문서</a>
      */
     @GetMapping("/teachers")
     public ResponseEntity<TeacherPaginationResponse> findAllTeacher(@ModelAttribute("filter") @Valid TeacherFilterRequest teacherFilterRequest, @PageableDefault Pageable pageable) {
@@ -83,17 +83,5 @@ public class MemberController {
         teacherFilterRequest.setTechSpec(techSpec);
         teacherFilterRequest.setCareer(career);
         return teacherFilterRequest;
-    }
-
-    /**
-     * @title 언어 및 기술 목록 조히
-     */
-    @GetMapping("/skills")
-    public ResponseEntity<List<TechSpec>> skills() {
-        List<TechSpec> techSpecs = new ArrayList<>();
-        techSpecs.add(new TechSpec("java", Arrays.asList("Spring", "Servlet")));
-        techSpecs.add(new TechSpec("javaScript", Arrays.asList("Vue", "Angular")));
-        techSpecs.add(new TechSpec("C", Arrays.asList("OpenGL", "Unity")));
-        return ResponseEntity.ok().body(techSpecs);
     }
 }

@@ -1,3 +1,4 @@
+import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import webpack from "webpack";
@@ -45,6 +46,8 @@ const config: webpack.Configuration = {
   plugins: [
     new HtmlWebpackPlugin({ template: "public/index.html", favicon: "public/favicon.ico" }),
     new ForkTsCheckerWebpackPlugin(),
+    new ReactRefreshWebpackPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
   ],
 };
 

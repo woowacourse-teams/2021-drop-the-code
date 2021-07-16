@@ -1,12 +1,14 @@
 package com.wootech.dropthecode.controller;
 
 import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
-import com.wootech.dropthecode.service.TeacherService;
 
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.test.web.servlet.ResultActions;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,11 +19,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@WebMvcTest(ReviewController.class)
 public class ReviewControllerTest extends RestApiDocumentTest {
-    private static final String JWT_TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
 
-    @MockBean
-    private TeacherService teacherService;
+    @Autowired
+    private ReviewController reviewController;
+
+    @BeforeEach
+    void setUp(RestDocumentationContextProvider provider) {
+        this.restDocsMockMvc = RestDocsMockMvcUtils.successRestDocsMockMvc(provider, reviewController);
+        this.failRestDocsMockMvc = RestDocsMockMvcUtils.failRestDocsMockMvc(provider, reviewController);
+    }
 
     @Test
     @DisplayName("새로운 리뷰 등록")

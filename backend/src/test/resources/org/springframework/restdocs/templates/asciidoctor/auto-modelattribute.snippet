@@ -1,0 +1,17 @@
+{{#isPageRequest}}
+페이지네이션 <<overview-pagination,문서>> 참조
+{{/isPageRequest}}
+
+{{#hasContent}}
+|===
+|{{th-parameter}}|{{th-type}}|{{th-optional}}|{{th-description}}
+
+{{#content}}
+|{{path}}
+|{{type}}
+|{{optional}}
+|{{description}}
+
+{{/content}}
+|===
+{{/hasContent}}{{#noContent}}{{no-params}}{{/noContent}}

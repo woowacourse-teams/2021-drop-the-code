@@ -451,6 +451,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#_domain">Domain</a></li>
 <li><a href="#_exception">Exception</a></li>
+<li><a href="#overview-pagination">Pagination</a></li>
 </ul>
 </li>
 <li><a href="#_member_api">Member API</a>
@@ -527,6 +528,57 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">401</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>권한 없음</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="overview-pagination"><a class="link" href="#overview-pagination">Pagination</a></h3>
+<div class="paragraph">
+<p>페이지네이션 설정 파라미터</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Request parameters</caption>
+<colgroup>
+<col style="width: 15.3846%;">
+<col style="width: 15.3846%;">
+<col style="width: 15.3846%;">
+<col style="width: 53.8462%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Path</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Optional</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">page</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">현재 페이지 수, 입력하지 않을 경우 1로 설정</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">size</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">페이지에 보여줄 아이템 개수, 입력하지 않을 경우 10으로 설정</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sort</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">정렬하려면 <code>property,property(,ASC|DESC)</code> 와 같은 형식으로 입력해주세요.</p>
+<p class="tableblock">사용 가능한 정렬 기준<br>
+- career: 연차<br>
+- sumReviewCount: 리뷰 개수 총합<br>
+- averageReviewTime: 리뷰 평균 시간</p>
+<p class="tableblock">예시는 다음과 같습니다.<br>
+- /teachers?language=javascript&amp;career=3&amp;sort=career,desc<br>
+- /teachers?language=javascript&amp;career=3&amp;sort=sumReviewCount,desc<br>
+- /teachers?language=javascript&amp;career=3&amp;sort=averageReviewTime,asc<br></p></td>
 </tr>
 </tbody>
 </table>
@@ -765,6 +817,54 @@ Content-Type: application/json;charset=UTF-8
 </div>
 </div>
 <div class="sect3">
+<h4 id="_query_parameters_2"><a class="link" href="#_query_parameters_2">Query parameters</a></h4>
+<div class="paragraph">
+<p>페이지네이션 <a href="#overview-pagination">문서</a> 참조</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Optional</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">techSpec</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Object</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">선생님 기술 스펙.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">techSpec.language</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">선생님 프로그래밍 언어.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">techSpec.skills</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Array[String]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">선생님 기술 스택.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">career</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">선생님 연차.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
 <h4 id="_response_fields_3"><a class="link" href="#_response_fields_3">Response fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -897,8 +997,8 @@ Content-Type: application/json;charset=UTF-8
 <h4 id="_example_request_3"><a class="link" href="#_example_request_3">Example request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /teachers?skills=Java&amp;skills=Spring&amp;career=3&amp;size=10&amp;sort=career%2Cdesc&amp;page=5 HTTP/1.1
-Accept: application/json;charset=UTF-8</code></pre>
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /teachers?language=java&amp;skills=spring&amp;career=3&amp;page=5&amp;size=10&amp;sort=career,desc HTTP/1.1
+Accept: application/json</code></pre>
 </div>
 </div>
 </div>
@@ -954,14 +1054,7 @@ Content-Type: application/json;charset=UTF-8
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 400 Bad Request
-Content-Type: application/json;charset=UTF-8
-
-[
-  {
-    "message" : "limit parameter is missing"
-  }
-]</code></pre>
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 400 Bad Request</code></pre>
 </div>
 </div>
 </div>
@@ -1726,7 +1819,7 @@ Authorization: Bearer aaa.bbb.ccc</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2021-07-13 16:26:15 +0900
+Last updated 2021-07-16 19:25:56 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

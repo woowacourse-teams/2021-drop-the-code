@@ -12,3 +12,5 @@ export interface Reviewer {
   title: string;
   techSpec: TechSpec[];
 }
+
+export type ReviwerSortOption = "career,desc" | "reviewTime,desc" | null;

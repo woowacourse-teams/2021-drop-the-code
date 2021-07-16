@@ -1,5 +1,7 @@
 package com.wootech.dropthecode.dto.request;
 
+import javax.validation.Valid;
+
 import com.wootech.dropthecode.dto.TechSpec;
 
 public class TeacherFilterRequest {
@@ -7,6 +9,7 @@ public class TeacherFilterRequest {
     /**
      * 선생님 기술 스펙
      */
+    @Valid
     private TechSpec techSpec = new TechSpec();
 
     /**

@@ -111,37 +111,17 @@ public class MemberControllerTest extends RestApiDocumentTest {
                 .andDo(print());
     }
 
-    @DisplayName("리뷰어 목록 조회 페이지 테스트 - 성공")
+    @DisplayName("리뷰어 목록 조회 테스트 - 필수 필드 값이 없을 경우 실패")
     @Test
-    void findAllTeacherPageTest() throws Exception {
-        TeacherPaginationResponse response = new TeacherPaginationResponse(
-                Collections.singletonList(
-                        new TeacherProfileResponse(1L, "seed@gmail.com", "seed", "s3://seed.jpg", "배민 개발자", "열심히 가르쳐드리겠습니다.", 3, 12, 1.4, new TechSpecResponse(Arrays
-                                .asList(new LanguageResponse(1L, "java"), new LanguageResponse(2L, "javascript")), Arrays
-                                .asList(new SkillResponse(1L, "spring"), new SkillResponse(2L, "react"))))
-                ),
-                1
-        );
-
-        given(teacherService.findAll(isA(TeacherFilterRequest.class), isA(Pageable.class))).willReturn(response);
-        this.restDocsMockMvc
-                .perform(get("/teachers-page?language=java&skills=spring&career=3&page=5&size=10&sort=career,desc")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+    void findAllTeacherFailTest() throws Exception {
+        this.failRestDocsMockMvc
+                .perform(get("/teachers")
+                        .param("language", "")
+                        .param("skills", "spring")
+                        .param("career", "3")
+                        .param("size", "2")
+                        .param("page", "1"))
+                .andExpect(status().isBadRequest())
                 .andDo(print());
     }
-
-    //    @DisplayName("리뷰어 목록 조회 테스트 - 필수 필드 값이 없을 경우 실패")
-    //    @Test
-    //    void findAllTeacherFailTest() throws Exception {
-    //        this.failRestDocsMockMvc
-    //                .perform(get("/teachers")
-    //                        .param("language", "Java")
-    //                        .param("skills", "Spring")
-    //                        .param("career", "3")
-    //                        .param("size", "")
-    //                        .param("page", "5"))
-    //                .andExpect(status().isBadRequest())
-    //                .andDo(print());
-    //    }
 }

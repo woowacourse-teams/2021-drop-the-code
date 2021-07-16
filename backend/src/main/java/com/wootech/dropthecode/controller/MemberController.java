@@ -73,7 +73,7 @@ public class MemberController {
      * @see <a href="https://www.dropthecode.p-e.kr/docs/api.html/#paging">페이지네이션 문서</a>
      */
     @GetMapping("/teachers")
-    public ResponseEntity<TeacherPaginationResponse> findAllTeacher(@ModelAttribute("filter") TeacherFilterRequest teacherFilterRequest, @PageableDefault Pageable pageable) {
+    public ResponseEntity<TeacherPaginationResponse> findAllTeacher(@ModelAttribute("filter") @Valid TeacherFilterRequest teacherFilterRequest, @PageableDefault Pageable pageable) {
         return ResponseEntity.ok(teacherService.findAll(teacherFilterRequest, pageable));
     }
 

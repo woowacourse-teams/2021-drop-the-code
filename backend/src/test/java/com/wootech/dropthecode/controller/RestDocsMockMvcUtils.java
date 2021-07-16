@@ -123,6 +123,7 @@ public class RestDocsMockMvcUtils {
         return MockMvcBuilders.standaloneSetup(controllers)
                               .addFilters(MockMvcConfig.utf8Filter())
                               .setControllerAdvice(MockMvcConfig.controllerAdvice())
+                              .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
                               .alwaysDo(prepareJackson(OBJECT_MAPPER))
                               .alwaysDo(restDocumentation())
                               .apply(documentationConfiguration(provider)

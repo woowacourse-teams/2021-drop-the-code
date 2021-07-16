@@ -2,14 +2,14 @@ import { Story, Meta } from "@storybook/react";
 
 import Button from "../shared/Button/Button";
 
-import FloatingMenuButton, { Props } from "./FloatingMenuButton";
+import MenuItemButton, { Props } from "./MenuItemButton";
 
 export default {
-  title: "components/FloatingMenu",
-  component: FloatingMenuButton,
+  title: "components/MenuItemButton",
+  component: MenuItemButton,
 } as Meta;
 
-const Template: Story<Props> = (args) => <FloatingMenuButton {...args} />;
+const Template: Story<Props> = (args) => <MenuItemButton {...args} />;
 
 export const Basic = Template.bind({});
 

@@ -6,7 +6,7 @@ import { LAYOUT } from "../../utils/constants/size";
 import { Flex, FlexSpaceBetween } from "../shared/Flexbox/Flexbox";
 
 const Inner = styled.header`
-  background-color: ${({ theme }) => theme.color.transParent.normal};
+  background-color: ${({ theme }) => theme.components.navigation.bg};
   height: 4rem;
   box-shadow: 0 0 30px rgb(0 0 0 / 0.2);
 `;
@@ -26,8 +26,8 @@ const NavBar = styled.nav`
 const RightChildren = styled(Flex)`
   a {
     align-items: center;
-    color: ${({ theme }) => theme.color.transParent.text};
-    border-radius: ${({ theme }) => theme.shape.rounded};
+    color: ${({ theme }) => theme.components.navigation.color};
+    border-radius: ${({ theme }) => theme.common.shape.rounded};
     transition: background-color 0.1s ease-in-out;
     padding: 0.625rem;
 

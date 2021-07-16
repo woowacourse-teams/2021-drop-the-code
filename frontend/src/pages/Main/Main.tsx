@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 
 import { techSpec as mockTechSpec } from "../../__mock__/filter";
 import { reviewers } from "../../__mock__/reviewers";
-import FloatingMenuButton from "../../components/FloatingMenuButton/FloatingMenuButton";
+import CareerPicker from "../../components/CareerPicker/CareerPicker";
+import MenuItemButton from "../../components/MenuItemButton/MenuItemButton";
 import ReviewerCard from "../../components/Reviewer/ReviewerCard";
 import Button from "../../components/shared/Button/Button";
 import { Flex, FlexEnd, FlexAlignCenter, FlexCenter } from "../../components/shared/Flexbox/Flexbox";
@@ -14,6 +15,7 @@ import { LAYOUT } from "../../utils/constants/size";
 const Main = () => {
   const [filterLanguage, setFilterLanguage] = useState<string | null>(null);
   const [filterSkills, setFilterSkills] = useState<string[]>([]);
+  const [filterCareer, setFilterCareer] = useState(0);
 
   // TODO: api 요청 받아서 처리하기
   const [techSpec, setTechSpec] = useState<TechSpec[]>(mockTechSpec);
@@ -30,7 +32,7 @@ const Main = () => {
 
     // await api
     // setTechSpec()
-  }, []);
+  }, [filterLanguage, filterSkills, filterCareer]);
 
   useEffect(() => {
     if (techSpec.length === 0) return;
@@ -50,7 +52,7 @@ const Main = () => {
                 {techSpec.map(({ language }) => (
                   <li key={language} css={{ marginRight: "0.375rem" }}>
                     <Button
-                      themeColor="transParent"
+                      themeColor="secondary"
                       active={language === filterLanguage}
                       onClick={() => {
                         setFilterLanguage(language);
@@ -72,7 +74,7 @@ const Main = () => {
                     <li key={skill}>
                       <Button
                         active={filterSkills.includes(skill)}
-                        themeColor="transParent"
+                        themeColor="secondary"
                         css={{ marginRight: "0.1875rem" }}
                         onClick={() => {
                           if (filterSkills.includes(skill)) {
@@ -93,7 +95,21 @@ const Main = () => {
           </Flex>
           <FlexEnd css={{ flexDirection: "column" }}>
             <div css={{ marginBottom: "0.625rem" }}>
-              <FloatingMenuButton>경력</FloatingMenuButton>
+              <MenuItemButton
+                themeColor="secondary"
+                border
+                contents={(close) => (
+                  <CareerPicker
+                    filterCareer={filterCareer}
+                    onSetFilterCareer={(career) => {
+                      setFilterCareer(career);
+                      close();
+                    }}
+                  />
+                )}
+              >
+                경력
+              </MenuItemButton>
             </div>
           </FlexEnd>
         </Flex>
@@ -121,7 +137,7 @@ const Main = () => {
         ))}
       </div>
       <FlexCenter css={{ marginBottom: "2.5rem" }}>
-        <Button themeColor="transParent" hover={false} css={{ fontWeight: 600 }}>
+        <Button themeColor="secondary" hover={false} css={{ fontWeight: 600 }}>
           더보기
         </Button>
       </FlexCenter>

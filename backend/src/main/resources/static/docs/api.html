@@ -746,7 +746,7 @@ Content-Type: application/json;charset=UTF-8
 
 [
   {
-    "message" : "[techSpecs](은)는 빈 값은 허용되지 않습니다. 입력된 값은: [null] 입니다."
+    "message" : "[techSpecs](은)는 빈 값이면 안됩니다. 입력된 값은: [null] 입니다."
   }
 ]</code></pre>
 </div>
@@ -765,7 +765,7 @@ Content-Type: application/json;charset=UTF-8
 </div>
 </div>
 <div class="sect3">
-<h4 id="_query_parameters_2"><a class="link" href="#_query_parameters_2">Query parameters</a></h4>
+<h4 id="_response_fields_3"><a class="link" href="#_response_fields_3">Response fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -775,7 +775,7 @@ Content-Type: application/json;charset=UTF-8
 </colgroup>
 <thead>
 <tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Path</th>
 <th class="tableblock halign-left valign-top">Type</th>
 <th class="tableblock halign-left valign-top">Optional</th>
 <th class="tableblock halign-left valign-top">Description</th>
@@ -783,43 +783,122 @@ Content-Type: application/json;charset=UTF-8
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">skills</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">teacherProfiles</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Array[Object]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">teacherProfiles[].id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">teacherProfiles[].email</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">teacherProfiles[].name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">teacherProfiles[].imageUrl</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">teacherProfiles[].title</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">teacherProfiles[].content</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">teacherProfiles[].career</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">teacherProfiles[].sumReviewCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">teacherProfiles[].averageReviewTime</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Decimal</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">teacherProfiles[].techSpec</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Object</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">선생님 기술 스택.</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">career</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">teacherProfiles[].techSpec.languages</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Array[Object]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">teacherProfiles[].techSpec.languages[].id</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">선생님 경력 연차.</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">limit</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">한 페이지에 보여줄 선생님 수.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">teacherProfiles[].techSpec.languages[].name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">page</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">teacherProfiles[].techSpec.skills</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Array[Object]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">teacherProfiles[].techSpec.skills[].id</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">현재 페이지 번호.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">teacherProfiles[].techSpec.skills[].name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">pageCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_response_fields_3"><a class="link" href="#_response_fields_3">Response fields</a></h4>
-<div class="paragraph">
-<p>No response body.</p>
-</div>
-</div>
-<div class="sect3">
 <h4 id="_example_request_3"><a class="link" href="#_example_request_3">Example request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /teachers?skills=Java&amp;skills=Spring&amp;career=3&amp;limit=10&amp;page=5 HTTP/1.1</code></pre>
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /teachers?skills=Java&amp;skills=Spring&amp;career=3&amp;size=10&amp;sort=career%2Cdesc&amp;page=5 HTTP/1.1
+Accept: application/json;charset=UTF-8</code></pre>
 </div>
 </div>
 </div>
@@ -827,7 +906,47 @@ Content-Type: application/json;charset=UTF-8
 <h4 id="_example_response_3"><a class="link" href="#_example_response_3">Example response</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK</code></pre>
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+
+{
+  "teacherProfiles" : [
+    {
+      "id" : 1,
+      "email" : "seed@gmail.com",
+      "name" : "seed",
+      "imageUrl" : "s3://seed.jpg",
+      "title" : "배민 개발자",
+      "content" : "열심히 가르쳐드리겠습니다.",
+      "career" : 3,
+      "sumReviewCount" : 12,
+      "averageReviewTime" : 1.4,
+      "techSpec" : {
+        "languages" : [
+          {
+            "id" : 1,
+            "name" : "java"
+          },
+          {
+            "id" : 2,
+            "name" : "javascript"
+          }
+        ],
+        "skills" : [
+          {
+            "id" : 1,
+            "name" : "spring"
+          },
+          {
+            "id" : 2,
+            "name" : "react"
+          }
+        ]
+      }
+    }
+  ],
+  "pageCount" : 1
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -956,13 +1075,13 @@ Content-Type: application/json;charset=UTF-8
 
 [
   {
-    "message" : "[title](은)는 빈 값은 허용되지 않습니다. 입력된 값은: [ ] 입니다."
+    "message" : "[studentId](은)는 빈 값이면 안됩니다. 입력된 값은: [null] 입니다."
   },
   {
-    "message" : "[studentId](은)는 빈 값은 허용되지 않습니다. 입력된 값은: [null] 입니다."
+    "message" : "[teacherId](은)는 빈 값이면 안됩니다. 입력된 값은: [null] 입니다."
   },
   {
-    "message" : "[teacherId](은)는 빈 값은 허용되지 않습니다. 입력된 값은: [null] 입니다."
+    "message" : "[title](은)는 빈 값이면 안됩니다. 입력된 값은: [ ] 입니다."
   }
 ]</code></pre>
 </div>
@@ -1607,7 +1726,7 @@ Authorization: Bearer aaa.bbb.ccc</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2021-07-12 19:14:48 +0900
+Last updated 2021-07-13 16:26:15 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

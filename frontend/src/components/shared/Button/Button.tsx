@@ -2,34 +2,35 @@ import { ButtonHTMLAttributes } from "react";
 
 import styled from "styled-components";
 
-import { COLOR_TYPE, SHAPE_TYPE } from "../../../types/styled";
+import { Shape } from "../../../types/styled/common";
+import { ButtonThemeColor } from "../../../types/styled/components";
 import { COLOR } from "../../../utils/constants/color";
 
 interface InnerProps {
-  themeColor?: keyof COLOR_TYPE;
-  shape?: keyof SHAPE_TYPE;
-  outline?: boolean;
+  themeColor?: ButtonThemeColor;
+  shape?: keyof Shape;
+  border?: boolean;
   hover?: boolean;
   active?: boolean;
 }
 
 const Inner = styled.button<InnerProps>`
-  color: ${({ theme, themeColor = "primary" }) => theme.color[themeColor].text};
+  color: ${({ theme, themeColor = "primary" }) => theme.components.button[themeColor].color};
   background-color: ${({ theme, themeColor = "primary", active = false }) =>
-    active ? theme.color[themeColor].active : theme.color[themeColor].normal};
-  border-radius: ${({ theme, shape = "rounded" }) => theme.shape[shape]};
+    active ? theme.components.button[themeColor].activeBg : theme.components.button[themeColor].bg};
+  border-radius: ${({ theme, shape = "rounded" }) => theme.common.shape[shape]};
   transition: background-color 0.1s ease-in-out;
   padding: 0.625rem;
-  ${({ outline }) => (outline ? `outline: 1px solid ${COLOR.WHITE}` : "")}
+  ${({ border }) => border && `border: 1px solid ${COLOR.BLACK};`}
 
   ${({ hover = true }) =>
     hover &&
     `:hover {
         box-shadow: 0 0 5px ${COLOR.GRAY_500};
       }`}
-  
+
   :active {
-    background-color: ${({ theme, themeColor = "primary" }) => theme.color[themeColor].active};
+    background-color: ${({ theme, themeColor = "primary" }) => theme.components.button[themeColor].activeBg};
   }
 `;
 

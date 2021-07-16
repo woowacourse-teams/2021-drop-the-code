@@ -4,6 +4,7 @@ export interface RouteShape {
   path: string;
   Component: () => ReactElement;
   isPrivate: boolean;
+  exact: boolean;
 }
 
 export interface NavMenuShape {

@@ -24,18 +24,9 @@ const Title = styled.p`
   font-weight: 600;
 `;
 
-const ReviewerCard = ({
-  id,
-  imageUrl,
-  career,
-  reviewCount,
-  averageResponseTime,
-  title,
-  techSpec,
-  ...props
-}: Reviewer) => (
+const ReviewerCard = ({ id, imageUrl, career, sumReviewCount, averageReviewTime, title, techSpec }: Reviewer) => (
   <Link to={`/reviewer/${id}`}>
-    <Inner {...props}>
+    <Inner>
       <Avatar imageUrl={imageUrl} width="6.25rem" height="6.25rem" shape="rounded" css={{ marginRight: "1.875rem" }} />
       <FlexSpaceBetween css={{ flexDirection: "column", flex: 1 }}>
         <ChipWrapper>
@@ -43,11 +34,11 @@ const ReviewerCard = ({
             <p>{career}년 이내 경력</p>
           </Chip>
           <Chip themeColor="count">
-            <p>누적 리뷰 {reviewCount}회</p>
+            <p>누적 리뷰 {sumReviewCount}회</p>
           </Chip>
-          {averageResponseTime && (
-            <Chip themeColor="averageResponse">
-              <p>평균 {averageResponseTime}일내 리뷰</p>
+          {!!averageReviewTime && (
+            <Chip themeColor="averageReview">
+              <p>평균 {averageReviewTime}일내 리뷰</p>
             </Chip>
           )}
         </ChipWrapper>
@@ -57,8 +48,8 @@ const ReviewerCard = ({
         <Flex>
           <p>
             {[
-              ...techSpec.map(({ language }) => language),
-              ...([] as string[]).concat(...techSpec.map(({ skills }) => skills)),
+              ...techSpec.languages.map((language) => language.name),
+              ...([] as string[]).concat(...techSpec.skills.map((skill) => skill.name)),
             ].join(" • ")}
           </p>
         </Flex>

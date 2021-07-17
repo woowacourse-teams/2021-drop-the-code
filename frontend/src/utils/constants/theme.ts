@@ -32,7 +32,7 @@ const components: Components = {
       bg: COLOR.GREEN_350,
       color: COLOR.BLACK,
     },
-    averageResponse: {
+    averageReview: {
       bg: COLOR.TEAL_350,
       color: COLOR.BLACK,
     },

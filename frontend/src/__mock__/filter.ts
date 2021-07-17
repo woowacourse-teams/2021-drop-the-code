@@ -1,6 +1,36 @@
-import { TechSpec } from "../types/reviewer";
+import { Language } from "../types/reviewer";
 
-export const techSpec: TechSpec[] = [
-  { language: "javaScript", skills: ["react", "vue", "angular"] },
-  { language: "java", skills: ["spring", "spring-boot"] },
+export const languages: Language[] = [
+  {
+    language: {
+      id: 1,
+      name: "java",
+    },
+    skills: [
+      {
+        id: 1,
+        name: "spring",
+      },
+      {
+        id: 2,
+        name: "jpa",
+      },
+    ],
+  },
+  {
+    language: {
+      id: 2,
+      name: "javascript",
+    },
+    skills: [
+      {
+        id: 3,
+        name: "vue",
+      },
+      {
+        id: 4,
+        name: "react",
+      },
+    ],
+  },
 ];

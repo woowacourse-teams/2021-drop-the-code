@@ -17,8 +17,29 @@ Basic.args = {
   id: 1,
   imageUrl: "https://avatars.githubusercontent.com/u/52202474?v=4",
   career: 3,
-  reviewCount: 300,
-  averageResponseTime: 1,
+  sumReviewCount: 300,
+  averageReviewTime: 1,
   title: "안녕하세요~",
-  techSpec: [{ language: "JavaScript", skills: ["React", "Angular"] }],
+  techSpec: {
+    languages: [
+      {
+        id: 1,
+        name: "java",
+      },
+      {
+        id: 2,
+        name: "javascript",
+      },
+    ],
+    skills: [
+      {
+        id: 1,
+        name: "spring",
+      },
+      {
+        id: 2,
+        name: "react",
+      },
+    ],
+  },
 };

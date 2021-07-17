@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 import CareerPicker from "../../components/CareerPicker/CareerPicker";
 import MenuItemButton from "../../components/MenuItemButton/MenuItemButton";
 import { Flex, FlexEnd } from "../../components/shared/Flexbox/Flexbox";
@@ -7,36 +9,36 @@ import { ReviwerSortOption } from "../../types/reviewer";
 import { COLOR } from "../../utils/constants/color";
 import { LAYOUT } from "../../utils/constants/size";
 
+import LanguageList from "./LanguageList";
 import ReviewerList from "./ReviewerList";
-import TechSpecMenu from "./TechSpecMenu";
 
 const Main = () => {
   const {
     filterLanguage,
     filterSkills,
     filterCareer,
-    pageCount,
+    currentPageCount,
     sort,
     setFilterLanguage,
     setFilterSkills,
     setFilterCareer,
-    setPageCount,
+    setCurrentPageCount,
     setSort,
   } = useReviewerListOptions();
-
-  // TODO: api 요청 받아서 처리하기
 
   return (
     <main css={{ maxWidth: LAYOUT.LG, margin: "0 auto" }}>
       <Flex css={{ flexDirection: "column", width: "100%" }}>
         <h2 css={{ fontSize: "1.25rem", fontWeight: 600, margin: "1.25rem 0" }}>리뷰어 찾기</h2>
         <Flex>
-          <TechSpecMenu
-            filterLanguage={filterLanguage}
-            filterSkills={filterSkills}
-            onSetFilterLanguage={setFilterLanguage}
-            onSetFilterSkills={setFilterSkills}
-          />
+          <Suspense fallback={<div>언어목록 로딩</div>}>
+            <LanguageList
+              filterLanguage={filterLanguage}
+              filterSkills={filterSkills}
+              onSetFilterLanguage={setFilterLanguage}
+              onSetFilterSkills={setFilterSkills}
+            />
+          </Suspense>
           <FlexEnd css={{ flexDirection: "column" }}>
             <div css={{ marginBottom: "0.625rem" }}>
               <MenuItemButton
@@ -61,18 +63,21 @@ const Main = () => {
       <div css={{ paddingTop: "1.25rem", borderTop: `1px solid ${COLOR.GRAY_300}` }}>
         <Select onChange={({ target: { value } }) => setSort(value as ReviwerSortOption)}>
           <option value="career,desc">경력 많은순</option>
-          <option value="reviewTime,desc">리뷰 빠른순</option>
+          <option value="averageReviewTime,desc">리뷰 빠른순</option>
+          <option value="sumReviewCount,desc">리뷰 많은순</option>
           {/* <option id="3">추천순</option> */}
         </Select>
       </div>
-      <ReviewerList
-        filterLanguage={filterLanguage}
-        filterSkills={filterSkills}
-        filterCareer={filterCareer}
-        pageCount={pageCount}
-        sort={sort}
-        onSetPageCount={setPageCount}
-      />
+      <Suspense fallback={<div>리뷰어 목록 로딩</div>}>
+        <ReviewerList
+          filterLanguage={filterLanguage}
+          filterSkills={filterSkills}
+          filterCareer={filterCareer}
+          sort={sort}
+          currentPageCount={currentPageCount}
+          onSetCurrentPageCount={setCurrentPageCount}
+        />
+      </Suspense>
     </main>
   );
 };

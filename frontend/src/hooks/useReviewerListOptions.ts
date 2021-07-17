@@ -6,19 +6,19 @@ const useReviewerListOptions = () => {
   const [filterLanguage, setFilterLanguage] = useState<string | null>(null);
   const [filterSkills, setFilterSkills] = useState<string[]>([]);
   const [filterCareer, setFilterCareer] = useState(0);
-  const [pageCount, setPageCount] = useState(1);
+  const [currentPageCount, setCurrentPageCount] = useState(0);
   const [sort, setSort] = useState<ReviwerSortOption>(null);
 
   return {
     filterLanguage,
     filterSkills,
     filterCareer,
-    pageCount,
+    currentPageCount,
     sort,
     setFilterLanguage,
     setFilterSkills,
     setFilterCareer,
-    setPageCount,
+    setCurrentPageCount,
     setSort,
   };
 };

@@ -9,7 +9,7 @@ interface ButtonColorAttr extends BaseColorAttr {
   activeBg: string;
 }
 
-export type ChipThemeColor = "primary" | "career" | "count" | "averageResponse";
+export type ChipThemeColor = "primary" | "career" | "count" | "averageReview";
 
 export interface Components {
   button: { [key in ButtonThemeColor]: ButtonColorAttr };

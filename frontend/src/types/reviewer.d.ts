@@ -1,16 +1,36 @@
+export interface Language {
+  language: {
+    id: number;
+    name: string;
+  };
+  skills: {
+    id: number;
+    name: string;
+  }[];
+}
+
 export interface TechSpec {
-  language: string;
-  skills: string[];
+  languages: {
+    id: number;
+    name: string;
+  }[];
+  skills: {
+    id: number;
+    name: string;
+  }[];
 }
 
 export interface Reviewer {
   id: number;
+  email: string;
+  name: string;
+  content: string;
   imageUrl: string;
   career: number;
-  reviewCount: number;
-  averageResponseTime: number | null;
+  sumReviewCount: number;
+  averageReviewTime: number | null;
   title: string;
-  techSpec: TechSpec[];
+  techSpec: TechSpec;
 }
 
-export type ReviwerSortOption = "career,desc" | "reviewTime,desc" | null;
+export type ReviwerSortOption = "career,desc" | "averageReviewTime,desc" | "sumReviewCount,desc" | null;

@@ -1,52 +1,40 @@
 import { Dispatch, SetStateAction } from "react";
 
-import { reviewers } from "../../__mock__/reviewers";
 import ReviewerCard from "../../components/Reviewer/ReviewerCard";
 import Button from "../../components/shared/Button/Button";
 import { FlexCenter } from "../../components/shared/Flexbox/Flexbox";
-import { ReviwerSortOption } from "../../types/reviewer";
+import useReviewerList, { Options } from "../../hooks/useReviewerList";
 
-interface Props {
-  filterLanguage: string | null;
-  filterSkills: string[];
-  filterCareer: number;
-  pageCount: number;
-  sort: ReviwerSortOption;
-  onSetPageCount: Dispatch<SetStateAction<number>>;
+interface Props extends Options {
+  onSetCurrentPageCount: Dispatch<SetStateAction<number>>;
 }
 
-const ReviewerList = ({ filterLanguage, filterSkills, filterCareer, pageCount, sort, onSetPageCount }: Props) => {
-  // useQuery()
+const ReviewerList = ({ onSetCurrentPageCount, ...options }: Props) => {
+  const { data } = useReviewerList({
+    ...options,
+  });
 
   return (
     <>
       <div css={{ margin: "1.25rem 0 2rem 0" }}>
-        {reviewers.map(({ id, imageUrl, career, reviewCount, averageResponseTime, title, techSpec }) => (
-          <ReviewerCard
-            key={id}
-            id={id}
-            imageUrl={imageUrl}
-            career={career}
-            reviewCount={reviewCount}
-            averageResponseTime={averageResponseTime}
-            title={title}
-            techSpec={techSpec}
-            css={{ marginBottom: "0.625rem" }}
-          />
+        {data?.teacherProfiles.map(({ id, ...props }) => (
+          <ReviewerCard key={id} id={id} {...props} css={{ marginBottom: "0.625rem" }} />
         ))}
       </div>
-      <FlexCenter css={{ marginBottom: "2.5rem" }}>
-        <Button
-          themeColor="secondary"
-          hover={false}
-          css={{ fontWeight: 600 }}
-          onClick={() => {
-            onSetPageCount(pageCount + 1);
-          }}
-        >
-          더보기
-        </Button>
-      </FlexCenter>
+      {data && options.currentPageCount < data.pageCount && (
+        <FlexCenter css={{ marginBottom: "2.5rem" }}>
+          <Button
+            themeColor="secondary"
+            hover={false}
+            css={{ fontWeight: 600 }}
+            onClick={() => {
+              onSetCurrentPageCount(options.currentPageCount + 1);
+            }}
+          >
+            더보기
+          </Button>
+        </FlexCenter>
+      )}
     </>
   );
 };

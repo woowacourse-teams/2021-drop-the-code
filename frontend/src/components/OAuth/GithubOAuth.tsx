@@ -31,7 +31,7 @@ const GithubOAuth = () => {
     <Inner>
       <img src={LgWhiteLogo} alt="깃허브 로고 이미지" />
       <LoginAnchor
-        href={`https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_OAUTH_CLIENT_ID}&redirect_uri=${process.env.GITHUB_OAUTH_REDIRECT}`}
+        href={`https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_OAUTH_CLIENT_ID}&redirect_uri=${process.env.CLIENT_BASE_URL}`}
       >
         <FlexCenter>
           <LoginButtonImage src={SmBlackLogo} alt="깃허브 로그인 버튼 이미지" />

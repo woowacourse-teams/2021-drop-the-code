@@ -13,7 +13,6 @@ const OAuthReceiver = () => {
     // setAuth
   }, []);
 
-  console.log(code, providerName);
   return (
     <div>
       code is {code} {providerName}

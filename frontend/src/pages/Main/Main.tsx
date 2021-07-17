@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 
 import CareerPicker from "../../components/CareerPicker/CareerPicker";
+import Loading from "../../components/Loading/Loading";
 import MenuItemButton from "../../components/MenuItemButton/MenuItemButton";
 import { Flex, FlexEnd } from "../../components/shared/Flexbox/Flexbox";
 import Select from "../../components/shared/Select/Select";
@@ -29,7 +30,7 @@ const Main = () => {
       <Flex css={{ flexDirection: "column", width: "100%" }}>
         <h2 css={{ fontSize: "1.25rem", fontWeight: 600, margin: "1.25rem 0" }}>리뷰어 찾기</h2>
         <Flex>
-          <Suspense fallback={<div>언어목록 로딩</div>}>
+          <Suspense fallback={<Loading />}>
             <LanguageList
               filterLanguage={filterLanguage}
               filterSkills={filterSkills}
@@ -66,7 +67,7 @@ const Main = () => {
           {/* <option id="3">추천순</option> */}
         </Select>
       </div>
-      <Suspense fallback={<div>리뷰어 목록 로딩</div>}>
+      <Suspense fallback={<Loading />}>
         <ReviewerList
           filterLanguage={filterLanguage}
           filterSkills={filterSkills}

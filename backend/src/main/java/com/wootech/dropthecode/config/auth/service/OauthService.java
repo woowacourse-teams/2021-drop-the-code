@@ -90,7 +90,7 @@ public class OauthService {
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
         formData.add("code", authorizationRequest.getCode());
         formData.add("grant_type", "authorization_code");
-        formData.add("redirect_uri", redirectUri);
+//        formData.add("redirect_uri", redirectUri);
         return formData;
     }
 }

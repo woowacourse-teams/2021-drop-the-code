@@ -38,7 +38,7 @@ const ReviewerCard = ({ id, imageUrl, career, sumReviewCount, averageReviewTime,
           </Chip>
           {!!averageReviewTime && (
             <Chip themeColor="averageReview">
-              <p>평균 {Math.round(averageReviewTime)}일내 리뷰</p>
+              <p>평균 {averageReviewTime}일내 리뷰</p>
             </Chip>
           )}
         </ChipWrapper>

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 
 import Button from "../../components/shared/Button/Button";
 import { Flex, FlexAlignCenter } from "../../components/shared/Flexbox/Flexbox";
@@ -17,7 +17,10 @@ const LanguageList = ({ filterLanguage, filterSkills, onSetFilterLanguage, onSet
   if (languages?.length === 0) return <></>;
 
   // 초기 메인페이지에서 필터 언어를 첫번째로 선택
-  if (languages && !filterLanguage) onSetFilterLanguage(languages[0].language.name);
+
+  useEffect(() => {
+    if (languages && !filterLanguage) onSetFilterLanguage(languages[0].language.name);
+  }, []);
 
   return (
     <Flex css={{ flex: "1", flexDirection: "column" }}>

@@ -1,34 +1,34 @@
-import { Dispatch, SetStateAction } from "react";
-
 import ReviewerCard from "../../components/Reviewer/ReviewerCard";
 import Button from "../../components/shared/Button/Button";
 import { FlexCenter } from "../../components/shared/Flexbox/Flexbox";
 import useReviewerList, { Options } from "../../hooks/useReviewerList";
 
-interface Props extends Options {
-  onSetCurrentPageCount: Dispatch<SetStateAction<number>>;
-}
+type Props = Options;
 
-const ReviewerList = ({ onSetCurrentPageCount, ...options }: Props) => {
-  const { data } = useReviewerList({
+const ReviewerList = ({ ...options }: Props) => {
+  const { data, fetchNextPage } = useReviewerList({
     ...options,
   });
+
+  const pageLength = data?.pages.length || 0;
 
   return (
     <>
       <div css={{ margin: "1.25rem 0 2rem 0" }}>
-        {data?.teacherProfiles.map(({ id, ...props }) => (
-          <ReviewerCard key={id} id={id} {...props} css={{ marginBottom: "0.625rem" }} />
-        ))}
+        {data?.pages.map((page) =>
+          page?.teacherProfiles.map(({ id, ...props }) => (
+            <ReviewerCard key={id} id={id} {...props} css={{ marginBottom: "0.625rem" }} />
+          ))
+        )}
       </div>
-      {data && options.currentPageCount < data.pageCount && (
+      {pageLength < (data?.pages[0]?.pageCount || 0) && (
         <FlexCenter css={{ marginBottom: "2.5rem" }}>
           <Button
             themeColor="secondary"
             hover={false}
             css={{ fontWeight: 600 }}
             onClick={() => {
-              onSetCurrentPageCount(options.currentPageCount + 1);
+              fetchNextPage({ pageParam: pageLength + 1 });
             }}
           >
             더보기

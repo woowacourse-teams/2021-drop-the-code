@@ -17,12 +17,10 @@ const Main = () => {
     filterLanguage,
     filterSkills,
     filterCareer,
-    currentPageCount,
     sort,
     setFilterLanguage,
     setFilterSkills,
     setFilterCareer,
-    setCurrentPageCount,
     setSort,
   } = useReviewerListOptions();
 
@@ -74,8 +72,6 @@ const Main = () => {
           filterSkills={filterSkills}
           filterCareer={filterCareer}
           sort={sort}
-          currentPageCount={currentPageCount}
-          onSetCurrentPageCount={setCurrentPageCount}
         />
       </Suspense>
     </main>

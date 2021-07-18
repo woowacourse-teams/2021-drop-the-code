@@ -24,8 +24,8 @@ const LanguageList = ({ filterLanguage, filterSkills, onSetFilterLanguage, onSet
 
   return (
     <Flex css={{ flex: "1", flexDirection: "column" }}>
-      <Flex css={{ margin: "0.3125rem 0" }}>
-        <FlexAlignCenter css={{ width: "5rem", fontWeight: 500 }}>언어</FlexAlignCenter>
+      <Flex css={{ margin: "0.1875rem 0" }}>
+        <FlexAlignCenter css={{ width: "5.625rem", fontWeight: 900 }}>언어</FlexAlignCenter>
         <ul css={{ display: "flex" }}>
           {languages?.map(({ language }) => (
             <li key={language.name} css={{ marginRight: "0.375rem" }}>
@@ -43,8 +43,8 @@ const LanguageList = ({ filterLanguage, filterSkills, onSetFilterLanguage, onSet
           ))}
         </ul>
       </Flex>
-      <Flex css={{ margin: "0.625rem 0" }}>
-        <FlexAlignCenter css={{ width: "5rem", fontWeight: 500 }}>기술 스택</FlexAlignCenter>
+      <Flex css={{ marginBottom: "15px" }}>
+        <FlexAlignCenter css={{ width: "5.625rem", fontWeight: 900 }}>기술 스택</FlexAlignCenter>
         <ul css={{ display: "flex" }}>
           {languages
             ?.find(({ language }) => {

@@ -6,7 +6,7 @@ import MenuItemButton from "../../components/MenuItemButton/MenuItemButton";
 import { Flex, FlexEnd } from "../../components/shared/Flexbox/Flexbox";
 import Select from "../../components/shared/Select/Select";
 import useReviewerListOptions from "../../hooks/useReviewerListOptions";
-import { ReviwerSortOption } from "../../types/reviewer";
+import { ReviewerSortOption } from "../../types/reviewer";
 import { COLOR } from "../../utils/constants/color";
 import { LAYOUT } from "../../utils/constants/size";
 
@@ -26,7 +26,7 @@ const Main = () => {
   } = useReviewerListOptions();
 
   return (
-    <main css={{ maxWidth: LAYOUT.LG, margin: "0 auto" }}>
+    <main css={{ paddingTop: "6rem", maxWidth: LAYOUT.LG, margin: "auto" }}>
       <Flex css={{ flexDirection: "column", width: "100%" }}>
         <h2 css={{ fontSize: "1.25rem", fontWeight: 600, margin: "1.25rem 0" }}>리뷰어 찾기</h2>
         <Flex>
@@ -43,6 +43,7 @@ const Main = () => {
               <MenuItemButton
                 themeColor="secondary"
                 border
+                shape="pill"
                 contents={(close) => (
                   <CareerPicker
                     filterCareer={filterCareer}
@@ -53,16 +54,16 @@ const Main = () => {
                   />
                 )}
               >
-                경력
+                {filterCareer === 0 ? "경력 무관" : `경력 ${filterCareer}년 이상`}
               </MenuItemButton>
             </div>
           </FlexEnd>
         </Flex>
       </Flex>
       <div css={{ paddingTop: "1.25rem", borderTop: `1px solid ${COLOR.GRAY_300}` }}>
-        <Select onChange={({ target: { value } }) => setSort(value as ReviwerSortOption)}>
+        <Select onChange={({ target: { value } }) => setSort(value as ReviewerSortOption)}>
           <option value="career,desc">경력 많은순</option>
-          <option value="averageReviewTime,desc">리뷰 빠른순</option>
+          <option value="averageReviewTime,asc">리뷰 빠른순</option>
           <option value="sumReviewCount,desc">리뷰 많은순</option>
           {/* <option id="3">추천순</option> */}
         </Select>

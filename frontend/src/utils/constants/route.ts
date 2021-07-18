@@ -1,6 +1,6 @@
 import OAuthReceiver from "../../components/OAuth/OAuthReceiver";
 import Main from "../../pages/Main/Main";
-import ReviwerDetail from "../../pages/ReviewerDetail/ReviewerDetail";
+import ReviewerDetail from "../../pages/ReviewerDetail/ReviewerDetail";
 import ReviewerRegister from "../../pages/ReviewerRegister/ReviewerRegister";
 import ReviewHistory from "../../pages/ReviewHistory/ReviewHistory";
 import ReviewRequest from "../../pages/ReviewRequest/ReviewRequest";
@@ -8,7 +8,7 @@ import { RouteShape, NavMenuShape } from "../../types/route";
 
 export const PATH = {
   MAIN: "/",
-  REVIWER_DETAIL: "/reviewer/:reviewerId",
+  REVIEWER_DETAIL: "/reviewer/:reviewerId",
   REVIEWER_REGISTER: "/reviewer/register",
   REVIEW_HISTORY: "/review/history",
   REVIEW_REQUEST: "/review/request/:reviewerId",
@@ -17,7 +17,7 @@ export const PATH = {
 
 export const ROUTE: RouteShape[] = [
   { path: PATH.MAIN, Component: Main, isPrivate: false, exact: true },
-  { path: PATH.REVIWER_DETAIL, Component: ReviwerDetail, isPrivate: false, exact: true },
+  { path: PATH.REVIEWER_DETAIL, Component: ReviewerDetail, isPrivate: false, exact: true },
   { path: PATH.REVIEWER_REGISTER, Component: ReviewerRegister, isPrivate: true, exact: true },
   { path: PATH.REVIEW_HISTORY, Component: ReviewHistory, isPrivate: true, exact: true },
   { path: PATH.REVIEW_REQUEST, Component: ReviewRequest, isPrivate: true, exact: true },

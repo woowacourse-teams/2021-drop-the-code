@@ -12,8 +12,8 @@ export interface Props {
 }
 
 const Inner = styled(FlexCenter)`
-  width: 400px;
-  height: 170px;
+  width: 15.625rem;
+  height: 8.125rem;
   flex-direction: column;
 `;
 
@@ -33,7 +33,7 @@ const Career = styled.input`
     width: 15px;
     height: 20px;
     background: ${({ theme }) => theme.common.color.primary};
-    border-radius: 3px;
+    border-radius: 5px;
     cursor: pointer;
     -webkit-appearance: none;
   }
@@ -44,6 +44,7 @@ const DataList = styled.datalist`
   justify-content: space-between;
   width: 92%;
   padding: 0 2px;
+  margin-top: 0.3125rem;
 
   > option {
     font-size: 14px;
@@ -54,11 +55,11 @@ const DataList = styled.datalist`
 const ResultWrapper = styled(FlexEnd)`
   align-self: flex-end;
   align-items: center;
-  margin: 40px 20px 0 0;
+  margin: 2.5rem 0.625rem 0 0;
 `;
 
 const CareerText = styled.p`
-  font-size: 20px;
+  font-size: 16px;
   margin-right: 10px;
   color: ${COLOR.GRAY_600};
 `;
@@ -94,7 +95,7 @@ const CareerPicker = ({ filterCareer, onSetFilterCareer }: Props) => {
         <Button
           type="button"
           themeColor="primary"
-          shape="rounded"
+          shape="pill"
           onClick={() => {
             onSetFilterCareer(career);
           }}

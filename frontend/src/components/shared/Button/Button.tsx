@@ -20,8 +20,8 @@ const Inner = styled.button<InnerProps>`
     active ? theme.components.button[themeColor].activeBg : theme.components.button[themeColor].bg};
   border-radius: ${({ theme, shape = "rounded" }) => theme.common.shape[shape]};
   transition: background-color 0.1s ease-in-out;
-  padding: 0.625rem;
-  ${({ border }) => border && `border: 1px solid ${COLOR.BLACK};`}
+  padding: 0.375rem 0.625rem;
+  ${({ border }) => border && `border: 1px solid ${COLOR.GRAY_400};`}
 
   ${({ hover = true }) =>
     hover &&

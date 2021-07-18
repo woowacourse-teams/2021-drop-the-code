@@ -1,14 +1,14 @@
 import { useInfiniteQuery } from "react-query";
 
 import { getReviewerList } from "../apis/reviewer";
-import { ReviwerSortOption } from "../types/reviewer";
+import { ReviewerSortOption } from "../types/reviewer";
 import { toURLSearchParams } from "../utils/formatter";
 
 export interface Options {
   filterLanguage: string | null;
   filterSkills: string[];
   filterCareer: number;
-  sort: ReviwerSortOption;
+  sort: ReviewerSortOption;
 }
 
 const useReviewerList = (options: Options) => {

@@ -1,16 +1,17 @@
 import { Suspense, useEffect } from "react";
 import { useQuery } from "react-query";
-import { useLocation } from "react-router-dom";
+import { Redirect, useLocation } from "react-router-dom";
 
 import { oauthLogin } from "../../apis/auth";
 import Loading from "../../components/Loading/Loading";
 import useAuthContext from "../../hooks/useAuthContext";
+import { PATH } from "../../utils/constants/route";
 import { toURLSearchParams } from "../../utils/formatter";
 
-// Auth
 const OAuthReceiver = () => {
-  const location = useLocation();
   const { login } = useAuthContext();
+
+  const location = useLocation();
 
   const query = new URLSearchParams(location.search);
   const [providerName, code] = [query.get("providerName"), query.get("code")];
@@ -33,11 +34,9 @@ const OAuthReceiver = () => {
     if (!data) return;
 
     login(data);
-
-    //setData
   }, []);
 
-  return <></>;
+  return <Redirect to={PATH.MAIN} />;
 };
 
 const RedirectOAuth = () => (

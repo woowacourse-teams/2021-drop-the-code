@@ -10,11 +10,8 @@ const PrivateRoute = ({ isAuthenticated, redirectTo, children, ...props }: Omit<
   <Route {...props}>{isAuthenticated ? children : <Redirect to={redirectTo} />}</Route>
 );
 
-const PublicRoute = ({ isAuthenticated, redirectTo, children, ...props }: Omit<Props, "isPrivate">) => (
-  <Route {...props}>{isAuthenticated ? <Redirect to={redirectTo} /> : children}</Route>
-);
-
-const AuthRoute = ({ isPrivate, ...props }: Props) =>
-  isPrivate ? <PrivateRoute {...props} /> : <PublicRoute {...props} />;
+const AuthRoute = ({ isPrivate, children, ...props }: Props) => {
+  return isPrivate ? <PrivateRoute {...props}>{children}</PrivateRoute> : <Route {...props}>{children}</Route>;
+};
 
 export default AuthRoute;

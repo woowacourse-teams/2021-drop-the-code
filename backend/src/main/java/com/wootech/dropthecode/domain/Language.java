@@ -15,7 +15,7 @@ public class Language extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "skill", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "language", fetch = FetchType.LAZY)
     private final List<LanguageSkill> skills = new ArrayList<>();
 
     @OneToMany(mappedBy = "language", fetch = FetchType.LAZY)

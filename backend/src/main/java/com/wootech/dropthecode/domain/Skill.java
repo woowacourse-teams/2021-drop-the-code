@@ -18,7 +18,7 @@ public class Skill extends BaseEntity {
     @OneToMany(mappedBy = "skill", fetch = FetchType.LAZY)
     private final List<TeacherSkill> teachers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "language", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "skill", fetch = FetchType.LAZY)
     private final List<LanguageSkill> languages = new ArrayList<>();
 
     protected Skill() {

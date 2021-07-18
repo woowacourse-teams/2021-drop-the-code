@@ -33,4 +33,4 @@ export interface Reviewer {
   techSpec: TechSpec;
 }
 
-export type ReviwerSortOption = "career,desc" | "averageReviewTime,desc" | "sumReviewCount,desc" | null;
+export type ReviewerSortOption = "career,desc" | "averageReviewTime,asc" | "sumReviewCount,desc" | null;

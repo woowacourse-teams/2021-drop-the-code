@@ -13,7 +13,7 @@ interface InnerProps {
 
 const Inner = styled(FlexCenter)<InnerProps>`
   border-radius: ${({ theme, shape = "rounded" }) => theme.common.shape[shape]};
-  padding: 0.5rem;
+  padding: 0.375rem 0.5rem;
   color: ${({ theme, themeColor = "primary" }) => theme.components.chip[themeColor].color};
   background-color: ${({ theme, themeColor = "primary" }) => theme.components.chip[themeColor].bg};
 `;

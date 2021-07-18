@@ -1,5 +1,5 @@
-const ReviwerDetail = () => {
+const ReviewerDetail = () => {
   return <></>;
 };
 
-export default ReviwerDetail;
+export default ReviewerDetail;

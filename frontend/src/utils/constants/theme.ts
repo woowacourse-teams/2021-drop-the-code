@@ -8,9 +8,9 @@ import { COLOR } from "./color";
 const components: Components = {
   button: {
     primary: {
-      bg: COLOR.PURPLE_600,
+      bg: COLOR.INDIGO_500,
       color: COLOR.WHITE,
-      activeBg: COLOR.PURPLE_900,
+      activeBg: COLOR.INDIGO_900,
     },
     secondary: {
       bg: "inherit",
@@ -41,7 +41,7 @@ const components: Components = {
 
 const common: Common = {
   color: {
-    primary: COLOR.PURPLE_600,
+    primary: COLOR.INDIGO_500,
     secondary: "inherit",
     dark: COLOR.BLACK,
     light: COLOR.WHITE,

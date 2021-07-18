@@ -40,12 +40,12 @@ const App = () => {
                   </NavLink>
                 ))}
                 {!isAuthenticated && (
-                  <Button themeColor="secondary" hover={false}>
+                  <Button themeColor="secondary" hover={false} css={{ fontWeight: 900 }}>
                     로그인
                   </Button>
                 )}
                 {isAuthenticated && (
-                  <Button themeColor="secondary" hover={false}>
+                  <Button themeColor="secondary" hover={false} css={{ fontWeight: 900 }}>
                     로그아웃
                   </Button>
                 )}
@@ -55,7 +55,7 @@ const App = () => {
             <h1>
               <Link to={PATH.MAIN}>
                 <FlexCenter>
-                  <Logo width={115} height={30} />
+                  <Logo width={200} height={50} />
                 </FlexCenter>
               </Link>
             </h1>

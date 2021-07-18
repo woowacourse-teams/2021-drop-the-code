@@ -22,7 +22,7 @@ const ReviewerList = ({ ...options }: Props) => {
         )}
       </div>
       {pageLength < (data?.pages[0]?.pageCount || 0) && (
-        <FlexCenter css={{ marginBottom: "2.5rem" }}>
+        <FlexCenter css={{ marginBottom: "3.75rem" }}>
           <Button
             themeColor="secondary"
             hover={false}

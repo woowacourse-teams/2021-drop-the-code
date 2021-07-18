@@ -7,8 +7,12 @@ import { Flex, FlexSpaceBetween } from "../shared/Flexbox/Flexbox";
 
 const Inner = styled.header`
   background-color: ${({ theme }) => theme.components.navigation.bg};
-  height: 4rem;
+  height: 6rem;
   box-shadow: 0 0 30px rgb(0 0 0 / 0.2);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1200;
 `;
 
 export interface Props {

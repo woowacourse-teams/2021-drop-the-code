@@ -3,7 +3,7 @@ import { Story, Meta } from "@storybook/react";
 import Navigation, { Props } from "./Navigation";
 
 export default {
-  title: "components/Navigation",
+  title: "components/shared/Navigation",
   component: Navigation,
 } as Meta;
 

@@ -25,10 +25,7 @@ const config = merge<Config>(common, {
     open: true,
     port: 3000,
   },
-  plugins: [
-    new webpack.EnvironmentPlugin(["GITHUB_OAUTH_CLIENT_ID", "CLIENT_BASE_URL", "SERVER_BASE_URL"]),
-    new ReactRefreshWebpackPlugin(),
-  ],
+  plugins: [new ReactRefreshWebpackPlugin()],
 });
 
 export default config;

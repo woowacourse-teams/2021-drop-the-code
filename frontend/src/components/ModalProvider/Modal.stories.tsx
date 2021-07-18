@@ -1,7 +1,7 @@
 import { Story, Meta } from "@storybook/react";
 
 import useModalContext from "../../hooks/useModalContext";
-import GithubOAuth from "../OAuth/GithubOAuth";
+import GithubOAuth from "../Auth/OAuth/GithubOAuth";
 import Button from "../shared/Button/Button";
 
 import ModalProvider, { Props } from "./ModalProvider";

@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-import LgWhiteLogo from "../../assets/lg-white-github-logo.png";
-import SmBlackLogo from "../../assets/sm-black-github-logo.png";
-import { FlexCenter } from "../shared/Flexbox/Flexbox";
+import LgWhiteLogo from "../../../assets/lg-white-github-logo.png";
+import SmBlackLogo from "../../../assets/sm-black-github-logo.png";
+import { FlexCenter } from "../../shared/Flexbox/Flexbox";
 
 const Inner = styled(FlexCenter)`
   width: 18.75rem;

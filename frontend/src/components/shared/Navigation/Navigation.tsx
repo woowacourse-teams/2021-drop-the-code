@@ -2,8 +2,8 @@ import { ReactNode } from "react";
 
 import styled from "styled-components";
 
-import { LAYOUT } from "../../utils/constants/size";
-import { Flex, FlexSpaceBetween } from "../shared/Flexbox/Flexbox";
+import { LAYOUT } from "../../../utils/constants/size";
+import { Flex, FlexSpaceBetween } from "../Flexbox/Flexbox";
 
 const Inner = styled.header`
   background-color: ${({ theme }) => theme.components.navigation.bg};

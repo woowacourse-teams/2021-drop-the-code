@@ -45,6 +45,12 @@ const config: webpack.Configuration = {
   plugins: [
     new HtmlWebpackPlugin({ template: "public/index.html", favicon: "public/favicon.ico" }),
     new ForkTsCheckerWebpackPlugin(),
+    new webpack.EnvironmentPlugin([
+      "GITHUB_OAUTH_CLIENT_ID",
+      "GITHUB_OAUTH_REDIRECT_URL",
+      "CLIENT_BASE_URL",
+      "SERVER_BASE_URL",
+    ]),
   ],
 };
 

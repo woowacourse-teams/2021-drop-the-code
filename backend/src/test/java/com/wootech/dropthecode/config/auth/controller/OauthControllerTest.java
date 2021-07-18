@@ -18,7 +18,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -52,7 +51,7 @@ class OauthControllerTest extends RestApiDocumentTest {
         AuthorizationRequest authorizationRequest = new AuthorizationRequest(GITHUB, CODE);
         LoginResponse loginResponse = new LoginResponse(NAME, EMAIL, IMAGE_URL, ACCESS_TOKEN, REFRESH_TOKEN);
 
-        given(oauthService.login(anyString(), any())).willReturn(loginResponse);
+        given(oauthService.login(any())).willReturn(loginResponse);
         String body = objectMapper.writeValueAsString(authorizationRequest);
 
         // when

@@ -4,24 +4,24 @@ import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.domain.Role;
 
 public class UserProfile {
-    private String email;
-    private String id;
-    private String imageUrl;
+    private String oauthId;
     private String name;
+    private String email;
+    private String imageUrl;
 
-    public UserProfile(String id, String name, String email, String imageUrl) {
-        this.id = id;
+    public UserProfile(String oauthId, String name, String email, String imageUrl) {
+        this.oauthId = oauthId;
         this.name = name;
         this.email = email;
         this.imageUrl = imageUrl;
     }
 
     public Member toMember() {
-        return new Member(id, name, email, imageUrl, Role.STUDENT, null);
+        return new Member(oauthId, name, email, imageUrl, Role.STUDENT, null);
     }
 
-    public String getId() {
-        return id;
+    public String getOauthId() {
+        return oauthId;
     }
 
     public String getName() {

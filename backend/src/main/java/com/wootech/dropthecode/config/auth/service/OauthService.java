@@ -19,6 +19,7 @@ import com.wootech.dropthecode.repository.MemberRepository;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -38,28 +39,30 @@ public class OauthService {
         this.redisUtil = redisUtil;
     }
 
-    public LoginResponse login(String redirectUri, AuthorizationRequest authorizationRequest) {
+    @Transactional
+    public LoginResponse login(AuthorizationRequest authorizationRequest) {
         OauthProvider oauthProvider = inMemoryProviderRepository.findByProviderName(authorizationRequest.getProviderName());
-        UserProfile userProfile = getUserProfile(redirectUri, authorizationRequest, oauthProvider);
+        UserProfile userProfile = getUserProfile(authorizationRequest, oauthProvider);
 
-        Member member = memberRepository.findByOauthId(userProfile.getId())
-                                        .orElse(memberRepository.save(userProfile.toMember()));
+        Member member = memberRepository.findByOauthId(userProfile.getOauthId())
+                                        .orElseGet(() -> memberRepository.save(userProfile.toMember()));
 
         String accessToken = jwtTokenProvider.createAccessToken(String.valueOf(member.getId()));
         String refreshToken = jwtTokenProvider.createRefreshToken();
 
-//        redisUtil.setData(String.valueOf(member.getId()), refreshToken);
+        // Redis
+        // redisUtil.setData(String.valueOf(member.getId()), refreshToken);
 
         return new LoginResponse(member.getName(), member.getEmail(), member.getImageUrl(), accessToken, refreshToken);
     }
 
-    private UserProfile getUserProfile(String redirectUri, AuthorizationRequest authorizationRequest, OauthProvider oauthProvider) {
-        TokenResponse tokenResponse = getToken(redirectUri, authorizationRequest, oauthProvider);
-        Map<String, Object> oauthUserProfile = getUserProfile(oauthProvider, tokenResponse);
-        return OauthAttributes.extract(authorizationRequest.getProviderName(), oauthUserProfile);
+    private UserProfile getUserProfile(AuthorizationRequest authorizationRequest, OauthProvider oauthProvider) {
+        TokenResponse tokenResponse = getToken(authorizationRequest, oauthProvider);
+        Map<String, Object> userAttributes = getUserAttributes(oauthProvider, tokenResponse);
+        return OauthAttributes.extract(authorizationRequest.getProviderName(), userAttributes);
     }
 
-    private TokenResponse getToken(String redirectUri, AuthorizationRequest authorizationRequest, OauthProvider oauthProvider) {
+    private TokenResponse getToken(AuthorizationRequest authorizationRequest, OauthProvider oauthProvider) {
         return WebClient.create()
                         .post()
                         .uri(oauthProvider.getTokenUrl())
@@ -69,13 +72,21 @@ public class OauthService {
                             header.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
                             header.setAcceptCharset(Collections.singletonList(StandardCharsets.UTF_8));
                         })
-                        .bodyValue(tokenRequest(redirectUri, authorizationRequest))
+                        .bodyValue(tokenRequest(authorizationRequest, oauthProvider))
                         .retrieve()
                         .bodyToMono(TokenResponse.class)
                         .block();
     }
 
-    private Map<String, Object> getUserProfile(OauthProvider oauthProvider, TokenResponse accessToken) {
+    private MultiValueMap<String, String> tokenRequest(AuthorizationRequest authorizationRequest, OauthProvider oauthProvider) {
+        MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
+        formData.add("code", authorizationRequest.getCode());
+        formData.add("grant_type", "authorization_code");
+        formData.add("redirect_uri", oauthProvider.getRedirectUrl());
+        return formData;
+    }
+
+    private Map<String, Object> getUserAttributes(OauthProvider oauthProvider, TokenResponse accessToken) {
         return WebClient.create()
                         .get()
                         .uri(oauthProvider.getUserInfoUrl())
@@ -83,14 +94,5 @@ public class OauthService {
                         .retrieve()
                         .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
                         .block();
-    }
-
-    private MultiValueMap<String, String> tokenRequest(String redirectUri,
-                                                       AuthorizationRequest authorizationRequest) {
-        MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
-        formData.add("code", authorizationRequest.getCode());
-        formData.add("grant_type", "authorization_code");
-        formData.add("redirect_uri", redirectUri);
-        return formData;
     }
 }

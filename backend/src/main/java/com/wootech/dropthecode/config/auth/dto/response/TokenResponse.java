@@ -25,8 +25,4 @@ public class TokenResponse {
     public String getTokenType() {
         return tokenType;
     }
-
-    public String getTokenWithType() {
-        return tokenType + " " + accessToken;
-    }
 }

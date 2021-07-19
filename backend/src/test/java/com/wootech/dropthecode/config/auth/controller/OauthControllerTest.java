@@ -1,6 +1,5 @@
 package com.wootech.dropthecode.config.auth.controller;
 
-import com.wootech.dropthecode.config.auth.dto.request.AuthorizationRequest;
 import com.wootech.dropthecode.config.auth.dto.response.LoginResponse;
 import com.wootech.dropthecode.config.auth.service.OauthService;
 import com.wootech.dropthecode.controller.RestApiDocumentTest;
@@ -18,9 +17,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(OauthController.class)
@@ -49,16 +47,13 @@ class OauthControllerTest extends RestApiDocumentTest {
     @DisplayName("github 아이디로 로그인")
     void loginWithGithub() throws Exception {
         // given
-        AuthorizationRequest authorizationRequest = new AuthorizationRequest(GITHUB, CODE);
         LoginResponse loginResponse = new LoginResponse(NAME, EMAIL, IMAGE_URL, ACCESS_TOKEN, REFRESH_TOKEN);
 
-        given(oauthService.login(anyString(), any())).willReturn(loginResponse);
-        String body = objectMapper.writeValueAsString(authorizationRequest);
+        given(oauthService.login(any())).willReturn(loginResponse);
 
         // when
         ResultActions result = this.restDocsMockMvc.perform(
-                post("/login/oauth")
-                        .content(body)
+                get("/login/oauth?providerName=" + GITHUB + "&code=" + CODE)
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON));
 

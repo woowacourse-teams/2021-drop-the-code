@@ -34,6 +34,7 @@ public class OauthController {
     private Cookie createCookie(String key, String value) {
         Cookie cookie = new Cookie(key, value);
         cookie.setHttpOnly(true);
+        cookie.setDomain("d1y4kq9j17q5cm.cloudfront.net");
         cookie.setPath("/");
         return cookie;
     }

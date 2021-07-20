@@ -22,7 +22,7 @@ public class TeacherProfile extends BaseEntity {
     private int career;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(foreignKey = @ForeignKey(name = "fk_teacherProfile_to_member"))
+    @JoinColumn(unique = true, foreignKey = @ForeignKey(name = "fk_teacherProfile_to_member"))
     private Member member;
 
     @OneToMany(mappedBy = "teacherProfile", fetch = FetchType.LAZY)

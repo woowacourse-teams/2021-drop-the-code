@@ -35,10 +35,6 @@ public class ReviewController {
      */
     @GetMapping("/student/{id}")
     public ResponseEntity<ReviewsResponse> showStudentReviews(@PathVariable Long id, @RequestHeader HttpHeaders headers) {
-        if (headers.get(HttpHeaders.AUTHORIZATION) == null) {
-            return ResponseEntity.status(401).build();
-        }
-
         ProfileResponse firstTeacher = new ProfileResponse(1L, "user1", "image1");
         ProfileResponse firstStudent = new ProfileResponse(2L, "user2", "image2");
 
@@ -102,10 +98,6 @@ public class ReviewController {
      */
     @PatchMapping("/{id}")
     public ResponseEntity<Void> changeProgress(@PathVariable Long id, @RequestHeader HttpHeaders headers) {
-        if (headers.get(HttpHeaders.AUTHORIZATION) == null) {
-            return ResponseEntity.status(401).build();
-        }
-
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

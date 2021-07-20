@@ -53,7 +53,7 @@ public class OauthService {
         // Redis
         // redisUtil.setData(String.valueOf(member.getId()), refreshToken);
 
-        return new LoginResponse(member.getName(), member.getEmail(), member.getImageUrl(), accessToken, refreshToken);
+        return new LoginResponse(member.getName(), member.getEmail(), member.getImageUrl(), member.getRole(), accessToken, refreshToken);
     }
 
     private UserProfile getUserProfile(AuthorizationRequest authorizationRequest, OauthProvider oauthProvider) {

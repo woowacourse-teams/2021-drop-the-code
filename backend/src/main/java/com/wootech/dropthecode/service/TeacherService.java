@@ -40,7 +40,7 @@ public class TeacherService {
 
     private final List<String> defaultSkills;
 
-    public TeacherService(TeacherProfileRepository teacherProfileRepository, LanguageRepository languageRepository, SkillRepository skillRepository, MemberRepository memberRepository, TeacherLanguageRepository teacherLanguageRepository, TeacherSkillRepository teacherSkillRepository, List<String> defaultSkills) {
+    public TeacherService(TeacherProfileRepository teacherProfileRepository, LanguageRepository languageRepository, MemberRepository memberRepository, TeacherLanguageRepository teacherLanguageRepository, TeacherSkillRepository teacherSkillRepository, List<String> defaultSkills) {
         this.teacherProfileRepository = teacherProfileRepository;
         this.languageRepository = languageRepository;
         this.memberRepository = memberRepository;

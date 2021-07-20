@@ -21,7 +21,7 @@ public abstract class RestApiDocumentTest {
     protected ObjectMapper objectMapper;
 
     @MockBean
-    private AuthService authService;
+    protected AuthService authService;
 
     protected MockMvc restDocsMockMvc;
     protected MockMvc failRestDocsMockMvc;

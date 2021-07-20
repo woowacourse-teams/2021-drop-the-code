@@ -7,6 +7,7 @@ import java.util.List;
 import com.wootech.dropthecode.config.auth.dto.response.LoginResponse;
 import com.wootech.dropthecode.config.auth.service.AuthService;
 import com.wootech.dropthecode.config.auth.service.OauthService;
+import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.dto.TechSpec;
 import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
@@ -60,7 +61,7 @@ class AuthenticationInterceptorTest {
         void login() {
             // given
             LoginResponse loginResponse = new LoginResponse("air", "air.junseo@gmail.com",
-                    "image url", "access-token", "refresh-token");
+                    "image url", Role.STUDENT, "access-token", "refresh-token");
 
             given(oauthService.login(any())).willReturn(loginResponse);
 

@@ -3,6 +3,8 @@ package com.wootech.dropthecode.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.querydsl.core.BooleanBuilder;
+import com.wootech.dropthecode.domain.QTeacherProfile;
 import com.wootech.dropthecode.domain.TeacherProfile;
 import com.wootech.dropthecode.dto.request.TeacherFilterRequest;
 import com.wootech.dropthecode.dto.response.TeacherPaginationResponse;
@@ -26,16 +28,16 @@ public class TeacherService {
 
     public TeacherPaginationResponse findAll(TeacherFilterRequest teacherFilterRequest, Pageable pageable) {
         List<String> skills = teacherFilterRequest.getTechSpec().getSkills();
-        if (skills.isEmpty()) {
-            skills = defaultSkills;
-        }
 
-        Page<TeacherProfile> teacherProfilePage =
-                teacherProfileRepository.findDistinctAllByLanguagesLanguageNameAndSkillsSkillNameInAndCareerGreaterThanEqual(
-                        pageable,
-                        teacherFilterRequest.getTechSpec().getLanguage(),
-                        skills,
-                        teacherFilterRequest.getCareer());
+        QTeacherProfile teacherProfile = QTeacherProfile.teacherProfile;
+        BooleanBuilder builder = new BooleanBuilder();
+        builder.and(teacherProfile.languages.any().language.name.eq(teacherFilterRequest.getTechSpec().getLanguage()));
+        if (!skills.isEmpty()) {
+            builder.and(teacherProfile.skills.any().skill.name.in(skills));
+        }
+        builder.and(teacherProfile.career.goe(teacherFilterRequest.getCareer()));
+
+        Page<TeacherProfile> teacherProfilePage = teacherProfileRepository.findAll(builder, pageable);
 
         final List<TeacherProfileResponse> teacherProfiles = teacherProfilePage.stream()
                                                                                .map(TeacherProfileResponse::from)

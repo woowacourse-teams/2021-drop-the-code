@@ -13,6 +13,7 @@ import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
 import com.wootech.dropthecode.dto.response.TeacherPaginationResponse;
 import com.wootech.dropthecode.dto.response.TeacherProfileResponse;
 import com.wootech.dropthecode.exception.AuthorizationException;
+import com.wootech.dropthecode.exception.TeacherException;
 import com.wootech.dropthecode.repository.TeacherProfileRepository;
 
 import org.springframework.data.domain.Page;
@@ -43,6 +44,7 @@ public class TeacherService {
         this.defaultSkills = defaultSkills;
     }
 
+    @Transactional
     public TeacherProfile save(TeacherProfile teacherProfile) {
         return teacherProfileRepository.save(teacherProfile);
     }
@@ -50,9 +52,9 @@ public class TeacherService {
     @Transactional
     public void registerTeacher(LoginMember loginMember, TeacherRegistrationRequest teacherRegistrationRequest) {
         Member member = memberService.findById(loginMember.getId())
-                                     .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+                                     .orElseThrow(() -> new TeacherException("리뷰어 등록을 하려는 사용자가 존재하지 않습니다."));
         if (member.hasRole(Role.TEACHER)) {
-            throw new IllegalArgumentException("이미 리뷰어로 등록된 사용자입니다.");
+            throw new TeacherException("이미 리뷰어로 등록된 사용자입니다.");
         }
 
         Map<String, Language> languageMap = languageService.findAllToMap();
@@ -72,7 +74,7 @@ public class TeacherService {
                                          .stream()
                                          .map(TechSpec::getLanguage)
                                          .map(languageName -> Optional.ofNullable(languageMap.get(languageName)))
-                                         .map(languageOptional -> languageOptional.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 언어입니다.")))
+                                         .map(languageOptional -> languageOptional.orElseThrow(() -> new TeacherException("존재하지 않는 언어입니다.")))
                                          .collect(Collectors.toList());
     }
 
@@ -82,7 +84,7 @@ public class TeacherService {
                                          .map(TechSpec::getSkills)
                                          .flatMap(Collection::stream)
                                          .map(skillName -> Optional.ofNullable(skillMap.get(skillName)))
-                                         .map(skill -> skill.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기술입니다.")))
+                                         .map(skill -> skill.orElseThrow(() -> new TeacherException("존재하지 않는 기술입니다.")))
                                          .collect(Collectors.toList());
     }
 

@@ -44,9 +44,4 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> dropTheCodeExceptionHandler(DropTheCodeException e) {
         return ResponseEntity.status(e.getHttpStatus()).body(new ErrorResponse(e.getMessage()));
     }
-
-    @ExceptionHandler(AuthorizationException.class)
-    public ResponseEntity<ErrorResponse> dropTheCodeExceptionHandler(AuthorizationException e) {
-        return ResponseEntity.status(e.getHttpStatus()).body(new ErrorResponse(e.getMessage()));
-    }
 }

@@ -1,8 +1,5 @@
 package com.wootech.dropthecode.config.auth.controller;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-
 import com.wootech.dropthecode.config.auth.dto.request.AuthorizationRequest;
 import com.wootech.dropthecode.config.auth.dto.response.LoginResponse;
 import com.wootech.dropthecode.config.auth.service.OauthService;
@@ -24,18 +21,8 @@ public class OauthController {
      * @title 로그인
      */
     @GetMapping("/login/oauth")
-    public ResponseEntity<LoginResponse> login(@ModelAttribute AuthorizationRequest authorizationRequest,
-                                               HttpServletResponse response) {
+    public ResponseEntity<LoginResponse> login(@ModelAttribute AuthorizationRequest authorizationRequest) {
         LoginResponse loginResponse = oauthService.login(authorizationRequest);
-        response.addCookie(createCookie("refreshToken", loginResponse.getRefreshToken()));
         return ResponseEntity.ok().body(loginResponse);
-    }
-
-    private Cookie createCookie(String key, String value) {
-        Cookie cookie = new Cookie(key, value);
-        cookie.setHttpOnly(true);
-        cookie.setDomain("d1y4kq9j17q5cm.cloudfront.net");
-        cookie.setPath("/");
-        return cookie;
     }
 }

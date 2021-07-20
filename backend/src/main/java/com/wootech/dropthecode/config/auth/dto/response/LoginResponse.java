@@ -1,8 +1,7 @@
 package com.wootech.dropthecode.config.auth.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.wootech.dropthecode.domain.Role;
 
-@JsonIgnoreProperties("refreshToken")
 public class LoginResponse {
     /**
      * 사용자 이름
@@ -20,19 +19,28 @@ public class LoginResponse {
     private String imageUrl;
 
     /**
+     * 선생님 등록 여부(STUDENT, TEACHER)
+     */
+    private Role role;
+
+    /**
      * access token
      */
     private String accessToken;
 
+    /**
+     * refresh token
+     */
     private String refreshToken;
 
     public LoginResponse() {
     }
 
-    public LoginResponse(String name, String email, String imageUrl, String accessToken, String refreshToken) {
+    public LoginResponse(String name, String email, String imageUrl, Role role, String accessToken, String refreshToken) {
         this.name = name;
         this.email = email;
         this.imageUrl = imageUrl;
+        this.role = role;
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
     }
@@ -47,6 +55,10 @@ public class LoginResponse {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public Role getRole() {
+        return role;
     }
 
     public String getAccessToken() {

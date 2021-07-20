@@ -12,8 +12,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedMethods("GET", "POST", "DELETE", "PUT", "PATCH", "OPTIONS")
                 .allowedHeaders("*")
-                .allowCredentials(true)
-                .allowedOrigins("https://d1y4kq9j17q5cm.cloudfront.net/")
+                .allowedOrigins("*")
                 .exposedHeaders("*");
 
         WebMvcConfigurer.super.addCorsMappings(registry);

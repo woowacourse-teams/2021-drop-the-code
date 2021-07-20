@@ -2,6 +2,7 @@ package com.wootech.dropthecode.controller;
 
 import com.wootech.dropthecode.config.auth.AuthenticationInterceptor;
 import com.wootech.dropthecode.config.auth.GetAuthenticationInterceptor;
+import com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils;
 import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
 import com.wootech.dropthecode.exception.AuthorizationException;
 import com.wootech.dropthecode.exception.GlobalExceptionHandler;
@@ -21,8 +22,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static capital.scalable.restdocs.jackson.JacksonResultHandlers.prepareJackson;
-import static com.wootech.dropthecode.controller.RestDocsMockMvcUtils.OBJECT_MAPPER;
-import static com.wootech.dropthecode.controller.RestDocsMockMvcUtils.restDocumentation;
+import static com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils.OBJECT_MAPPER;
+import static com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils.restDocumentation;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;

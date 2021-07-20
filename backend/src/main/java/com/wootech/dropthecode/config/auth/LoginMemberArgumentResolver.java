@@ -1,7 +1,6 @@
 package com.wootech.dropthecode.config.auth;
 
 import java.util.Objects;
-
 import javax.servlet.http.HttpServletRequest;
 
 import com.wootech.dropthecode.config.auth.domain.Login;

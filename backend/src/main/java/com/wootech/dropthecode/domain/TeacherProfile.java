@@ -1,7 +1,9 @@
 package com.wootech.dropthecode.domain;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.*;
 
 import com.wootech.dropthecode.domain.bridge.TeacherLanguage;
@@ -24,16 +26,23 @@ public class TeacherProfile extends BaseEntity {
     private Member member;
 
     @OneToMany(mappedBy = "teacherProfile", fetch = FetchType.LAZY)
-    private final List<TeacherLanguage> languages = new ArrayList<>();
+    private Set<TeacherLanguage> languages = new HashSet<>();
 
     @OneToMany(mappedBy = "teacherProfile", fetch = FetchType.LAZY)
-    private final List<TeacherSkill> skills = new ArrayList<>();
+    private Set<TeacherSkill> skills = new HashSet<>();
 
-    private final Integer sumReviewCount = 0;
+    private Integer sumReviewCount = 0;
 
-    private final Double averageReviewTime = (double) 0;
+    private Double averageReviewTime = (double) 0;
 
     protected TeacherProfile() {
+    }
+
+    public TeacherProfile(String title, String content, int career, Member member) {
+        this.title = title;
+        this.content = content;
+        this.career = career;
+        this.member = member;
     }
 
     public String getTitle() {
@@ -52,11 +61,11 @@ public class TeacherProfile extends BaseEntity {
         return member;
     }
 
-    public List<TeacherLanguage> getLanguages() {
+    public Set<TeacherLanguage> getLanguages() {
         return languages;
     }
 
-    public List<TeacherSkill> getSkills() {
+    public Set<TeacherSkill> getSkills() {
         return skills;
     }
 

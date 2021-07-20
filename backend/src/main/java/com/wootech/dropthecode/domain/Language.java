@@ -21,11 +21,15 @@ public class Language extends BaseEntity {
     @OneToMany(mappedBy = "language", fetch = FetchType.LAZY)
     private final List<TeacherLanguage> teachers = new ArrayList<>();
 
-    public String getName() {
-        return name;
+    public Language() {
     }
 
-    public Language() {
+    public Language(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public List<LanguageSkill> getSkills() {

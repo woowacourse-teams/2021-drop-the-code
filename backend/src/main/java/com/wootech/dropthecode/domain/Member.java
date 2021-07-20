@@ -84,4 +84,8 @@ public class Member extends BaseEntity {
     public void setRole(Role role) {
         this.role = role;
     }
+
+    public boolean hasRole(Role role) {
+        return this.role == role;
+    }
 }

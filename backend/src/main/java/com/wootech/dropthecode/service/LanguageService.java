@@ -1,6 +1,8 @@
 package com.wootech.dropthecode.service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import com.wootech.dropthecode.domain.Language;
@@ -29,5 +31,11 @@ public class LanguageService {
                                                                  .collect(Collectors.toList());
                             return new LanguageSkillsResponse(LanguageResponse.from(language), skills);
                         }).collect(Collectors.toList());
+    }
+
+    public Map<String, Language> findAllToMap() {
+        return languageRepository.findAll()
+                                 .stream()
+                                 .collect(Collectors.toMap(Language::getName, Function.identity()));
     }
 }

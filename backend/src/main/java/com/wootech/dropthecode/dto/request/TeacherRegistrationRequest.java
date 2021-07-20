@@ -1,11 +1,15 @@
 package com.wootech.dropthecode.dto.request;
 
 import java.util.List;
+import java.util.Map;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
+import com.wootech.dropthecode.domain.Language;
+import com.wootech.dropthecode.domain.Member;
+import com.wootech.dropthecode.domain.TeacherProfile;
 import com.wootech.dropthecode.dto.TechSpec;
 
 public class TeacherRegistrationRequest {
@@ -43,6 +47,14 @@ public class TeacherRegistrationRequest {
         this.content = content;
         this.career = career;
         this.techSpecs = techSpecs;
+    }
+
+    public TeacherProfile toTeacherProfileWithMember(Member member) {
+        return new TeacherProfile(title, content, career, member);
+    }
+
+    public void validateSkillsInLanguage(Map<String, Language> languageMap) {
+        techSpecs.forEach(techSpec -> techSpec.validateSkillsInLanguage(languageMap.get(techSpec.getLanguage())));
     }
 
     public String getTitle() {

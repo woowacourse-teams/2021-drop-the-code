@@ -139,7 +139,7 @@ public class RestDocsMockMvcUtils {
                               .build();
     }
 
-    private static RestDocumentationResultHandler restDocumentation(Snippet... snippets) {
+    public static RestDocumentationResultHandler restDocumentation(Snippet... snippets) {
         return MockMvcRestDocumentation
                 .document("{class-name}/{method-name}",
                         preprocessRequest(

@@ -1,12 +1,6 @@
-import { Dispatch, SetStateAction } from "react";
 import { useQuery } from "react-query";
 
 import { getLanguageList } from "../apis/reviewer";
-
-export interface FileterLanguageState {
-  filterLanguage: string | null;
-  onSetFilterLanguage: Dispatch<SetStateAction<string | null>>;
-}
 
 const useLanguageList = () => {
   const { data: languages } = useQuery(["getLanguageList"], async () => {

@@ -8,17 +8,24 @@ import com.wootech.dropthecode.exception.GlobalExceptionHandler;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.restdocs.http.HttpDocumentation;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static capital.scalable.restdocs.jackson.JacksonResultHandlers.prepareJackson;
+import static com.wootech.dropthecode.controller.RestDocsMockMvcUtils.OBJECT_MAPPER;
+import static com.wootech.dropthecode.controller.RestDocsMockMvcUtils.restDocumentation;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -103,13 +110,27 @@ public class ReviewControllerTest extends RestApiDocumentTest {
 
     @DisplayName("내가 요청한 리뷰 목록 조회 - Authorization Header 가 없을 경우 실패")
     @Test
-    void studentReviewsFailIfAuthorizationHeaderNotExists() throws Exception {
+    void studentReviewsFailIfAuthorizationHeaderNotExists(RestDocumentationContextProvider provider) throws Exception {
         // given
         doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
                 .when(authService).validatesAccessToken(any());
         this.failRestDocsMockMvc = MockMvcBuilders.standaloneSetup(reviewController)
+                                                  .addFilters(new CharacterEncodingFilter("UTF-8", true))
                                                   .addInterceptors(new GetAuthenticationInterceptor(authService))
                                                   .setControllerAdvice(new GlobalExceptionHandler())
+                                                  .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
+                                                  .alwaysDo(prepareJackson(OBJECT_MAPPER))
+                                                  .alwaysDo(restDocumentation())
+                                                  .apply(documentationConfiguration(provider)
+                                                          .uris()
+                                                          .withScheme("http")
+                                                          .withHost("localhost")
+                                                          .withPort(8080)
+                                                          .and()
+                                                          .snippets()
+                                                          .withDefaults(
+                                                                  HttpDocumentation.httpResponse()
+                                                          ))
                                                   .build();
         // when
         final ResultActions result = this.failRestDocsMockMvc
@@ -169,15 +190,42 @@ public class ReviewControllerTest extends RestApiDocumentTest {
         result.andExpect(status().isNoContent());
     }
 
+    /**
+     * .apply(documentationConfiguration(provider)
+     * .uris()
+     * .withScheme("http")
+     * .withHost("localhost")
+     * .withPort(8080)
+     * .and()
+     * .snippets()
+     * .withDefaults(
+     * HttpDocumentation.httpResponse()
+     * ))
+     */
+
     @DisplayName("리뷰 상태 변경 - Authorization Header 가 없을 경우 실패")
     @Test
-    void changeReviewProgressFailIfAuthorizationHeaderNotExists() throws Exception {
+    void changeReviewProgressFailIfAuthorizationHeaderNotExists(RestDocumentationContextProvider provider) throws Exception {
         // given
         doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
                 .when(authService).validatesAccessToken(any());
         this.failRestDocsMockMvc = MockMvcBuilders.standaloneSetup(reviewController)
+                                                  .addFilters(new CharacterEncodingFilter("UTF-8", true))
                                                   .addInterceptors(new AuthenticationInterceptor(authService))
                                                   .setControllerAdvice(new GlobalExceptionHandler())
+                                                  .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
+                                                  .alwaysDo(prepareJackson(OBJECT_MAPPER))
+                                                  .alwaysDo(restDocumentation())
+                                                  .apply(documentationConfiguration(provider)
+                                                          .uris()
+                                                          .withScheme("http")
+                                                          .withHost("localhost")
+                                                          .withPort(8080)
+                                                          .and()
+                                                          .snippets()
+                                                          .withDefaults(
+                                                                  HttpDocumentation.httpResponse()
+                                                          ))
                                                   .build();
 
         // when

@@ -1,8 +1,9 @@
-package com.wootech.dropthecode.controller;
+package com.wootech.dropthecode.controller.util;
 
 import java.util.Arrays;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wootech.dropthecode.controller.util.PrettyPrintingUtils;
 import com.wootech.dropthecode.exception.GlobalExceptionHandler;
 
 import org.springframework.boot.test.context.TestConfiguration;
@@ -139,7 +140,7 @@ public class RestDocsMockMvcUtils {
                               .build();
     }
 
-    private static RestDocumentationResultHandler restDocumentation(Snippet... snippets) {
+    public static RestDocumentationResultHandler restDocumentation(Snippet... snippets) {
         return MockMvcRestDocumentation
                 .document("{class-name}/{method-name}",
                         preprocessRequest(

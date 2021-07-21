@@ -33,12 +33,25 @@ public class Member extends BaseEntity {
     }
 
     public Member(String oauthId, String name, String email, String imageUrl, Role role, TeacherProfile teacherProfile) {
+        this(null, oauthId, name, email, imageUrl, role, teacherProfile);
+    }
+
+    public Member(Long id, String oauthId, String name, String email, String imageUrl, Role role, TeacherProfile teacherProfile) {
+        this.id = id;
         this.oauthId = oauthId;
         this.name = name;
         this.email = email;
         this.imageUrl = imageUrl;
         this.role = role;
         this.teacherProfile = teacherProfile;
+    }
+
+    public Member(String oauthId, String email, String name, String imageUrl, Role role) {
+        this.oauthId = oauthId;
+        this.email = email;
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.role = role;
     }
 
     public String getOauthId() {
@@ -71,5 +84,13 @@ public class Member extends BaseEntity {
 
     public List<Review> getReviewsAsStudent() {
         return reviewsAsStudent;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public boolean hasRole(Role role) {
+        return this.role == role;
     }
 }

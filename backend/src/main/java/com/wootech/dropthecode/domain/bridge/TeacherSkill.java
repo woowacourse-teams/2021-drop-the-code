@@ -23,6 +23,11 @@ public class TeacherSkill {
     protected TeacherSkill() {
     }
 
+    public TeacherSkill(TeacherProfile teacherProfile, Skill skill) {
+        this.teacherProfile = teacherProfile;
+        this.skill = skill;
+    }
+
     public Long getId() {
         return id;
     }

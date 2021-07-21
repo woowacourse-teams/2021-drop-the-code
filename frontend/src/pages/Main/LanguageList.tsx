@@ -5,10 +5,10 @@ import { Flex, FlexAlignCenter } from "../../components/shared/Flexbox/Flexbox";
 import useLanguageList from "../../hooks/useLanguageList";
 
 interface Props {
-  filterSkills: string[];
-  onSetFilterSkills: Dispatch<SetStateAction<string[]>>;
   filterLanguage: string | null;
+  filterSkills: string[];
   onSetFilterLanguage: Dispatch<SetStateAction<string | null>>;
+  onSetFilterSkills: Dispatch<SetStateAction<string[]>>;
 }
 
 const LanguageList = ({ filterLanguage, filterSkills, onSetFilterLanguage, onSetFilterSkills }: Props) => {

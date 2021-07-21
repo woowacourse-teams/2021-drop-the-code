@@ -1,8 +1,10 @@
 package com.wootech.dropthecode.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wootech.dropthecode.config.auth.service.AuthService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -17,6 +19,9 @@ public abstract class RestApiDocumentTest {
 
     @Autowired
     protected ObjectMapper objectMapper;
+
+    @MockBean
+    protected AuthService authService;
 
     protected MockMvc restDocsMockMvc;
     protected MockMvc failRestDocsMockMvc;

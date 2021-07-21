@@ -24,6 +24,10 @@ public class Skill extends BaseEntity {
     protected Skill() {
     }
 
+    public Skill(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

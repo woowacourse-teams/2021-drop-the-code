@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<List<ErrorResponse>> handleBindingException(MethodArgumentNotValidException e, BindingResult bindingResult) {
-
         List<ErrorResponse> errorResponses = new ArrayList<>();
 
         for (FieldError fieldError : bindingResult.getFieldErrors()) {
@@ -38,5 +38,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<List<ErrorResponse>> handleMissingParams(MissingServletRequestParameterException e) {
         String name = e.getParameterName() + " parameter is missing";
         return ResponseEntity.badRequest().body(Collections.singletonList(new ErrorResponse(name)));
+    }
+
+    @ExceptionHandler(DropTheCodeException.class)
+    public ResponseEntity<ErrorResponse> dropTheCodeExceptionHandler(DropTheCodeException e) {
+        return ResponseEntity.status(e.getHttpStatus()).body(new ErrorResponse(e.getMessage()));
     }
 }

@@ -100,11 +100,11 @@ public class TeacherService {
                 pageable
         );
 
-        final List<TeacherProfileResponse> teacherProfiles = teacherProfilePage.stream()
-                                                                               .map(TeacherProfileResponse::from)
-                                                                               .collect(Collectors.toList());
+        final List<TeacherProfileResponse> teacherProfileResponses = teacherProfilePage.stream()
+                                                                                       .map(TeacherProfileResponse::from)
+                                                                                       .collect(Collectors.toList());
 
-        return new TeacherPaginationResponse(teacherProfiles, teacherProfilePage.getTotalPages());
+        return new TeacherPaginationResponse(teacherProfileResponses, teacherProfilePage.getTotalPages());
     }
 }
 

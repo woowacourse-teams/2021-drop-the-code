@@ -33,6 +33,11 @@ public class Member extends BaseEntity {
     }
 
     public Member(String oauthId, String name, String email, String imageUrl, Role role, TeacherProfile teacherProfile) {
+        this(null, oauthId, name, email, imageUrl, role, teacherProfile);
+    }
+
+    public Member(Long id, String oauthId, String name, String email, String imageUrl, Role role, TeacherProfile teacherProfile) {
+        this.id = id;
         this.oauthId = oauthId;
         this.name = name;
         this.email = email;

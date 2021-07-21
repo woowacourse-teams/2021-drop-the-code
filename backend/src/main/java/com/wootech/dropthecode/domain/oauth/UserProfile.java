@@ -1,13 +1,13 @@
-package com.wootech.dropthecode.config.auth.domain;
+package com.wootech.dropthecode.domain.oauth;
 
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.domain.Role;
 
 public class UserProfile {
-    private String oauthId;
-    private String name;
-    private String email;
-    private String imageUrl;
+    private final String oauthId;
+    private final String name;
+    private final String email;
+    private final String imageUrl;
 
     public UserProfile(String oauthId, String name, String email, String imageUrl) {
         this.oauthId = oauthId;

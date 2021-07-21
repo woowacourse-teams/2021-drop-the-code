@@ -4,9 +4,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import com.wootech.dropthecode.config.auth.dto.response.LoginResponse;
-import com.wootech.dropthecode.config.auth.service.AuthService;
-import com.wootech.dropthecode.config.auth.service.OauthService;
+import com.wootech.dropthecode.dto.response.LoginResponse;
+import com.wootech.dropthecode.service.AuthService;
+import com.wootech.dropthecode.service.OauthService;
 import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.dto.TechSpec;
 import com.wootech.dropthecode.dto.request.ReviewCreateRequest;

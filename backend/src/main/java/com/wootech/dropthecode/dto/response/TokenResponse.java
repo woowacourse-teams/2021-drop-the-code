@@ -1,4 +1,4 @@
-package com.wootech.dropthecode.config.auth.dto.response;
+package com.wootech.dropthecode.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,12 +1,12 @@
-package com.wootech.dropthecode.config.auth;
+package com.wootech.dropthecode.controller.auth;
 
 import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 
-import com.wootech.dropthecode.config.auth.domain.Login;
-import com.wootech.dropthecode.config.auth.service.AuthService;
-import com.wootech.dropthecode.config.auth.util.AuthorizationExtractor;
+import com.wootech.dropthecode.controller.auth.util.AuthorizationExtractor;
 import com.wootech.dropthecode.domain.LoginMember;
+import com.wootech.dropthecode.domain.oauth.Login;
+import com.wootech.dropthecode.service.AuthService;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;

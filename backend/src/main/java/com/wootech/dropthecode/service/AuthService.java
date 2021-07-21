@@ -1,10 +1,9 @@
-package com.wootech.dropthecode.config.auth.service;
+package com.wootech.dropthecode.service;
 
-import com.wootech.dropthecode.config.auth.util.JwtTokenProvider;
+import com.wootech.dropthecode.controller.auth.util.JwtTokenProvider;
 import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.exception.AuthorizationException;
-import com.wootech.dropthecode.service.MemberService;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

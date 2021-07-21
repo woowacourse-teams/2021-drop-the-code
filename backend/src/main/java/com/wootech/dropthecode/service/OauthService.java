@@ -1,19 +1,19 @@
-package com.wootech.dropthecode.config.auth.service;
+package com.wootech.dropthecode.service;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Map;
 
-import com.wootech.dropthecode.config.auth.domain.InMemoryProviderRepository;
-import com.wootech.dropthecode.config.auth.domain.OauthAttributes;
-import com.wootech.dropthecode.config.auth.domain.OauthProvider;
-import com.wootech.dropthecode.config.auth.domain.UserProfile;
-import com.wootech.dropthecode.config.auth.dto.request.AuthorizationRequest;
-import com.wootech.dropthecode.config.auth.dto.response.LoginResponse;
-import com.wootech.dropthecode.config.auth.dto.response.TokenResponse;
-import com.wootech.dropthecode.config.auth.util.JwtTokenProvider;
-import com.wootech.dropthecode.config.auth.util.RedisUtil;
+import com.wootech.dropthecode.controller.auth.util.JwtTokenProvider;
+import com.wootech.dropthecode.controller.auth.util.RedisUtil;
 import com.wootech.dropthecode.domain.Member;
+import com.wootech.dropthecode.domain.oauth.InMemoryProviderRepository;
+import com.wootech.dropthecode.domain.oauth.OauthAttributes;
+import com.wootech.dropthecode.domain.oauth.OauthProvider;
+import com.wootech.dropthecode.domain.oauth.UserProfile;
+import com.wootech.dropthecode.dto.request.AuthorizationRequest;
+import com.wootech.dropthecode.dto.response.LoginResponse;
+import com.wootech.dropthecode.dto.response.TokenResponse;
 import com.wootech.dropthecode.repository.MemberRepository;
 
 import org.springframework.core.ParameterizedTypeReference;

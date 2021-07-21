@@ -1,4 +1,4 @@
-package com.wootech.dropthecode.config.auth.domain;
+package com.wootech.dropthecode.domain.oauth;
 
 import java.util.Arrays;
 import java.util.Map;

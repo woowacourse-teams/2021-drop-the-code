@@ -2,10 +2,10 @@ package com.wootech.dropthecode.config;
 
 import java.util.List;
 
-import com.wootech.dropthecode.config.auth.AuthenticationInterceptor;
-import com.wootech.dropthecode.config.auth.GetAuthenticationInterceptor;
-import com.wootech.dropthecode.config.auth.LoginMemberArgumentResolver;
-import com.wootech.dropthecode.config.auth.service.AuthService;
+import com.wootech.dropthecode.controller.auth.AuthenticationInterceptor;
+import com.wootech.dropthecode.controller.auth.GetAuthenticationInterceptor;
+import com.wootech.dropthecode.controller.auth.LoginMemberArgumentResolver;
+import com.wootech.dropthecode.service.AuthService;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

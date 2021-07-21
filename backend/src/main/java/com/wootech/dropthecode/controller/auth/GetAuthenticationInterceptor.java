@@ -1,9 +1,9 @@
-package com.wootech.dropthecode.config.auth;
+package com.wootech.dropthecode.controller.auth;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.wootech.dropthecode.config.auth.service.AuthService;
+import com.wootech.dropthecode.service.AuthService;
 
 public class GetAuthenticationInterceptor extends AuthenticationInterceptor {
 

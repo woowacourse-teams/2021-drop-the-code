@@ -1,8 +1,8 @@
-package com.wootech.dropthecode.config.auth.controller;
+package com.wootech.dropthecode.controller;
 
-import com.wootech.dropthecode.config.auth.dto.request.AuthorizationRequest;
-import com.wootech.dropthecode.config.auth.dto.response.LoginResponse;
-import com.wootech.dropthecode.config.auth.service.OauthService;
+import com.wootech.dropthecode.dto.request.AuthorizationRequest;
+import com.wootech.dropthecode.dto.response.LoginResponse;
+import com.wootech.dropthecode.service.OauthService;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

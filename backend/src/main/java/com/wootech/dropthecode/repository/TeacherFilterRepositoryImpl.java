@@ -1,4 +1,4 @@
-package com.wootech.dropthecode.service;
+package com.wootech.dropthecode.repository;
 
 import java.util.List;
 import java.util.Objects;
@@ -11,7 +11,6 @@ import com.wootech.dropthecode.domain.QTeacherProfile;
 import com.wootech.dropthecode.domain.TeacherProfile;
 import com.wootech.dropthecode.domain.bridge.QTeacherLanguage;
 import com.wootech.dropthecode.domain.bridge.QTeacherSkill;
-import com.wootech.dropthecode.repository.TeacherFilterRepository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

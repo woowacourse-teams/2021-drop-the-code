@@ -1,10 +1,10 @@
-package com.wootech.dropthecode.config.auth.util;
+package com.wootech.dropthecode.controller.auth.util;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import com.wootech.dropthecode.config.auth.domain.OauthProperties;
-import com.wootech.dropthecode.config.auth.domain.OauthProvider;
+import com.wootech.dropthecode.domain.oauth.OauthProperties;
+import com.wootech.dropthecode.domain.oauth.OauthProvider;
 
 public class OauthAdapter {
 

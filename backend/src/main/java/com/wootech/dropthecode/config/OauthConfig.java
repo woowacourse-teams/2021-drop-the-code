@@ -1,11 +1,11 @@
-package com.wootech.dropthecode.config.auth.config;
+package com.wootech.dropthecode.config;
 
 import java.util.Map;
 
-import com.wootech.dropthecode.config.auth.domain.InMemoryProviderRepository;
-import com.wootech.dropthecode.config.auth.domain.OauthProperties;
-import com.wootech.dropthecode.config.auth.domain.OauthProvider;
-import com.wootech.dropthecode.config.auth.util.OauthAdapter;
+import com.wootech.dropthecode.controller.auth.util.OauthAdapter;
+import com.wootech.dropthecode.domain.oauth.InMemoryProviderRepository;
+import com.wootech.dropthecode.domain.oauth.OauthProperties;
+import com.wootech.dropthecode.domain.oauth.OauthProvider;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

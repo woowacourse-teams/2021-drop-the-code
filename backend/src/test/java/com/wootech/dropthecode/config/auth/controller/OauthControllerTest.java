@@ -1,7 +1,8 @@
 package com.wootech.dropthecode.config.auth.controller;
 
-import com.wootech.dropthecode.config.auth.dto.response.LoginResponse;
-import com.wootech.dropthecode.config.auth.service.OauthService;
+import com.wootech.dropthecode.dto.response.LoginResponse;
+import com.wootech.dropthecode.service.OauthService;
+import com.wootech.dropthecode.controller.OauthController;
 import com.wootech.dropthecode.controller.RestApiDocumentTest;
 import com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils;
 import com.wootech.dropthecode.domain.Role;

@@ -1,10 +1,10 @@
-package com.wootech.dropthecode.config.auth;
+package com.wootech.dropthecode.controller.auth;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.wootech.dropthecode.config.auth.service.AuthService;
-import com.wootech.dropthecode.config.auth.util.AuthorizationExtractor;
+import com.wootech.dropthecode.controller.auth.util.AuthorizationExtractor;
+import com.wootech.dropthecode.service.AuthService;
 
 import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.HandlerInterceptor;

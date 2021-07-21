@@ -1,11 +1,11 @@
-package com.wootech.dropthecode.config.auth.domain;
+package com.wootech.dropthecode.domain.oauth;
 
 public class OauthProvider {
-    private String clientId;
-    private String clientSecret;
-    private String redirectUrl;
-    private String tokenUrl;
-    private String userInfoUrl;
+    private final String clientId;
+    private final String clientSecret;
+    private final String redirectUrl;
+    private final String tokenUrl;
+    private final String userInfoUrl;
 
     public OauthProvider(OauthProperties.User user, OauthProperties.Provider provider) {
         this(user.getClientId(), user.getClientSecret(), user.getRedirectUri(), provider.getTokenUri(), provider.getUserInfoUri());

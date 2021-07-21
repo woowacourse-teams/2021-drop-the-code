@@ -1,4 +1,4 @@
-package com.wootech.dropthecode.config.auth.util;
+package com.wootech.dropthecode.controller.auth.util;
 
 import java.time.Duration;
 

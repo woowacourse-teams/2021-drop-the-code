@@ -5,9 +5,7 @@ import styled from "styled-components";
 import { COLOR } from "../../../utils/constants/color";
 
 interface InnerProps {
-  height?: string;
   labelText?: string;
-  placeHolder?: string;
   errorMessage?: string;
 }
 
@@ -18,15 +16,15 @@ const Label = styled.label`
 
 const Inner = styled.textarea<InnerProps>`
   width: 100%;
-  ${({ height }) => (height ? `height: ${height}` : "")};
-  padding: 5px;
+  padding: 0.625rem 1.25rem;
   border-radius: 4px;
-  line-height: 1.5;
+  line-height: 2rem;
   border: 1px solid ${COLOR.GRAY_500};
+  white-space: break-spaces;
 `;
 
 const ErrorMessage = styled.div`
-  padding: 5px;
+  padding: 0.3125rem 0;
   font-size: 13px;
   color: ${COLOR.RED_600};
 `;

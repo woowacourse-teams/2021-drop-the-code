@@ -12,8 +12,8 @@ import com.wootech.dropthecode.dto.request.TeacherFilterRequest;
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
 import com.wootech.dropthecode.dto.response.TeacherPaginationResponse;
 import com.wootech.dropthecode.dto.response.TeacherProfileResponse;
-import com.wootech.dropthecode.exception.AuthorizationException;
 import com.wootech.dropthecode.exception.TeacherException;
+import com.wootech.dropthecode.repository.TeacherFilterRepository;
 import com.wootech.dropthecode.repository.TeacherProfileRepository;
 
 import org.springframework.data.domain.Page;
@@ -24,24 +24,27 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class TeacherService {
 
+    private final TeacherFilterRepository teacherFilterRepository;
     private final MemberService memberService;
     private final LanguageService languageService;
     private final SkillService skillService;
     private final TeacherLanguageService teacherLanguageService;
     private final TeacherSkillService teacherSkillService;
-
     private final TeacherProfileRepository teacherProfileRepository;
 
-    private final List<String> defaultSkills;
-
-    public TeacherService(MemberService memberService, LanguageService languageService, SkillService skillService, TeacherLanguageService teacherLanguageService, TeacherSkillService teacherSkillService, TeacherProfileRepository teacherProfileRepository, List<String> defaultSkills) {
+    public TeacherService(TeacherFilterRepository teacherFilterRepository,
+                          MemberService memberService, LanguageService languageService,
+                          SkillService skillService,
+                          TeacherLanguageService teacherLanguageService,
+                          TeacherSkillService teacherSkillService,
+                          TeacherProfileRepository teacherProfileRepository) {
+        this.teacherFilterRepository = teacherFilterRepository;
         this.memberService = memberService;
         this.languageService = languageService;
         this.skillService = skillService;
         this.teacherLanguageService = teacherLanguageService;
         this.teacherSkillService = teacherSkillService;
         this.teacherProfileRepository = teacherProfileRepository;
-        this.defaultSkills = defaultSkills;
     }
 
     @Transactional
@@ -90,21 +93,18 @@ public class TeacherService {
 
     @Transactional(readOnly = true)
     public TeacherPaginationResponse findAll(TeacherFilterRequest teacherFilterRequest, Pageable pageable) {
-        List<String> skills = teacherFilterRequest.getTechSpec().getSkills();
-        if (skills.isEmpty()) {
-            skills = defaultSkills;
-        }
-
-        Page<TeacherProfile> teacherProfilePage =
-                teacherProfileRepository.findDistinctAllByLanguagesLanguageNameAndSkillsSkillNameInAndCareerGreaterThanEqual(
-                        pageable,
-                        teacherFilterRequest.getTechSpec().getLanguage(),
-                        skills,
-                        teacherFilterRequest.getCareer());
+        Page<TeacherProfile> teacherProfilePage = teacherFilterRepository.findAll(
+                teacherFilterRequest.getTechSpec().getLanguage(),
+                teacherFilterRequest.getTechSpec().getSkills(),
+                teacherFilterRequest.getCareer(),
+                pageable
+        );
 
         final List<TeacherProfileResponse> teacherProfiles = teacherProfilePage.stream()
                                                                                .map(TeacherProfileResponse::from)
                                                                                .collect(Collectors.toList());
+
         return new TeacherPaginationResponse(teacherProfiles, teacherProfilePage.getTotalPages());
     }
 }
+

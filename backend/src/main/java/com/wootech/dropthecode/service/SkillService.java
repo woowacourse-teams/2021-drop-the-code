@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import com.wootech.dropthecode.domain.Language;
 import com.wootech.dropthecode.domain.Skill;
 import com.wootech.dropthecode.repository.SkillRepository;
 

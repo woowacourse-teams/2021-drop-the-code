@@ -2,10 +2,10 @@ package com.wootech.dropthecode.config;
 
 import java.util.List;
 
-import com.wootech.dropthecode.config.auth.AuthenticationInterceptor;
-import com.wootech.dropthecode.config.auth.GetAuthenticationInterceptor;
-import com.wootech.dropthecode.config.auth.LoginMemberArgumentResolver;
-import com.wootech.dropthecode.config.auth.service.AuthService;
+import com.wootech.dropthecode.controller.auth.AuthenticationInterceptor;
+import com.wootech.dropthecode.controller.auth.GetAuthenticationInterceptor;
+import com.wootech.dropthecode.controller.auth.LoginMemberArgumentResolver;
+import com.wootech.dropthecode.service.AuthService;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -26,8 +26,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedMethods("GET", "POST", "DELETE", "PUT", "PATCH", "OPTIONS")
                 .allowedHeaders("*")
-                .allowCredentials(true)
-                .allowedOrigins("https://d1y4kq9j17q5cm.cloudfront.net/")
+                .allowedOrigins("*")
                 .exposedHeaders("*");
 
         WebMvcConfigurer.super.addCorsMappings(registry);

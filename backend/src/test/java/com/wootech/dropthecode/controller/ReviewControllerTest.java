@@ -1,7 +1,7 @@
 package com.wootech.dropthecode.controller;
 
-import com.wootech.dropthecode.config.auth.AuthenticationInterceptor;
-import com.wootech.dropthecode.config.auth.GetAuthenticationInterceptor;
+import com.wootech.dropthecode.controller.auth.AuthenticationInterceptor;
+import com.wootech.dropthecode.controller.auth.GetAuthenticationInterceptor;
 import com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils;
 import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
 import com.wootech.dropthecode.exception.AuthorizationException;

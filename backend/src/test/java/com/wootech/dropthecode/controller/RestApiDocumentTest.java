@@ -1,7 +1,7 @@
 package com.wootech.dropthecode.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wootech.dropthecode.config.auth.service.AuthService;
+import com.wootech.dropthecode.service.AuthService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;

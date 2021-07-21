@@ -8,16 +8,16 @@ import com.wootech.dropthecode.domain.bridge.TeacherLanguage;
 import com.wootech.dropthecode.domain.bridge.TeacherSkill;
 
 public class TeacherProfileResponse {
-    private Long id;
-    private String email;
-    private String name;
-    private String imageUrl;
-    private String title;
-    private String content;
-    private Integer career;
-    private Integer sumReviewCount;
-    private Double averageReviewTime;
-    private TechSpecResponse techSpec;
+    private final Long id;
+    private final String email;
+    private final String name;
+    private final String imageUrl;
+    private final String title;
+    private final String content;
+    private final Integer career;
+    private final Integer sumReviewCount;
+    private final Double averageReviewTime;
+    private final TechSpecResponse techSpec;
 
     public TeacherProfileResponse(Long id, String email, String name, String imageUrl, String title, String content, Integer career, Integer sumReviewCount, Double averageReviewTime, TechSpecResponse techSpec) {
         this.id = id;

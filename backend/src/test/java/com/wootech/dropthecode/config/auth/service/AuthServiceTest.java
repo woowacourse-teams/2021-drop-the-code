@@ -1,10 +1,11 @@
 package com.wootech.dropthecode.config.auth.service;
 
-import com.wootech.dropthecode.config.auth.util.JwtTokenProvider;
+import com.wootech.dropthecode.controller.auth.util.JwtTokenProvider;
 import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.exception.AuthorizationException;
+import com.wootech.dropthecode.service.AuthService;
 import com.wootech.dropthecode.service.MemberService;
 
 import org.junit.jupiter.api.DisplayName;

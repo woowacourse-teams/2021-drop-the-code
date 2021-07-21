@@ -3,7 +3,6 @@ package com.wootech.dropthecode.dto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import javax.validation.constraints.NotBlank;
 
 import com.wootech.dropthecode.domain.Language;
@@ -57,13 +56,5 @@ public class TechSpec {
 
     public void setSkills(List<String> skills) {
         this.skills = skills;
-    }
-
-    @Override
-    public String toString() {
-        return "TechSpec{" +
-                "language='" + language + '\'' +
-                ", skills=" + skills +
-                '}';
     }
 }

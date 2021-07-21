@@ -2,8 +2,8 @@ package com.wootech.dropthecode.controller;
 
 import javax.validation.Valid;
 
-import com.wootech.dropthecode.config.auth.domain.Login;
 import com.wootech.dropthecode.domain.LoginMember;
+import com.wootech.dropthecode.domain.oauth.Login;
 import com.wootech.dropthecode.dto.TechSpec;
 import com.wootech.dropthecode.dto.request.TeacherFilterRequest;
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;

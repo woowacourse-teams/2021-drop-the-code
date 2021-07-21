@@ -1,4 +1,4 @@
-package com.wootech.dropthecode.controller;
+package com.wootech.dropthecode.controller.util;
 
 import java.io.IOException;
 

@@ -23,6 +23,11 @@ public class TeacherLanguage {
     protected TeacherLanguage() {
     }
 
+    public TeacherLanguage(TeacherProfile teacherProfile, Language language) {
+        this.teacherProfile = teacherProfile;
+        this.language = language;
+    }
+
     public Long getId() {
         return id;
     }

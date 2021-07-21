@@ -41,7 +41,8 @@ public class MemberController {
      * @title 리뷰어 등록
      */
     @PostMapping(value = "/teachers")
-    public ResponseEntity<Void> registerTeacher(@Valid @RequestBody TeacherRegistrationRequest teacherRegistrationRequest) {
+    public ResponseEntity<Void> registerTeacher(@Login LoginMember loginMember, @Valid @RequestBody TeacherRegistrationRequest teacherRegistrationRequest) {
+        teacherService.registerTeacher(loginMember, teacherRegistrationRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

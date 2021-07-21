@@ -2,6 +2,7 @@ package com.wootech.dropthecode.controller;
 
 import java.util.List;
 
+import com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils;
 import com.wootech.dropthecode.dto.response.LanguageResponse;
 import com.wootech.dropthecode.dto.response.LanguageSkillsResponse;
 import com.wootech.dropthecode.dto.response.SkillResponse;
@@ -17,7 +18,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.wootech.dropthecode.controller.RestDocsMockMvcUtils.OBJECT_MAPPER;
+import static com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils.OBJECT_MAPPER;
 import static java.util.Arrays.asList;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;

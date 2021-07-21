@@ -5,7 +5,7 @@ import { Redirect, useLocation } from "react-router-dom";
 import { oauthLogin } from "../../apis/auth";
 import Loading from "../../components/Loading/Loading";
 import useAuthContext from "../../hooks/useAuthContext";
-import { PATH } from "../../utils/constants/route";
+import { PATH } from "../../utils/constants/path";
 import { toURLSearchParams } from "../../utils/formatter";
 
 const OAuthReceiver = () => {

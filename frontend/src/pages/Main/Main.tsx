@@ -26,9 +26,9 @@ const Main = () => {
   } = useReviewerListOptions();
 
   return (
-    <main css={{ paddingTop: "6rem", maxWidth: LAYOUT.LG, margin: "auto" }}>
+    <main css={{ paddingTop: "6rem", maxWidth: LAYOUT.LG, margin: "0 auto" }}>
+      <h2 css={{ fontSize: "1.25rem", fontWeight: 600 }}>리뷰어 찾기</h2>
       <Flex css={{ flexDirection: "column", width: "100%" }}>
-        <h2 css={{ fontSize: "1.25rem", fontWeight: 600, margin: "1.25rem 0" }}>리뷰어 찾기</h2>
         <Flex>
           <Suspense fallback={<Loading />}>
             <LanguageList

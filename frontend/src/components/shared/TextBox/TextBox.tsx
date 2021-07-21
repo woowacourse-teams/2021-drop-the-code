@@ -20,7 +20,7 @@ const Title = styled.div`
 
 const Description = styled.div`
   margin-top: 0.9375rem;
-  line-height: 1.5rem;
+  line-height: 2rem;
   white-space: break-spaces;
 `;
 

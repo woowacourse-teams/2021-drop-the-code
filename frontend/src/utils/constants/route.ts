@@ -6,19 +6,12 @@ import ReviewHistory from "../../pages/ReviewHistory/ReviewHistory";
 import ReviewRequest from "../../pages/ReviewRequest/ReviewRequest";
 import { RouteShape, NavMenuShape } from "../../types/route";
 
-export const PATH = {
-  MAIN: "/",
-  REVIEWER_DETAIL: "/reviewer/:reviewerId",
-  REVIEWER_REGISTER: "/reviewer/register",
-  REVIEW_HISTORY: "/review/history",
-  REVIEW_REQUEST: "/review/request/:reviewerId",
-  REDIRECT_OAUTH: "/redirect/oauth",
-};
+import { PATH } from "./path";
 
 export const ROUTE: RouteShape[] = [
   { path: PATH.MAIN, Component: Main, isPrivate: false, exact: true },
-  { path: PATH.REVIEWER_DETAIL, Component: ReviewerDetail, isPrivate: false, exact: true },
   { path: PATH.REVIEWER_REGISTER, Component: ReviewerRegister, isPrivate: true, exact: true },
+  { path: PATH.REVIEWER_DETAIL, Component: ReviewerDetail, isPrivate: false, exact: true },
   { path: PATH.REVIEW_HISTORY, Component: ReviewHistory, isPrivate: true, exact: true },
   { path: PATH.REVIEW_REQUEST, Component: ReviewRequest, isPrivate: true, exact: true },
   { path: PATH.REDIRECT_OAUTH, Component: RedirectOAuth, isPrivate: false, exact: true },

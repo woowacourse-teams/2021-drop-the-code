@@ -33,4 +33,14 @@ export interface Reviewer {
   techSpec: TechSpec;
 }
 
+export interface ReviewerRegisterFormData {
+  techSpecs: {
+    language: string;
+    skills: string[];
+  }[];
+  career: string;
+  title: string;
+  content: string;
+}
+
 export type ReviewerSortOption = "career,desc" | "averageReviewTime,asc" | "sumReviewCount,desc" | null;

@@ -37,6 +37,12 @@ const GlobalStyle = createGlobalStyle`
     display: flex;
     text-decoration: none;
   }
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 2.5rem 0;
+  }
 `;
 
 export default GlobalStyle;

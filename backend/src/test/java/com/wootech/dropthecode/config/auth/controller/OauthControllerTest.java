@@ -62,7 +62,6 @@ class OauthControllerTest extends RestApiDocumentTest {
 
         // then
         result.andExpect(status().isOk());
-        result.andExpect(status().isOk());
         result.andExpect(jsonPath("$.name").value(NAME));
         result.andExpect(jsonPath("$.email").value(EMAIL));
         result.andExpect(jsonPath("$.imageUrl").value(IMAGE_URL));

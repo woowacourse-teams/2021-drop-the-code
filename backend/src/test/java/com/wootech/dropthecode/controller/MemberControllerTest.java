@@ -4,11 +4,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils;
 import com.wootech.dropthecode.dto.TechSpec;
 import com.wootech.dropthecode.dto.request.TeacherFilterRequest;
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
 import com.wootech.dropthecode.dto.response.*;
+import com.wootech.dropthecode.service.MemberService;
 import com.wootech.dropthecode.service.TeacherService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,19 +19,20 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.test.web.servlet.ResultActions;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils.OBJECT_MAPPER;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(MemberController.class)
 public class MemberControllerTest extends RestApiDocumentTest {
@@ -40,10 +43,32 @@ public class MemberControllerTest extends RestApiDocumentTest {
     @MockBean
     private TeacherService teacherService;
 
+    @MockBean
+    private MemberService memberService;
+
     @BeforeEach
     void setUp(RestDocumentationContextProvider provider) {
         this.restDocsMockMvc = RestDocsMockMvcUtils.successRestDocsMockMvc(provider, memberController);
         this.failRestDocsMockMvc = RestDocsMockMvcUtils.failRestDocsMockMvc(provider, memberController);
+    }
+
+    @DisplayName("로그인 한 유저 정보 조회")
+    @Test
+    void membersMe() throws Exception {
+        // given
+        MemberResponse memberResponse = new MemberResponse("air", "air.junseo@gmail.com", "s3://image url", Role.TEACHER);
+        given(memberService.findByLoginMember(any())).willReturn(memberResponse);
+
+        // when
+        ResultActions resultActions = this.restDocsMockMvc.perform(get("/members/me").with(userToken()));
+
+        // then
+        resultActions.andExpect(status().isOk())
+                     .andExpect(jsonPath("$.name").value("air"))
+                     .andExpect(jsonPath("$.email").value("air.junseo@gmail.com"))
+                     .andExpect(jsonPath("$.imageUrl").value("s3://image url"))
+                     .andExpect(jsonPath("$.role").value("TEACHER"));
+
     }
 
     @DisplayName("리뷰어 등록 테스트 - 성공")

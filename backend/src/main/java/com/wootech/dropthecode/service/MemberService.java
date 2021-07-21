@@ -2,10 +2,14 @@ package com.wootech.dropthecode.service;
 
 import java.util.Optional;
 
+import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Member;
+import com.wootech.dropthecode.dto.response.MemberResponse;
+import com.wootech.dropthecode.exception.AuthorizationException;
 import com.wootech.dropthecode.repository.MemberRepository;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MemberService {
@@ -16,6 +20,18 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
+    @Transactional(readOnly = true)
+    public MemberResponse findByLoginMember(LoginMember loginMember) {
+        loginMember.validatesAnonymous();
+        Member member = findById(loginMember.getId());
+        return MemberResponse.of(member);
+    }
+
+    @Transactional(readOnly = true)
+    public Member findById(Long id) {
+        return memberRepository.findById(id)
+                               .orElseThrow(() -> new AuthorizationException("유효하지 않은 유저입니다."));
+      
     public Optional<Member> findById(Long id) {
         return memberRepository.findById(id);
     }

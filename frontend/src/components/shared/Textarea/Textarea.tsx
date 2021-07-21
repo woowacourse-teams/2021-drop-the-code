@@ -6,11 +6,12 @@ import { COLOR } from "../../../utils/constants/color";
 
 interface InnerProps {
   labelText?: string;
-  errorMessage?: string;
+  errorMessage?: string | null;
 }
 
 const Label = styled.label`
   display: block;
+  font-weight: 600;
   margin-bottom: 10px;
 `;
 

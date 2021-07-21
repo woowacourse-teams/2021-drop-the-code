@@ -7,11 +7,12 @@ import { Flex } from "../Flexbox/Flexbox";
 
 interface InnerProps {
   labelText?: string;
-  errorMessage?: string;
+  errorMessage?: string | null;
 }
 
 const Label = styled.label`
   display: block;
+  font-weight: 600;
   margin-bottom: 0.625rem;
 `;
 

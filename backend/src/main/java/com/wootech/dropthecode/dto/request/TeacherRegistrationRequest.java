@@ -1,27 +1,18 @@
 package com.wootech.dropthecode.dto.request;
 
 import java.util.List;
+import java.util.Map;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
+import com.wootech.dropthecode.domain.Language;
+import com.wootech.dropthecode.domain.Member;
+import com.wootech.dropthecode.domain.TeacherProfile;
 import com.wootech.dropthecode.dto.TechSpec;
 
 public class TeacherRegistrationRequest {
-
-    /**
-     * 선생님 테크 스펙
-     */
-    @NotEmpty
-    private List<TechSpec> techSpecs;
-
-    /**
-     * 선생님 연차
-     */
-    @NotNull
-    @PositiveOrZero
-    private Integer career;
 
     /**
      * 선생님 자기 소개 제목
@@ -35,22 +26,35 @@ public class TeacherRegistrationRequest {
     @NotBlank
     private String content;
 
+    /**
+     * 선생님 연차
+     */
+    @NotNull
+    @PositiveOrZero
+    private Integer career;
+
+    /**
+     * 선생님 테크 스펙
+     */
+    @NotEmpty
+    private List<TechSpec> techSpecs;
+
     public TeacherRegistrationRequest() {
     }
 
-    public TeacherRegistrationRequest(List<TechSpec> techSpecs, Integer career, String title, String content) {
-        this.techSpecs = techSpecs;
-        this.career = career;
+    public TeacherRegistrationRequest(@NotBlank String title, @NotBlank String content, @NotNull @PositiveOrZero Integer career, @NotEmpty List<TechSpec> techSpecs) {
         this.title = title;
         this.content = content;
+        this.career = career;
+        this.techSpecs = techSpecs;
     }
 
-    public List<TechSpec> getTechSpecs() {
-        return techSpecs;
+    public TeacherProfile toTeacherProfileWithMember(Member member) {
+        return new TeacherProfile(title, content, career, member);
     }
 
-    public Integer getCareer() {
-        return career;
+    public void validateSkillsInLanguage(Map<String, Language> languageMap) {
+        techSpecs.forEach(techSpec -> techSpec.validateSkillsInLanguage(languageMap.get(techSpec.getLanguage())));
     }
 
     public String getTitle() {
@@ -59,6 +63,14 @@ public class TeacherRegistrationRequest {
 
     public String getContent() {
         return content;
+    }
+
+    public Integer getCareer() {
+        return career;
+    }
+
+    public List<TechSpec> getTechSpecs() {
+        return techSpecs;
     }
 }
 

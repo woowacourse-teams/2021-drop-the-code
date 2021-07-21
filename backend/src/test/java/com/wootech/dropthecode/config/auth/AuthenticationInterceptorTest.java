@@ -18,6 +18,7 @@ import com.wootech.dropthecode.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import org.junit.jupiter.api.DisplayName;
@@ -31,6 +32,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 
+@ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class AuthenticationInterceptorTest {
     private static final String BEARER = "Bearer";
@@ -137,10 +139,9 @@ class AuthenticationInterceptorTest {
             // given
             doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
                     .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
-            List<TechSpec> techSpecs = Collections.singletonList(
-                    new TechSpec("java", Arrays.asList("Spring", "Servlet")));
+            List<TechSpec> techSpecs = Collections.singletonList(new TechSpec("java", Arrays.asList("Spring", "Servlet")));
             TeacherRegistrationRequest request
-                    = new TeacherRegistrationRequest(techSpecs, 3, "백엔드 개발자입니다.", "환영합니다.");
+                    = new TeacherRegistrationRequest("백엔드 개발자입니다.", "환영합니다.", 3, techSpecs);
 
             // when
             WebTestClient.ResponseSpec response = webTestClient.post()
@@ -158,10 +159,9 @@ class AuthenticationInterceptorTest {
         void teachersWithToken() {
             // given
             doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
-            List<TechSpec> techSpecs = Collections.singletonList(
-                    new TechSpec("java", Arrays.asList("Spring", "Servlet")));
+            List<TechSpec> techSpecs = Collections.singletonList(new TechSpec("java", Arrays.asList("Spring", "Servlet")));
             TeacherRegistrationRequest request
-                    = new TeacherRegistrationRequest(techSpecs, 3, "백엔드 개발자입니다.", "환영합니다.");
+                    = new TeacherRegistrationRequest("백엔드 개발자입니다.", "환영합니다.", 3, techSpecs);
 
             // when
             WebTestClient.ResponseSpec response = webTestClient.post()

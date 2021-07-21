@@ -2,6 +2,8 @@ package com.wootech.dropthecode.controller;
 
 import javax.validation.Valid;
 
+import com.wootech.dropthecode.config.auth.domain.Login;
+import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.dto.TechSpec;
 import com.wootech.dropthecode.dto.request.TeacherFilterRequest;
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
@@ -27,7 +29,8 @@ public class MemberController {
      * @title 리뷰어 등록
      */
     @PostMapping(value = "/teachers")
-    public ResponseEntity<Void> registerTeacher(@Valid @RequestBody TeacherRegistrationRequest teacherRegistrationRequest) {
+    public ResponseEntity<Void> registerTeacher(@Login LoginMember loginMember, @Valid @RequestBody TeacherRegistrationRequest teacherRegistrationRequest) {
+        teacherService.registerTeacher(loginMember, teacherRegistrationRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

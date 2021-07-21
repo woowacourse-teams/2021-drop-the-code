@@ -19,15 +19,9 @@ public class MemberService {
 
     @Transactional(readOnly = true)
     public MemberResponse findByLoginMember(LoginMember loginMember) {
-        validatesMember(loginMember);
+        loginMember.validatesAnonymous();
         Member member = findById(loginMember.getId());
         return MemberResponse.of(member);
-    }
-
-    private void validatesMember(LoginMember loginMember) {
-        if (loginMember.isAnonymous()) {
-            throw new AuthorizationException("유효하지 않은 유저입니다.");
-        }
     }
 
     @Transactional(readOnly = true)

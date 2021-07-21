@@ -1,5 +1,7 @@
 package com.wootech.dropthecode.domain;
 
+import com.wootech.dropthecode.exception.AuthorizationException;
+
 public class LoginMember {
     private static final LoginMember ANONYMOUS = new LoginMember();
 
@@ -16,8 +18,10 @@ public class LoginMember {
         return ANONYMOUS;
     }
 
-    public boolean isAnonymous() {
-        return ANONYMOUS.equals(this);
+    public void validatesAnonymous() {
+        if (ANONYMOUS.equals(this)) {
+            throw new AuthorizationException("유효하지 않은 유저입니다.");
+        }
     }
 
     public Long getId() {

@@ -51,8 +51,8 @@ public class TeacherService {
 
     @Transactional
     public void registerTeacher(LoginMember loginMember, TeacherRegistrationRequest teacherRegistrationRequest) {
-        Member member = memberService.findById(loginMember.getId())
-                                     .orElseThrow(() -> new TeacherException("리뷰어 등록을 하려는 사용자가 존재하지 않습니다."));
+        Member member = memberService.findById(loginMember.getId());
+
         if (member.hasRole(Role.TEACHER)) {
             throw new TeacherException("이미 리뷰어로 등록된 사용자입니다.");
         }

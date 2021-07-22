@@ -6,10 +6,8 @@ import java.util.List;
 
 import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.dto.TechSpec;
-import com.wootech.dropthecode.dto.request.RefreshTokenRequest;
 import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
-import com.wootech.dropthecode.dto.response.AccessTokenResponse;
 import com.wootech.dropthecode.dto.response.LoginResponse;
 import com.wootech.dropthecode.dto.response.MemberResponse;
 import com.wootech.dropthecode.exception.AuthorizationException;
@@ -29,7 +27,6 @@ import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;

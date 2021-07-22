@@ -29,8 +29,7 @@ import static com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils.OBJEC
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -69,6 +68,14 @@ public class MemberControllerTest extends RestApiDocumentTest {
                      .andExpect(jsonPath("$.imageUrl").value("s3://image url"))
                      .andExpect(jsonPath("$.role").value("TEACHER"));
 
+    }
+
+    @DisplayName("멤버 삭제 테스트 - 성공")
+    @Test
+    void deleteMemberTest() throws Exception {
+        this.restDocsMockMvc.perform(delete("/members/1"))
+                            .andExpect(status().isNoContent())
+                            .andDo(print());
     }
 
     @DisplayName("리뷰어 등록 테스트 - 성공")

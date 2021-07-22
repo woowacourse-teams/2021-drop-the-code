@@ -20,7 +20,7 @@ public class Member extends BaseEntity {
     @Column(nullable = false)
     private Role role;
 
-    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private TeacherProfile teacherProfile;
 
     @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)

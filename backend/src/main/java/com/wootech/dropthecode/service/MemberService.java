@@ -31,7 +31,13 @@ public class MemberService {
                                .orElseThrow(() -> new AuthorizationException("유효하지 않은 유저입니다."));
     }
 
+    @Transactional
     public void save(Member member) {
         memberRepository.save(member);
+    }
+
+    @Transactional
+    public void deleteMember(Long id) {
+        memberRepository.deleteById(id);
     }
 }

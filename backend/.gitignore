@@ -195,3 +195,4 @@ gradle-app.setting
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,windows,intellij+all,java,gradle
 /src/main/resources/application-oauth.properties
+/src/main/resources/static/docs/api.html

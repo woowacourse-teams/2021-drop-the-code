@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction, useEffect } from "react";
 
-import Button from "../../components/shared/Button/Button";
-import { Flex, FlexAlignCenter } from "../../components/shared/Flexbox/Flexbox";
-import useLanguageList from "../../hooks/useLanguageList";
+import Button from "../../../components/shared/Button/Button";
+import { Flex, FlexAlignCenter } from "../../../components/shared/Flexbox/Flexbox";
+import useLanguageList from "../../../hooks/useLanguageList";
 
 interface Props {
   filterLanguage: string | null;

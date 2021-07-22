@@ -23,14 +23,14 @@ ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={THEME}>
       <AuthProvider>
-        <ModalProvider>
-          <QueryClientProvider client={queryClient}>
+        <QueryClientProvider client={queryClient}>
+          <ModalProvider>
             <GlobalStyle />
             <BrowserRouter>
               <App />
             </BrowserRouter>
-          </QueryClientProvider>
-        </ModalProvider>
+          </ModalProvider>
+        </QueryClientProvider>
       </AuthProvider>
     </ThemeProvider>
   </React.StrictMode>,

@@ -3,6 +3,7 @@ import React, { ReactNode } from "react";
 import styled from "styled-components";
 
 import useModalContext from "../../hooks/useModalContext";
+import { FlexCenter } from "../shared/Flexbox/Flexbox";
 
 import ModalPortal from "./ModalPortal";
 
@@ -30,7 +31,10 @@ const Dimmed = styled.div`
   left: 0;
 `;
 
-const Contents = styled.div`
+const Contents = styled(FlexCenter)`
+  padding: 20px;
+  border-radius: ${({ theme }) => theme.common.shape.rounded};
+  background-color: white;
   z-index: ${({ theme }) => theme.common.zIndex.modal};
 `;
 

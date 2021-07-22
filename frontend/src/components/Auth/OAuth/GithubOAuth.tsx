@@ -9,8 +9,6 @@ const Inner = styled(FlexCenter)`
   height: 18.75rem;
   flex-direction: column;
   justify-content: space-evenly;
-  background-color: white;
-  border-radius: ${({ theme }) => theme.common.shape.rounded};
 `;
 
 const LoginAnchor = styled.a`

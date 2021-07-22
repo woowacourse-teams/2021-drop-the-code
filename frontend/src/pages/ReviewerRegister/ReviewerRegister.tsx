@@ -14,7 +14,7 @@ import { PLACE_HOLDER } from "../../utils/constants/message";
 import { PATH } from "../../utils/constants/path";
 import { LAYOUT } from "../../utils/constants/size";
 import { STANDARD } from "../../utils/constants/standard";
-import validators from "../../utils/validators/reviewerRegisterForm";
+import reviewerRegisterValidators from "../../utils/validators/reviewerRegisterValidators";
 // import useAuthContext from "../../hooks/useAuthContext";
 
 import SpecPicker from "./SpecPicker";
@@ -48,7 +48,7 @@ const ReviewerRegister = () => {
 
   // TODO 반복되는 메인 컴포넌트 + 테마로 관리하기
   return (
-    <main css={{ paddingTop: "6rem", maxWidth: LAYOUT.LG, margin: "0 auto" }}>
+    <main css={{ paddingTop: "6rem", width: "100%", maxWidth: LAYOUT.LG, margin: "0 auto" }}>
       <h2 css={{ fontSize: "1.25rem", fontWeight: 600 }}>리뷰어 등록</h2>
       <FormProvider
         submit={async ({ career, title, content }) => {
@@ -67,7 +67,7 @@ const ReviewerRegister = () => {
             content,
           });
         }}
-        validators={validators}
+        validators={reviewerRegisterValidators}
         css={{ marginTop: "1.25rem", width: "100%" }}
       >
         <Suspense fallback={<Loading />}>

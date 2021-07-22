@@ -9,7 +9,6 @@ import Button, { Props as ButtonProps } from "../shared/Button/Button";
 const Inner = styled.div`
   display: flex;
   position: relative;
-  width: 100%;
 `;
 
 const Dimmed = styled.div`

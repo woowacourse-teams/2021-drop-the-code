@@ -3,7 +3,6 @@ package com.wootech.dropthecode.controller.util;
 import java.util.Arrays;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wootech.dropthecode.controller.util.PrettyPrintingUtils;
 import com.wootech.dropthecode.exception.GlobalExceptionHandler;
 
 import org.springframework.boot.test.context.TestConfiguration;

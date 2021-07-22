@@ -4,6 +4,11 @@ import com.wootech.dropthecode.domain.Role;
 
 public class LoginResponse {
     /**
+     * 사용자 id
+     */
+    private Long id;
+
+    /**
      * 사용자 이름
      */
     private String name;
@@ -24,6 +29,11 @@ public class LoginResponse {
     private Role role;
 
     /**
+     * 토큰 타입
+     */
+    private String tokenType;
+
+    /**
      * access token
      */
     private String accessToken;
@@ -36,13 +46,19 @@ public class LoginResponse {
     public LoginResponse() {
     }
 
-    public LoginResponse(String name, String email, String imageUrl, Role role, String accessToken, String refreshToken) {
+    public LoginResponse(Long id, String name, String email, String imageUrl, Role role, String tokenType, String accessToken, String refreshToken) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.imageUrl = imageUrl;
         this.role = role;
+        this.tokenType = tokenType;
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -59,6 +75,10 @@ public class LoginResponse {
 
     public Role getRole() {
         return role;
+    }
+
+    public String getTokenType() {
+        return tokenType;
     }
 
     public String getAccessToken() {

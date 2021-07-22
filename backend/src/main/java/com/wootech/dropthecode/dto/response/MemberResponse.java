@@ -5,26 +5,35 @@ import com.wootech.dropthecode.domain.Role;
 
 public class MemberResponse {
     /**
+     * 로그인 한 유저 id
+     */
+    private Long id;
+
+    /**
      * 로그인 한 유저 이름
      */
-    private final String name;
+    private String name;
 
     /**
      * 로그인 한 유저 이메일
      */
-    private final String email;
+    private String email;
 
     /**
      * 로그인 한 유저 이미지 url
      */
-    private final String imageUrl;
+    private String imageUrl;
 
     /**
      * 로그인 한 유저의 Role
      */
-    private final Role role;
+    private Role role;
 
-    public MemberResponse(String name, String email, String imageUrl, Role role) {
+    public MemberResponse() {
+    }
+
+    public MemberResponse(Long id, String name, String email, String imageUrl, Role role) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.imageUrl = imageUrl;
@@ -32,7 +41,11 @@ public class MemberResponse {
     }
 
     public static MemberResponse of(Member member) {
-        return new MemberResponse(member.getName(), member.getEmail(), member.getImageUrl(), member.getRole());
+        return new MemberResponse(member.getId(), member.getName(), member.getEmail(), member.getImageUrl(), member.getRole());
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {

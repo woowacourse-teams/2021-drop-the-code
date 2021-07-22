@@ -56,7 +56,7 @@ class MemberServiceTest {
 
         // then
         assertThat(result).usingRecursiveComparison()
-                          .isEqualTo(new MemberResponse("air", "air.junseo@gmail.com", "s3://image", Role.STUDENT));
+                          .isEqualTo(new MemberResponse(1L, "air", "air.junseo@gmail.com", "s3://image", Role.STUDENT));
     }
 
     @Test

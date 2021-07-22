@@ -2,7 +2,7 @@ package com.wootech.dropthecode.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class TokenResponse {
+public class OauthTokenResponse {
     @JsonProperty("access_token")
     private String accessToken;
 
@@ -11,7 +11,7 @@ public class TokenResponse {
     @JsonProperty("token_type")
     private String tokenType;
 
-    public TokenResponse() {
+    public OauthTokenResponse() {
     }
 
     public String getAccessToken() {

@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils;
+import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.dto.TechSpec;
 import com.wootech.dropthecode.dto.request.TeacherFilterRequest;
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
@@ -56,7 +56,7 @@ public class MemberControllerTest extends RestApiDocumentTest {
     @Test
     void membersMe() throws Exception {
         // given
-        MemberResponse memberResponse = new MemberResponse("air", "air.junseo@gmail.com", "s3://image url", Role.TEACHER);
+        MemberResponse memberResponse = new MemberResponse(1L, "air", "air.junseo@gmail.com", "s3://image url", Role.TEACHER);
         given(memberService.findByLoginMember(any())).willReturn(memberResponse);
 
         // when

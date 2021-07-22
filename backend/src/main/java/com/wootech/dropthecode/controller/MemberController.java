@@ -42,7 +42,7 @@ public class MemberController {
      */
     // todo 유저 삭제는 관리자나 본인만 할 수 있도록 허용하는 기능 추가
     @DeleteMapping("/members/{id}")
-    public ResponseEntity<MemberResponse> loginMemberInformation(@PathVariable Long id) {
+    public ResponseEntity<MemberResponse> deleteMember(@PathVariable Long id) {
         memberService.deleteMember(id);
         return ResponseEntity.noContent().build();
     }

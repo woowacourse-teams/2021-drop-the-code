@@ -91,6 +91,8 @@ include::{snippets}/language-controller-test/find-all-languages/auto-section.ado
 
 include::{snippets}/member-controller-test/members-me/auto-section.adoc[]
 
+include::{snippets}/member-controller-test/delete-member-test/auto-section.adoc[]
+
 include::{snippets}/member-controller-test/register-teacher-test/auto-section.adoc[]
 
 *필드 값이 하나라도 들어있지 않을 때의 응답*

@@ -3,7 +3,3 @@ export const LAYOUT = {
   MD: "768px",
   LG: "1024px",
 };
-
-export const Z_INDEX = {
-  FLOATING_MENU: 1004,
-};

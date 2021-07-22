@@ -1,23 +1,24 @@
-package com.wootech.dropthecode.config.auth;
+package com.wootech.dropthecode.controller.auth;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import com.wootech.dropthecode.dto.response.LoginResponse;
-import com.wootech.dropthecode.service.AuthService;
-import com.wootech.dropthecode.service.OauthService;
 import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.dto.TechSpec;
+import com.wootech.dropthecode.dto.request.RefreshTokenRequest;
 import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
+import com.wootech.dropthecode.dto.response.AccessTokenResponse;
+import com.wootech.dropthecode.dto.response.LoginResponse;
+import com.wootech.dropthecode.dto.response.MemberResponse;
 import com.wootech.dropthecode.exception.AuthorizationException;
-import com.wootech.dropthecode.service.LanguageService;
-import com.wootech.dropthecode.service.TeacherService;
+import com.wootech.dropthecode.service.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -28,16 +29,19 @@ import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
+import static org.springframework.web.reactive.function.BodyInserters.fromFormData;
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class AuthenticationInterceptorTest {
-    private static final String BEARER = "Bearer";
+    private static final String BEARER = "Bearer ";
     private static final String VALID_ACCESS_TOKEN = "valid.access.token";
     private static final String INVALID_ACCESS_TOKEN = "invalid.access.token";
+    private static final String REFRESH_TOKEN = "valid.refresh.token";
 
     @Autowired
     private WebTestClient webTestClient;
@@ -54,6 +58,9 @@ class AuthenticationInterceptorTest {
     @MockBean
     private TeacherService teacherService;
 
+    @MockBean
+    private MemberService memberService;
+
     @Nested
     @DisplayName("인터셉터 거치지 않는 요청 확인")
     class NoApplyInterceptor {
@@ -62,8 +69,8 @@ class AuthenticationInterceptorTest {
         @DisplayName("GET /login/oauth")
         void login() {
             // given
-            LoginResponse loginResponse = new LoginResponse("air", "air.junseo@gmail.com",
-                    "image url", Role.STUDENT, "access-token", "refresh-token");
+            LoginResponse loginResponse = new LoginResponse(1L, "air", "air.junseo@gmail.com",
+                    "image url", Role.STUDENT, "Bearer", "access-token", "refresh-token");
 
             given(oauthService.login(any())).willReturn(loginResponse);
 
@@ -273,6 +280,110 @@ class AuthenticationInterceptorTest {
             // when
             WebTestClient.ResponseSpec response = webTestClient.patch()
                                                                .uri("/reviews/1")
+                                                               .header("Authorization", BEARER + VALID_ACCESS_TOKEN)
+                                                               .exchange();
+
+            // then
+            response.expectStatus().isNoContent();
+        }
+
+        @Test
+        @DisplayName("POST /token")
+        void refreshingToken() {
+            // given
+            doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+                    .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
+
+            // when
+            WebTestClient.ResponseSpec response = webTestClient.post()
+                                                               .uri("/token")
+                                                               .header("Authorization", BEARER + INVALID_ACCESS_TOKEN)
+                                                               .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                                               .body(fromFormData("refreshToken", REFRESH_TOKEN))
+                                                               .exchange();
+
+            // then
+            response.expectStatus().isUnauthorized();
+        }
+
+        @Test
+        @DisplayName("POST /token with token")
+        void refreshingTokenWithToken() {
+            // given
+            doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
+
+            // when
+            WebTestClient.ResponseSpec response = webTestClient.post()
+                                                               .uri("/token")
+                                                               .header("Authorization", BEARER + VALID_ACCESS_TOKEN)
+                                                               .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                                               .body(fromFormData("refreshToken", REFRESH_TOKEN))
+                                                               .exchange();
+
+            // then
+            response.expectStatus().isOk();
+        }
+
+        @Test
+        @DisplayName("GET /members/me")
+        void membersMe() {
+            // given
+            doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+                    .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
+
+            // when
+            WebTestClient.ResponseSpec response = webTestClient.get()
+                                                               .uri("/members/me")
+                                                               .header("Authorization", BEARER + INVALID_ACCESS_TOKEN)
+                                                               .exchange();
+
+            // then
+            response.expectStatus().isUnauthorized();
+        }
+
+        @Test
+        @DisplayName("GET /members/me with token")
+        void membersMeWithToken() {
+            // given
+            doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
+            given(memberService.findByLoginMember(any())).willReturn(new MemberResponse());
+
+            // when
+            WebTestClient.ResponseSpec response = webTestClient.get()
+                                                               .uri("/members/me")
+                                                               .header("Authorization", BEARER + VALID_ACCESS_TOKEN)
+                                                               .exchange();
+
+            // then
+            response.expectStatus().isOk();
+        }
+
+        @Test
+        @DisplayName("POST /logout")
+        void logout() {
+            // given
+            doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+                    .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
+
+            // when
+            WebTestClient.ResponseSpec response = webTestClient.post()
+                                                               .uri("/logout")
+                                                               .header("Authorization", BEARER + INVALID_ACCESS_TOKEN)
+                                                               .exchange();
+
+            // then
+            response.expectStatus().isUnauthorized();
+        }
+
+        @Test
+        @DisplayName("POST /logout with token")
+        void logoutWithToken() {
+            // given
+            doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
+
+            // when
+            WebTestClient.ResponseSpec response = webTestClient.post()
+                                                               .uri("/logout")
                                                                .header("Authorization", BEARER + VALID_ACCESS_TOKEN)
                                                                .exchange();
 

@@ -1,7 +1,7 @@
 export const STANDARD = {
   REVIEWER_REGISTER: {
     TITLE: {
-      MAX_LENGTH: 30,
+      MAX_LENGTH: 50,
     },
     CAREER: {
       MIN: 0,
@@ -9,6 +9,17 @@ export const STANDARD = {
     },
     CONTENT: {
       MAX_LENGTH: 5000,
+    },
+  },
+  REVIEW_REQUEST: {
+    TITLE: {
+      MAX_LENGTH: 50,
+    },
+    PR_URL: {
+      MAX_LENGTH: 200,
+    },
+    CONTENT: {
+      MAX_LENGTH: 1000,
     },
   },
 };

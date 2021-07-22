@@ -1,7 +1,7 @@
 import { ERROR_MESSAGE } from "../constants/message";
 import { STANDARD } from "../constants/standard";
 
-const validators = {
+const reviewerRegisterValidators = {
   title: (title: string) => {
     if (title.length >= STANDARD.REVIEWER_REGISTER.TITLE.MAX_LENGTH) {
       throw Error(ERROR_MESSAGE.REVIEWER_REGISTER.TITLE);
@@ -22,4 +22,4 @@ const validators = {
   },
 };
 
-export default validators;
+export default reviewerRegisterValidators;

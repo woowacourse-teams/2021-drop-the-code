@@ -10,8 +10,8 @@ import { ReviewerSortOption } from "../../types/reviewer";
 import { COLOR } from "../../utils/constants/color";
 import { LAYOUT } from "../../utils/constants/size";
 
-import LanguageList from "./LanguageList";
-import ReviewerList from "./ReviewerList";
+import LanguageList from "./LanguageList/LanguageList";
+import ReviewerList from "./ReviewerList/ReviewerList";
 
 const Main = () => {
   const {
@@ -26,7 +26,7 @@ const Main = () => {
   } = useReviewerListOptions();
 
   return (
-    <main css={{ paddingTop: "6rem", maxWidth: LAYOUT.LG, margin: "0 auto" }}>
+    <main css={{ paddingTop: "6rem", width: "100%", maxWidth: LAYOUT.LG, margin: "0 auto" }}>
       <h2 css={{ fontSize: "1.25rem", fontWeight: 600 }}>리뷰어 찾기</h2>
       <Flex css={{ flexDirection: "column", width: "100%" }}>
         <Flex>

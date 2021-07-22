@@ -30,7 +30,7 @@ const useReviewerList = (options: Options) => {
       );
 
       if (!response.isSuccess) {
-        // 스낵바에 전달
+        // TODO: 스낵바에 전달
         // response.error.message;
         return { teacherProfiles: [], pageCount: 0 };
       }

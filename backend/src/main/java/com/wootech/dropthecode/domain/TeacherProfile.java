@@ -23,10 +23,10 @@ public class TeacherProfile extends BaseEntity {
     @JoinColumn(unique = true, foreignKey = @ForeignKey(name = "fk_teacherProfile_to_member"))
     private Member member;
 
-    @OneToMany(mappedBy = "teacherProfile", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "teacherProfile", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private final Set<TeacherLanguage> languages = new HashSet<>();
 
-    @OneToMany(mappedBy = "teacherProfile", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "teacherProfile", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private final Set<TeacherSkill> skills = new HashSet<>();
 
     private final Integer sumReviewCount = 0;

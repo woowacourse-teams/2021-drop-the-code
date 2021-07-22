@@ -28,9 +28,8 @@ const ReviewerRegister = () => {
   const [specs, setSpecs] = useState<Specs>({});
 
   // const { user } = useAuthContext();
-
   const history = useHistory();
-  // Mutation인 경우 Loading 처리
+
   const mutation = useMutation(
     (reviewerRegisterFormData: ReviewerRegisterFormData) => {
       return registerReviewer(reviewerRegisterFormData);
@@ -45,6 +44,8 @@ const ReviewerRegister = () => {
       },
     }
   );
+
+  if (mutation.isLoading) return <Loading />;
 
   // TODO 반복되는 메인 컴포넌트 + 테마로 관리하기
   return (

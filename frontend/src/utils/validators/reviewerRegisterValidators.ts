@@ -23,7 +23,3 @@ const reviewerRegisterValidators = {
 };
 
 export default reviewerRegisterValidators;
-
-//https://github.com/localForage/localForage/pull/1019
-
-//   **/github.com**/**/pull/** */ */

@@ -13,7 +13,7 @@ interface Props {
 
 const LanguageList = ({ filterLanguage, filterSkills, onSetFilterLanguage, onSetFilterSkills }: Props) => {
   const { languages } = useLanguageList();
-  // TODO 텅빈화면
+  // TODO: 텅빈화면
   if (languages?.length === 0) return <></>;
 
   // 초기 메인페이지에서 필터 언어를 첫번째로 선택

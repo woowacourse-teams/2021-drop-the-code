@@ -4,6 +4,7 @@ import { requestReview } from "../../../apis/review";
 import FormProvider from "../../../components/FormProvider/FormProvider";
 import InputField from "../../../components/FormProvider/InputField";
 import TextareaField from "../../../components/FormProvider/TextareaField";
+import Loading from "../../../components/Loading/Loading";
 import Button from "../../../components/shared/Button/Button";
 import { Flex } from "../../../components/shared/Flexbox/Flexbox";
 import useAuthContext from "../../../hooks/useAuthContext";
@@ -20,7 +21,7 @@ interface Props {
 
 const ReviewRequest = ({ teacherId }: Props) => {
   const { user } = useAuthContext();
-  // Mutation인 경우 Loading 처리
+
   const mutation = useMutation(
     (reviewRequestFormData: ReviewRequestFormData) => {
       return requestReview(reviewRequestFormData);
@@ -34,6 +35,8 @@ const ReviewRequest = ({ teacherId }: Props) => {
       },
     }
   );
+
+  if (mutation.isLoading) return <Loading />;
 
   return (
     <div css={{ width: "40.625rem", margin: "0 auto" }}>

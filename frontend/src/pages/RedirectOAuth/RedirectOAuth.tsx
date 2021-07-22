@@ -22,7 +22,7 @@ const OAuthReceiver = () => {
     const response = await oauthLogin(toURLSearchParams({ providerName, code }));
 
     if (!response.isSuccess) {
-      // 스낵바에 전달
+      // TODO: 스낵바에 전달
       // response.error.message;
       return;
     }

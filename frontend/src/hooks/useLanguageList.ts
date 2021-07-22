@@ -6,7 +6,7 @@ const useLanguageList = () => {
   const { data: languages } = useQuery(["getLanguageList"], async () => {
     const response = await getLanguageList();
     if (!response.isSuccess) {
-      // 스낵바에 전달
+      // TODO:스낵바에 전달
       // response.error.message;
       return [];
     }

@@ -53,6 +53,7 @@ const common: Common = {
   },
   zIndex: {
     modal: 99,
+    menuItem: 88,
   },
 };
 

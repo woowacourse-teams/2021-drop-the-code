@@ -3,7 +3,6 @@ import { ReactNode, useState } from "react";
 import styled from "styled-components";
 
 import { COLOR } from "../../utils/constants/color";
-import { Z_INDEX } from "../../utils/constants/size";
 import Button, { Props as ButtonProps } from "../shared/Button/Button";
 
 const Inner = styled.div`
@@ -29,7 +28,7 @@ const Menu = styled.div`
   overflow: auto;
   right: 0;
   padding: 1.875rem;
-  z-index: ${Z_INDEX.FLOATING_MENU};
+  z-index: ${({ theme }) => theme.common.zIndex.menuItem};
 `;
 
 export interface Props extends Omit<ButtonProps, "active" | "onClick"> {

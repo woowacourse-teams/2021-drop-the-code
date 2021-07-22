@@ -118,10 +118,25 @@ public class MemberControllerTest extends RestApiDocumentTest {
     @Test
     void findAllTeacherTest() throws Exception {
         TeacherPaginationResponse response = new TeacherPaginationResponse(
-                Collections.singletonList(
-                        new TeacherProfileResponse(1L, "seed@gmail.com", "seed", "s3://seed.jpg", "배민 개발자", "열심히 가르쳐드리겠습니다.", 3, 12, 1.4, new TechSpecResponse(Arrays
-                                .asList(new LanguageResponse(1L, "java"), new LanguageResponse(2L, "javascript")), Arrays
-                                .asList(new SkillResponse(1L, "spring"), new SkillResponse(2L, "react"))))
+                Collections.singletonList(new TeacherProfileResponse(
+                                1L,
+                                "seed@gmail.com",
+                                "seed",
+                                "s3://seed.jpg",
+                                "배민 개발자",
+                                "열심히 가르쳐드리겠습니다.",
+                                3,
+                                12,
+                                1.4,
+                                new TechSpecResponse(
+                                        Arrays.asList(
+                                                new LanguageResponse(1L, "java"),
+                                                new LanguageResponse(2L, "javascript")),
+                                        Arrays.asList(
+                                                new SkillResponse(1L, "spring"),
+                                                new SkillResponse(2L, "react"))
+                                )
+                        )
                 ),
                 1
         );

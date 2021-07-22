@@ -24,10 +24,10 @@ public class TeacherProfile extends BaseEntity {
     private Member member;
 
     @OneToMany(mappedBy = "teacherProfile", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private final Set<TeacherLanguage> languages = new HashSet<>();
+    private Set<TeacherLanguage> languages = new HashSet<>();
 
     @OneToMany(mappedBy = "teacherProfile", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private final Set<TeacherSkill> skills = new HashSet<>();
+    private Set<TeacherSkill> skills = new HashSet<>();
 
     private final Integer sumReviewCount = 0;
 
@@ -73,5 +73,17 @@ public class TeacherProfile extends BaseEntity {
 
     public Double getAverageReviewTime() {
         return averageReviewTime;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public void setLanguages(Set<TeacherLanguage> languages) {
+        this.languages = languages;
+    }
+
+    public void setSkills(Set<TeacherSkill> skills) {
+        this.skills = skills;
     }
 }

@@ -13,7 +13,7 @@ import com.wootech.dropthecode.domain.oauth.OauthProvider;
 import com.wootech.dropthecode.domain.oauth.UserProfile;
 import com.wootech.dropthecode.dto.request.AuthorizationRequest;
 import com.wootech.dropthecode.dto.response.LoginResponse;
-import com.wootech.dropthecode.dto.response.TokenResponse;
+import com.wootech.dropthecode.dto.response.OauthTokenResponse;
 import com.wootech.dropthecode.repository.MemberRepository;
 
 import org.springframework.core.ParameterizedTypeReference;
@@ -50,19 +50,18 @@ public class OauthService {
         String accessToken = jwtTokenProvider.createAccessToken(String.valueOf(member.getId()));
         String refreshToken = jwtTokenProvider.createRefreshToken();
 
-        // Redis
-        // redisUtil.setData(String.valueOf(member.getId()), refreshToken);
+        redisUtil.setData(String.valueOf(member.getId()), refreshToken);
 
-        return new LoginResponse(member.getName(), member.getEmail(), member.getImageUrl(), member.getRole(), accessToken, refreshToken);
+        return new LoginResponse(member.getId(), member.getName(), member.getEmail(), member.getImageUrl(), member.getRole(), "Bearer", accessToken, refreshToken);
     }
 
     private UserProfile getUserProfile(AuthorizationRequest authorizationRequest, OauthProvider oauthProvider) {
-        TokenResponse tokenResponse = getToken(authorizationRequest, oauthProvider);
-        Map<String, Object> userAttributes = getUserAttributes(oauthProvider, tokenResponse);
+        OauthTokenResponse oauthTokenResponse = getToken(authorizationRequest, oauthProvider);
+        Map<String, Object> userAttributes = getUserAttributes(oauthProvider, oauthTokenResponse);
         return OauthAttributes.extract(authorizationRequest.getProviderName(), userAttributes);
     }
 
-    private TokenResponse getToken(AuthorizationRequest authorizationRequest, OauthProvider oauthProvider) {
+    private OauthTokenResponse getToken(AuthorizationRequest authorizationRequest, OauthProvider oauthProvider) {
         return WebClient.create()
                         .post()
                         .uri(oauthProvider.getTokenUrl())
@@ -74,7 +73,7 @@ public class OauthService {
                         })
                         .bodyValue(tokenRequest(authorizationRequest, oauthProvider))
                         .retrieve()
-                        .bodyToMono(TokenResponse.class)
+                        .bodyToMono(OauthTokenResponse.class)
                         .block();
     }
 
@@ -86,7 +85,7 @@ public class OauthService {
         return formData;
     }
 
-    private Map<String, Object> getUserAttributes(OauthProvider oauthProvider, TokenResponse accessToken) {
+    private Map<String, Object> getUserAttributes(OauthProvider oauthProvider, OauthTokenResponse accessToken) {
         return WebClient.create()
                         .get()
                         .uri(oauthProvider.getUserInfoUrl())

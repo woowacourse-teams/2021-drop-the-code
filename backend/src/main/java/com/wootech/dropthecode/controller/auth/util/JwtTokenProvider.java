@@ -2,6 +2,8 @@ package com.wootech.dropthecode.controller.auth.util;
 
 import java.util.Date;
 
+import com.wootech.dropthecode.exception.AuthorizationException;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -38,7 +40,13 @@ public class JwtTokenProvider {
     }
 
     public String getPayload(String token) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+        try {
+            return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+        } catch (ExpiredJwtException e) {
+            return e.getClaims().getSubject();
+        } catch (JwtException e) {
+            throw new AuthorizationException("유효하지 않은 토큰입니다.");
+        }
     }
 
     public boolean validateToken(String token) {

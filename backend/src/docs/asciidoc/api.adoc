@@ -81,7 +81,13 @@ endif::[]
 
 == Login API
 
-include::{snippets}/oauth-controller-test/login-with-github/auto-section.adoc[]
+include::{snippets}/auth-controller-test/login-with-github/auto-section.adoc[]
+
+include::{snippets}/auth-controller-test/refresh-access-token/auto-section.adoc[]
+
+include::{snippets}/auth-controller-test/refresh-access-token-with-invalid-refresh-token/http-response.adoc[]
+
+include::{snippets}/auth-controller-test/logout/auto-section.adoc[]
 
 == Language API
 

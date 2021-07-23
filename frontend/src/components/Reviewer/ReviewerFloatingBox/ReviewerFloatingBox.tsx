@@ -72,13 +72,13 @@ const ReviewerFloatingBox = ({ reviewer }: Props) => {
         </AvatarWrapper>
         <ChipWrapper>
           <Chip themeColor="career" css={{ fontSize: "0.875rem", marginBottom: "0.3125rem" }}>
-            <p>경력 {career}3년차</p>
+            <p>경력 {career}년차</p>
           </Chip>
           <Chip themeColor="count" css={{ fontSize: "0.875rem", marginBottom: "0.3125rem" }}>
-            <p>누적 리뷰 {sumReviewCount} 회</p>
+            <p>누적 리뷰 {sumReviewCount}회</p>
           </Chip>
           <Chip themeColor="averageReview" css={{ fontSize: "0.875rem" }}>
-            <p>평균 답변 {averageReviewTime} 일</p>
+            <p>평균 답변 {averageReviewTime}일</p>
           </Chip>
         </ChipWrapper>
       </ProfileWrapper>

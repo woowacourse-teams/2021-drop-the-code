@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
-import { Reviewer } from "../../../types/reviewer";
 import { COLOR } from "../../../utils/constants/color";
-import { Flex } from "../../shared/Flexbox/Flexbox";
+import { Flex } from "../Flexbox/Flexbox";
 
 const Inner = styled(Flex)`
   flex-direction: column;
@@ -26,18 +25,17 @@ const Content = styled.p`
 `;
 
 export interface Props {
-  reviewer: Reviewer;
+  title?: React.ReactNode;
+  children?: React.ReactNode;
 }
 
-const ReviewerContentBox = ({ reviewer }: Props) => {
-  const { title, content } = reviewer;
-
+const ContextBox = ({ title, children }: Props) => {
   return (
     <Inner>
       <Title>{title}</Title>
-      <Content>{content}</Content>
+      <Content>{children}</Content>
     </Inner>
   );
 };
 
-export default ReviewerContentBox;
+export default ContextBox;

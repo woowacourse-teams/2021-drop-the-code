@@ -1,5 +1,6 @@
 package com.wootech.dropthecode.domain;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
@@ -7,8 +8,24 @@ import javax.persistence.*;
 import com.wootech.dropthecode.domain.bridge.TeacherLanguage;
 import com.wootech.dropthecode.domain.bridge.TeacherSkill;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+@EntityListeners(AuditingEntityListener.class)
 @Entity
-public class TeacherProfile extends BaseEntity {
+public class TeacherProfile {
+
+    @Id
+    private Long id;
+
+    @CreatedDate
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
+
     @Column(nullable = false)
     private String title;
 
@@ -19,8 +36,9 @@ public class TeacherProfile extends BaseEntity {
     @Column(nullable = false)
     private int career;
 
+    @MapsId
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(unique = true, foreignKey = @ForeignKey(name = "fk_teacherProfile_to_member"))
+    @JoinColumn(name = "id", unique = true, foreignKey = @ForeignKey(name = "fk_teacherProfile_to_member"))
     private Member member;
 
     @OneToMany(mappedBy = "teacherProfile", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
@@ -41,6 +59,10 @@ public class TeacherProfile extends BaseEntity {
         this.content = content;
         this.career = career;
         this.member = member;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getTitle() {

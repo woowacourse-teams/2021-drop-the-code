@@ -22,19 +22,15 @@ public class QTeacherProfile extends EntityPathBase<TeacherProfile> {
 
     public static final QTeacherProfile teacherProfile = new QTeacherProfile("teacherProfile");
 
-    public final QBaseEntity _super = new QBaseEntity(this);
-
     public final NumberPath<Double> averageReviewTime = createNumber("averageReviewTime", Double.class);
 
     public final NumberPath<Integer> career = createNumber("career", Integer.class);
 
     public final StringPath content = createString("content");
 
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
+    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
 
-    //inherited
-    public final NumberPath<Long> id = _super.id;
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final SetPath<com.wootech.dropthecode.domain.bridge.TeacherLanguage, com.wootech.dropthecode.domain.bridge.QTeacherLanguage> languages = this.<com.wootech.dropthecode.domain.bridge.TeacherLanguage, com.wootech.dropthecode.domain.bridge.QTeacherLanguage>createSet("languages", com.wootech.dropthecode.domain.bridge.TeacherLanguage.class, com.wootech.dropthecode.domain.bridge.QTeacherLanguage.class, PathInits.DIRECT2);
 
@@ -46,8 +42,7 @@ public class QTeacherProfile extends EntityPathBase<TeacherProfile> {
 
     public final StringPath title = createString("title");
 
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
+    public final DateTimePath<java.time.LocalDateTime> updatedAt = createDateTime("updatedAt", java.time.LocalDateTime.class);
 
     public QTeacherProfile(String variable) {
         this(TeacherProfile.class, forVariable(variable), INITS);

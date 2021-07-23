@@ -48,20 +48,15 @@ VALUES (CURRENT_DATE(), CURRENT_DATE(), 'air@gmail.com', 's3://air-profile.jpg',
 INSERT INTO member (created_at, updated_at, email, image_url, name, role)
 VALUES (CURRENT_DATE(), CURRENT_DATE(), 'fafi@gmail.com', 's3://fafi-profile.jpg', '파피', 'TEACHER');
 
-INSERT INTO teacher_profile (member_id, created_at, updated_at, career, content, title, sum_review_count,
-                             average_review_time)
+INSERT INTO teacher_profile (id, created_at, updated_at, career, content, title, sum_review_count, average_review_time)
 VALUES (1, CURRENT_DATE(), CURRENT_DATE(), 5, '배민 1타 강사. 롤체 챌 출신. 열심히 가르쳐드리겠습니다.', '배민 출신 백엔드 개발자', 2, 1.3);
-INSERT INTO teacher_profile (member_id, created_at, updated_at, career, content, title, sum_review_count,
-                             average_review_time)
+INSERT INTO teacher_profile (id, created_at, updated_at, career, content, title, sum_review_count, average_review_time)
 VALUES (2, CURRENT_DATE(), CURRENT_DATE(), 3, '빡세게 가르쳐드리겠습니다.', '쿠팡 이츠 출신 백엔드 개발자', 5, 1.2);
-INSERT INTO teacher_profile (member_id, created_at, updated_at, career, content, title, sum_review_count,
-                             average_review_time)
+INSERT INTO teacher_profile (id, created_at, updated_at, career, content, title, sum_review_count, average_review_time)
 VALUES (3, CURRENT_DATE(), CURRENT_DATE(), 1, '열심히 하겠습니다.', '우테코 갓 졸업생', 10, 0);
-INSERT INTO teacher_profile (member_id, created_at, updated_at, career, content, title, sum_review_count,
-                             average_review_time)
+INSERT INTO teacher_profile (id, created_at, updated_at, career, content, title, sum_review_count, average_review_time)
 VALUES (4, CURRENT_DATE(), CURRENT_DATE(), 6, '화이팅', '배민 인프라 담당자', 1, 10);
-INSERT INTO teacher_profile (member_id, created_at, updated_at, career, content, title, sum_review_count,
-                             average_review_time)
+INSERT INTO teacher_profile (id, created_at, updated_at, career, content, title, sum_review_count, average_review_time)
 VALUES (5, CURRENT_DATE(), CURRENT_DATE(), 10, '실리콘밸리 출신 인프라 개발자. 영어로 수업합니다.', 'Amazon 서버 개발자', 3, 0);
 
 INSERT INTO teacher_language (language_id, teacher_profile_id)

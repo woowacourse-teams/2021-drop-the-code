@@ -16,10 +16,10 @@ import Button from "../../shared/Button/Button";
 import { Flex } from "../../shared/Flexbox/Flexbox";
 
 interface Props {
-  teacherId: number;
+  reviewerId: number;
 }
 
-const ReviewRequest = ({ teacherId }: Props) => {
+const ReviewRequest = ({ reviewerId }: Props) => {
   const { user } = useAuthContext();
 
   const mutation = useMutation(
@@ -42,10 +42,10 @@ const ReviewRequest = ({ teacherId }: Props) => {
     <div css={{ width: "40.625rem", margin: "0 auto" }}>
       <h2 css={{ fontSize: "1.25rem", fontWeight: 600, margin: "20px 0 40px", textAlign: "center" }}>리뷰 신청</h2>
       <FormProvider
-        submit={async ({ studentId, teacherId, title, prUrl, content }) => {
+        submit={async ({ studentId, reviewerId, title, prUrl, content }) => {
           // mutation.mutate({
           //   studentId: user.id
-          //   teacherId,
+          //   teacherId: reviewerId,
           //   title,
           //   prUrl,
           //   content,

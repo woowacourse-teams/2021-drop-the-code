@@ -1,20 +1,18 @@
 import { useQuery } from "react-query";
 
 import { getReviewList } from "../../../apis/review";
-import useAuthContext from "../../../hooks/useAuthContext";
 import { ReviewListMode } from "../../../types/review";
 import ReviewCard from "../ReviewCard/ReviewCard";
 
 interface Props {
+  id: number;
   mode: ReviewListMode;
 }
 
-const ReviewList = ({ mode }: Props) => {
-  const { user } = useAuthContext();
-
+const ReviewList = ({ id, mode }: Props) => {
   const { data } = useQuery(["getReviewList", mode], async () => {
     // const response = await getReviewList(user.id, mode);
-    const response = await getReviewList(1, mode);
+    const response = await getReviewList(id, mode);
     if (!response.isSuccess) {
       // TODO:스낵바에 전달
       // response.error.message;
@@ -23,6 +21,8 @@ const ReviewList = ({ mode }: Props) => {
 
     return response.data;
   });
+
+  console.log(data);
 
   return (
     <>

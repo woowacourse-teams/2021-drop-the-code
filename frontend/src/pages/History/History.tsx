@@ -4,6 +4,7 @@ import styled, { css } from "styled-components";
 
 import Loading from "../../components/Loading/Loading";
 import ReviewList from "../../components/Review/ReviewList/ReviewList";
+import useAuthContext from "../../hooks/useAuthContext";
 import { ReviewListMode } from "../../types/review";
 import { COLOR } from "../../utils/constants/color";
 import { LAYOUT } from "../../utils/constants/size";
@@ -32,12 +33,11 @@ const Item = styled.li<{ active: boolean }>`
 `;
 
 const History = () => {
+  const { user } = useAuthContext();
+
   const [activeTab, setActiveTab] = useState<ReviewListMode | null>(null);
 
   // const { user } = useAuthContext();
-  /* //만약 user의 Role이 teacher면 myTab=["내가 맡은 리뷰", "내가 요청한 리뷰"] */
-  /* //만약 user의 Role이 student면 myTab=["내가 요청한 리뷰"] */
-  // const myTabs = user.role === teacher? ["내가 맡은 리뷰", "내가 요청한 리뷰"] : ["내가 요청한 리뷰"]
 
   // const isReviewer = user.role === "teacher";
   const isReviewer = "teacher" === "teacher";
@@ -69,7 +69,7 @@ const History = () => {
           </Item>
         ))}
       </ul>
-      <Suspense fallback={<Loading />}>{activeTab && <ReviewList mode={activeTab} />}</Suspense>
+      <Suspense fallback={<Loading />}>{activeTab && <ReviewList id={1} mode={activeTab} />}</Suspense>
     </main>
   );
 };

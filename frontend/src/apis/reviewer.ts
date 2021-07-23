@@ -10,6 +10,10 @@ export const getReviewerList = (queryString: string) => {
   return apiClient.get<{ teacherProfiles: Reviewer[]; pageCount: number }>(`/teachers${queryString}`);
 };
 
+export const getReviewer = (reviewerId: number) => {
+  return apiClient.get<Reviewer>(`/teachers/${reviewerId}`);
+};
+
 export const registerReviewer = (reviewerRegisterFormData: ReviewerRegisterFormData) => {
   return apiClient.post(`/teachers`, reviewerRegisterFormData);
 };

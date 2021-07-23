@@ -1,12 +1,6 @@
 import { useMutation } from "react-query";
 
 import { requestReview } from "../../../apis/review";
-import FormProvider from "../../../components/FormProvider/FormProvider";
-import InputField from "../../../components/FormProvider/InputField";
-import TextareaField from "../../../components/FormProvider/TextareaField";
-import Loading from "../../../components/Loading/Loading";
-import Button from "../../../components/shared/Button/Button";
-import { Flex } from "../../../components/shared/Flexbox/Flexbox";
 import useAuthContext from "../../../hooks/useAuthContext";
 import { ReviewRequestFormData } from "../../../types/review";
 import { COLOR } from "../../../utils/constants/color";
@@ -14,12 +8,18 @@ import { PLACE_HOLDER } from "../../../utils/constants/message";
 import { LAYOUT } from "../../../utils/constants/size";
 import { STANDARD } from "../../../utils/constants/standard";
 import reviewRequestValidators from "../../../utils/validators/reviewRequestValidators";
+import FormProvider from "../../FormProvider/FormProvider";
+import InputField from "../../FormProvider/InputField";
+import TextareaField from "../../FormProvider/TextareaField";
+import Loading from "../../Loading/Loading";
+import Button from "../../shared/Button/Button";
+import { Flex } from "../../shared/Flexbox/Flexbox";
 
 interface Props {
-  teacherId: number;
+  reviewerId: number;
 }
 
-const ReviewRequest = ({ teacherId }: Props) => {
+const ReviewRequest = ({ reviewerId }: Props) => {
   const { user } = useAuthContext();
 
   const mutation = useMutation(
@@ -42,10 +42,10 @@ const ReviewRequest = ({ teacherId }: Props) => {
     <div css={{ width: "40.625rem", margin: "0 auto" }}>
       <h2 css={{ fontSize: "1.25rem", fontWeight: 600, margin: "20px 0 40px", textAlign: "center" }}>리뷰 신청</h2>
       <FormProvider
-        submit={async ({ studentId, teacherId, title, prUrl, content }) => {
+        submit={async ({ studentId, reviewerId, title, prUrl, content }) => {
           // mutation.mutate({
           //   studentId: user.id
-          //   teacherId,
+          //   teacherId: reviewerId,
           //   title,
           //   prUrl,
           //   content,

@@ -1,7 +1,7 @@
-import ReviewerCard from "../../../components/Reviewer/ReviewerCard";
-import Button from "../../../components/shared/Button/Button";
-import { FlexCenter } from "../../../components/shared/Flexbox/Flexbox";
 import useReviewerList, { Options } from "../../../hooks/useReviewerList";
+import Button from "../../shared/Button/Button";
+import { FlexCenter } from "../../shared/Flexbox/Flexbox";
+import ReviewerCard from "../ReviewerCard/ReviewerCard";
 
 type Props = Options;
 

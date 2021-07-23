@@ -1,24 +1,19 @@
+import { Suspense } from "react";
 import { useParams } from "react-router-dom";
 
-import useModalContext from "../../hooks/useModalContext";
+import Loading from "../../components/Loading/Loading";
+import ReviewerInfoContainer from "../../components/Reviewer/ReviewerInfoContainer/ReviewerInfoContainer";
 import { LAYOUT } from "../../utils/constants/size";
 
-import ReviewRequest from "./ReviewRequest/ReviewRequest";
-
 const ReviewerDetail = () => {
-  const { open } = useModalContext();
-
   const { reviewerId } = useParams<{ reviewerId: string }>();
 
   return (
     <main css={{ paddingTop: "6rem", width: "100%", maxWidth: LAYOUT.LG, margin: "0 auto" }}>
-      <button
-        onClick={() => {
-          open(<ReviewRequest teacherId={Number(reviewerId)} />);
-        }}
-      >
-        리뷰요청모달버튼등장
-      </button>
+      <h2 css={{ fontSize: "1.25rem", fontWeight: 600 }}>리뷰어 정보</h2>
+      <Suspense fallback={<Loading />}>
+        <ReviewerInfoContainer reviewerId={Number(reviewerId)} />
+      </Suspense>
     </main>
   );
 };

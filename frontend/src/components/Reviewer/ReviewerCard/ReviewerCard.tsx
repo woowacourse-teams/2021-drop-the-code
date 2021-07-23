@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 
 import styled from "styled-components";
 
-import { Reviewer } from "../../types/reviewer";
-import { COLOR } from "../../utils/constants/color";
-import Avatar from "../shared/Avatar/Avatar";
-import Chip from "../shared/Chip/Chip";
-import { Flex, FlexSpaceBetween } from "../shared/Flexbox/Flexbox";
+import { Reviewer } from "../../../types/reviewer";
+import { COLOR } from "../../../utils/constants/color";
+import Avatar from "../../shared/Avatar/Avatar";
+import Chip from "../../shared/Chip/Chip";
+import { Flex, FlexSpaceBetween } from "../../shared/Flexbox/Flexbox";
 
 const ReviewerLink = styled(Link)`
   margin-bottom: 1.25rem;

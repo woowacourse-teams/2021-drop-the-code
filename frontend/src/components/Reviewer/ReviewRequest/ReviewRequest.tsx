@@ -1,12 +1,6 @@
 import { useMutation } from "react-query";
 
 import { requestReview } from "../../../apis/review";
-import FormProvider from "../../../components/FormProvider/FormProvider";
-import InputField from "../../../components/FormProvider/InputField";
-import TextareaField from "../../../components/FormProvider/TextareaField";
-import Loading from "../../../components/Loading/Loading";
-import Button from "../../../components/shared/Button/Button";
-import { Flex } from "../../../components/shared/Flexbox/Flexbox";
 import useAuthContext from "../../../hooks/useAuthContext";
 import { ReviewRequestFormData } from "../../../types/review";
 import { COLOR } from "../../../utils/constants/color";
@@ -14,6 +8,12 @@ import { PLACE_HOLDER } from "../../../utils/constants/message";
 import { LAYOUT } from "../../../utils/constants/size";
 import { STANDARD } from "../../../utils/constants/standard";
 import reviewRequestValidators from "../../../utils/validators/reviewRequestValidators";
+import FormProvider from "../../FormProvider/FormProvider";
+import InputField from "../../FormProvider/InputField";
+import TextareaField from "../../FormProvider/TextareaField";
+import Loading from "../../Loading/Loading";
+import Button from "../../shared/Button/Button";
+import { Flex } from "../../shared/Flexbox/Flexbox";
 
 interface Props {
   teacherId: number;

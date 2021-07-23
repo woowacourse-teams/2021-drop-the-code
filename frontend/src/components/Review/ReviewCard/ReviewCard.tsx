@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 
 import styled from "styled-components";
 
-import { Progress as ProgressShape, Review } from "../../types/review";
-import { COLOR } from "../../utils/constants/color";
-import { toPassedTimeString } from "../../utils/formatter";
-import { Flex, FlexAlignCenter } from "../shared/Flexbox/Flexbox";
+import { Progress as ProgressShape, Review } from "../../../types/review";
+import { COLOR } from "../../../utils/constants/color";
+import { toPassedTimeString } from "../../../utils/formatter";
+import { Flex, FlexAlignCenter } from "../../shared/Flexbox/Flexbox";
 
 const ReviewLink = styled(Link)`
   margin-bottom: 1.25rem;

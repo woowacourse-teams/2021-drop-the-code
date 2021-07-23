@@ -1,17 +1,16 @@
 import { Suspense } from "react";
 
 import CareerPicker from "../../components/CareerPicker/CareerPicker";
+import LanguageList from "../../components/LanguageList/LanguageList";
 import Loading from "../../components/Loading/Loading";
 import MenuItemButton from "../../components/MenuItemButton/MenuItemButton";
+import ReviewerList from "../../components/Reviewer/ReviewerList/ReviewerList";
 import { Flex, FlexEnd } from "../../components/shared/Flexbox/Flexbox";
 import Select from "../../components/shared/Select/Select";
 import useReviewerListOptions from "../../hooks/useReviewerListOptions";
 import { ReviewerSortOption } from "../../types/reviewer";
 import { COLOR } from "../../utils/constants/color";
 import { LAYOUT } from "../../utils/constants/size";
-
-import LanguageList from "./LanguageList/LanguageList";
-import ReviewerList from "./ReviewerList/ReviewerList";
 
 const Main = () => {
   const {

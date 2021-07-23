@@ -1,9 +1,8 @@
 import { useParams } from "react-router-dom";
 
+import ReviewRequest from "../../components/Reviewer/ReviewRequest/ReviewRequest";
 import useModalContext from "../../hooks/useModalContext";
 import { LAYOUT } from "../../utils/constants/size";
-
-import ReviewRequest from "./ReviewRequest/ReviewRequest";
 
 const ReviewerDetail = () => {
   const { open } = useModalContext();
@@ -12,6 +11,7 @@ const ReviewerDetail = () => {
 
   return (
     <main css={{ paddingTop: "6rem", width: "100%", maxWidth: LAYOUT.LG, margin: "0 auto" }}>
+      <h2 css={{ fontSize: "1.25rem", fontWeight: 600 }}>리뷰어 정보</h2>
       <button
         onClick={() => {
           open(<ReviewRequest teacherId={Number(reviewerId)} />);

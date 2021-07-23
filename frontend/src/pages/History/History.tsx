@@ -3,11 +3,10 @@ import { Suspense, useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 
 import Loading from "../../components/Loading/Loading";
+import ReviewList from "../../components/Review/ReviewList/ReviewList";
 import { ReviewListMode } from "../../types/review";
 import { COLOR } from "../../utils/constants/color";
 import { LAYOUT } from "../../utils/constants/size";
-
-import ReviewList from "./ReviewList/ReviewList";
 
 const Item = styled.li<{ active: boolean }>`
   position: relative;

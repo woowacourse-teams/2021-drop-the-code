@@ -1,6 +1,6 @@
 import { Story, Meta } from "@storybook/react";
 
-import { Review } from "../../types/review";
+import { Review } from "../../../types/review";
 
 import ReviewCard from "./ReviewCard";
 

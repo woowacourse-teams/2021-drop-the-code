@@ -1,9 +1,9 @@
 import { useQuery } from "react-query";
 
 import { getReviewList } from "../../../apis/review";
-import ReviewCard from "../../../components/Review/ReviewCard";
 import useAuthContext from "../../../hooks/useAuthContext";
 import { ReviewListMode } from "../../../types/review";
+import ReviewCard from "../ReviewCard/ReviewCard";
 
 interface Props {
   mode: ReviewListMode;

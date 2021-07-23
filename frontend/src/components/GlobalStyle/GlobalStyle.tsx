@@ -43,6 +43,10 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 600;
     margin: 2.5rem 0;
   }
+
+  button {
+    background: none;
+  }
 `;
 
 export default GlobalStyle;

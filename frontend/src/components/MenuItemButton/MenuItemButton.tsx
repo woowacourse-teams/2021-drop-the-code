@@ -7,7 +7,6 @@ import Button, { Props as ButtonProps } from "../shared/Button/Button";
 
 const Inner = styled.div`
   display: flex;
-  position: relative;
 `;
 
 const Dimmed = styled.div`

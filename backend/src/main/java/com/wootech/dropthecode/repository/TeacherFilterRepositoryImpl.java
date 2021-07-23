@@ -41,10 +41,6 @@ public class TeacherFilterRepositoryImpl extends QuerydslRepositorySupport imple
         }
         builder.and(teacherProfile.career.goe(career));
 
-        // 동적 쿼리를 위해 RepositoryImpl 에서 구현
-        // fetch join 과 pagination 을 같이 쓸 때 발생하는 메모리 과부하를 방지하기 위해,
-        // fetch join 쿼리와 pagination 쿼리를 따로 날린다.
-        // 아래는 TeacherProfile 의 Id 만을 구하고, Pagination 을 처리하는 코드
         final JPQLQuery<Long> query = from(teacherProfile).select(teacherLanguage.id).distinct()
                                                           .innerJoin(teacherProfile.languages, teacherLanguage)
                                                           .innerJoin(teacherLanguage.language, language)
@@ -56,8 +52,6 @@ public class TeacherFilterRepositoryImpl extends QuerydslRepositorySupport imple
                                                             .applyPagination(pageable, query)
                                                             .fetchResults();
 
-        // InnerJoin 및 FetchJoin 을 사용하기 위해 RepositoryImpl 에서 구현
-        // EntityGraph 는 기본적으로 LeftJoin
         final List<TeacherProfile> teacherProfiles = from(teacherProfile).distinct()
                                                                          .innerJoin(teacherProfile.languages, teacherLanguage).fetchJoin()
                                                                          .innerJoin(teacherLanguage.language, language).fetchJoin()

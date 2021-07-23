@@ -6,10 +6,7 @@ import java.util.Objects;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.JPQLQuery;
-import com.wootech.dropthecode.domain.QLanguage;
-import com.wootech.dropthecode.domain.QSkill;
-import com.wootech.dropthecode.domain.QTeacherProfile;
-import com.wootech.dropthecode.domain.TeacherProfile;
+import com.wootech.dropthecode.domain.*;
 import com.wootech.dropthecode.domain.bridge.QTeacherLanguage;
 import com.wootech.dropthecode.domain.bridge.QTeacherSkill;
 
@@ -27,7 +24,7 @@ public class TeacherFilterRepositoryImpl extends QuerydslRepositorySupport imple
     }
 
     @Override
-    public Page<TeacherProfile> findAll(String languageName, List<String> skills, int career, Pageable pageable) {
+    public Page<TeacherProfile> findAll(List<Language> languages, List<Skill> skills, int career, Pageable pageable) {
         QTeacherProfile teacherProfile = QTeacherProfile.teacherProfile;
         QTeacherLanguage teacherLanguage = QTeacherLanguage.teacherLanguage;
         QLanguage language = QLanguage.language;
@@ -35,9 +32,9 @@ public class TeacherFilterRepositoryImpl extends QuerydslRepositorySupport imple
         QSkill skill = QSkill.skill;
 
         BooleanBuilder builder = new BooleanBuilder();
-        builder.and(language.name.eq(languageName));
+        builder.and(language.in(languages));
         if (!skills.isEmpty()) {
-            builder.and(skill.name.in(skills));
+            builder.and(skill.in(skills));
         }
         builder.and(teacherProfile.career.goe(career));
 

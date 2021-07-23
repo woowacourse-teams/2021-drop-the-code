@@ -1,9 +1,6 @@
 package com.wootech.dropthecode.service;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.wootech.dropthecode.domain.*;
@@ -61,8 +58,8 @@ public class TeacherService {
         }
 
         Map<String, Language> languageMap = languageService.findAllToMap();
-        List<Language> languages = validateLanguageNamesExists(teacherRegistrationRequest, languageMap);
-        List<Skill> skills = validateSkillNamesExists(teacherRegistrationRequest, skillService.findAllToMap());
+        List<Language> languages = validateLanguageNamesExists(teacherRegistrationRequest.getTechSpecs(), languageMap);
+        List<Skill> skills = validateSkillNamesExists(teacherRegistrationRequest.getTechSpecs(), skillService.findAllToMap());
         teacherRegistrationRequest.validateSkillsInLanguage(languageMap);
 
         TeacherProfile teacher = save(teacherRegistrationRequest.toTeacherProfileWithMember(member));
@@ -72,30 +69,31 @@ public class TeacherService {
         memberService.save(member);
     }
 
-    private List<Language> validateLanguageNamesExists(TeacherRegistrationRequest teacherRegistrationRequest, Map<String, Language> languageMap) {
-        return teacherRegistrationRequest.getTechSpecs()
-                                         .stream()
-                                         .map(TechSpec::getLanguage)
-                                         .map(languageName -> Optional.ofNullable(languageMap.get(languageName)))
-                                         .map(languageOptional -> languageOptional.orElseThrow(() -> new TeacherException("존재하지 않는 언어입니다.")))
-                                         .collect(Collectors.toList());
+    private List<Language> validateLanguageNamesExists(List<TechSpec> techSpecs, Map<String, Language> languageMap) {
+        return techSpecs.stream()
+                        .map(TechSpec::getLanguage)
+                        .map(languageName -> Optional.ofNullable(languageMap.get(languageName)))
+                        .map(languageOptional -> languageOptional.orElseThrow(() -> new TeacherException("존재하지 않는 언어입니다.")))
+                        .collect(Collectors.toList());
     }
 
-    private List<Skill> validateSkillNamesExists(TeacherRegistrationRequest teacherRegistrationRequest, Map<String, Skill> skillMap) {
-        return teacherRegistrationRequest.getTechSpecs()
-                                         .stream()
-                                         .map(TechSpec::getSkills)
-                                         .flatMap(Collection::stream)
-                                         .map(skillName -> Optional.ofNullable(skillMap.get(skillName)))
-                                         .map(skill -> skill.orElseThrow(() -> new TeacherException("존재하지 않는 기술입니다.")))
-                                         .collect(Collectors.toList());
+    private List<Skill> validateSkillNamesExists(List<TechSpec> techSpecs, Map<String, Skill> skillMap) {
+        return techSpecs.stream()
+                        .map(TechSpec::getSkills)
+                        .flatMap(Collection::stream)
+                        .map(skillName -> Optional.ofNullable(skillMap.get(skillName)))
+                        .map(skill -> skill.orElseThrow(() -> new TeacherException("존재하지 않는 기술입니다.")))
+                        .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public TeacherPaginationResponse findAll(TeacherFilterRequest teacherFilterRequest, Pageable pageable) {
+        List<Language> languages = validateLanguageNamesExists(Collections.singletonList(teacherFilterRequest.getTechSpec()), languageService.findAllToMap());
+        List<Skill> skills = validateSkillNamesExists(Collections.singletonList(teacherFilterRequest.getTechSpec()), skillService.findAllToMap());
+
         Page<TeacherProfile> teacherProfilePage = teacherFilterRepository.findAll(
-                teacherFilterRequest.getTechSpec().getLanguage(),
-                teacherFilterRequest.getTechSpec().getSkills(),
+                languages,
+                skills,
                 teacherFilterRequest.getCareer(),
                 pageable
         );

@@ -15,6 +15,13 @@ Basic.args = {
   children: "내용물",
 };
 
+export const Disabled = BasicTemplate.bind({});
+
+Disabled.args = {
+  children: "내용물",
+  disabled: true,
+};
+
 const ToggleTemplate: Story<Props> = (args) => (
   <>
     <Button {...args} themeColor="secondary" active={false} />

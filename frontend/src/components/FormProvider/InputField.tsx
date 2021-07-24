@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import Input, { Props as InputProps } from "components/shared/Input/Input";
 import useFormContext from "hooks/useFormContext";
 
@@ -6,7 +8,11 @@ export interface Props extends InputProps {
 }
 
 const InputField = ({ name, ...props }: Props) => {
-  const { values, onChange, errorMessages } = useFormContext();
+  const { values, errorMessages, register, onChange } = useFormContext();
+
+  useEffect(() => {
+    register(name);
+  }, []);
 
   return (
     <Input value={values[name] || ""} name={name} errorMessage={errorMessages[name]} onChange={onChange} {...props} />

@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 
 import CareerPicker from "../../components/CareerPicker/CareerPicker";
-import LanguageList from "../../components/LanguageList/LanguageList";
+import LanguageList from "../../components/Language/LanguageList";
 import Loading from "../../components/Loading/Loading";
 import MenuItemButton from "../../components/MenuItemButton/MenuItemButton";
 import ReviewerList from "../../components/Reviewer/ReviewerList/ReviewerList";

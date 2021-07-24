@@ -31,7 +31,6 @@ const Progress = styled.div<ProgressProps>`
 
 const ContentWrapper = styled(Flex)`
   width: calc(100% - 8.75rem);
-  word-break: break-all;
   flex-direction: column;
   margin-right: 1.25rem;
 `;

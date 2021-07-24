@@ -28,3 +28,11 @@ export const PLACE_HOLDER = {
     CONTENT: `안녕하세요. 개발 공부 3개월차 코린이입니다.\n리액트를 처음 사용해보았는데, 잘 사용하고 있는 것인지 궁금해서 리뷰요청을 드립니다.\n리액트 훅을 사용한 부분을 중점적으로 봐주시면 좋겠습니다. 감사합니다.\n`,
   },
 };
+
+export const ALT = {
+  REVIEW_DETAIL_NOTIFICATION:
+    "리뷰어는 리뷰를 남긴 후, 하단의 리뷰완료 버튼을 눌러주세요. 리뷰 요청인은 리뷰를 받은 후 리뷰 종료 버튼을 눌러주세요.",
+  GITHUB_LOGIN_BUTTON: "깃허브 로그인 버튼 이미지",
+  REVIEWER_PROFILE_AVATAR: "리뷰어 프로필 이미지",
+  GITHUB_LOGO: "깃허브 로고 이미지",
+};

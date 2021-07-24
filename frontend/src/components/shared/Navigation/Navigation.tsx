@@ -15,8 +15,8 @@ const Inner = styled.header`
 `;
 
 export interface Props {
+  leftChildren?: ReactNode;
   children?: ReactNode;
-  rightChildren?: ReactNode;
 }
 
 const NavBar = styled.nav`
@@ -43,13 +43,13 @@ const RightChildren = styled(Flex)`
   }
 `;
 
-const Navigation = ({ rightChildren, children }: Props) => {
+const Navigation = ({ leftChildren, children }: Props) => {
   return (
     <Inner>
       <NavBar>
         <FlexSpaceBetween css={{ maxWidth: LAYOUT.LG, width: "100%", height: "100%", alignItems: "center" }}>
-          {children}
-          <RightChildren>{rightChildren}</RightChildren>
+          {leftChildren}
+          <RightChildren>{children}</RightChildren>
         </FlexSpaceBetween>
       </NavBar>
     </Inner>

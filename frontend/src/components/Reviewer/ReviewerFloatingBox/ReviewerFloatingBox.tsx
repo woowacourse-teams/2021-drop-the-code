@@ -5,6 +5,7 @@ import styled from "styled-components";
 import SmBlackLogo from "../../../assets/sm-white-github-logo.png";
 import useModalContext from "../../../hooks/useModalContext";
 import { Reviewer } from "../../../types/reviewer";
+import { ALT } from "../../../utils/constants/message";
 import ReviewRequest from "../../Review/ReviewRequest/ReviewRequest";
 import Avatar from "../../shared/Avatar/Avatar";
 import Button from "../../shared/Button/Button";
@@ -56,16 +57,15 @@ const ReviewerFloatingBox = ({ reviewer }: Props) => {
       <ProfileWrapper>
         <AvatarWrapper>
           <Avatar
-            alt="리뷰어 프로필 이미지"
+            alt={ALT.REVIEWER_PROFILE_AVATAR}
             height="6.25rem"
             imageUrl={imageUrl}
             width="6.25rem"
-            shape="rounded"
             css={{ marginBottom: "0.3125rem" }}
           />
           <Link to={"/"}>
             <FlexAlignCenter>
-              <LoginButtonImage src={SmBlackLogo} alt="깃허브 로그인 버튼 이미지" />
+              <LoginButtonImage src={SmBlackLogo} alt={ALT.GITHUB_LOGIN_BUTTON} />
               <p>seojihwan</p>
             </FlexAlignCenter>
           </Link>

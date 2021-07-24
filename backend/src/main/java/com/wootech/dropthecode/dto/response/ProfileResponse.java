@@ -1,5 +1,8 @@
 package com.wootech.dropthecode.dto.response;
 
+import com.wootech.dropthecode.domain.Member;
+import com.wootech.dropthecode.domain.MemberSummary;
+
 public class ProfileResponse {
     /**
      * 프로필 id
@@ -14,7 +17,6 @@ public class ProfileResponse {
      */
     private String imageUrl;
 
-
     public ProfileResponse() {
     }
 
@@ -22,6 +24,10 @@ public class ProfileResponse {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
+    }
+
+    public static ProfileResponse of(MemberSummary member) {
+        return new ProfileResponse(member.getId(), member.getName(), member.getImageUrl());
     }
 
     public Long getId() {

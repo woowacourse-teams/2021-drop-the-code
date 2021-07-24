@@ -29,6 +29,18 @@ public class Review extends BaseEntity {
     @Column(nullable = false)
     private final Progress progress = Progress.ON_GOING;
 
+    protected Review() {
+    }
+
+    public Review(Member teacher, Member student, String title, String content, String prUrl, Integer elapsedTime) {
+        this.teacher = teacher;
+        this.student = student;
+        this.title = title;
+        this.content = content;
+        this.prUrl = prUrl;
+        this.elapsedTime = elapsedTime;
+    }
+
     public Member getTeacher() {
         return teacher;
     }

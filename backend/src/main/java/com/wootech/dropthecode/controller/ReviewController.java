@@ -1,14 +1,19 @@
 package com.wootech.dropthecode.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 
+import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Progress;
+import com.wootech.dropthecode.domain.oauth.Login;
 import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
 import com.wootech.dropthecode.dto.response.ProfileResponse;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
 import com.wootech.dropthecode.dto.response.ReviewsResponse;
+import com.wootech.dropthecode.service.ReviewService;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,6 +23,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/reviews")
 public class ReviewController {
+    private final ReviewService reviewService;
+
+    public ReviewController(ReviewService reviewService) {
+        this.reviewService = reviewService;
+    }
 
     /**
      * @title 리뷰 생성
@@ -30,25 +40,11 @@ public class ReviewController {
     }
 
     /**
-     * @param id 학생 id
      * @title 내가 받은 리뷰 목록 조회
      */
     @GetMapping("/student/{id}")
-    public ResponseEntity<ReviewsResponse> showStudentReviews(@PathVariable Long id, @RequestHeader HttpHeaders headers) {
-        ProfileResponse firstTeacher = new ProfileResponse(1L, "user1", "image1");
-        ProfileResponse firstStudent = new ProfileResponse(2L, "user2", "image2");
-
-        ProfileResponse secondTeacher = new ProfileResponse(1L, "user1", "image1");
-        ProfileResponse secondStudent = new ProfileResponse(3L, "user3", "image3");
-
-        ReviewResponse firstReviewResponse = new ReviewResponse(1L, "title1", "content1", Progress.ON_GOING, firstTeacher, firstStudent);
-        ReviewResponse secondReviewResponse = new ReviewResponse(2L, "title2", "content2", Progress.ON_GOING, secondTeacher, secondStudent);
-
-        List<ReviewResponse> data = new ArrayList<>();
-        data.add(firstReviewResponse);
-        data.add(secondReviewResponse);
-
-        ReviewsResponse reviewsResponse = new ReviewsResponse(data);
+    public ResponseEntity<ReviewsResponse> showStudentReviews(@PathVariable Long id) {
+      ReviewsResponse reviewsResponse = reviewService.findStudentReview(id);
         return ResponseEntity.status(HttpStatus.OK)
                              .body(reviewsResponse);
     }
@@ -65,8 +61,10 @@ public class ReviewController {
         ProfileResponse secondTeacher = new ProfileResponse(1L, "user1", "image1");
         ProfileResponse secondStudent = new ProfileResponse(3L, "user3", "image3");
 
-        ReviewResponse firstReviewResponse = new ReviewResponse(1L, "title1", "content1", Progress.ON_GOING, firstTeacher, firstStudent);
-        ReviewResponse secondReviewResponse = new ReviewResponse(2L, "title2", "content2", Progress.ON_GOING, secondTeacher, secondStudent);
+        ReviewResponse firstReviewResponse = new ReviewResponse(1L, "title1", "content1", Progress.ON_GOING,
+                firstTeacher, firstStudent, "prUrl1", LocalDateTime.now());
+        ReviewResponse secondReviewResponse = new ReviewResponse(2L, "title2", "content2", Progress.ON_GOING,
+                secondTeacher, secondStudent, "prUrl2", LocalDateTime.now());
 
         List<ReviewResponse> data = new ArrayList<>();
         data.add(firstReviewResponse);
@@ -86,7 +84,8 @@ public class ReviewController {
         ProfileResponse firstTeacher = new ProfileResponse(1L, "user1", "image1");
         ProfileResponse firstStudent = new ProfileResponse(2L, "user2", "image2");
 
-        ReviewResponse reviewResponse = new ReviewResponse(1L, "title1", "content1", Progress.ON_GOING, firstTeacher, firstStudent);
+        ReviewResponse reviewResponse = new ReviewResponse(1L, "title1", "content1", Progress.ON_GOING,
+                firstTeacher, firstStudent, "prUrl1", LocalDateTime.now());
 
         return ResponseEntity.status(HttpStatus.OK)
                              .body(reviewResponse);

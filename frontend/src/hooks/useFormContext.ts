@@ -3,8 +3,10 @@ import { createContext, useContext } from "react";
 interface FormContextProps {
   values: { [name: string]: string };
   errorMessages: { [name: string]: string | null };
-  onChange: React.ChangeEventHandler;
   isValid: boolean;
+  isEmpty: boolean;
+  register: (name: string) => void;
+  onChange: React.ChangeEventHandler;
 }
 
 export const FormContext = createContext<FormContextProps | null>(null);

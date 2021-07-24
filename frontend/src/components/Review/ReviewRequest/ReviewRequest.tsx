@@ -5,9 +5,9 @@ import { ReviewRequestFormData } from "types/review";
 import { requestReview } from "apis/review";
 import FormProvider from "components/FormProvider/FormProvider";
 import InputField from "components/FormProvider/InputField";
+import SubmitButton from "components/FormProvider/SubmitButton";
 import TextareaField from "components/FormProvider/TextareaField";
 import Loading from "components/Loading/Loading";
-import Button from "components/shared/Button/Button";
 import { Flex } from "components/shared/Flexbox/Flexbox";
 import useAuthContext from "hooks/useAuthContext";
 import { COLOR } from "utils/constants/color";
@@ -82,9 +82,9 @@ const ReviewRequest = ({ reviewerId }: Props) => {
           css={{ minHeight: "12.5rem" }}
         />
         <Flex css={{ margin: "1.25rem 0 2.5rem" }}>
-          <Button type="submit" themeColor="primary" shape="rounded" css={{ marginLeft: "auto" }}>
+          <SubmitButton themeColor="primary" shape="rounded" css={{ marginLeft: "auto" }}>
             요청
-          </Button>
+          </SubmitButton>
         </Flex>
       </FormProvider>
     </div>

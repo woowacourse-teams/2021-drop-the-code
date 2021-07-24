@@ -5,10 +5,10 @@ import { useHistory } from "react-router-dom";
 import { registerReviewer } from "apis/reviewer";
 import FormProvider from "components/FormProvider/FormProvider";
 import InputField from "components/FormProvider/InputField";
+import SubmitButton from "components/FormProvider/SubmitButton";
 import TextareaField from "components/FormProvider/TextareaField";
 import SpecPicker from "components/Language/SpecPicker";
 import Loading from "components/Loading/Loading";
-import Button from "components/shared/Button/Button";
 import { Flex } from "components/shared/Flexbox/Flexbox";
 import { PLACE_HOLDER } from "utils/constants/message";
 import { PATH } from "utils/constants/path";
@@ -103,9 +103,9 @@ const ReviewerRegister = () => {
           css={{ minHeight: "31.25rem" }}
         />
         <Flex css={{ margin: "1.25rem 0 2.5rem" }}>
-          <Button type="submit" themeColor="primary" shape="rounded" css={{ marginLeft: "auto" }}>
+          <SubmitButton themeColor="primary" shape="rounded" css={{ marginLeft: "auto" }}>
             등록
-          </Button>
+          </SubmitButton>
         </Flex>
       </FormProvider>
     </main>

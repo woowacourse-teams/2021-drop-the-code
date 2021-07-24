@@ -5,11 +5,11 @@ import { BrowserRouter } from "react-router-dom";
 
 import { ThemeProvider } from "styled-components";
 
-import App from "./App";
-import AuthProvider from "./components/Auth/AuthProvider/AuthProvider";
-import GlobalStyle from "./components/GlobalStyle/GlobalStyle";
-import ModalProvider from "./components/ModalProvider/ModalProvider";
-import { THEME } from "./utils/constants/theme";
+import App from "App";
+import AuthProvider from "components/Auth/AuthProvider/AuthProvider";
+import GlobalStyle from "components/GlobalStyle/GlobalStyle";
+import ModalProvider from "components/ModalProvider/ModalProvider";
+import { THEME } from "utils/constants/theme";
 
 const queryClient = new QueryClient({
   defaultOptions: {

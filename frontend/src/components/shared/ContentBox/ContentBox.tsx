@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
-import { COLOR } from "../../../utils/constants/color";
-import { Flex } from "../Flexbox/Flexbox";
+import { Flex } from "components/shared/Flexbox/Flexbox";
+import { COLOR } from "utils/constants/color";
 
 const Inner = styled(Flex)`
   flex-direction: column;

@@ -1,5 +1,5 @@
-import useFormContext from "../../hooks/useFormContext";
-import Input, { Props as InputProps } from "../shared/Input/Input";
+import Input, { Props as InputProps } from "components/shared/Input/Input";
+import useFormContext from "hooks/useFormContext";
 
 export interface Props extends InputProps {
   name: string;

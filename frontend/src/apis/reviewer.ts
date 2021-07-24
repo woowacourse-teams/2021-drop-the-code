@@ -1,6 +1,6 @@
-import { Language, Reviewer, ReviewerRegisterFormData } from "../types/reviewer";
+import { Language, Reviewer, ReviewerRegisterFormData } from "types/reviewer";
 
-import apiClient from "./apiClient";
+import apiClient from "apis/apiClient";
 
 export const getLanguageList = () => {
   return apiClient.get<Language[]>(`/languages`);

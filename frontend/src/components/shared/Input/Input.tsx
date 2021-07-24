@@ -2,8 +2,8 @@ import { InputHTMLAttributes } from "react";
 
 import styled from "styled-components";
 
-import { COLOR } from "../../../utils/constants/color";
-import { Flex } from "../Flexbox/Flexbox";
+import { Flex } from "components/shared/Flexbox/Flexbox";
+import { COLOR } from "utils/constants/color";
 
 interface InnerProps {
   labelText?: string;

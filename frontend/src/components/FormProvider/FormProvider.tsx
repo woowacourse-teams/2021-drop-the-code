@@ -1,6 +1,6 @@
 import { useState, FormHTMLAttributes } from "react";
 
-import { FormContext } from "../../hooks/useFormContext";
+import { FormContext } from "hooks/useFormContext";
 
 interface Values {
   [key: string]: string;

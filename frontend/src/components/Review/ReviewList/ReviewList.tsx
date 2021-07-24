@@ -1,8 +1,9 @@
 import { useQuery } from "react-query";
 
-import { getReviewList } from "../../../apis/review";
-import { Role } from "../../../types/review";
-import ReviewCard from "../ReviewCard/ReviewCard";
+import { Role } from "types/review";
+
+import { getReviewList } from "apis/review";
+import ReviewCard from "components/Review/ReviewCard/ReviewCard";
 
 interface Props {
   id: number;

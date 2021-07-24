@@ -1,9 +1,9 @@
 import { Suspense } from "react";
 import { useParams } from "react-router-dom";
 
-import Loading from "../../components/Loading/Loading";
-import ReviewerInfoContainer from "../../components/Reviewer/ReviewerInfoContainer/ReviewerInfoContainer";
-import { LAYOUT } from "../../utils/constants/size";
+import Loading from "components/Loading/Loading";
+import ReviewerInfoContainer from "components/Reviewer/ReviewerInfoContainer/ReviewerInfoContainer";
+import { LAYOUT } from "utils/constants/size";
 
 const ReviewerDetail = () => {
   const { reviewerId } = useParams<{ reviewerId: string }>();

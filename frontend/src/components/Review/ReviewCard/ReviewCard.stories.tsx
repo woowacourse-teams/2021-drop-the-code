@@ -1,8 +1,8 @@
 import { Story, Meta } from "@storybook/react";
 
-import { Review } from "../../../types/review";
+import { Review } from "types/review";
 
-import ReviewCard from "./ReviewCard";
+import ReviewCard from "components/Review/ReviewCard/ReviewCard";
 
 export default {
   title: "components/ReviewCard",

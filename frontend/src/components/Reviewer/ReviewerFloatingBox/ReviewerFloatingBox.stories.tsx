@@ -1,8 +1,7 @@
 import { Story, Meta } from "@storybook/react";
 
-import { reviewers } from "../../../__mock__/reviewers";
-
-import ReviewerFloatingBox, { Props } from "./ReviewerFloatingBox";
+import { reviewers } from "__mock__/reviewers";
+import ReviewerFloatingBox, { Props } from "components/Reviewer/ReviewerFloatingBox/ReviewerFloatingBox";
 
 export default {
   title: "components/ReviewerFloatingBox",

@@ -2,7 +2,7 @@ import { TextareaHTMLAttributes } from "react";
 
 import styled from "styled-components";
 
-import { COLOR } from "../../../utils/constants/color";
+import { COLOR } from "utils/constants/color";
 
 interface InnerProps {
   labelText?: string;

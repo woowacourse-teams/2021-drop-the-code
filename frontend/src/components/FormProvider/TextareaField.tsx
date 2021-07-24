@@ -1,5 +1,5 @@
-import useFormContext from "../../hooks/useFormContext";
-import Textarea, { Props as TextareaProps } from "../shared/Textarea/Textarea";
+import Textarea, { Props as TextareaProps } from "components/shared/Textarea/Textarea";
+import useFormContext from "hooks/useFormContext";
 
 export interface Props extends TextareaProps {
   name: string;

@@ -3,16 +3,16 @@ import { Redirect } from "react-router-dom";
 
 import styled from "styled-components";
 
-import { getReview, patchReviewProgress } from "../../../apis/review";
-import Notification from "../../../assets/notification.png";
-import useAuthContext from "../../../hooks/useAuthContext";
-import { COLOR } from "../../../utils/constants/color";
-import { ALT } from "../../../utils/constants/message";
-import { PATH } from "../../../utils/constants/path";
-import Avatar from "../../shared/Avatar/Avatar";
-import Button from "../../shared/Button/Button";
-import ContentBox from "../../shared/ContentBox/ContentBox";
-import { FlexAlignCenter, Flex, FlexCenter } from "../../shared/Flexbox/Flexbox";
+import { getReview, patchReviewProgress } from "apis/review";
+import Notification from "assets/notification.png";
+import Avatar from "components/shared/Avatar/Avatar";
+import Button from "components/shared/Button/Button";
+import ContentBox from "components/shared/ContentBox/ContentBox";
+import { FlexAlignCenter, Flex, FlexCenter } from "components/shared/Flexbox/Flexbox";
+import useAuthContext from "hooks/useAuthContext";
+import { COLOR } from "utils/constants/color";
+import { ALT } from "utils/constants/message";
+import { PATH } from "utils/constants/path";
 
 const Title = styled.p`
   font-weight: 900;

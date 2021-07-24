@@ -2,12 +2,12 @@ import { Dispatch, SetStateAction } from "react";
 
 import styled from "styled-components";
 
-import CloseSvg from "../../assets/close.svg";
-import useLanguageList from "../../hooks/useLanguageList";
-import { COLOR } from "../../utils/constants/color";
-import { LAYOUT } from "../../utils/constants/size";
-import Button from "../shared/Button/Button";
-import { Flex, FlexAlignCenter } from "../shared/Flexbox/Flexbox";
+import CloseSvg from "assets/close.svg";
+import Button from "components/shared/Button/Button";
+import { Flex, FlexAlignCenter } from "components/shared/Flexbox/Flexbox";
+import useLanguageList from "hooks/useLanguageList";
+import { COLOR } from "utils/constants/color";
+import { LAYOUT } from "utils/constants/size";
 
 const SpecButton = styled(Button)`
   color: ${({ theme }) => theme.common.color.primary};

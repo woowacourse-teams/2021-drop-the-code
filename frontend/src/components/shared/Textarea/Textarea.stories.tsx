@@ -1,6 +1,6 @@
 import { Story, Meta } from "@storybook/react";
 
-import Textarea, { Props } from "./Textarea";
+import Textarea, { Props } from "components/shared/Textarea/Textarea";
 
 export default {
   title: "components/shared/Textarea",

@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 
-import { getLanguageList } from "../apis/reviewer";
+import { getLanguageList } from "apis/reviewer";
 
 const useLanguageList = () => {
   const { data: languages } = useQuery("getLanguageList", async () => {

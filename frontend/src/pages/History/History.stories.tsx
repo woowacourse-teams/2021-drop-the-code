@@ -1,6 +1,6 @@
 import { Story, Meta } from "@storybook/react";
 
-import History from "./History";
+import History from "pages/History/History";
 
 export default {
   title: "pages/History",

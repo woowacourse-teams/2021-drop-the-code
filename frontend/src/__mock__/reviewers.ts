@@ -1,4 +1,4 @@
-import { Reviewer } from "../types/reviewer";
+import { Reviewer } from "types/reviewer";
 
 export const reviewers: Reviewer[] = [
   {

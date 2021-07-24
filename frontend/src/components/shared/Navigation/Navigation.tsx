@@ -12,6 +12,7 @@ const Inner = styled.header`
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: ${({ theme }) => theme.common.zIndex.header};
 `;
 
 export interface Props {

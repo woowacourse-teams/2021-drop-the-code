@@ -19,6 +19,7 @@ const ModalBlock = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: ${({ theme }) => theme.common.zIndex.modal};
 `;
 
 const Dimmed = styled.div`
@@ -31,10 +32,10 @@ const Dimmed = styled.div`
 `;
 
 const Contents = styled(FlexCenter)`
-  padding: 20px;
+  padding: 1.25rem;
   border-radius: ${({ theme }) => theme.common.shape.rounded};
   background-color: white;
-  z-index: ${({ theme }) => theme.common.zIndex.modal};
+  z-index: 1;
 `;
 
 const Modal = ({ children }: Props) => {

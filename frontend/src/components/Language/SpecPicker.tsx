@@ -1,11 +1,27 @@
 import { Dispatch, SetStateAction } from "react";
 
+import styled from "styled-components";
+
 import CloseSvg from "../../assets/close.svg";
-import Button from "../../components/shared/Button/Button";
-import { Flex, FlexAlignCenter } from "../../components/shared/Flexbox/Flexbox";
 import useLanguageList from "../../hooks/useLanguageList";
 import { COLOR } from "../../utils/constants/color";
 import { LAYOUT } from "../../utils/constants/size";
+import Button from "../shared/Button/Button";
+import { Flex, FlexAlignCenter } from "../shared/Flexbox/Flexbox";
+
+const SpecButton = styled(Button)`
+  color: ${({ theme }) => theme.common.color.primary};
+  font-weight: 900;
+  border: 2px solid ${({ theme }) => theme.common.color.primary};
+  margin-right: 0.625rem;
+`;
+
+const Close = styled(CloseSvg)`
+  width: 10px;
+  height: 10px;
+  stroke: ${({ theme }) => theme.common.color.primary};
+  stroke-width: 2px;
+`;
 
 interface Specs {
   [language: string]: string[];
@@ -96,12 +112,10 @@ const SpecPicker = ({ filterLanguage, specs, onSetFilterLanguage, onSetSpecs }: 
           >
             {Object.entries(specs).map(([key, value]) =>
               [key, ...value].map((spec) => (
-                <Button
+                <SpecButton
                   key={spec}
                   themeColor="secondary"
                   shape="pill"
-                  border
-                  css={{ borderColor: COLOR.INDIGO_500, marginRight: "0.625rem" }}
                   onClick={() => {
                     if (!filterLanguage) return;
 
@@ -124,8 +138,8 @@ const SpecPicker = ({ filterLanguage, specs, onSetFilterLanguage, onSetSpecs }: 
                   }}
                 >
                   {`${spec} `}
-                  <CloseSvg width="8px" height="8px" stroke={COLOR.INDIGO_500} />
-                </Button>
+                  <Close />
+                </SpecButton>
               ))
             )}
           </FlexAlignCenter>

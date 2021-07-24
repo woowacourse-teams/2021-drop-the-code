@@ -1,12 +1,12 @@
 import { useQuery } from "react-query";
 
 import { getReviewList } from "../../../apis/review";
-import { ReviewListMode } from "../../../types/review";
+import { Role } from "../../../types/review";
 import ReviewCard from "../ReviewCard/ReviewCard";
 
 interface Props {
   id: number;
-  mode: ReviewListMode;
+  mode: Role;
 }
 
 const ReviewList = ({ id, mode }: Props) => {

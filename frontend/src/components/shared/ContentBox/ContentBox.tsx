@@ -5,7 +5,7 @@ import { Flex } from "../Flexbox/Flexbox";
 
 const Inner = styled(Flex)`
   flex-direction: column;
-  padding: 1.25rem;
+  padding: 2.5rem;
   box-shadow: 0.4375rem 0.375rem 0.375rem rgb(0 0 0 / 10%);
   border-radius: ${({ theme }) => theme.common.shape.rounded};
 `;

@@ -60,6 +60,13 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
     },
   });
 
+  /*TODO: 리뷰 진행 상태에 따른 분기
+
+    진행버튼의 Text와 disabled 상태의 분류
+  
+    리뷰가 완료됨, 리뷰와 관련 없는 사람의 방문, 리뷰 진행의 권한이 없는 경우 (Role, 리뷰 Progress 비교)
+  */
+
   // const isFinished = data.progress === "FINISHED"
   // const isAnonymous = ![data.studentProfile.id, data.teacherProfile.id].includes(user.id);
 
@@ -122,26 +129,3 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
 };
 
 export default ReviewInfoContainer;
-
-/*
-
-
-data.progress === 'ON_GOING'
-data.progress === 'TEACHER_COMPLETED'
-data.progress === 'FINISHED'
-
-user.id === data.studentProfile.id + data.progress ==='ON_GOING' 리뷰 종료 / disabled
-user.id === data.teacherProfile.id + data.progress === 'TEACHER_COMPLETED' 이면  리뷰 완료 / disabled
-'FINISHED' 이면 disabled
-익명의 참석자이면 button 생성 X
-
-[buttonText, disabled] = user.role === 'student' ? [user.id === data.studentProfile.id && 리뷰 종료, data.progress !== 'ON_GOING'] : = [user.id === data.teacherProfile.id && 리뷰 완료, data.progress !== 'TEACHER_COMPLETED']
-[buttonText, disabled] = [user.id === data.teacherProfile.id && 리뷰 완료, data.progress !== 'TEACHER_COMPLETED']
-buttonText = user.id === data.teacherProfile.id && 리뷰 완료
-
-const isAnonymous = ![data.studentProfile.id, data.teacherProfile.id].includes(user.id)
-
-
-
-"ON_GOING" | "TEACHER_COMPLETED" | "FINISHED";
-*/

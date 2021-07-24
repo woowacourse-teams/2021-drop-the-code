@@ -6,13 +6,13 @@ import ReviewInfoContainer from "../../components/Review/ReviewInfoContainer/Rev
 import { LAYOUT } from "../../utils/constants/size";
 
 const ReviewDetail = () => {
-  useParams();
+  const { reviewId } = useParams<{ reviewId: string }>();
 
   return (
     <main css={{ paddingTop: "6rem", width: "100%", maxWidth: LAYOUT.LG, margin: "0 auto" }}>
       <h2 css={{ fontSize: "1.25rem", fontWeight: 600 }}>리뷰 상세</h2>
       <Suspense fallback={<Loading />}>
-        <ReviewInfoContainer reviewId={1} />
+        <ReviewInfoContainer reviewId={Number(reviewId)} />
       </Suspense>
     </main>
   );

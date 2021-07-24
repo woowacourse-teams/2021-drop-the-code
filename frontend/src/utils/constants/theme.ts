@@ -51,8 +51,9 @@ const common: Common = {
     circle: "100%",
   },
   zIndex: {
-    modal: 99,
-    menuItem: 88,
+    menuItem: 1,
+    header: 10,
+    modal: 20,
   },
 };
 

@@ -29,13 +29,9 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
 
-  header, a {
-    color: ${COLOR.BLACK};
-    cursor: pointer;
-  }
-
   a {
     display: flex;
+    color: ${COLOR.BLACK};
     text-decoration: none;
   }
 

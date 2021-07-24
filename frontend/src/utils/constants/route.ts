@@ -1,12 +1,12 @@
-import History from "../../pages/History/History";
-import Main from "../../pages/Main/Main";
-import RedirectOAuth from "../../pages/RedirectOAuth/RedirectOAuth";
-import ReviewDetail from "../../pages/ReviewDetail/ReviewDetail";
-import ReviewerDetail from "../../pages/ReviewerDetail/ReviewerDetail";
-import ReviewerRegister from "../../pages/ReviewerRegister/ReviewerRegister";
-import { RouteShape, NavMenuShape } from "../../types/route";
+import { RouteShape, NavMenuShape } from "types/route";
 
-import { PATH } from "./path";
+import History from "pages/History/History";
+import Main from "pages/Main/Main";
+import RedirectOAuth from "pages/RedirectOAuth/RedirectOAuth";
+import ReviewDetail from "pages/ReviewDetail/ReviewDetail";
+import ReviewerDetail from "pages/ReviewerDetail/ReviewerDetail";
+import ReviewerRegister from "pages/ReviewerRegister/ReviewerRegister";
+import { PATH } from "utils/constants/path";
 
 export const ROUTE: RouteShape[] = [
   { path: PATH.MAIN, Component: Main, isPrivate: false, exact: true },

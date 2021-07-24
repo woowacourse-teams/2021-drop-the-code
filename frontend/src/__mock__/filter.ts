@@ -1,4 +1,4 @@
-import { Language } from "../types/reviewer";
+import { Language } from "types/reviewer";
 
 export const languages: Language[] = [
   {

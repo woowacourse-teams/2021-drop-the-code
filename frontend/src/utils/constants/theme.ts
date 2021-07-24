@@ -1,9 +1,8 @@
 import { DefaultTheme } from "styled-components";
+import { Common } from "types/styled/common";
+import { Components } from "types/styled/components";
 
-import { Common } from "../../types/styled/common";
-import { Components } from "../../types/styled/components";
-
-import { COLOR } from "./color";
+import { COLOR } from "utils/constants/color";
 
 const components: Components = {
   button: {

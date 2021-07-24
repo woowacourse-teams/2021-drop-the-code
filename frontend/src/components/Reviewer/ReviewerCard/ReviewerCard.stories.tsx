@@ -1,8 +1,8 @@
 import { Story, Meta } from "@storybook/react";
 
-import { Reviewer } from "../../../types/reviewer";
+import { Reviewer } from "types/reviewer";
 
-import ReviewerCard from "./ReviewerCard";
+import ReviewerCard from "components/Reviewer/ReviewerCard/ReviewerCard";
 
 export default {
   title: "components/ReviewerCard",

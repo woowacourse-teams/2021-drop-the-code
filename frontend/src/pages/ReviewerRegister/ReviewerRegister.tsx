@@ -2,20 +2,20 @@ import { Suspense, useState } from "react";
 import { useMutation } from "react-query";
 import { useHistory } from "react-router-dom";
 
-import { registerReviewer } from "../../apis/reviewer";
-import FormProvider from "../../components/FormProvider/FormProvider";
-import InputField from "../../components/FormProvider/InputField";
-import TextareaField from "../../components/FormProvider/TextareaField";
-import SpecPicker from "../../components/Language/SpecPicker";
-import Loading from "../../components/Loading/Loading";
-import Button from "../../components/shared/Button/Button";
-import { Flex } from "../../components/shared/Flexbox/Flexbox";
-import { PLACE_HOLDER } from "../../utils/constants/message";
-import { PATH } from "../../utils/constants/path";
-import { LAYOUT } from "../../utils/constants/size";
-import { STANDARD } from "../../utils/constants/standard";
-import reviewerRegisterValidators from "../../utils/validators/reviewerRegisterValidators";
-// import useAuthContext from "../../hooks/useAuthContext";
+import { registerReviewer } from "apis/reviewer";
+import FormProvider from "components/FormProvider/FormProvider";
+import InputField from "components/FormProvider/InputField";
+import TextareaField from "components/FormProvider/TextareaField";
+import SpecPicker from "components/Language/SpecPicker";
+import Loading from "components/Loading/Loading";
+import Button from "components/shared/Button/Button";
+import { Flex } from "components/shared/Flexbox/Flexbox";
+import { PLACE_HOLDER } from "utils/constants/message";
+import { PATH } from "utils/constants/path";
+import { LAYOUT } from "utils/constants/size";
+import { STANDARD } from "utils/constants/standard";
+import reviewerRegisterValidators from "utils/validators/reviewerRegisterValidators";
+// import useAuthContext from "hooks/useAuthContext";
 
 interface Specs {
   [language: string]: string[];

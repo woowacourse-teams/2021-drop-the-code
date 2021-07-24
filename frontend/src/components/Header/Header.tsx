@@ -1,14 +1,14 @@
 import { Link, NavLink } from "react-router-dom";
 
-import Logo from "../../assets/logo.svg";
-import useAuthContext from "../../hooks/useAuthContext";
-import useModalContext from "../../hooks/useModalContext";
-import { PATH } from "../../utils/constants/path";
-import { NAV_MENU } from "../../utils/constants/route";
-import GithubOAuth from "../Auth/OAuth/GithubOAuth";
-import Button from "../shared/Button/Button";
-import { FlexCenter } from "../shared/Flexbox/Flexbox";
-import Navigation from "../shared/Navigation/Navigation";
+import Logo from "assets/logo.svg";
+import GithubOAuth from "components/Auth/OAuth/GithubOAuth";
+import Button from "components/shared/Button/Button";
+import { FlexCenter } from "components/shared/Flexbox/Flexbox";
+import Navigation from "components/shared/Navigation/Navigation";
+import useAuthContext from "hooks/useAuthContext";
+import useModalContext from "hooks/useModalContext";
+import { PATH } from "utils/constants/path";
+import { NAV_MENU } from "utils/constants/route";
 
 const Header = () => {
   const { user, logout } = useAuthContext();

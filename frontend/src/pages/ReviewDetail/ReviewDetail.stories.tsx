@@ -1,6 +1,6 @@
 import { Story, Meta } from "@storybook/react";
 
-import ReviewDetail from "./ReviewDetail";
+import ReviewDetail from "pages/ReviewDetail/ReviewDetail";
 
 export default {
   title: "pages/ReviewDetail",

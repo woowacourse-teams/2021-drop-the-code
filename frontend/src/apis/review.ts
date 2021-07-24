@@ -1,6 +1,6 @@
-import { Review, Role, ReviewRequestFormData } from "../types/review";
+import { Review, Role, ReviewRequestFormData } from "types/review";
 
-import apiClient from "./apiClient";
+import apiClient from "apis/apiClient";
 
 export const requestReview = (reviewRequestFormData: ReviewRequestFormData) => {
   return apiClient.post(`/teachers`, reviewRequestFormData);

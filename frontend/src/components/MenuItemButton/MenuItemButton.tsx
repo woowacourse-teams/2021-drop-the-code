@@ -2,8 +2,8 @@ import { ReactNode, useState } from "react";
 
 import styled from "styled-components";
 
-import { COLOR } from "../../utils/constants/color";
-import Button, { Props as ButtonProps } from "../shared/Button/Button";
+import Button, { Props as ButtonProps } from "components/shared/Button/Button";
+import { COLOR } from "utils/constants/color";
 
 const Inner = styled.div`
   display: flex;

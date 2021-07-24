@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
 
-import { User } from "../types/auth";
+import { User } from "types/auth";
 
 interface AuthContextProps {
   login: (user: User) => void;

@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
 
-import { getReviewer } from "../../../apis/reviewer";
-import { Role } from "../../../types/review";
-import ReviewList from "../../Review/ReviewList/ReviewList";
-import Button from "../../shared/Button/Button";
-import ReviewerContentBox from "../../shared/ContentBox/ContentBox";
-import { Flex, FlexCenter } from "../../shared/Flexbox/Flexbox";
-import ReviewerFloatingBox from "../ReviewerFloatingBox/ReviewerFloatingBox";
+import { Role } from "types/review";
+
+import { getReviewer } from "apis/reviewer";
+import ReviewList from "components/Review/ReviewList/ReviewList";
+import ReviewerFloatingBox from "components/Reviewer/ReviewerFloatingBox/ReviewerFloatingBox";
+import Button from "components/shared/Button/Button";
+import ReviewerContentBox from "components/shared/ContentBox/ContentBox";
+import { Flex, FlexCenter } from "components/shared/Flexbox/Flexbox";
 
 interface Props {
   reviewerId: number;

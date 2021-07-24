@@ -2,10 +2,9 @@ import React, { ReactNode } from "react";
 
 import styled from "styled-components";
 
-import useModalContext from "../../hooks/useModalContext";
-import { FlexCenter } from "../shared/Flexbox/Flexbox";
-
-import ModalPortal from "./ModalPortal";
+import ModalPortal from "components/ModalProvider/ModalPortal";
+import { FlexCenter } from "components/shared/Flexbox/Flexbox";
+import useModalContext from "hooks/useModalContext";
 
 export interface Props {
   children: ReactNode;

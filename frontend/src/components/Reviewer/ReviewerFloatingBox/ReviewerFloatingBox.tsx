@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
+import { Reviewer } from "types/reviewer";
 
-import SmBlackLogo from "../../../assets/sm-white-github-logo.png";
-import useModalContext from "../../../hooks/useModalContext";
-import { Reviewer } from "../../../types/reviewer";
-import { ALT } from "../../../utils/constants/message";
-import ReviewRequest from "../../Review/ReviewRequest/ReviewRequest";
-import Avatar from "../../shared/Avatar/Avatar";
-import Button from "../../shared/Button/Button";
-import Chip from "../../shared/Chip/Chip";
-import { Flex, FlexAlignCenter, FlexCenter } from "../../shared/Flexbox/Flexbox";
+import SmBlackLogo from "assets/sm-white-github-logo.png";
+import ReviewRequest from "components/Review/ReviewRequest/ReviewRequest";
+import Avatar from "components/shared/Avatar/Avatar";
+import Button from "components/shared/Button/Button";
+import Chip from "components/shared/Chip/Chip";
+import { Flex, FlexAlignCenter, FlexCenter } from "components/shared/Flexbox/Flexbox";
+import useModalContext from "hooks/useModalContext";
+import { ALT } from "utils/constants/message";
 
 const Inner = styled(Flex)`
   flex-direction: column;

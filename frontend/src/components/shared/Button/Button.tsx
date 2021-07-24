@@ -1,10 +1,10 @@
 import { ButtonHTMLAttributes } from "react";
 
 import styled from "styled-components";
+import { Shape } from "types/styled/common";
+import { ButtonThemeColor } from "types/styled/components";
 
-import { Shape } from "../../../types/styled/common";
-import { ButtonThemeColor } from "../../../types/styled/components";
-import { COLOR } from "../../../utils/constants/color";
+import { COLOR } from "utils/constants/color";
 
 interface InnerProps {
   themeColor?: ButtonThemeColor;

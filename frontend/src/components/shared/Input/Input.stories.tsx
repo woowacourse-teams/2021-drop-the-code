@@ -1,6 +1,6 @@
 import { Story, Meta } from "@storybook/react";
 
-import Input, { Props } from "./Input";
+import Input, { Props } from "components/shared/Input/Input";
 
 export default {
   title: "components/shared/Input",

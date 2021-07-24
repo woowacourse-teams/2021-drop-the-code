@@ -2,7 +2,7 @@ import { SelectHTMLAttributes } from "react";
 
 import styled from "styled-components";
 
-import { COLOR } from "../../../utils/constants/color";
+import { COLOR } from "utils/constants/color";
 
 export type Props = SelectHTMLAttributes<HTMLSelectElement>;
 

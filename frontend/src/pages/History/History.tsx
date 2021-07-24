@@ -1,13 +1,13 @@
 import { Suspense, useEffect, useState } from "react";
 
 import styled, { css } from "styled-components";
+import { Role } from "types/review";
 
-import Loading from "../../components/Loading/Loading";
-import ReviewList from "../../components/Review/ReviewList/ReviewList";
-import useAuthContext from "../../hooks/useAuthContext";
-import { Role } from "../../types/review";
-import { COLOR } from "../../utils/constants/color";
-import { LAYOUT } from "../../utils/constants/size";
+import Loading from "components/Loading/Loading";
+import ReviewList from "components/Review/ReviewList/ReviewList";
+import useAuthContext from "hooks/useAuthContext";
+import { COLOR } from "utils/constants/color";
+import { LAYOUT } from "utils/constants/size";
 
 const Item = styled.li<{ active: boolean }>`
   position: relative;

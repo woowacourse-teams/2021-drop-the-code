@@ -1,4 +1,4 @@
-import { STANDARD } from "./standard";
+import { STANDARD } from "utils/constants/standard";
 
 export const ERROR_MESSAGE = {
   REVIEWER_REGISTER: {

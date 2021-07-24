@@ -1,8 +1,7 @@
 import { Story, Meta } from "@storybook/react";
 
-import { reviewers } from "../../../__mock__/reviewers";
-
-import ContentBox, { Props } from "./ContentBox";
+import { reviewers } from "__mock__/reviewers";
+import ContentBox, { Props } from "components/shared/ContentBox/ContentBox";
 
 export default {
   title: "components/ContentBox",

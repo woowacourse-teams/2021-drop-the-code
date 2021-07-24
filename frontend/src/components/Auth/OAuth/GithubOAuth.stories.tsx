@@ -1,6 +1,6 @@
 import { Story, Meta } from "@storybook/react";
 
-import GithubOAuth from "./GithubOAuth";
+import GithubOAuth from "components/Auth/OAuth/GithubOAuth";
 
 export default {
   title: "components/GithubOAuth",

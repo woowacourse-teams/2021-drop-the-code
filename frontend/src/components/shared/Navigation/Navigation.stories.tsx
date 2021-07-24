@@ -1,6 +1,6 @@
 import { Story, Meta } from "@storybook/react";
 
-import Navigation, { Props } from "./Navigation";
+import Navigation, { Props } from "components/shared/Navigation/Navigation";
 
 export default {
   title: "components/shared/Navigation",

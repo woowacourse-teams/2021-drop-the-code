@@ -16,11 +16,11 @@ import com.wootech.dropthecode.repository.bridge.TeacherLanguageRepository;
 import com.wootech.dropthecode.repository.bridge.TeacherSkillRepository;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
-@Profile("prod-init")
-@Configuration
+@Profile({"prod-init"})
+@Component
 public class DataInitializer {
     public static final Integer REPEAT_COUNT = 10;
 

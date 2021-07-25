@@ -15,6 +15,8 @@ import com.wootech.dropthecode.dto.response.ReviewResponse;
 import com.wootech.dropthecode.dto.response.ReviewsResponse;
 import com.wootech.dropthecode.service.ReviewService;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,8 +45,8 @@ public class ReviewController {
      * @title 내가 받은 리뷰 목록 조회
      */
     @GetMapping("/student/{id}")
-    public ResponseEntity<ReviewsResponse> showStudentReviews(@PathVariable Long id) {
-      ReviewsResponse reviewsResponse = reviewService.findStudentReview(id);
+    public ResponseEntity<ReviewsResponse> showStudentReviews(@PathVariable Long id, @PageableDefault Pageable pageable) {
+      ReviewsResponse reviewsResponse = reviewService.findStudentReview(id, pageable);
         return ResponseEntity.status(HttpStatus.OK)
                              .body(reviewsResponse);
     }

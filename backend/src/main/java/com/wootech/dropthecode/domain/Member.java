@@ -54,6 +54,14 @@ public class Member extends BaseEntity {
         this.role = role;
     }
 
+    public Member(String email, String name, String imageUrl, Role role) {
+        this.oauthId = oauthId;
+        this.email = email;
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.role = role;
+    }
+
     public String getOauthId() {
         return oauthId;
     }

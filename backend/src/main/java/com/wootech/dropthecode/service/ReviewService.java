@@ -20,10 +20,10 @@ public class ReviewService {
     }
 
     public ReviewsResponse findStudentReview(Long id, ReviewSearchCondition condition, Pageable pageable) {
-        List<ReviewResponse> collect = reviewRepository.searchPageByStudentId(id, condition, pageable)
+        List<ReviewResponse> reviews = reviewRepository.searchPageByStudentId(id, condition, pageable)
                                                        .stream()
                                                        .map(ReviewResponse::of)
                                                        .collect(Collectors.toList());
-        return new ReviewsResponse(collect);
+        return new ReviewsResponse(reviews);
     }
 }

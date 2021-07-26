@@ -47,6 +47,12 @@ public class TeacherService {
         this.teacherProfileRepository = teacherProfileRepository;
     }
 
+    @Transactional(readOnly = true)
+    public TeacherProfile findById(Long id) {
+        return teacherProfileRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 리뷰어입니다."));
+    }
+
     @Transactional
     public TeacherProfile save(TeacherProfile teacherProfile) {
         return teacherProfileRepository.save(teacherProfile);

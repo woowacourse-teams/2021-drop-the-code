@@ -1,6 +1,10 @@
 package com.wootech.dropthecode.domain;
 
+import java.sql.Timestamp;
 import javax.persistence.*;
+
+import com.wootech.dropthecode.exception.AuthorizationException;
+import com.wootech.dropthecode.exception.ReviewException;
 
 @Entity
 public class Review extends BaseEntity {
@@ -22,12 +26,11 @@ public class Review extends BaseEntity {
     @Column(nullable = false)
     private String prUrl;
 
-    // 선생이 리뷰 완료 버튼을 누르기 까지 경과한 시간(일)
-    private Integer elapsedTime;
+    private Long elapsedTime;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private final Progress progress = Progress.ON_GOING;
+    private Progress progress = Progress.ON_GOING;
 
     public Review() {
     }
@@ -38,6 +41,17 @@ public class Review extends BaseEntity {
         this.title = title;
         this.content = content;
         this.prUrl = prUrl;
+    }
+
+    public void updateElapsedTime() {
+        long now = System.currentTimeMillis();
+        long createTime = Timestamp.valueOf(getCreatedAt()).getTime();
+
+        elapsedTime = now - createTime;
+    }
+
+    public Long calculateElapsedTime() {
+        return elapsedTime / (1000 * 60 * 60);
     }
 
     public Member getTeacher() {
@@ -60,11 +74,41 @@ public class Review extends BaseEntity {
         return prUrl;
     }
 
-    public Integer getElapsedTime() {
+    public Long getElapsedTime() {
         return elapsedTime;
     }
 
     public Progress getProgress() {
         return progress;
+    }
+
+    public void setProgress(Progress progress) {
+        this.progress = progress;
+    }
+
+    public void setTeacherCompleteProgress() {
+        if (this.progress != Progress.ON_GOING) {
+            throw new ReviewException("현재 리뷰는 리뷰 진행중 상태가 아닙니다. 리뷰 완료로 진행시킬 수 없습니다.");
+        }
+        this.progress = Progress.TEACHER_COMPLETED;
+    }
+
+    public void setFinishedProgress() {
+        if (this.progress != Progress.TEACHER_COMPLETED) {
+            throw new ReviewException("현재 리뷰는 리뷰 완료 상태가 아닙니다. 리뷰 종료로 진행시킬 수 없습니다.");
+        }
+        this.progress = Progress.FINISHED;
+    }
+
+    public void validateMemberIdAsTeacher(Long id) {
+        if(teacher.isSameIdAs(id)) {
+            throw new AuthorizationException("현재 사용자는 해당 리뷰에 대한 리뷰 완료 권한이 없습니다.");
+        }
+    }
+
+    public void validateMemberIdAsStudent(Long id) {
+        if(teacher.isSameIdAs(id)) {
+            throw new AuthorizationException("현재 사용자는 해당 리뷰에 대한 리뷰 완료 권한이 없습니다.");
+        }
     }
 }

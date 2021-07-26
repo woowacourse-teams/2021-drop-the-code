@@ -29,9 +29,9 @@ public class TeacherProfile extends BaseEntity {
     @OneToMany(mappedBy = "teacherProfile", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private final Set<TeacherSkill> skills = new HashSet<>();
 
-    private final Integer sumReviewCount = 0;
+    private Integer sumReviewCount = 0;
 
-    private final Double averageReviewTime = (double) 0;
+    private Double averageReviewTime = (double) 0;
 
     protected TeacherProfile() {
     }
@@ -47,7 +47,15 @@ public class TeacherProfile extends BaseEntity {
         this.title = title;
         this.content = content;
         this.career = career;
+        this.sumReviewCount = sumReviewCount;
+        this.averageReviewTime = averageReviewTime;
         this.member = member;
+    }
+
+    public void updateReviewCountAndTime(Long newReviewTime) {
+        double newAverageReviewTime = (newReviewTime + averageReviewTime * sumReviewCount * 24) / 24 / (sumReviewCount + 1);
+        sumReviewCount++;
+        averageReviewTime = Math.round(newAverageReviewTime * 10) / 10.0;
     }
 
     public String getTitle() {

@@ -55,7 +55,6 @@ public class Member extends BaseEntity {
     }
 
     public Member(String email, String name, String imageUrl, Role role) {
-        this.oauthId = oauthId;
         this.email = email;
         this.name = name;
         this.imageUrl = imageUrl;
@@ -100,5 +99,9 @@ public class Member extends BaseEntity {
 
     public boolean hasRole(Role role) {
         return this.role == role;
+    }
+
+    public boolean isSameIdAs(Long id) {
+        return this.id.equals(id);
     }
 }

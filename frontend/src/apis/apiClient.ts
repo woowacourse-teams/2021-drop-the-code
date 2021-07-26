@@ -46,6 +46,22 @@ const apiClient = {
       };
     }
   },
+  patch: async <T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<Response<T>> => {
+    try {
+      const response = await axios.patch<T>(url, data, config);
+
+      return {
+        isSuccess: true,
+        data: response.data,
+      };
+    } catch (error) {
+      return {
+        isSuccess: false,
+        error: error.response.data,
+        code: error.code,
+      };
+    }
+  },
 } as const;
 
 export default apiClient;

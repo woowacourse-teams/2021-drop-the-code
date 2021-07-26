@@ -19,7 +19,7 @@
     "import/order": [
       "error",
       {
-        "groups": ["external", "builtin", "parent", "sibling", "internal"],
+        "groups": ["external", "builtin", "internal", "parent", "sibling"],
         "pathGroups": [
           {
             "pattern": "@storybook/**",
@@ -39,6 +39,14 @@
           "caseInsensitive": true
         }
       }
-    ]
+    ],
+    "import/newline-after-import": ["error"]
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "webpack.common.ts"
+      }
+    }
   }
 }

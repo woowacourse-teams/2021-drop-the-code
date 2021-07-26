@@ -2,7 +2,7 @@ import { createGlobalStyle } from "styled-components";
 import normalize from "styled-normalize";
 import reset from "styled-reset";
 
-import { COLOR } from "../../utils/constants/color";
+import { COLOR } from "utils/constants/color";
 
 const GlobalStyle = createGlobalStyle`
   ${normalize}
@@ -21,6 +21,7 @@ const GlobalStyle = createGlobalStyle`
 
   * {
     box-sizing: border-box;
+    word-break: break-word;
   }
 
   button {
@@ -28,13 +29,9 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
 
-  header, a {
-    color: ${COLOR.BLACK};
-    cursor: pointer;
-  }
-
   a {
     display: flex;
+    color: ${COLOR.BLACK};
     text-decoration: none;
   }
 
@@ -42,6 +39,10 @@ const GlobalStyle = createGlobalStyle`
     font-size: 1.25rem;
     font-weight: 600;
     margin: 2.5rem 0;
+  }
+
+  button {
+    background: none;
   }
 `;
 

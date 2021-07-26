@@ -1,25 +1,26 @@
 import { useMutation } from "react-query";
 
-import { requestReview } from "../../../apis/review";
-import FormProvider from "../../../components/FormProvider/FormProvider";
-import InputField from "../../../components/FormProvider/InputField";
-import TextareaField from "../../../components/FormProvider/TextareaField";
-import Loading from "../../../components/Loading/Loading";
-import Button from "../../../components/shared/Button/Button";
-import { Flex } from "../../../components/shared/Flexbox/Flexbox";
-import useAuthContext from "../../../hooks/useAuthContext";
-import { ReviewRequestFormData } from "../../../types/review";
-import { COLOR } from "../../../utils/constants/color";
-import { PLACE_HOLDER } from "../../../utils/constants/message";
-import { LAYOUT } from "../../../utils/constants/size";
-import { STANDARD } from "../../../utils/constants/standard";
-import reviewRequestValidators from "../../../utils/validators/reviewRequestValidators";
+import { ReviewRequestFormData } from "types/review";
+
+import { requestReview } from "apis/review";
+import FormProvider from "components/FormProvider/FormProvider";
+import InputField from "components/FormProvider/InputField";
+import SubmitButton from "components/FormProvider/SubmitButton";
+import TextareaField from "components/FormProvider/TextareaField";
+import Loading from "components/Loading/Loading";
+import { Flex } from "components/shared/Flexbox/Flexbox";
+import useAuthContext from "hooks/useAuthContext";
+import { COLOR } from "utils/constants/color";
+import { PLACE_HOLDER } from "utils/constants/message";
+import { LAYOUT } from "utils/constants/size";
+import { STANDARD } from "utils/constants/standard";
+import reviewRequestValidators from "utils/validators/reviewRequestValidators";
 
 interface Props {
-  teacherId: number;
+  reviewerId: number;
 }
 
-const ReviewRequest = ({ teacherId }: Props) => {
+const ReviewRequest = ({ reviewerId }: Props) => {
   const { user } = useAuthContext();
 
   const mutation = useMutation(
@@ -42,10 +43,10 @@ const ReviewRequest = ({ teacherId }: Props) => {
     <div css={{ width: "40.625rem", margin: "0 auto" }}>
       <h2 css={{ fontSize: "1.25rem", fontWeight: 600, margin: "20px 0 40px", textAlign: "center" }}>리뷰 신청</h2>
       <FormProvider
-        submit={async ({ studentId, teacherId, title, prUrl, content }) => {
+        submit={async ({ studentId, reviewerId, title, prUrl, content }) => {
           // mutation.mutate({
           //   studentId: user.id
-          //   teacherId,
+          //   teacherId: reviewerId,
           //   title,
           //   prUrl,
           //   content,
@@ -81,9 +82,9 @@ const ReviewRequest = ({ teacherId }: Props) => {
           css={{ minHeight: "12.5rem" }}
         />
         <Flex css={{ margin: "1.25rem 0 2.5rem" }}>
-          <Button type="submit" themeColor="primary" shape="rounded" css={{ marginLeft: "auto" }}>
+          <SubmitButton themeColor="primary" shape="rounded" css={{ marginLeft: "auto" }}>
             요청
-          </Button>
+          </SubmitButton>
         </Flex>
       </FormProvider>
     </div>

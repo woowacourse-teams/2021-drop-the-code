@@ -1,8 +1,7 @@
 import { ImgHTMLAttributes } from "react";
 
 import styled from "styled-components";
-
-import { Shape } from "../../../types/styled/common";
+import { Shape } from "types/styled/common";
 
 interface InnerProps {
   imageUrl?: string;

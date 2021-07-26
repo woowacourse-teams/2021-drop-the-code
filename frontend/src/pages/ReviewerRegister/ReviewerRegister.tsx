@@ -2,22 +2,20 @@ import { Suspense, useState } from "react";
 import { useMutation } from "react-query";
 import { useHistory } from "react-router-dom";
 
-import { registerReviewer } from "../../apis/reviewer";
-import FormProvider from "../../components/FormProvider/FormProvider";
-import InputField from "../../components/FormProvider/InputField";
-import TextareaField from "../../components/FormProvider/TextareaField";
-import Loading from "../../components/Loading/Loading";
-import Button from "../../components/shared/Button/Button";
-import { Flex } from "../../components/shared/Flexbox/Flexbox";
-import { ReviewerRegisterFormData } from "../../types/reviewer";
-import { PLACE_HOLDER } from "../../utils/constants/message";
-import { PATH } from "../../utils/constants/path";
-import { LAYOUT } from "../../utils/constants/size";
-import { STANDARD } from "../../utils/constants/standard";
-import reviewerRegisterValidators from "../../utils/validators/reviewerRegisterValidators";
-// import useAuthContext from "../../hooks/useAuthContext";
-
-import SpecPicker from "./SpecPicker";
+import { registerReviewer } from "apis/reviewer";
+import FormProvider from "components/FormProvider/FormProvider";
+import InputField from "components/FormProvider/InputField";
+import SubmitButton from "components/FormProvider/SubmitButton";
+import TextareaField from "components/FormProvider/TextareaField";
+import SpecPicker from "components/Language/SpecPicker";
+import Loading from "components/Loading/Loading";
+import { Flex } from "components/shared/Flexbox/Flexbox";
+import { PLACE_HOLDER } from "utils/constants/message";
+import { PATH } from "utils/constants/path";
+import { LAYOUT } from "utils/constants/size";
+import { STANDARD } from "utils/constants/standard";
+import reviewerRegisterValidators from "utils/validators/reviewerRegisterValidators";
+// import useAuthContext from "hooks/useAuthContext";
 
 interface Specs {
   [language: string]: string[];
@@ -30,20 +28,15 @@ const ReviewerRegister = () => {
   // const { user } = useAuthContext();
   const history = useHistory();
 
-  const mutation = useMutation(
-    (reviewerRegisterFormData: ReviewerRegisterFormData) => {
-      return registerReviewer(reviewerRegisterFormData);
+  const mutation = useMutation(registerReviewer, {
+    onSuccess: () => {
+      history.push(PATH.MAIN);
     },
-    {
-      onSuccess: () => {
-        history.push(PATH.MAIN);
-      },
-      onError: () => {
-        history.push(PATH.MAIN);
-        alert("에러");
-      },
-    }
-  );
+    onError: () => {
+      history.push(PATH.MAIN);
+      alert("에러");
+    },
+  });
 
   if (mutation.isLoading) return <Loading />;
 
@@ -110,9 +103,9 @@ const ReviewerRegister = () => {
           css={{ minHeight: "31.25rem" }}
         />
         <Flex css={{ margin: "1.25rem 0 2.5rem" }}>
-          <Button type="submit" themeColor="primary" shape="rounded" css={{ marginLeft: "auto" }}>
+          <SubmitButton themeColor="primary" shape="rounded" css={{ marginLeft: "auto" }}>
             등록
-          </Button>
+          </SubmitButton>
         </Flex>
       </FormProvider>
     </main>

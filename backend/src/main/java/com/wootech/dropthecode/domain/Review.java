@@ -32,6 +32,10 @@ public class Review extends BaseEntity {
     protected Review() {
     }
 
+    public Review(Member teacher, Member student, String title, String content, String prUrl) {
+        this(teacher, student, title, content, prUrl, 0);
+    }
+
     public Review(Member teacher, Member student, String title, String content, String prUrl, Integer elapsedTime) {
         this.teacher = teacher;
         this.student = student;

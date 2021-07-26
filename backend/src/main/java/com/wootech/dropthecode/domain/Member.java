@@ -23,10 +23,10 @@ public class Member extends BaseEntity {
     @OneToOne(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private TeacherProfile teacherProfile;
 
-    @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Review> reviewsAsTeacher;
 
-    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Review> reviewsAsStudent;
 
     protected Member() {
@@ -47,6 +47,14 @@ public class Member extends BaseEntity {
     }
 
     public Member(String oauthId, String email, String name, String imageUrl, Role role) {
+        this.oauthId = oauthId;
+        this.email = email;
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.role = role;
+    }
+
+    public Member(String email, String name, String imageUrl, Role role) {
         this.oauthId = oauthId;
         this.email = email;
         this.name = name;

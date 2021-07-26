@@ -1,7 +1,8 @@
 import { ReactNode, useState } from "react";
 
-import { AuthContext } from "../../../hooks/useAuthContext";
-import { User } from "../../../types/auth";
+import { User } from "types/auth";
+
+import { AuthContext } from "hooks/useAuthContext";
 
 export interface Props {
   children: ReactNode;

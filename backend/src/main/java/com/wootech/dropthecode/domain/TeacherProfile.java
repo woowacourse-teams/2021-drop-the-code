@@ -43,6 +43,13 @@ public class TeacherProfile extends BaseEntity {
         this.member = member;
     }
 
+    public TeacherProfile(String title, String content, int career, int sumReviewCount, Double averageReviewTime, Member member) {
+        this.title = title;
+        this.content = content;
+        this.career = career;
+        this.member = member;
+    }
+
     public String getTitle() {
         return title;
     }

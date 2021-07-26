@@ -1,8 +1,7 @@
 import React, { useState, ReactNode } from "react";
 
-import { ModalContext } from "../../hooks/useModalContext";
-
-import Modal from "./Modal";
+import Modal from "components/ModalProvider/Modal";
+import { ModalContext } from "hooks/useModalContext";
 
 export interface Props {
   children: ReactNode;

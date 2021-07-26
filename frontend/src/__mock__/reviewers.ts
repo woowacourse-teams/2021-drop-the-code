@@ -1,16 +1,17 @@
-import { Reviewer } from "../types/reviewer";
+import { Reviewer } from "types/reviewer";
 
 export const reviewers: Reviewer[] = [
   {
     id: 1,
     email: "seed@gmail.com",
-    content: "콘텐츠",
+    content:
+      "코드리뷰 만큼 빠르게 성장할 수 있는 방법은 없다고 생각합니다.\n저는 우아한 테크코스 6기 과정의 리뷰어로 참여한 리뷰 경험이 있습니다.\n많은 실무 경험과 리뷰 경험을 바탕으로 퀄리티 높은 리뷰를 보장하겠습니다.\n제 리뷰에 대해서 궁금한 점이나 의문이 드는 점들에 대해서는 의견을 남겨주시면 감사하겠습니다.\n\n - 빠른 시간 안에 답변드리겠습니다.\n - 설정 파일부터 꼼꼼히 봐드리겠습니다.",
     name: "seed",
     imageUrl: "https://avatars.githubusercontent.com/u/52202474?v=4",
     career: 3,
     sumReviewCount: 1,
     averageReviewTime: 10,
-    title: "안녕하세요~브랜입니다. 타입스크립트 정말잘해용 믿고 맡겨주세요.",
+    title: "네이버 개발자 서지환입니다.",
     techSpec: {
       languages: [
         {

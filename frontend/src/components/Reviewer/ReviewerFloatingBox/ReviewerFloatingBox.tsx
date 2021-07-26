@@ -9,6 +9,7 @@ import Avatar from "components/shared/Avatar/Avatar";
 import Button from "components/shared/Button/Button";
 import Chip from "components/shared/Chip/Chip";
 import { Flex, FlexAlignCenter, FlexCenter } from "components/shared/Flexbox/Flexbox";
+import useAuthContext from "hooks/useAuthContext";
 import useModalContext from "hooks/useModalContext";
 import { ALT } from "utils/constants/message";
 
@@ -52,6 +53,8 @@ const ReviewerFloatingBox = ({ reviewer }: Props) => {
 
   const { id, imageUrl, career, sumReviewCount, averageReviewTime } = reviewer;
 
+  const { user } = useAuthContext();
+
   return (
     <Inner>
       <ProfileWrapper>
@@ -82,18 +85,20 @@ const ReviewerFloatingBox = ({ reviewer }: Props) => {
           </Chip>
         </ChipWrapper>
       </ProfileWrapper>
-      <FlexCenter>
-        <Button
-          themeColor="secondary"
-          hover={false}
-          css={{ fontWeight: 900 }}
-          onClick={() => {
-            open(<ReviewRequest reviewerId={id} />);
-          }}
-        >
-          리뷰 요청하기
-        </Button>
-      </FlexCenter>
+      {user !== null && user.id !== id && (
+        <FlexCenter>
+          <Button
+            themeColor="secondary"
+            hover={false}
+            css={{ fontWeight: 900 }}
+            onClick={() => {
+              open(<ReviewRequest reviewerId={id} />);
+            }}
+          >
+            리뷰 요청하기
+          </Button>
+        </FlexCenter>
+      )}
     </Inner>
   );
 };

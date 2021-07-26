@@ -7,6 +7,7 @@ import { User } from "types/auth";
 import { checkMember, requestLogout } from "apis/auth";
 import { AuthContext } from "hooks/useAuthContext";
 import useLocalStorage from "hooks/useLocalStorage";
+import useRevalidate from "hooks/useRevalidate";
 
 export interface Props {
   children: ReactNode;
@@ -17,10 +18,12 @@ const AuthProvider = ({ children }: Props) => {
   const [accessToken, setAccessToken, removeAccessToken] = useLocalStorage("accessToken", "");
   const [refreshToken, setRefreshToken, removeRefreshToken] = useLocalStorage("refreshToken", "");
 
-  const queryClinet = useQueryClient();
-  const logoutMutation = useMutation(requestLogout, {
+  const { revalidate } = useRevalidate();
+
+  const queryClient = useQueryClient();
+  const logoutMutation = useMutation(() => revalidate(() => requestLogout()), {
     onSuccess: () => {
-      queryClinet.invalidateQueries("oauthLogin");
+      queryClient.invalidateQueries("oauthLogin");
 
       removeAccessToken();
       removeRefreshToken();
@@ -33,7 +36,7 @@ const AuthProvider = ({ children }: Props) => {
     "checkMember",
     async () => {
       axios.defaults.headers.Authorization = `Bearer ${accessToken}`;
-      const response = await checkMember();
+      const response = await revalidate(() => checkMember());
 
       if (!response.isSuccess) {
         // TODO: 스낵바

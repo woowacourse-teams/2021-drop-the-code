@@ -13,3 +13,11 @@ export const oauthLogin = (queryString: string) => {
 export const requestLogout = () => {
   return apiClient.post("/logout");
 };
+
+export const renewToken = (refreshToken: string) => {
+  return apiClient.post<{ accessToken: string }>(
+    "/token",
+    { refreshToken },
+    { headers: { "content-type": "application/x-www-form-urlencoded" } }
+  );
+};

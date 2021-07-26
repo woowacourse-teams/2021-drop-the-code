@@ -10,6 +10,7 @@ import TextareaField from "components/FormProvider/TextareaField";
 import Loading from "components/Loading/Loading";
 import { Flex } from "components/shared/Flexbox/Flexbox";
 import useAuthContext from "hooks/useAuthContext";
+import useRevalidate from "hooks/useRevalidate";
 import { COLOR } from "utils/constants/color";
 import { PLACE_HOLDER } from "utils/constants/message";
 import { LAYOUT } from "utils/constants/size";
@@ -23,10 +24,12 @@ interface Props {
 const ReviewRequest = ({ reviewerId }: Props) => {
   const { user } = useAuthContext();
 
+  const { revalidate } = useRevalidate();
   const mutation = useMutation(
-    (reviewRequestFormData: ReviewRequestFormData) => {
-      return requestReview(reviewRequestFormData);
-    },
+    (reviewRequestFormData: ReviewRequestFormData) =>
+      revalidate(() => {
+        return requestReview(reviewRequestFormData);
+      }),
     {
       onSuccess: () => {
         alert("성공");

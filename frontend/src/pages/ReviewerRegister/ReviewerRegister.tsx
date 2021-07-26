@@ -2,6 +2,8 @@ import { Suspense, useState } from "react";
 import { useMutation } from "react-query";
 import { useHistory } from "react-router-dom";
 
+import { ReviewerRegisterFormData } from "types/reviewer";
+
 import { registerReviewer } from "apis/reviewer";
 import FormProvider from "components/FormProvider/FormProvider";
 import InputField from "components/FormProvider/InputField";
@@ -10,6 +12,7 @@ import TextareaField from "components/FormProvider/TextareaField";
 import SpecPicker from "components/Language/SpecPicker";
 import Loading from "components/Loading/Loading";
 import { Flex } from "components/shared/Flexbox/Flexbox";
+import useRevalidate from "hooks/useRevalidate";
 import { PLACE_HOLDER } from "utils/constants/message";
 import { PATH } from "utils/constants/path";
 import { LAYOUT } from "utils/constants/size";
@@ -25,18 +28,24 @@ const ReviewerRegister = () => {
   const [filterLanguage, setFilterLanguage] = useState<string | null>(null);
   const [specs, setSpecs] = useState<Specs>({});
 
+  const { revalidate } = useRevalidate();
+
   // const { user } = useAuthContext();
   const history = useHistory();
 
-  const mutation = useMutation(registerReviewer, {
-    onSuccess: () => {
-      history.push(PATH.MAIN);
-    },
-    onError: () => {
-      history.push(PATH.MAIN);
-      alert("에러");
-    },
-  });
+  const mutation = useMutation(
+    (reviewerRegisterFormData: ReviewerRegisterFormData) =>
+      revalidate(() => registerReviewer(reviewerRegisterFormData)),
+    {
+      onSuccess: () => {
+        history.push(PATH.MAIN);
+      },
+      onError: () => {
+        history.push(PATH.MAIN);
+        alert("에러");
+      },
+    }
+  );
 
   if (mutation.isLoading) return <Loading />;
 

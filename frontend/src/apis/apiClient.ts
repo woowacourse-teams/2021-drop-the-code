@@ -8,10 +8,10 @@ interface ApiSuccess<T> {
 interface ApiFailure<T> {
   isSuccess: false;
   error: T;
-  code: string;
+  code: number;
 }
 
-type Response<T> = ApiSuccess<T> | ApiFailure<{ message: string }>;
+export type Response<T> = ApiSuccess<T> | ApiFailure<{ message: string }>;
 
 const apiClient = {
   get: async <T>(url: string, config?: AxiosRequestConfig): Promise<Response<T>> => {
@@ -26,7 +26,7 @@ const apiClient = {
       return {
         isSuccess: false,
         error: error.response.data,
-        code: error.code,
+        code: error.response.status,
       };
     }
   },
@@ -42,7 +42,7 @@ const apiClient = {
       return {
         isSuccess: false,
         error: error.response.data,
-        code: error.code,
+        code: error.response.status,
       };
     }
   },
@@ -58,7 +58,7 @@ const apiClient = {
       return {
         isSuccess: false,
         error: error.response.data,
-        code: error.code,
+        code: error.response.status,
       };
     }
   },

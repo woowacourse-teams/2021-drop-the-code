@@ -10,6 +10,7 @@ import Button from "components/shared/Button/Button";
 import ContentBox from "components/shared/ContentBox/ContentBox";
 import { FlexAlignCenter, Flex, FlexCenter } from "components/shared/Flexbox/Flexbox";
 import useAuthContext from "hooks/useAuthContext";
+import useRevalidate from "hooks/useRevalidate";
 import { COLOR } from "utils/constants/color";
 import { ALT } from "utils/constants/message";
 import { PATH } from "utils/constants/path";
@@ -36,7 +37,9 @@ interface Props {
 const ReviewInfoContainer = ({ reviewId }: Props) => {
   const { user } = useAuthContext();
 
-  const queryClinet = useQueryClient();
+  const { revalidate } = useRevalidate();
+
+  const queryClient = useQueryClient();
 
   const { data } = useQuery("getReview", async () => {
     const response = await getReview(reviewId);
@@ -50,9 +53,9 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
     return response.data;
   });
 
-  const mutation = useMutation(patchReviewProgress, {
+  const mutation = useMutation((id: number) => revalidate(() => patchReviewProgress(id)), {
     onSuccess: () => {
-      queryClinet.invalidateQueries("getReview");
+      queryClient.invalidateQueries("getReview");
       /**/
     },
     onError: () => {

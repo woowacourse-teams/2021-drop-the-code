@@ -1,9 +1,7 @@
 package com.wootech.dropthecode.dto.response;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wootech.dropthecode.domain.Progress;
 import com.wootech.dropthecode.domain.ReviewSummary;
 import com.wootech.dropthecode.util.LocalDateTimeToArray;
@@ -58,7 +56,9 @@ public class ReviewResponse {
 
     public static ReviewResponse of(ReviewSummary review) {
         return new ReviewResponse(review.getId(), review.getTitle(), review.getContent(), review.getProgress(),
-                ProfileResponse.of(review.getTeacher()), ProfileResponse.of(review.getStudent()), review.getPrUrl(), review.getCreatedAt());
+                ProfileResponse.of(review.getTeacherId(), review.getTeacherName(), review.getTeacherImageUrl()),
+                ProfileResponse.of(review.getStudentId(), review.getStudentName(), review.getStudentImageUrl()),
+                review.getPrUrl(), review.getCreatedAt());
     }
 
 

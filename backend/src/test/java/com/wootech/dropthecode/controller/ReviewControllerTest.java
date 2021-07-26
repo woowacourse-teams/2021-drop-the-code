@@ -36,6 +36,7 @@ import static capital.scalable.restdocs.jackson.JacksonResultHandlers.prepareJac
 import static com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils.OBJECT_MAPPER;
 import static com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils.restDocumentation;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
@@ -132,7 +133,7 @@ public class ReviewControllerTest extends RestApiDocumentTest {
         data.add(secondReviewResponse);
 
         doNothing().when(authService).validatesAccessToken(ACCESS_TOKEN);
-        given(reviewService.findStudentReview(any())).willReturn(new ReviewsResponse(data));
+        given(reviewService.findStudentReview(anyLong(), any(), any())).willReturn(new ReviewsResponse(data));
 
         // when
         ResultActions result = restDocsMockMvc.perform(

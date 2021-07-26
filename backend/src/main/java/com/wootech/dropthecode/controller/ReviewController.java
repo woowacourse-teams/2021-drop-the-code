@@ -10,6 +10,7 @@ import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Progress;
 import com.wootech.dropthecode.domain.oauth.Login;
 import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
+import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
 import com.wootech.dropthecode.dto.response.ProfileResponse;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
 import com.wootech.dropthecode.dto.response.ReviewsResponse;
@@ -45,8 +46,8 @@ public class ReviewController {
      * @title 내가 받은 리뷰 목록 조회
      */
     @GetMapping("/student/{id}")
-    public ResponseEntity<ReviewsResponse> showStudentReviews(@PathVariable Long id, @PageableDefault Pageable pageable) {
-      ReviewsResponse reviewsResponse = reviewService.findStudentReview(id, pageable);
+    public ResponseEntity<ReviewsResponse> showStudentReviews(@PathVariable Long id, @ModelAttribute ReviewSearchCondition condition, Pageable pageable) {
+        ReviewsResponse reviewsResponse = reviewService.findStudentReview(id, condition, pageable);
         return ResponseEntity.status(HttpStatus.OK)
                              .body(reviewsResponse);
     }

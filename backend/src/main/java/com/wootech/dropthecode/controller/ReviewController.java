@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 
+import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Progress;
+import com.wootech.dropthecode.domain.oauth.Login;
 import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
 import com.wootech.dropthecode.dto.response.ProfileResponse;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
 import com.wootech.dropthecode.dto.response.ReviewsResponse;
+import com.wootech.dropthecode.service.ReviewService;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,6 +21,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/reviews")
 public class ReviewController {
+
+    private final ReviewService reviewService;
+
+    public ReviewController(ReviewService reviewService) {
+        this.reviewService = reviewService;
+    }
 
     /**
      * @title 리뷰 생성
@@ -94,11 +103,21 @@ public class ReviewController {
 
     /**
      * @param id 리뷰 id
-     * @title 리뷰 상태 업데이트
+     * @title 리뷰 상태 업데이트(ON_GOING -> TEACHER_COMPLETE)
      */
-    @PatchMapping("/{id}")
-    public ResponseEntity<Void> changeProgress(@PathVariable Long id, @RequestHeader HttpHeaders headers) {
+    @PatchMapping("/{id}/complete")
+    public ResponseEntity<Void> updateToCompleteReview(@Login LoginMember loginMember, @PathVariable Long id) {
+        reviewService.updateToCompleteReview(loginMember, id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    /**
+     * @param id 리뷰 id
+     * @title 리뷰 상태 업데이트(TEACHER_COMPLETE -> FINISHED)
+     */
+    @PatchMapping("/{id}/finish")
+    public ResponseEntity<Void> updateToFinishReview(@Login LoginMember loginMember, @PathVariable Long id) {
+        reviewService.updateToFinishReview(loginMember, id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }

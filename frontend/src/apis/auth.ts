@@ -9,3 +9,7 @@ export const checkMember = () => {
 export const oauthLogin = (queryString: string) => {
   return apiClient.get<User>(`/login/oauth${queryString}`);
 };
+
+export const requestLogout = () => {
+  return apiClient.post("/logout");
+};

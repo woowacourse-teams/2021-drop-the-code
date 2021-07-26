@@ -12,6 +12,11 @@ const AuthProvider = ({ children }: Props) => {
   const [user, setUser] = useState<User | null>(null);
 
   const login = (user: User) => {
+    const { accessToken, refreshToken } = user;
+
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
+
     setUser(user);
   };
 

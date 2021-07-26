@@ -1,7 +1,7 @@
+import { User } from "types/auth";
+
 import apiClient from "apis/apiClient";
 
 export const oauthLogin = (queryString: string) => {
-  return apiClient.get<{ name: string; email: string; imageUrl: string; accessToken: string }>(
-    `/login/oauth${queryString}`
-  );
+  return apiClient.get<User>(`/login/oauth${queryString}`);
 };

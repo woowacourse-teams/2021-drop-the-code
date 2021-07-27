@@ -14,10 +14,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @ActiveProfiles("test")
 public class ReviewTest {
 
-    void setup() {
-
-    }
-
     @Test
     @DisplayName("Teacher Completed 상태 변경이 가능한 경우 - 성공")
     void updateTeacherCompletedReview() {
@@ -97,7 +93,7 @@ public class ReviewTest {
 
         Review onGoingReview = new Review(teacher, student, "test title", "test content", "github/3", 0L, Progress.ON_GOING);
 
-        assertThatThrownBy(() -> onGoingReview.validateMemberIdAsTeacher( student.getId()))
+        assertThatThrownBy(() -> onGoingReview.validateMemberIdAsTeacher(student.getId()))
                 .isInstanceOf(AuthorizationRequest.class);
     }
 }

@@ -50,7 +50,7 @@ public class TeacherService {
     @Transactional(readOnly = true)
     public TeacherProfile findById(Long id) {
         return teacherProfileRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 리뷰어입니다."));
+                                       .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 리뷰어입니다."));
     }
 
     @Transactional

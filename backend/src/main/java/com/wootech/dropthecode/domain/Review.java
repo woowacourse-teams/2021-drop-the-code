@@ -107,13 +107,13 @@ public class Review extends BaseEntity {
     }
 
     public void validateMemberIdAsTeacher(Long id) {
-        if(!teacher.isSameIdAs(id)) {
+        if (!teacher.isSameIdAs(id)) {
             throw new AuthorizationException("현재 사용자는 해당 리뷰에 대한 리뷰 완료 권한이 없습니다.");
         }
     }
 
     public void validateMemberIdAsStudent(Long id) {
-        if(!student.isSameIdAs(id)) {
+        if (!student.isSameIdAs(id)) {
             throw new AuthorizationException("현재 사용자는 해당 리뷰에 대한 리뷰 완료 권한이 없습니다.");
         }
     }

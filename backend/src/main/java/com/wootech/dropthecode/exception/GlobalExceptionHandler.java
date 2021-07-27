@@ -1,8 +1,5 @@
 package com.wootech.dropthecode.exception;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.mapping.PropertyReferenceException;
@@ -19,20 +16,15 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<List<ErrorResponse>> handleBindingException(MethodArgumentNotValidException e, BindingResult bindingResult) {
-        List<ErrorResponse> errorResponses = new ArrayList<>();
-
-        for (FieldError fieldError : bindingResult.getFieldErrors()) {
-            errorResponses.add(new ErrorResponse(polishErrorMessage(e)));
-        }
-
-        return ResponseEntity.badRequest().body(errorResponses);
+    public ResponseEntity<ErrorResponse> handleBindingException(BindingResult bindingResult) {
+        String message = bindingResult.getAllErrors().get(0).getDefaultMessage();
+        return ResponseEntity.badRequest().body(new ErrorResponse(message));
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    public ResponseEntity<List<ErrorResponse>> handleMissingParams(MissingServletRequestParameterException e) {
-        String name = e.getParameterName() + " parameter is missing";
-        return ResponseEntity.badRequest().body(Collections.singletonList(new ErrorResponse(name)));
+    public ResponseEntity<ErrorResponse> handleMissingParams(MissingServletRequestParameterException e) {
+        String message = e.getParameterName() + " parameter is missing";
+        return ResponseEntity.badRequest().body(new ErrorResponse(message));
     }
 
     @ExceptionHandler(BindException.class)

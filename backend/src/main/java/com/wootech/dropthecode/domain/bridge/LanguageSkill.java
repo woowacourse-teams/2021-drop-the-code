@@ -23,6 +23,11 @@ public class LanguageSkill {
     protected LanguageSkill() {
     }
 
+    public LanguageSkill(Language language, Skill skill) {
+        this.language = language;
+        this.skill = skill;
+    }
+
     public Skill getSkill() {
         return skill;
     }

@@ -47,9 +47,9 @@ public class TeacherProfile {
     @OneToMany(mappedBy = "teacherProfile", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private Set<TeacherSkill> skills = new HashSet<>();
 
-    private final Integer sumReviewCount = 0;
+    private Integer sumReviewCount = 0;
 
-    private final Double averageReviewTime = (double) 0;
+    private Double averageReviewTime = (double) 0;
 
     protected TeacherProfile() {
     }
@@ -61,11 +61,14 @@ public class TeacherProfile {
         this.member = member;
     }
 
+    public TeacherProfile(String title, String content, int career, int sumReviewCount, Double averageReviewTime, Member member) {
+        this(title, content, career, member);
+        this.sumReviewCount = sumReviewCount;
+        this.averageReviewTime = averageReviewTime;
+    }
+
     public TeacherProfile(String title, String content, int career, Member member, Set<TeacherLanguage> languages, Set<TeacherSkill> skills) {
-        this.title = title;
-        this.content = content;
-        this.career = career;
-        this.member = member;
+        this(title, content, career, member);
         this.languages = languages;
         this.skills = skills;
     }
@@ -104,17 +107,5 @@ public class TeacherProfile {
 
     public Double getAverageReviewTime() {
         return averageReviewTime;
-    }
-
-    public void setMember(Member member) {
-        this.member = member;
-    }
-
-    public void setLanguages(Set<TeacherLanguage> languages) {
-        this.languages = languages;
-    }
-
-    public void setSkills(Set<TeacherSkill> skills) {
-        this.skills = skills;
     }
 }

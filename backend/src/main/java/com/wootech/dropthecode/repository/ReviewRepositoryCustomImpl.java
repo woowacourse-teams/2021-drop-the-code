@@ -19,9 +19,9 @@ import static com.wootech.dropthecode.domain.QMember.member;
 import static com.wootech.dropthecode.domain.QReview.review;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
-public class ReviewRepositoryImpl extends Querydsl4RepositorySupport implements ReviewRepositoryCustom {
+public class ReviewRepositoryCustomImpl extends Querydsl4RepositorySupport implements ReviewRepositoryCustom {
 
-    public ReviewRepositoryImpl(EntityManager entityManager) {
+    public ReviewRepositoryCustomImpl(EntityManager entityManager) {
         super(Review.class);
     }
 

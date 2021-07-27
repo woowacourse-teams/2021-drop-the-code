@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @Transactional
 @ActiveProfiles("test")
-class ReviewRepositoryImplTest {
+class ReviewRepositoryCustomImplTest {
 
     @Autowired
     private EntityManager em;

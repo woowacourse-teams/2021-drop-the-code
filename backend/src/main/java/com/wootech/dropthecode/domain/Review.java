@@ -29,6 +29,9 @@ public class Review extends BaseEntity {
     @Column(nullable = false)
     private Progress progress;
 
+    protected Review() {
+    }
+
     public Review(Member teacher, Member student, String title, String content,
                   String prUrl, Progress progress) {
         this.teacher = teacher;

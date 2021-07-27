@@ -35,6 +35,10 @@ public class Review extends BaseEntity {
     public Review() {
     }
 
+    public Review(Member teacher, Member student, String title, String content, String prUrl) {
+        this(teacher, student, title, content, prUrl, 0L, Progress.ON_GOING);
+    }
+
     public Review(Member teacher, Member student, String title, String content, String prUrl, Long elapsedTime, Progress progress) {
         this.teacher = teacher;
         this.student = student;
@@ -43,10 +47,6 @@ public class Review extends BaseEntity {
         this.prUrl = prUrl;
         this.elapsedTime = elapsedTime;
         this.progress = progress;
-    }
-
-    public Review(Member teacher, Member student, String title, String content, String prUrl) {
-        this(teacher, student, title, content, prUrl, 0L, Progress.ON_GOING);
     }
 
     public void updateElapsedTime() {

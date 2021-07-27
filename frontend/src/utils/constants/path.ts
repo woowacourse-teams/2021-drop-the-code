@@ -6,4 +6,5 @@ export const PATH = {
   HISTORY: "/history",
   REVIEW_REQUEST: "/review/request/:reviewerId",
   REDIRECT_OAUTH: "/redirect/oauth",
+  NOT_FOUND: "*",
 };

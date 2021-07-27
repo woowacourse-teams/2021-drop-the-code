@@ -31,7 +31,7 @@ public class ReviewService {
         Review review = findById(id);
         review.validateMemberIdAsTeacher(loginMember.getId());
 
-        review.setTeacherCompleteProgress();
+        review.completeProgress();
         review.updateElapsedTime();
         reviewRepository.save(review);
 
@@ -45,7 +45,7 @@ public class ReviewService {
         Review review = findById(id);
         review.validateMemberIdAsStudent(loginMember.getId());
 
-        review.setFinishedProgress();
+        review.finishProgress();
         reviewRepository.save(review);
     }
 }

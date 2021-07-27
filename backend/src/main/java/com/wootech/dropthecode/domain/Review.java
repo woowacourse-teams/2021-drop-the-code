@@ -54,6 +54,32 @@ public class Review extends BaseEntity {
         this.progress = progress;
     }
 
+    public void validateMemberIdAsTeacher(Long id) {
+        if (!teacher.isSameIdAs(id)) {
+            throw new AuthorizationException("현재 사용자는 해당 리뷰에 대한 리뷰 완료 권한이 없습니다.");
+        }
+    }
+
+    public void validateMemberIdAsStudent(Long id) {
+        if (!student.isSameIdAs(id)) {
+            throw new AuthorizationException("현재 사용자는 해당 리뷰에 대한 리뷰 완료 권한이 없습니다.");
+        }
+    }
+
+    public void completeProgress() {
+        if (this.progress != Progress.ON_GOING) {
+            throw new ReviewException("현재 리뷰는 리뷰 진행중 상태가 아닙니다. 리뷰 완료로 진행시킬 수 없습니다.");
+        }
+        this.progress = Progress.TEACHER_COMPLETED;
+    }
+
+    public void finishProgress() {
+        if (this.progress != Progress.TEACHER_COMPLETED) {
+            throw new ReviewException("현재 리뷰는 리뷰 완료 상태가 아닙니다. 리뷰 종료로 진행시킬 수 없습니다.");
+        }
+        this.progress = Progress.FINISHED;
+    }
+
     public void updateElapsedTime() {
         long now = System.currentTimeMillis();
         long createTime = Timestamp.valueOf(getCreatedAt()).getTime();
@@ -95,31 +121,5 @@ public class Review extends BaseEntity {
 
     public void setProgress(Progress progress) {
         this.progress = progress;
-    }
-
-    public void setTeacherCompleteProgress() {
-        if (this.progress != Progress.ON_GOING) {
-            throw new ReviewException("현재 리뷰는 리뷰 진행중 상태가 아닙니다. 리뷰 완료로 진행시킬 수 없습니다.");
-        }
-        this.progress = Progress.TEACHER_COMPLETED;
-    }
-
-    public void setFinishedProgress() {
-        if (this.progress != Progress.TEACHER_COMPLETED) {
-            throw new ReviewException("현재 리뷰는 리뷰 완료 상태가 아닙니다. 리뷰 종료로 진행시킬 수 없습니다.");
-        }
-        this.progress = Progress.FINISHED;
-    }
-
-    public void validateMemberIdAsTeacher(Long id) {
-        if (!teacher.isSameIdAs(id)) {
-            throw new AuthorizationException("현재 사용자는 해당 리뷰에 대한 리뷰 완료 권한이 없습니다.");
-        }
-    }
-
-    public void validateMemberIdAsStudent(Long id) {
-        if (!student.isSameIdAs(id)) {
-            throw new AuthorizationException("현재 사용자는 해당 리뷰에 대한 리뷰 완료 권한이 없습니다.");
-        }
     }
 }

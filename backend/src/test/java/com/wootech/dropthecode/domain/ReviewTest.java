@@ -23,7 +23,7 @@ public class ReviewTest {
         Review onGoingReview = new Review(teacher, student, "test title", "test content", "github/3", 0L, Progress.ON_GOING);
         Review completedReview = new Review(teacher, student, "test title", "test content", "github/3", 0L, Progress.TEACHER_COMPLETED);
 
-        assertThatCode(onGoingReview::setTeacherCompleteProgress)
+        assertThatCode(onGoingReview::completeProgress)
                 .doesNotThrowAnyException();
     }
 
@@ -34,7 +34,7 @@ public class ReviewTest {
 
         Review completedReview = new Review(teacher, student, "test title", "test content", "github/3", 0L, Progress.TEACHER_COMPLETED);
 
-        assertThatThrownBy(completedReview::setTeacherCompleteProgress)
+        assertThatThrownBy(completedReview::completeProgress)
                 .isInstanceOf(ReviewException.class);
     }
 
@@ -46,7 +46,7 @@ public class ReviewTest {
 
         Review completedReview = new Review(teacher, student, "test title", "test content", "github/3", 0L, Progress.TEACHER_COMPLETED);
 
-        assertThatCode(completedReview::setFinishedProgress)
+        assertThatCode(completedReview::finishProgress)
                 .doesNotThrowAnyException();
     }
 
@@ -57,7 +57,7 @@ public class ReviewTest {
 
         Review onGoingReview = new Review(teacher, student, "test title", "test content", "github/3", 0L, Progress.ON_GOING);
 
-        assertThatThrownBy(onGoingReview::setFinishedProgress)
+        assertThatThrownBy(onGoingReview::finishProgress)
                 .isInstanceOf(ReviewException.class);
     }
 

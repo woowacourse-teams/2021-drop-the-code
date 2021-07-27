@@ -14,7 +14,6 @@ public class ProfileResponse {
      */
     private String imageUrl;
 
-
     public ProfileResponse() {
     }
 
@@ -22,6 +21,10 @@ public class ProfileResponse {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
+    }
+
+    public static ProfileResponse of(Long id, String name, String imageUrl) {
+        return new ProfileResponse(id, name, imageUrl);
     }
 
     public Long getId() {

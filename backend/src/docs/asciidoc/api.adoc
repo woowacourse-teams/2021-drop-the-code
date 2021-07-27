@@ -76,6 +76,18 @@ endif::[]
 - /teachers?language=javascript&career=3&sort=sumReviewCount,desc +
 - /teachers?language=javascript&career=3&sort=averageReviewTime,asc +
 
+| filter
+| String
+| true
+| 검색 예시 +
+
+[내가 받은 리뷰 목록 조회] +
+
+[선생님 이름 & 리뷰 상태] +
+- /reviews/student/{id}?page=1&size=10&name={teacherName} +
+- /reviews/student/{id}?page=1&size=10&progress=ON_GOING +
+- /reviews/student/{id}?page=1&size=10&name={teacherName}&progress=ON_GOING,FINISHED +
+- /reviews/student/{id}?page=1&size=10&name={teacherName}&progress=ON_GOING,FINISHED&sort=createdAt,asc
 
 |===
 

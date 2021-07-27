@@ -94,7 +94,7 @@ public class Member extends BaseEntity {
         return this.role == role;
     }
 
-    public boolean isSameIdAs(Long id) {
+    public boolean hasSameId(Long id) {
         return this.id.equals(id);
     }
 }

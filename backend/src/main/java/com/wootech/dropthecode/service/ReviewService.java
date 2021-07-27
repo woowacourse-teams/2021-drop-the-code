@@ -30,7 +30,6 @@ public class ReviewService {
     public void updateToCompleteReview(LoginMember loginMember, Long id) {
         Review review = findById(id);
         review.completeProgress(loginMember.getId());
-        review.updateElapsedTime();
         reviewRepository.save(review);
 
         TeacherProfile teacher = teacherService.findById(loginMember.getId());

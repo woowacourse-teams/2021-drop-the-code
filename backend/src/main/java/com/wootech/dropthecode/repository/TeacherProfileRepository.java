@@ -5,7 +5,7 @@ import com.wootech.dropthecode.domain.TeacherProfile;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TeacherProfileRepository extends JpaRepository<TeacherProfile, Long> {
+public interface TeacherProfileRepository extends JpaRepository<TeacherProfile, Long>, TeacherFilterRepository {
 
     Boolean existsTeacherProfileByMember(Member member);
 }

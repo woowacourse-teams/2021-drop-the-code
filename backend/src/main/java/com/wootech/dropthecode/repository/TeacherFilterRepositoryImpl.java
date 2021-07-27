@@ -38,7 +38,7 @@ public class TeacherFilterRepositoryImpl extends QuerydslRepositorySupport imple
         }
         builder.and(teacherProfile.career.goe(career));
 
-        final JPQLQuery<Long> query = from(teacherProfile).select(teacherLanguage.id).distinct()
+        final JPQLQuery<Long> query = from(teacherProfile).select(teacherProfile.id).distinct()
                                                           .innerJoin(teacherProfile.languages, teacherLanguage)
                                                           .innerJoin(teacherLanguage.language, language)
                                                           .innerJoin(teacherProfile.skills, teacherSkill)

@@ -10,6 +10,7 @@ import com.wootech.dropthecode.dto.TechSpec;
 import com.wootech.dropthecode.dto.request.TeacherFilterRequest;
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
 import com.wootech.dropthecode.dto.response.*;
+import com.wootech.dropthecode.exception.TeacherException;
 import com.wootech.dropthecode.service.MemberService;
 import com.wootech.dropthecode.service.TeacherService;
 
@@ -156,6 +157,23 @@ public class MemberControllerTest extends RestApiDocumentTest {
         this.failRestDocsMockMvc
                 .perform(get("/teachers")
                         .param("language", "")
+                        .param("skills", "spring")
+                        .param("career", "3")
+                        .param("size", "2")
+                        .param("page", "1"))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @DisplayName("리뷰어 목록 조회 테스트 - DB에 없는 언어를 입력할 경우 실패")
+    @Test
+    void findAllTeacherFailIfLanguageNotExistsTest() throws Exception {
+
+        given(teacherService.findAll(isA(TeacherFilterRequest.class), isA(Pageable.class))).willThrow(new TeacherException("존재하지 않는 언어입니다."));
+
+        this.failRestDocsMockMvc
+                .perform(get("/teachers")
+                        .param("language", "golang")
                         .param("skills", "spring")
                         .param("career", "3")
                         .param("size", "2")

@@ -61,6 +61,15 @@ public class TeacherProfile {
         this.member = member;
     }
 
+    public TeacherProfile(String title, String content, int career, Member member, Set<TeacherLanguage> languages, Set<TeacherSkill> skills) {
+        this.title = title;
+        this.content = content;
+        this.career = career;
+        this.member = member;
+        this.languages = languages;
+        this.skills = skills;
+    }
+
     public Long getId() {
         return id;
     }

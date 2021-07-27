@@ -34,7 +34,7 @@ public class TeacherProfile {
     private String content;
 
     @Column(nullable = false)
-    private int career;
+    private Integer career;
 
     @MapsId
     @OneToOne(fetch = FetchType.LAZY)
@@ -54,20 +54,20 @@ public class TeacherProfile {
     protected TeacherProfile() {
     }
 
-    public TeacherProfile(String title, String content, int career, Member member) {
+    public TeacherProfile(String title, String content, Integer career, Member member) {
         this.title = title;
         this.content = content;
         this.career = career;
         this.member = member;
     }
 
-    public TeacherProfile(String title, String content, int career, int sumReviewCount, Double averageReviewTime, Member member) {
+    public TeacherProfile(String title, String content, Integer career, Integer sumReviewCount, Double averageReviewTime, Member member) {
         this(title, content, career, member);
         this.sumReviewCount = sumReviewCount;
         this.averageReviewTime = averageReviewTime;
     }
 
-    public TeacherProfile(String title, String content, int career, Member member, Set<TeacherLanguage> languages, Set<TeacherSkill> skills) {
+    public TeacherProfile(String title, String content, Integer career, Member member, Set<TeacherLanguage> languages, Set<TeacherSkill> skills) {
         this(title, content, career, member);
         this.languages = languages;
         this.skills = skills;

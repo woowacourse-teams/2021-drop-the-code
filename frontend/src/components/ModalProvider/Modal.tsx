@@ -2,9 +2,10 @@ import React, { ReactNode } from "react";
 
 import styled from "styled-components";
 
-import ModalPortal from "components/ModalProvider/ModalPortal";
-import { FlexCenter } from "components/shared/Flexbox/Flexbox";
-import useModalContext from "hooks/useModalContext";
+import useModalContext from "../../hooks/useModalContext";
+import { FlexCenter } from "../shared/Flexbox/Flexbox";
+
+import ModalPortal from "./ModalPortal";
 
 export interface Props {
   children: ReactNode;
@@ -19,7 +20,6 @@ const ModalBlock = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: ${({ theme }) => theme.common.zIndex.modal};
 `;
 
 const Dimmed = styled.div`
@@ -32,10 +32,10 @@ const Dimmed = styled.div`
 `;
 
 const Contents = styled(FlexCenter)`
-  padding: 1.25rem;
+  padding: 20px;
   border-radius: ${({ theme }) => theme.common.shape.rounded};
   background-color: white;
-  z-index: 1;
+  z-index: ${({ theme }) => theme.common.zIndex.modal};
 `;
 
 const Modal = ({ children }: Props) => {

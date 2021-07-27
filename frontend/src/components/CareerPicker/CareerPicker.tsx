@@ -2,9 +2,9 @@ import { useState } from "react";
 
 import styled from "styled-components";
 
-import Button from "components/shared/Button/Button";
-import { FlexCenter, FlexEnd } from "components/shared/Flexbox/Flexbox";
-import { COLOR } from "utils/constants/color";
+import { COLOR } from "../../utils/constants/color";
+import Button from "../shared/Button/Button";
+import { FlexCenter, FlexEnd } from "../shared/Flexbox/Flexbox";
 
 export interface Props {
   filterCareer: number;

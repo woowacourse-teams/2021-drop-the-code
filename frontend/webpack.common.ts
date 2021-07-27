@@ -41,7 +41,7 @@ const config: webpack.Configuration = {
       },
     ],
   },
-  resolve: { extensions: [".js", ".ts", ".tsx"], modules: [path.join(__dirname, "src"), "node_modules"] },
+  resolve: { extensions: [".js", ".ts", ".tsx"] },
   plugins: [
     new HtmlWebpackPlugin({ template: "public/index.html", favicon: "public/favicon.ico" }),
     new ForkTsCheckerWebpackPlugin(),

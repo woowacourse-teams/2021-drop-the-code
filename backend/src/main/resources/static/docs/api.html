@@ -456,9 +456,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_login_api">Login API</a>
 <ul class="sectlevel2">
-<li><a href="#resources-auth-controller-test-login-with-github">로그인</a></li>
-<li><a href="#resources-auth-controller-test-refresh-access-token">access token 갱신</a></li>
-<li><a href="#resources-auth-controller-test-logout">로그아웃</a></li>
+<li><a href="#resources-oauth-controller-test-login-with-github">로그인</a></li>
 </ul>
 </li>
 <li><a href="#_language_api">Language API</a>
@@ -468,8 +466,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_member_api">Member API</a>
 <ul class="sectlevel2">
-<li><a href="#resources-member-controller-test-members-me">로그인 한 유저 정보 조회</a></li>
-<li><a href="#resources-member-controller-test-delete-member-test">유저 삭제</a></li>
 <li><a href="#resources-member-controller-test-register-teacher-test">리뷰어 등록</a></li>
 <li><a href="#resources-member-controller-test-find-all-teacher-test">리뷰어 목록 조회</a></li>
 </ul>
@@ -602,7 +598,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_login_api"><a class="link" href="#_login_api">Login API</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="resources-auth-controller-test-login-with-github"><a class="link" href="#resources-auth-controller-test-login-with-github">로그인</a></h3>
+<h3 id="resources-oauth-controller-test-login-with-github"><a class="link" href="#resources-oauth-controller-test-login-with-github">로그인</a></h3>
 <div class="paragraph">
 <p><code><strong>GET</strong>/login/oauth</code></p>
 </div>
@@ -664,12 +660,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">사용자 id.</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
@@ -693,12 +683,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">선생님 등록 여부(STUDENT, TEACHER).</p>
 <p class="tableblock">Must be one of [STUDENT, TEACHER].</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">tokenType</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">토큰 타입.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">accessToken</p></td>
@@ -733,151 +717,13 @@ Accept: application/json</code></pre>
 Content-Type: application/json;charset=UTF-8
 
 {
-  "id" : 1,
   "name" : "air",
   "email" : "air.junseo@gmail.com",
   "imageUrl" : "https://ssl.pstatic.net/static/pwe/address/img_profile.png",
   "role" : "STUDENT",
-  "tokenType" : "Bearer",
-  "accessToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-  "refreshToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+  "accessToken" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+  "refreshToken" : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
 }</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="resources-auth-controller-test-refresh-access-token"><a class="link" href="#resources-auth-controller-test-refresh-access-token">access token 갱신</a></h3>
-<div class="paragraph">
-<p><code><strong>POST</strong>/token</code></p>
-</div>
-<div class="sect3">
-<h4 id="_authorization_2"><a class="link" href="#_authorization_2">Authorization</a></h4>
-<div class="paragraph">
-<p>User jwt token required.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_request_fields"><a class="link" href="#_request_fields">Request fields</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Optional</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">refreshToken</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">만료된 access token 갱신을 위한 refresh token.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="_response_fields_2"><a class="link" href="#_response_fields_2">Response fields</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Path</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Optional</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">accessToken</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">갱신된 access Token.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="_example_request_2"><a class="link" href="#_example_request_2">Example request</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /token HTTP/1.1
-Content-Type: application/x-www-form-urlencoded;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-
-refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_example_response_2"><a class="link" href="#_example_response_2">Example response</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-
-{
-  "accessToken" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2IiwiaWF0IjoxNjI2OTIyNjkyLCJleHAiOjE2MjY5MjYyOTJ9.dsb5uqMS__VcYToB8QrQFVGOkONeDtMyMv4tMXTUuhY"
-}</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 401 Unauthorized
-Content-Type: application/json;charset=UTF-8
-
-{
-  "message" : "refresh token이 유효하지 않습니다."
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="resources-auth-controller-test-logout"><a class="link" href="#resources-auth-controller-test-logout">로그아웃</a></h3>
-<div class="paragraph">
-<p><code><strong>POST</strong>/logout</code></p>
-</div>
-<div class="sect3">
-<h4 id="_authorization_3"><a class="link" href="#_authorization_3">Authorization</a></h4>
-<div class="paragraph">
-<p>User jwt token required.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_response_fields_3"><a class="link" href="#_response_fields_3">Response fields</a></h4>
-<div class="paragraph">
-<p>No response body.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_example_request_3"><a class="link" href="#_example_request_3">Example request</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /logout HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_example_response_3"><a class="link" href="#_example_response_3">Example response</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 204 No Content</code></pre>
 </div>
 </div>
 </div>
@@ -893,13 +739,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 <p><code><strong>GET</strong>/languages</code></p>
 </div>
 <div class="sect3">
-<h4 id="_authorization_4"><a class="link" href="#_authorization_4">Authorization</a></h4>
+<h4 id="_authorization_2"><a class="link" href="#_authorization_2">Authorization</a></h4>
 <div class="paragraph">
 <p>Resource is public.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_response_fields_4"><a class="link" href="#_response_fields_4">Response fields</a></h4>
+<h4 id="_response_fields_2"><a class="link" href="#_response_fields_2">Response fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -956,7 +802,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 </table>
 </div>
 <div class="sect3">
-<h4 id="_example_request_4"><a class="link" href="#_example_request_4">Example request</a></h4>
+<h4 id="_example_request_2"><a class="link" href="#_example_request_2">Example request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /languages HTTP/1.1
@@ -965,7 +811,7 @@ Accept: application/json</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_example_response_4"><a class="link" href="#_example_response_4">Example response</a></h4>
+<h4 id="_example_response_2"><a class="link" href="#_example_response_2">Example response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
@@ -1015,169 +861,18 @@ Content-Type: application/json;charset=UTF-8
 <h2 id="_member_api"><a class="link" href="#_member_api">Member API</a></h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="resources-member-controller-test-members-me"><a class="link" href="#resources-member-controller-test-members-me">로그인 한 유저 정보 조회</a></h3>
-<div class="paragraph">
-<p><code><strong>GET</strong>/members/me</code></p>
-</div>
-<div class="sect3">
-<h4 id="_authorization_5"><a class="link" href="#_authorization_5">Authorization</a></h4>
-<div class="paragraph">
-<p>User jwt token required.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_response_fields_5"><a class="link" href="#_response_fields_5">Response fields</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Path</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Optional</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">로그인 한 유저 id.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">로그인 한 유저 이름.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">email</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">로그인 한 유저 이메일.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">imageUrl</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">로그인 한 유저 이미지 url.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">role</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">String</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">로그인 한 유저의 Role.</p>
-<p class="tableblock">Must be one of [STUDENT, TEACHER].</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="_example_request_5"><a class="link" href="#_example_request_5">Example request</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /members/me HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_example_response_5"><a class="link" href="#_example_response_5">Example response</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
-
-{
-  "id" : 1,
-  "name" : "air",
-  "email" : "air.junseo@gmail.com",
-  "imageUrl" : "s3://image url",
-  "role" : "TEACHER"
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="resources-member-controller-test-delete-member-test"><a class="link" href="#resources-member-controller-test-delete-member-test">유저 삭제</a></h3>
-<div class="paragraph">
-<p><code><strong>DELETE</strong>/members/{id}</code></p>
-</div>
-<div class="sect3">
-<h4 id="_authorization_6"><a class="link" href="#_authorization_6">Authorization</a></h4>
-<div class="paragraph">
-<p>Resource is public.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_path_parameters"><a class="link" href="#_path_parameters">Path parameters</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Optional</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Integer</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="_response_fields_6"><a class="link" href="#_response_fields_6">Response fields</a></h4>
-<div class="paragraph">
-<p>No response body.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_example_request_6"><a class="link" href="#_example_request_6">Example request</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /members/1 HTTP/1.1</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_example_response_6"><a class="link" href="#_example_response_6">Example response</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 204 No Content</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
 <h3 id="resources-member-controller-test-register-teacher-test"><a class="link" href="#resources-member-controller-test-register-teacher-test">리뷰어 등록</a></h3>
 <div class="paragraph">
 <p><code><strong>POST</strong>/teachers</code></p>
 </div>
 <div class="sect3">
-<h4 id="_authorization_7"><a class="link" href="#_authorization_7">Authorization</a></h4>
+<h4 id="_authorization_3"><a class="link" href="#_authorization_3">Authorization</a></h4>
 <div class="paragraph">
 <p>User jwt token required.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_request_fields_2"><a class="link" href="#_request_fields_2">Request fields</a></h4>
+<h4 id="_request_fields"><a class="link" href="#_request_fields">Request fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1235,18 +930,18 @@ Content-Type: application/json;charset=UTF-8
 </table>
 </div>
 <div class="sect3">
-<h4 id="_response_fields_7"><a class="link" href="#_response_fields_7">Response fields</a></h4>
+<h4 id="_response_fields_3"><a class="link" href="#_response_fields_3">Response fields</a></h4>
 <div class="paragraph">
 <p>No response body.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_example_request_7"><a class="link" href="#_example_request_7">Example request</a></h4>
+<h4 id="_example_request_3"><a class="link" href="#_example_request_3">Example request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /teachers HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+Authorization: Bearer aaa.bbb.ccc
 
 {
   "title" : "백엔드 개발자입니다.",
@@ -1273,7 +968,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 </div>
 </div>
 <div class="sect3">
-<h4 id="_example_response_7"><a class="link" href="#_example_response_7">Example response</a></h4>
+<h4 id="_example_response_3"><a class="link" href="#_example_response_3">Example response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 201 Created</code></pre>
@@ -1287,9 +982,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 400 Bad Request
 Content-Type: application/json;charset=UTF-8
 
-{
-  "message" : "빈 값이면 안됩니다."
-}</code></pre>
+[
+  {
+    "message" : "[career](은)는 빈 값이면 안됩니다. 입력된 값은: [null] 입니다."
+  }
+]</code></pre>
 </div>
 </div>
 </div>
@@ -1300,7 +997,7 @@ Content-Type: application/json;charset=UTF-8
 <p><code><strong>GET</strong>/teachers</code></p>
 </div>
 <div class="sect3">
-<h4 id="_authorization_8"><a class="link" href="#_authorization_8">Authorization</a></h4>
+<h4 id="_authorization_4"><a class="link" href="#_authorization_4">Authorization</a></h4>
 <div class="paragraph">
 <p>Resource is public.</p>
 </div>
@@ -1354,7 +1051,7 @@ Content-Type: application/json;charset=UTF-8
 </table>
 </div>
 <div class="sect3">
-<h4 id="_response_fields_8"><a class="link" href="#_response_fields_8">Response fields</a></h4>
+<h4 id="_response_fields_4"><a class="link" href="#_response_fields_4">Response fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1483,7 +1180,7 @@ Content-Type: application/json;charset=UTF-8
 </table>
 </div>
 <div class="sect3">
-<h4 id="_example_request_8"><a class="link" href="#_example_request_8">Example request</a></h4>
+<h4 id="_example_request_4"><a class="link" href="#_example_request_4">Example request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /teachers?language=java&amp;skills=spring&amp;career=3&amp;page=5&amp;size=10&amp;sort=career,desc HTTP/1.1
@@ -1492,7 +1189,7 @@ Accept: application/json</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_example_response_8"><a class="link" href="#_example_response_8">Example response</a></h4>
+<h4 id="_example_response_4"><a class="link" href="#_example_response_4">Example response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
@@ -1559,13 +1256,13 @@ Content-Type: application/json;charset=UTF-8
 <p><code><strong>POST</strong>/reviews</code></p>
 </div>
 <div class="sect3">
-<h4 id="_authorization_9"><a class="link" href="#_authorization_9">Authorization</a></h4>
+<h4 id="_authorization_5"><a class="link" href="#_authorization_5">Authorization</a></h4>
 <div class="paragraph">
 <p>User jwt token required.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_request_fields_3"><a class="link" href="#_request_fields_3">Request fields</a></h4>
+<h4 id="_request_fields_2"><a class="link" href="#_request_fields_2">Request fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1616,18 +1313,18 @@ Content-Type: application/json;charset=UTF-8
 </table>
 </div>
 <div class="sect3">
-<h4 id="_response_fields_9"><a class="link" href="#_response_fields_9">Response fields</a></h4>
+<h4 id="_response_fields_5"><a class="link" href="#_response_fields_5">Response fields</a></h4>
 <div class="paragraph">
 <p>No response body.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_example_request_9"><a class="link" href="#_example_request_9">Example request</a></h4>
+<h4 id="_example_request_5"><a class="link" href="#_example_request_5">Example request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /reviews HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+Authorization: Bearer aaa.bbb.ccc
 
 {
   "studentId" : 1,
@@ -1640,7 +1337,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3O
 </div>
 </div>
 <div class="sect3">
-<h4 id="_example_response_9"><a class="link" href="#_example_response_9">Example response</a></h4>
+<h4 id="_example_response_5"><a class="link" href="#_example_response_5">Example response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 201 Created
@@ -1655,9 +1352,17 @@ Location: /reviews/1</code></pre>
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 400 Bad Request
 Content-Type: application/json;charset=UTF-8
 
-{
-  "message" : "빈 값이면 안됩니다."
-}</code></pre>
+[
+  {
+    "message" : "[title](은)는 빈 값이면 안됩니다. 입력된 값은: [ ] 입니다."
+  },
+  {
+    "message" : "[teacherId](은)는 빈 값이면 안됩니다. 입력된 값은: [null] 입니다."
+  },
+  {
+    "message" : "[studentId](은)는 빈 값이면 안됩니다. 입력된 값은: [null] 입니다."
+  }
+]</code></pre>
 </div>
 </div>
 </div>
@@ -1668,13 +1373,13 @@ Content-Type: application/json;charset=UTF-8
 <p><code><strong>GET</strong>/reviews/student/{id}</code></p>
 </div>
 <div class="sect3">
-<h4 id="_authorization_10"><a class="link" href="#_authorization_10">Authorization</a></h4>
+<h4 id="_authorization_6"><a class="link" href="#_authorization_6">Authorization</a></h4>
 <div class="paragraph">
 <p>User jwt token required.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_path_parameters_2"><a class="link" href="#_path_parameters_2">Path parameters</a></h4>
+<h4 id="_path_parameters"><a class="link" href="#_path_parameters">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1701,7 +1406,7 @@ Content-Type: application/json;charset=UTF-8
 </table>
 </div>
 <div class="sect3">
-<h4 id="_response_fields_10"><a class="link" href="#_response_fields_10">Response fields</a></h4>
+<h4 id="_response_fields_6"><a class="link" href="#_response_fields_6">Response fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1801,16 +1506,16 @@ Content-Type: application/json;charset=UTF-8
 </table>
 </div>
 <div class="sect3">
-<h4 id="_example_request_10"><a class="link" href="#_example_request_10">Example request</a></h4>
+<h4 id="_example_request_6"><a class="link" href="#_example_request_6">Example request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /reviews/student/1 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</code></pre>
+Authorization: Bearer aaa.bbb.ccc</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_example_response_10"><a class="link" href="#_example_response_10">Example response</a></h4>
+<h4 id="_example_response_6"><a class="link" href="#_example_response_6">Example response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
@@ -1875,13 +1580,13 @@ Content-Type: application/json;charset=UTF-8
 <p><code><strong>GET</strong>/reviews/teacher/{id}</code></p>
 </div>
 <div class="sect3">
-<h4 id="_authorization_11"><a class="link" href="#_authorization_11">Authorization</a></h4>
+<h4 id="_authorization_7"><a class="link" href="#_authorization_7">Authorization</a></h4>
 <div class="paragraph">
 <p>Resource is public.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_path_parameters_3"><a class="link" href="#_path_parameters_3">Path parameters</a></h4>
+<h4 id="_path_parameters_2"><a class="link" href="#_path_parameters_2">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -1908,7 +1613,7 @@ Content-Type: application/json;charset=UTF-8
 </table>
 </div>
 <div class="sect3">
-<h4 id="_response_fields_11"><a class="link" href="#_response_fields_11">Response fields</a></h4>
+<h4 id="_response_fields_7"><a class="link" href="#_response_fields_7">Response fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -2008,7 +1713,7 @@ Content-Type: application/json;charset=UTF-8
 </table>
 </div>
 <div class="sect3">
-<h4 id="_example_request_11"><a class="link" href="#_example_request_11">Example request</a></h4>
+<h4 id="_example_request_7"><a class="link" href="#_example_request_7">Example request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /reviews/teacher/1 HTTP/1.1</code></pre>
@@ -2016,7 +1721,7 @@ Content-Type: application/json;charset=UTF-8
 </div>
 </div>
 <div class="sect3">
-<h4 id="_example_response_11"><a class="link" href="#_example_response_11">Example response</a></h4>
+<h4 id="_example_response_7"><a class="link" href="#_example_response_7">Example response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
@@ -2068,13 +1773,13 @@ Content-Type: application/json;charset=UTF-8
 <p><code><strong>GET</strong>/reviews/{id}</code></p>
 </div>
 <div class="sect3">
-<h4 id="_authorization_12"><a class="link" href="#_authorization_12">Authorization</a></h4>
+<h4 id="_authorization_8"><a class="link" href="#_authorization_8">Authorization</a></h4>
 <div class="paragraph">
 <p>Resource is public.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_path_parameters_4"><a class="link" href="#_path_parameters_4">Path parameters</a></h4>
+<h4 id="_path_parameters_3"><a class="link" href="#_path_parameters_3">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -2101,7 +1806,7 @@ Content-Type: application/json;charset=UTF-8
 </table>
 </div>
 <div class="sect3">
-<h4 id="_response_fields_12"><a class="link" href="#_response_fields_12">Response fields</a></h4>
+<h4 id="_response_fields_8"><a class="link" href="#_response_fields_8">Response fields</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -2195,7 +1900,7 @@ Content-Type: application/json;charset=UTF-8
 </table>
 </div>
 <div class="sect3">
-<h4 id="_example_request_12"><a class="link" href="#_example_request_12">Example request</a></h4>
+<h4 id="_example_request_8"><a class="link" href="#_example_request_8">Example request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /reviews/1 HTTP/1.1</code></pre>
@@ -2203,7 +1908,7 @@ Content-Type: application/json;charset=UTF-8
 </div>
 </div>
 <div class="sect3">
-<h4 id="_example_response_12"><a class="link" href="#_example_response_12">Example response</a></h4>
+<h4 id="_example_response_8"><a class="link" href="#_example_response_8">Example response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
@@ -2235,13 +1940,13 @@ Content-Type: application/json;charset=UTF-8
 <p><code><strong>PATCH</strong>/reviews/{id}</code></p>
 </div>
 <div class="sect3">
-<h4 id="_authorization_13"><a class="link" href="#_authorization_13">Authorization</a></h4>
+<h4 id="_authorization_9"><a class="link" href="#_authorization_9">Authorization</a></h4>
 <div class="paragraph">
 <p>User jwt token required.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_path_parameters_5"><a class="link" href="#_path_parameters_5">Path parameters</a></h4>
+<h4 id="_path_parameters_4"><a class="link" href="#_path_parameters_4">Path parameters</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
@@ -2268,22 +1973,22 @@ Content-Type: application/json;charset=UTF-8
 </table>
 </div>
 <div class="sect3">
-<h4 id="_response_fields_13"><a class="link" href="#_response_fields_13">Response fields</a></h4>
+<h4 id="_response_fields_9"><a class="link" href="#_response_fields_9">Response fields</a></h4>
 <div class="paragraph">
 <p>No response body.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_example_request_13"><a class="link" href="#_example_request_13">Example request</a></h4>
+<h4 id="_example_request_9"><a class="link" href="#_example_request_9">Example request</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">PATCH /reviews/1 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</code></pre>
+Authorization: Bearer aaa.bbb.ccc</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_example_response_13"><a class="link" href="#_example_response_13">Example response</a></h4>
+<h4 id="_example_response_9"><a class="link" href="#_example_response_9">Example response</a></h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 204 No Content</code></pre>
@@ -2310,7 +2015,7 @@ Content-Type: application/json;charset=UTF-8
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2021-07-23 16:27:41 +0900
+Last updated 2021-07-21 02:33:06 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

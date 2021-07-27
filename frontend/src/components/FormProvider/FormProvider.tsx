@@ -1,6 +1,6 @@
 import { useState, FormHTMLAttributes } from "react";
 
-import { FormContext } from "hooks/useFormContext";
+import { FormContext } from "../../hooks/useFormContext";
 
 interface Values {
   [key: string]: string;
@@ -19,7 +19,6 @@ const FormProvider = ({ submit, validators, children, ...props }: Props) => {
   }>({});
 
   const isValid = Object.values(errorMessages).filter(Boolean).length === 0;
-  const isEmpty = Object.values(values).filter(Boolean).length < Object.values(values).length;
 
   const validate = (name: string, value: string) => {
     const validator = validators?.[name];
@@ -28,9 +27,9 @@ const FormProvider = ({ submit, validators, children, ...props }: Props) => {
     try {
       validator(value);
 
-      setErrorMessages((prevState) => ({ ...prevState, [name]: null }));
+      setErrorMessages({ ...errorMessages, [name]: null });
     } catch (error) {
-      setErrorMessages((prevState) => ({ ...prevState, [name]: error.message }));
+      setErrorMessages({ ...errorMessages, [name]: error.message });
     }
 
     return;
@@ -39,7 +38,7 @@ const FormProvider = ({ submit, validators, children, ...props }: Props) => {
   const onChange: React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement> = ({ target }) => {
     const { name, value } = target;
 
-    setValues((prevState) => ({ ...prevState, [name]: value }));
+    setValues({ ...values, [name]: value });
 
     validate(name, value);
   };
@@ -52,12 +51,8 @@ const FormProvider = ({ submit, validators, children, ...props }: Props) => {
     submit(values);
   };
 
-  const register = (name: string) => {
-    setValues((prevState) => ({ ...prevState, [name]: "" }));
-  };
-
   return (
-    <FormContext.Provider value={{ values, errorMessages, isValid, isEmpty, register, onChange }}>
+    <FormContext.Provider value={{ values, errorMessages, onChange, isValid }}>
       <form onSubmit={onSubmit} {...props}>
         {children}
       </form>

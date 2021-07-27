@@ -1,9 +1,14 @@
 import { InputHTMLAttributes } from "react";
 
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-import { Flex } from "components/shared/Flexbox/Flexbox";
-import { COLOR } from "utils/constants/color";
+import { COLOR } from "../../../utils/constants/color";
+import { Flex } from "../Flexbox/Flexbox";
+
+interface InnerProps {
+  labelText?: string;
+  errorMessage?: string | null;
+}
 
 const Label = styled.label`
   display: block;
@@ -11,25 +16,15 @@ const Label = styled.label`
   margin-bottom: 0.625rem;
 `;
 
-interface InnerProps {
-  isEmpty?: boolean;
-  isError?: boolean;
-}
-
-const Inner = styled(Flex)<InnerProps>`
+const Inner = styled(Flex)`
   width: 100%;
   flex-direction: column;
 
   input {
-    outline: none;
     width: 100%;
     padding: 0.625rem 1.25rem;
-    border: 1px solid;
     border-radius: 4px;
-
-    border-color: ${({ isEmpty, isError }) => css`
-      ${isEmpty ? COLOR.BLACK : isError ? COLOR.RED_500 : COLOR.GREEN_500}
-    `};
+    border: 1px solid ${COLOR.GRAY_500};
   }
 `;
 
@@ -39,16 +34,13 @@ const ErrorMessage = styled.div`
   color: ${COLOR.RED_600};
 `;
 
-export interface Props extends InputHTMLAttributes<HTMLInputElement> {
-  labelText?: string;
-  errorMessage?: string | null;
-}
+export type Props = InputHTMLAttributes<HTMLInputElement> & InnerProps;
 
-const Input = ({ labelText, errorMessage, value, ...props }: Props) => {
-  const innerProps = { ...(labelText && { id: labelText }), value, ...props };
+const Input = ({ labelText, errorMessage, ...props }: Props) => {
+  const innerProps = { ...(labelText && { id: labelText }), ...props };
 
   return (
-    <Inner isEmpty={!value} isError={!!errorMessage}>
+    <Inner>
       {labelText && <Label htmlFor={labelText}>{labelText}</Label>}
       <input {...innerProps} />
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}

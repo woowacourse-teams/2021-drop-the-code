@@ -1,22 +1,18 @@
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
-import { Reviewer } from "types/reviewer";
 
-import Avatar from "components/shared/Avatar/Avatar";
-import Chip from "components/shared/Chip/Chip";
-import { Flex, FlexSpaceBetween } from "components/shared/Flexbox/Flexbox";
-import { COLOR } from "utils/constants/color";
-
-const ReviewerLink = styled(Link)`
-  margin-bottom: 1.25rem;
-`;
+import { Reviewer } from "../../types/reviewer";
+import { COLOR } from "../../utils/constants/color";
+import Avatar from "../shared/Avatar/Avatar";
+import Chip from "../shared/Chip/Chip";
+import { Flex, FlexSpaceBetween } from "../shared/Flexbox/Flexbox";
 
 const Inner = styled(Flex)`
   width: 100%;
-  padding: 1.25rem;
+  padding: 1.875rem;
   border-radius: ${({ theme }) => theme.common.shape.rounded};
-  box-shadow: 0.4375rem 0.375rem 0.375rem rgb(0 0 0 / 10%);
+  box-shadow: 11px 11px 30px 5px rgb(0 0 0 / 10%);
 `;
 
 const ChipWrapper = styled(Flex)`
@@ -31,9 +27,9 @@ const Title = styled.p`
 `;
 
 const ReviewerCard = ({ id, imageUrl, career, sumReviewCount, averageReviewTime, title, techSpec }: Reviewer) => (
-  <ReviewerLink to={`/reviewer/${id}`}>
+  <Link to={`/reviewer/${id}`}>
     <Inner>
-      <Avatar imageUrl={imageUrl} width="6.25rem" height="6.25rem" css={{ marginRight: "1.875rem" }} />
+      <Avatar imageUrl={imageUrl} width="6.25rem" height="6.25rem" shape="rounded" css={{ marginRight: "1.875rem" }} />
       <FlexSpaceBetween css={{ flexDirection: "column", flex: 1 }}>
         <ChipWrapper>
           <Chip themeColor="career" css={{ fontSize: "0.875rem" }}>
@@ -61,7 +57,7 @@ const ReviewerCard = ({ id, imageUrl, career, sumReviewCount, averageReviewTime,
         </Flex>
       </FlexSpaceBetween>
     </Inner>
-  </ReviewerLink>
+  </Link>
 );
 
 export default ReviewerCard;

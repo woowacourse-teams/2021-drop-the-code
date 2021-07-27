@@ -1,9 +1,8 @@
 import { useInfiniteQuery } from "react-query";
 
-import { ReviewerSortOption } from "types/reviewer";
-
-import { getReviewerList } from "apis/reviewer";
-import { toURLSearchParams } from "utils/formatter";
+import { getReviewerList } from "../apis/reviewer";
+import { ReviewerSortOption } from "../types/reviewer";
+import { toURLSearchParams } from "../utils/formatter";
 
 export interface Options {
   filterLanguage: string | null;

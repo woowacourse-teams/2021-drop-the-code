@@ -1,6 +1,7 @@
 package com.wootech.dropthecode.dto.request;
 
 import javax.validation.Valid;
+import javax.validation.constraints.PositiveOrZero;
 
 import com.wootech.dropthecode.dto.TechSpec;
 
@@ -15,6 +16,7 @@ public class TeacherFilterRequest {
     /**
      * 선생님 연차
      */
+    @PositiveOrZero
     private Integer career;
 
     public TeacherFilterRequest() {

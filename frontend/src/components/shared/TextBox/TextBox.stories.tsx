@@ -2,7 +2,7 @@ import { PropsWithChildren } from "react";
 
 import { Story, Meta } from "@storybook/react";
 
-import TextBox, { Props } from "components/shared/TextBox/TextBox";
+import TextBox, { Props } from "./TextBox";
 
 export default {
   title: "components/shared/TextBox",

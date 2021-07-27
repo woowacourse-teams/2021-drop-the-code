@@ -1,5 +1,5 @@
-import { ERROR_MESSAGE } from "utils/constants/message";
-import { STANDARD } from "utils/constants/standard";
+import { ERROR_MESSAGE } from "../constants/message";
+import { STANDARD } from "../constants/standard";
 
 const reviewRequestValidators = {
   title: (title: string) => {

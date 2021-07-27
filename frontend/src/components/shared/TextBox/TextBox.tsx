@@ -2,8 +2,8 @@ import { ReactNode, PropsWithChildren } from "react";
 
 import styled from "styled-components";
 
-import { Flex } from "components/shared/Flexbox/Flexbox";
-import { COLOR } from "utils/constants/color";
+import { COLOR } from "../../../utils/constants/color";
+import { Flex } from "../Flexbox/Flexbox";
 
 const Inner = styled(Flex)`
   flex-direction: column;

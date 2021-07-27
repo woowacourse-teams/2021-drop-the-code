@@ -1,6 +1,6 @@
 import { Story, Meta } from "@storybook/react";
 
-import CareerPicker, { Props } from "components/CareerPicker/CareerPicker";
+import CareerPicker, { Props } from "./CareerPicker";
 
 export default {
   title: "components/CareerPicker",

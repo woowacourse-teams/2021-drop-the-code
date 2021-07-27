@@ -1,10 +1,10 @@
 import { HTMLAttributes } from "react";
 
 import styled from "styled-components";
-import { Shape } from "types/styled/common";
-import { ChipThemeColor } from "types/styled/components";
 
-import { FlexCenter } from "components/shared/Flexbox/Flexbox";
+import { Shape } from "../../../types/styled/common";
+import { ChipThemeColor } from "../../../types/styled/components";
+import { FlexCenter } from "../Flexbox/Flexbox";
 
 interface InnerProps {
   themeColor?: ChipThemeColor;

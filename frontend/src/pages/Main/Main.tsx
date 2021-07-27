@@ -1,17 +1,17 @@
 import { Suspense } from "react";
 
-import { ReviewerSortOption } from "types/reviewer";
+import CareerPicker from "../../components/CareerPicker/CareerPicker";
+import Loading from "../../components/Loading/Loading";
+import MenuItemButton from "../../components/MenuItemButton/MenuItemButton";
+import { Flex, FlexEnd } from "../../components/shared/Flexbox/Flexbox";
+import Select from "../../components/shared/Select/Select";
+import useReviewerListOptions from "../../hooks/useReviewerListOptions";
+import { ReviewerSortOption } from "../../types/reviewer";
+import { COLOR } from "../../utils/constants/color";
+import { LAYOUT } from "../../utils/constants/size";
 
-import CareerPicker from "components/CareerPicker/CareerPicker";
-import LanguageList from "components/Language/LanguageList";
-import Loading from "components/Loading/Loading";
-import MenuItemButton from "components/MenuItemButton/MenuItemButton";
-import ReviewerList from "components/Reviewer/ReviewerList/ReviewerList";
-import { Flex, FlexEnd } from "components/shared/Flexbox/Flexbox";
-import Select from "components/shared/Select/Select";
-import useReviewerListOptions from "hooks/useReviewerListOptions";
-import { COLOR } from "utils/constants/color";
-import { LAYOUT } from "utils/constants/size";
+import LanguageList from "./LanguageList/LanguageList";
+import ReviewerList from "./ReviewerList/ReviewerList";
 
 const Main = () => {
   const {
@@ -26,7 +26,7 @@ const Main = () => {
   } = useReviewerListOptions();
 
   return (
-    <>
+    <main css={{ paddingTop: "6rem", width: "100%", maxWidth: LAYOUT.LG, margin: "0 auto" }}>
       <h2 css={{ fontSize: "1.25rem", fontWeight: 600 }}>리뷰어 찾기</h2>
       <Flex css={{ flexDirection: "column", width: "100%" }}>
         <Flex>
@@ -76,7 +76,7 @@ const Main = () => {
           sort={sort}
         />
       </Suspense>
-    </>
+    </main>
   );
 };
 

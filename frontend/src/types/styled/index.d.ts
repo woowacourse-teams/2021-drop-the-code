@@ -1,7 +1,7 @@
 import "styled-components";
 
-import { Common } from "types/styled/common";
-import { Components } from "types/styled/components";
+import { Common } from "./common";
+import { Components } from "./components";
 
 declare module "styled-components" {
   export interface DefaultTheme {

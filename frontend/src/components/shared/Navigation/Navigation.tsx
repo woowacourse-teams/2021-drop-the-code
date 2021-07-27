@@ -2,8 +2,8 @@ import { ReactNode } from "react";
 
 import styled from "styled-components";
 
-import { Flex, FlexSpaceBetween } from "components/shared/Flexbox/Flexbox";
-import { LAYOUT } from "utils/constants/size";
+import { LAYOUT } from "../../../utils/constants/size";
+import { Flex, FlexSpaceBetween } from "../Flexbox/Flexbox";
 
 const Inner = styled.header`
   background-color: ${({ theme }) => theme.components.navigation.bg};
@@ -12,12 +12,11 @@ const Inner = styled.header`
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: ${({ theme }) => theme.common.zIndex.header};
 `;
 
 export interface Props {
-  leftChildren?: ReactNode;
   children?: ReactNode;
+  rightChildren?: ReactNode;
 }
 
 const NavBar = styled.nav`
@@ -44,13 +43,13 @@ const RightChildren = styled(Flex)`
   }
 `;
 
-const Navigation = ({ leftChildren, children }: Props) => {
+const Navigation = ({ rightChildren, children }: Props) => {
   return (
     <Inner>
       <NavBar>
         <FlexSpaceBetween css={{ maxWidth: LAYOUT.LG, width: "100%", height: "100%", alignItems: "center" }}>
-          {leftChildren}
-          <RightChildren>{children}</RightChildren>
+          {children}
+          <RightChildren>{rightChildren}</RightChildren>
         </FlexSpaceBetween>
       </NavBar>
     </Inner>

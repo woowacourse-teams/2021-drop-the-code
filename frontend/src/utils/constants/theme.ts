@@ -1,8 +1,9 @@
 import { DefaultTheme } from "styled-components";
-import { Common } from "types/styled/common";
-import { Components } from "types/styled/components";
 
-import { COLOR } from "utils/constants/color";
+import { Common } from "../../types/styled/common";
+import { Components } from "../../types/styled/components";
+
+import { COLOR } from "./color";
 
 const components: Components = {
   button: {
@@ -51,9 +52,8 @@ const common: Common = {
     circle: "100%",
   },
   zIndex: {
-    menuItem: 1,
-    header: 10,
-    modal: 20,
+    modal: 99,
+    menuItem: 88,
   },
 };
 

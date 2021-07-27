@@ -36,8 +36,7 @@ public class TeacherProfileResponse {
         final List<LanguageResponse> languageResponses = teacherProfile.getLanguages()
                                                                        .stream()
                                                                        .map(TeacherLanguage::getLanguage)
-                                                                       .map(lang -> new LanguageResponse(lang.getId(), lang
-                                                                               .getName()))
+                                                                       .map(lang -> new LanguageResponse(lang.getId(), lang.getName()))
                                                                        .collect(Collectors.toList());
 
         final List<SkillResponse> skillsResponse = teacherProfile.getSkills()

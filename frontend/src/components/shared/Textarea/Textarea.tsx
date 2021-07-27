@@ -1,10 +1,13 @@
 import { TextareaHTMLAttributes } from "react";
 
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-import { COLOR } from "utils/constants/color";
+import { COLOR } from "../../../utils/constants/color";
 
-import { Flex } from "../Flexbox/Flexbox";
+interface InnerProps {
+  labelText?: string;
+  errorMessage?: string | null;
+}
 
 const Label = styled.label`
   display: block;
@@ -12,28 +15,13 @@ const Label = styled.label`
   margin-bottom: 10px;
 `;
 
-interface InnerProps {
-  isEmpty?: boolean;
-  isError?: boolean;
-}
-
-const Inner = styled(Flex)<InnerProps>`
+const Inner = styled.textarea<InnerProps>`
   width: 100%;
-  flex-direction: column;
-
-  textarea {
-    outline: none;
-    width: 100%;
-    padding: 0.625rem 1.25rem;
-    border: 1px solid;
-    border-radius: 4px;
-    line-height: 2rem;
-    white-space: break-spaces;
-
-    border-color: ${({ isEmpty, isError }) => css`
-      ${isEmpty ? COLOR.BLACK : isError ? COLOR.RED_500 : COLOR.GREEN_500}
-    `};
-  }
+  padding: 0.625rem 1.25rem;
+  border-radius: 4px;
+  line-height: 2rem;
+  border: 1px solid ${COLOR.GRAY_500};
+  white-space: break-spaces;
 `;
 
 const ErrorMessage = styled.div`
@@ -42,20 +30,17 @@ const ErrorMessage = styled.div`
   color: ${COLOR.RED_600};
 `;
 
-export interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  labelText?: string;
-  errorMessage?: string | null;
-}
+export type Props = TextareaHTMLAttributes<HTMLTextAreaElement> & InnerProps;
 
-const Textarea = ({ labelText, errorMessage, value, ...props }: Props) => {
-  const innerProps = { ...(labelText && { id: labelText }), value, ...props };
+const Textarea = ({ labelText, errorMessage, ...props }: Props) => {
+  const innerProps = { ...(labelText && { id: labelText }), ...props };
 
   return (
-    <Inner isEmpty={!value} isError={!!errorMessage}>
+    <>
       {labelText && <Label htmlFor={labelText}>{labelText}</Label>}
-      <textarea {...innerProps} />
+      <Inner {...innerProps} />
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-    </Inner>
+    </>
   );
 };
 

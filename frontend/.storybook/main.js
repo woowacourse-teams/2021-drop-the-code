@@ -1,5 +1,3 @@
-const path = require("path");
-
 module.exports = {
   stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
   addons: ["@storybook/addon-links", "@storybook/addon-essentials"],
@@ -17,8 +15,6 @@ module.exports = {
       test: /\.svg$/,
       use: ["@svgr/webpack"],
     });
-
-    config.resolve.modules.push(path.resolve(__dirname, "../src"), "../node_modules");
 
     return config;
   },

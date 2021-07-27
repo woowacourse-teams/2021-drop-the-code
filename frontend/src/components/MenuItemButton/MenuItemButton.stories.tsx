@@ -1,7 +1,8 @@
 import { Story, Meta } from "@storybook/react";
 
-import MenuItemButton, { Props } from "components/MenuItemButton/MenuItemButton";
-import Button from "components/shared/Button/Button";
+import Button from "../shared/Button/Button";
+
+import MenuItemButton, { Props } from "./MenuItemButton";
 
 export default {
   title: "components/MenuItemButton",

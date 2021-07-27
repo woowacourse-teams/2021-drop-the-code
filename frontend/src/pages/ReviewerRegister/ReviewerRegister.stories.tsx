@@ -1,6 +1,6 @@
 import { Story, Meta } from "@storybook/react";
 
-import ReviewerRegister from "pages/ReviewerRegister/ReviewerRegister";
+import ReviewerRegister from "./ReviewerRegister";
 
 export default {
   title: "pages/ReviewerRegister",

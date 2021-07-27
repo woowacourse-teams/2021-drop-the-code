@@ -1,6 +1,6 @@
 import { Story, Meta } from "@storybook/react";
 
-import Select, { Props } from "components/shared/Select/Select";
+import Select, { Props } from "./Select";
 
 export default {
   title: "components/shared/Select",

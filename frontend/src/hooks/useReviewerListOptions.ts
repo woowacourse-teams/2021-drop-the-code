@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { ReviewerSortOption } from "types/reviewer";
+import { ReviewerSortOption } from "../types/reviewer";
 
 const useReviewerListOptions = () => {
   const [filterLanguage, setFilterLanguage] = useState<string | null>(null);

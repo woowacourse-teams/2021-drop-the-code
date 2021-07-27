@@ -120,8 +120,8 @@ public class ReviewControllerTest extends RestApiDocumentTest {
         ProfileResponse firstTeacher = new ProfileResponse(1L, "user1", "image1");
         ProfileResponse firstStudent = new ProfileResponse(2L, "user2", "image2");
 
-        ProfileResponse secondTeacher = new ProfileResponse(1L, "user1", "image1");
-        ProfileResponse secondStudent = new ProfileResponse(3L, "user3", "image3");
+        ProfileResponse secondTeacher = new ProfileResponse(3L, "user3", "image3");
+        ProfileResponse secondStudent = new ProfileResponse(2L, "user2", "image2");
 
         ReviewResponse firstReviewResponse = new ReviewResponse(1L, "title1", "content1", Progress.ON_GOING,
                 firstTeacher, firstStudent, "prUrl1", LocalDateTime.now());
@@ -192,9 +192,29 @@ public class ReviewControllerTest extends RestApiDocumentTest {
     @Test
     @DisplayName("내가 리뷰한 목록")
     void teacherReviews() throws Exception {
+        // given
+        ProfileResponse firstTeacher = new ProfileResponse(1L, "user1", "image1");
+        ProfileResponse firstStudent = new ProfileResponse(2L, "user2", "image2");
+
+        ProfileResponse secondTeacher = new ProfileResponse(1L, "user1", "image1");
+        ProfileResponse secondStudent = new ProfileResponse(3L, "user3", "image3");
+
+        ReviewResponse firstReviewResponse = new ReviewResponse(1L, "title1", "content1", Progress.ON_GOING,
+                firstTeacher, firstStudent, "prUrl1", LocalDateTime.now());
+        ReviewResponse secondReviewResponse = new ReviewResponse(2L, "title2", "content2", Progress.ON_GOING,
+                secondTeacher, secondStudent, "prUrl2", LocalDateTime.now());
+
+        List<ReviewResponse> data = new ArrayList<>();
+        data.add(firstReviewResponse);
+        data.add(secondReviewResponse);
+
+        doNothing().when(authService).validatesAccessToken(ACCESS_TOKEN);
+        given(reviewService.findTeacherReview(anyLong(), any(), any())).willReturn(new ReviewsResponse(data, 2));
+
         // when
         ResultActions result = restDocsMockMvc.perform(
-                get("/reviews/teacher/{id}", 1));
+                get("/reviews/teacher/1")
+                        .with(userToken()));
 
         // then
         result.andExpect(status().isOk());

@@ -29,4 +29,13 @@ public class ReviewService {
                                                   .collect(Collectors.toList());
         return new ReviewsResponse(reviews, pageReviews.getTotalPages());
     }
+
+    public ReviewsResponse findTeacherReview(Long id, ReviewSearchCondition condition, Pageable pageable) {
+        Page<ReviewSummary> pageReviews = reviewRepository.searchPageByTeacherId(id, condition, pageable);
+
+        List<ReviewResponse> reviews = pageReviews.stream()
+                                                  .map(ReviewResponse::of)
+                                                  .collect(Collectors.toList());
+        return new ReviewsResponse(reviews, pageReviews.getTotalPages());
+    }
 }

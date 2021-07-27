@@ -1,8 +1,6 @@
 package com.wootech.dropthecode.controller;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import javax.validation.Valid;
 
 import com.wootech.dropthecode.domain.Progress;
@@ -39,10 +37,12 @@ public class ReviewController {
     }
 
     /**
+     * @param id 로그인한 멤버 id
      * @title 내가 받은 리뷰 목록 조회
      */
     @GetMapping("/student/{id}")
-    public ResponseEntity<ReviewsResponse> showStudentReviews(@PathVariable Long id, @ModelAttribute ReviewSearchCondition condition, Pageable pageable) {
+    public ResponseEntity<ReviewsResponse> showStudentReviews(@PathVariable Long id,
+                                                              @ModelAttribute ReviewSearchCondition condition, Pageable pageable) {
         ReviewsResponse reviewsResponse = reviewService.findStudentReview(id, condition, pageable);
         return ResponseEntity.status(HttpStatus.OK)
                              .body(reviewsResponse);
@@ -53,23 +53,9 @@ public class ReviewController {
      * @title 내가 리뷰한 리뷰 목록 조회
      */
     @GetMapping("/teacher/{id}")
-    public ResponseEntity<ReviewsResponse> showTeacherReviews(@PathVariable Long id) {
-        ProfileResponse firstTeacher = new ProfileResponse(1L, "user1", "image1");
-        ProfileResponse firstStudent = new ProfileResponse(2L, "user2", "image2");
-
-        ProfileResponse secondTeacher = new ProfileResponse(1L, "user1", "image1");
-        ProfileResponse secondStudent = new ProfileResponse(3L, "user3", "image3");
-
-        ReviewResponse firstReviewResponse = new ReviewResponse(1L, "title1", "content1", Progress.ON_GOING,
-                firstTeacher, firstStudent, "prUrl1", LocalDateTime.now());
-        ReviewResponse secondReviewResponse = new ReviewResponse(2L, "title2", "content2", Progress.ON_GOING,
-                secondTeacher, secondStudent, "prUrl2", LocalDateTime.now());
-
-        List<ReviewResponse> data = new ArrayList<>();
-        data.add(firstReviewResponse);
-        data.add(secondReviewResponse);
-
-        ReviewsResponse reviewsResponse = new ReviewsResponse(data, 0);
+    public ResponseEntity<ReviewsResponse> showTeacherReviews(@PathVariable Long id,
+                                                              @ModelAttribute ReviewSearchCondition condition, Pageable pageable) {
+        ReviewsResponse reviewsResponse = reviewService.findTeacherReview(id, condition, pageable);
         return ResponseEntity.status(HttpStatus.OK)
                              .body(reviewsResponse);
     }

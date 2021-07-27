@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import ErrorImage from "assets/error.png";
+import ErrorGIF from "assets/error.gif";
 import Button from "components/shared/Button/Button";
 import { FlexCenter } from "components/shared/Flexbox/Flexbox";
 
@@ -16,7 +16,7 @@ export interface Props {
 const Error = ({ resetError }: Props) => {
   return (
     <FlexCenter css={{ position: "absolute", flexDirection: "column", width: "100vw", height: "100vh" }}>
-      <Image src={ErrorImage} alt="404 not found 이미지" />
+      <Image src={ErrorGIF} alt="404 not found 이미지" />
       <Button
         shape="pill"
         onClick={() => {

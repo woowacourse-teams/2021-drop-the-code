@@ -3,7 +3,7 @@ import { Story, Meta } from "@storybook/react";
 import Error, { Props } from "components/Error/Error";
 
 export default {
-  title: "pages/Error",
+  title: "components/Error",
   component: Error,
 } as Meta;
 

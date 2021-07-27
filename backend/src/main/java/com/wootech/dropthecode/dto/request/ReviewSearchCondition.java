@@ -12,7 +12,7 @@ public class ReviewSearchCondition {
     private List<Progress> progress = new ArrayList<>();
 
     /**
-     * 선생님 이름
+     * 선생님 이름 or 학생 이름
      */
     private String name;
 

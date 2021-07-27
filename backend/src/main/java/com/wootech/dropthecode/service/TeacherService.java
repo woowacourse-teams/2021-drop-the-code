@@ -10,7 +10,6 @@ import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
 import com.wootech.dropthecode.dto.response.TeacherPaginationResponse;
 import com.wootech.dropthecode.dto.response.TeacherProfileResponse;
 import com.wootech.dropthecode.exception.TeacherException;
-import com.wootech.dropthecode.repository.TeacherFilterRepository;
 import com.wootech.dropthecode.repository.TeacherProfileRepository;
 
 import org.springframework.data.domain.Page;
@@ -21,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class TeacherService {
 
-    private final TeacherFilterRepository teacherFilterRepository;
     private final MemberService memberService;
     private final LanguageService languageService;
     private final SkillService skillService;
@@ -29,13 +27,11 @@ public class TeacherService {
     private final TeacherSkillService teacherSkillService;
     private final TeacherProfileRepository teacherProfileRepository;
 
-    public TeacherService(TeacherFilterRepository teacherFilterRepository,
-                          MemberService memberService, LanguageService languageService,
+    public TeacherService(MemberService memberService, LanguageService languageService,
                           SkillService skillService,
                           TeacherLanguageService teacherLanguageService,
                           TeacherSkillService teacherSkillService,
                           TeacherProfileRepository teacherProfileRepository) {
-        this.teacherFilterRepository = teacherFilterRepository;
         this.memberService = memberService;
         this.languageService = languageService;
         this.skillService = skillService;
@@ -91,7 +87,7 @@ public class TeacherService {
         List<Language> languages = validateLanguageNamesExists(Collections.singletonList(teacherFilterRequest.getTechSpec()), languageService.findAllToMap());
         List<Skill> skills = validateSkillNamesExists(Collections.singletonList(teacherFilterRequest.getTechSpec()), skillService.findAllToMap());
 
-        Page<TeacherProfile> teacherProfilePage = teacherFilterRepository.findAll(
+        Page<TeacherProfile> teacherProfilePage = teacherProfileRepository.findAll(
                 languages,
                 skills,
                 teacherFilterRequest.getCareer(),

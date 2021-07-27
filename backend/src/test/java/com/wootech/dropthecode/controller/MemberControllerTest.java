@@ -3,9 +3,11 @@ package com.wootech.dropthecode.controller;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
 import com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils;
 import com.wootech.dropthecode.domain.Role;
+import com.wootech.dropthecode.domain.TeacherProfile;
 import com.wootech.dropthecode.dto.TechSpec;
 import com.wootech.dropthecode.dto.request.TeacherFilterRequest;
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
@@ -18,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mapping.PropertyReferenceException;
+import org.springframework.data.util.ClassTypeInformation;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.test.web.servlet.ResultActions;
@@ -170,6 +174,27 @@ public class MemberControllerTest extends RestApiDocumentTest {
     void findAllTeacherFailIfLanguageNotExistsTest() throws Exception {
 
         given(teacherService.findAll(isA(TeacherFilterRequest.class), isA(Pageable.class))).willThrow(new TeacherException("존재하지 않는 언어입니다."));
+
+        this.failRestDocsMockMvc
+                .perform(get("/teachers")
+                        .param("language", "golang")
+                        .param("skills", "spring")
+                        .param("career", "3")
+                        .param("size", "2")
+                        .param("page", "1"))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @DisplayName("리뷰어 목록 조회 테스트 - 허용하지 않은 정렬 조건으로 검색할 경우 실패")
+    @Test
+    void findAllTeacherFailIfSortIsInvalidTest() throws Exception {
+
+        String sort = "test";
+        ClassTypeInformation<TeacherProfile> type = ClassTypeInformation.from(TeacherProfile.class);
+
+        given(teacherService.findAll(isA(TeacherFilterRequest.class), isA(Pageable.class)))
+                .willThrow(new PropertyReferenceException(sort, type, new Stack<>()));
 
         this.failRestDocsMockMvc
                 .perform(get("/teachers")

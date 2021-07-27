@@ -29,9 +29,7 @@ public class ReviewService {
     @Transactional
     public void updateToCompleteReview(LoginMember loginMember, Long id) {
         Review review = findById(id);
-        review.validateMemberIdAsTeacher(loginMember.getId());
-
-        review.completeProgress();
+        review.completeProgress(loginMember.getId());
         review.updateElapsedTime();
         reviewRepository.save(review);
 
@@ -43,9 +41,7 @@ public class ReviewService {
     @Transactional
     public void updateToFinishReview(LoginMember loginMember, Long id) {
         Review review = findById(id);
-        review.validateMemberIdAsStudent(loginMember.getId());
-
-        review.finishProgress();
+        review.finishProgress(loginMember.getId());
         reviewRepository.save(review);
     }
 }

@@ -8,6 +8,7 @@ import { ThemeProvider } from "styled-components";
 
 import App from "App";
 import AuthProvider from "components/Auth/AuthProvider/AuthProvider";
+import ErrorBoundary from "components/Error/ErrorBoundary";
 import GlobalStyle from "components/GlobalStyle/GlobalStyle";
 import Loading from "components/Loading/Loading";
 import ModalProvider from "components/ModalProvider/ModalProvider";
@@ -32,7 +33,9 @@ ReactDOM.render(
             <ModalProvider>
               <GlobalStyle />
               <BrowserRouter>
-                <App />
+                <ErrorBoundary>
+                  <App />
+                </ErrorBoundary>
               </BrowserRouter>
             </ModalProvider>
           </AuthProvider>

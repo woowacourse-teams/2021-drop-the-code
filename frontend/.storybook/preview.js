@@ -9,10 +9,8 @@ import { THEME } from "utils/constants/theme";
 
 import ModalProvider from "components/ModalProvider/ModalProvider";
 import AuthProvider from "components/Auth/AuthProvider/AuthProvider";
-import { LAYOUT } from "utils/constants/size";
 import { FlexCenter } from "components/shared/Flexbox/Flexbox";
 import { Suspense } from "react";
-import { loadPartialConfig } from "@babel/core";
 
 import Loading from "components/Loading/Loading";
 
@@ -26,6 +24,7 @@ export const parameters = {
       date: /Date$/,
     },
   },
+  layout: "centered",
 };
 
 const queryClient = new QueryClient({

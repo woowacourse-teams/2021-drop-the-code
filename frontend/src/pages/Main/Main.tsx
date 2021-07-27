@@ -11,7 +11,6 @@ import { Flex, FlexEnd } from "components/shared/Flexbox/Flexbox";
 import Select from "components/shared/Select/Select";
 import useReviewerListOptions from "hooks/useReviewerListOptions";
 import { COLOR } from "utils/constants/color";
-import { LAYOUT } from "utils/constants/size";
 
 const Main = () => {
   const {

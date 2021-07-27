@@ -9,6 +9,7 @@ import com.wootech.dropthecode.dto.request.TeacherFilterRequest;
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
 import com.wootech.dropthecode.dto.response.MemberResponse;
 import com.wootech.dropthecode.dto.response.TeacherPaginationResponse;
+import com.wootech.dropthecode.dto.response.TeacherProfileResponse;
 import com.wootech.dropthecode.service.MemberService;
 import com.wootech.dropthecode.service.TeacherService;
 
@@ -70,5 +71,13 @@ public class MemberController {
         teacherFilterRequest.setTechSpec(techSpec);
         teacherFilterRequest.setCareer(career);
         return teacherFilterRequest;
+    }
+
+    /**
+     * @title 리뷰어 단일 조회
+     */
+    @GetMapping("/teachers/{id}")
+    public ResponseEntity<TeacherProfileResponse> findTeacher(@PathVariable Long id) {
+        return ResponseEntity.ok(teacherService.findTeacherResponseById(id));
     }
 }

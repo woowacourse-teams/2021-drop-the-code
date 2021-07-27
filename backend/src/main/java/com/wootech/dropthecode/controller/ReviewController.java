@@ -5,10 +5,12 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.wootech.dropthecode.domain.Progress;
+import com.wootech.dropthecode.domain.Review;
 import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
 import com.wootech.dropthecode.dto.response.ProfileResponse;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
 import com.wootech.dropthecode.dto.response.ReviewsResponse;
+import com.wootech.dropthecode.service.ReviewService;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,14 +20,20 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/reviews")
 public class ReviewController {
+    private final ReviewService reviewService;
+
+    public ReviewController(ReviewService reviewService) {
+        this.reviewService = reviewService;
+    }
 
     /**
      * @title 리뷰 생성
      */
     @PostMapping
     public ResponseEntity<Void> create(@RequestBody @Valid ReviewCreateRequest reviewCreateRequest) {
+        Review review = reviewService.create(reviewCreateRequest);
         return ResponseEntity.status(HttpStatus.CREATED)
-                             .header("Location", "/reviews/1")
+                             .header("Location", "/reviews/" + review.getId())
                              .build();
     }
 

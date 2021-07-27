@@ -27,7 +27,17 @@ public class Review extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private final Progress progress = Progress.ON_GOING;
+    private Progress progress;
+
+    public Review(Member teacher, Member student, String title, String content,
+                  String prUrl, Progress progress) {
+        this.teacher = teacher;
+        this.student = student;
+        this.title = title;
+        this.content = content;
+        this.prUrl = prUrl;
+        this.progress = progress;
+    }
 
     public Member getTeacher() {
         return teacher;

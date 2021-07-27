@@ -8,6 +8,11 @@ import com.wootech.dropthecode.exception.ReviewException;
 
 @Entity
 public class Review extends BaseEntity {
+
+    public static final int ONE_SECOND_TO_MILLISECONDS = 1000;
+    public static final int ONE_MINUTE_TO_SECONDS = 60;
+    public static final int ONE_HOUR_TO_MINUTE = 60;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "fk_review_to_teacher"))
     private Member teacher;
@@ -57,7 +62,7 @@ public class Review extends BaseEntity {
     }
 
     public Long calculateElapsedTime() {
-        return elapsedTime / (1000 * 60 * 60);
+        return elapsedTime / (ONE_SECOND_TO_MILLISECONDS * ONE_MINUTE_TO_SECONDS * ONE_HOUR_TO_MINUTE);
     }
 
     public Member getTeacher() {

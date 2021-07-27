@@ -206,4 +206,48 @@ public class MemberControllerTest extends RestApiDocumentTest {
                 .andExpect(status().isBadRequest())
                 .andDo(print());
     }
+
+    @DisplayName("리뷰어 단일 조회 테스트 - 성공")
+    @Test
+    void findTeacherTest() throws Exception {
+
+        final TeacherProfileResponse response = new TeacherProfileResponse(
+                1L,
+                "seed@gmail.com",
+                "seed",
+                "s3://seed.jpg",
+                "배민 개발자",
+                "열심히 가르쳐드리겠습니다.",
+                3,
+                12,
+                1.4,
+                new TechSpecResponse(
+                        Arrays.asList(
+                                new LanguageResponse(1L, "java"),
+                                new LanguageResponse(2L, "javascript")),
+                        Arrays.asList(
+                                new SkillResponse(1L, "spring"),
+                                new SkillResponse(2L, "react"))
+                )
+        );
+
+        given(teacherService.findTeacherResponseById(1L)).willReturn(response);
+
+        this.restDocsMockMvc
+                .perform(get("/teachers/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(OBJECT_MAPPER.writeValueAsString(response)))
+                .andDo(print());
+    }
+
+    @DisplayName("리뷰어 단일 조회 테스트 - 유효하지 않은 회원의 ID일 경우 실패")
+    @Test
+    void findTeacherFailIfIdIsInvalidTest() throws Exception {
+        given(teacherService.findTeacherResponseById(1L)).willThrow(new TeacherException("존재하지 않는 리뷰어의 ID 입니다."));
+
+        this.restDocsMockMvc
+                .perform(get("/teachers/1"))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
 }

@@ -100,5 +100,13 @@ public class TeacherService {
 
         return new TeacherPaginationResponse(teacherProfileResponses, teacherProfilePage.getTotalPages());
     }
+
+    public TeacherProfileResponse findTeacherResponseById(Long id) {
+        return TeacherProfileResponse.from(findTeacherProfileById(id));
+    }
+
+    public TeacherProfile findTeacherProfileById(Long id) {
+        return teacherProfileRepository.findById(id).orElseThrow(() -> new TeacherException("존재하지 않는 리뷰어의 ID 입니다."));
+    }
 }
 

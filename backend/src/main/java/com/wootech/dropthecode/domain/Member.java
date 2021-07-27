@@ -32,10 +32,6 @@ public class Member extends BaseEntity {
     protected Member() {
     }
 
-    public Member(String oauthId, String name, String email, String imageUrl, Role role, TeacherProfile teacherProfile) {
-        this(null, oauthId, name, email, imageUrl, role, teacherProfile);
-    }
-
     public Member(Long id, String oauthId, String name, String email, String imageUrl, Role role, TeacherProfile teacherProfile) {
         this.id = id;
         this.oauthId = oauthId;
@@ -46,19 +42,16 @@ public class Member extends BaseEntity {
         this.teacherProfile = teacherProfile;
     }
 
+    public Member(String oauthId, String name, String email, String imageUrl, Role role, TeacherProfile teacherProfile) {
+        this(null, oauthId, name, email, imageUrl, role, teacherProfile);
+    }
+
     public Member(String oauthId, String email, String name, String imageUrl, Role role) {
-        this.oauthId = oauthId;
-        this.email = email;
-        this.name = name;
-        this.imageUrl = imageUrl;
-        this.role = role;
+        this(null, oauthId, email, name, imageUrl, role, null);
     }
 
     public Member(String email, String name, String imageUrl, Role role) {
-        this.email = email;
-        this.name = name;
-        this.imageUrl = imageUrl;
-        this.role = role;
+        this(null, null, email, name, imageUrl, role, null);
     }
 
     public String getOauthId() {

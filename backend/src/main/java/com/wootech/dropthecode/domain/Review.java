@@ -30,17 +30,23 @@ public class Review extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Progress progress = Progress.ON_GOING;
+    private Progress progress;
 
     public Review() {
     }
 
-    public Review(Member teacher, Member student, String title, String content, String prUrl) {
+    public Review(Member teacher, Member student, String title, String content, String prUrl, Long elapsedTime, Progress progress) {
         this.teacher = teacher;
         this.student = student;
         this.title = title;
         this.content = content;
         this.prUrl = prUrl;
+        this.elapsedTime = elapsedTime;
+        this.progress = progress;
+    }
+
+    public Review(Member teacher, Member student, String title, String content, String prUrl) {
+        this(teacher, student, title, content, prUrl, 0L, Progress.ON_GOING);
     }
 
     public void updateElapsedTime() {
@@ -101,13 +107,13 @@ public class Review extends BaseEntity {
     }
 
     public void validateMemberIdAsTeacher(Long id) {
-        if(teacher.isSameIdAs(id)) {
+        if(!teacher.isSameIdAs(id)) {
             throw new AuthorizationException("현재 사용자는 해당 리뷰에 대한 리뷰 완료 권한이 없습니다.");
         }
     }
 
     public void validateMemberIdAsStudent(Long id) {
-        if(teacher.isSameIdAs(id)) {
+        if(!student.isSameIdAs(id)) {
             throw new AuthorizationException("현재 사용자는 해당 리뷰에 대한 리뷰 완료 권한이 없습니다.");
         }
     }

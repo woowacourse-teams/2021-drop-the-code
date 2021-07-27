@@ -27,22 +27,27 @@ public class Review extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private final Progress progress = Progress.ON_GOING;
+    private Progress progress;
 
     protected Review() {
     }
 
     public Review(Member teacher, Member student, String title, String content, String prUrl) {
-        this(teacher, student, title, content, prUrl, 0);
+        this(teacher, student, title, content, prUrl, 0, Progress.ON_GOING);
     }
 
     public Review(Member teacher, Member student, String title, String content, String prUrl, Integer elapsedTime) {
+        this(teacher, student, title, content, prUrl, elapsedTime, Progress.ON_GOING);
+    }
+
+    public Review(Member teacher, Member student, String title, String content, String prUrl, Integer elapsedTime, Progress progress) {
         this.teacher = teacher;
         this.student = student;
         this.title = title;
         this.content = content;
         this.prUrl = prUrl;
         this.elapsedTime = elapsedTime;
+        this.progress = progress;
     }
 
     public Member getTeacher() {

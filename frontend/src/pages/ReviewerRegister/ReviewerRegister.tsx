@@ -51,7 +51,7 @@ const ReviewerRegister = () => {
 
   // TODO 반복되는 메인 컴포넌트 + 테마로 관리하기
   return (
-    <main css={{ paddingTop: "6rem", width: "100%", maxWidth: LAYOUT.LG, margin: "0 auto" }}>
+    <>
       <h2 css={{ fontSize: "1.25rem", fontWeight: 600 }}>리뷰어 등록</h2>
       <FormProvider
         submit={async ({ career, title, content }) => {
@@ -117,7 +117,7 @@ const ReviewerRegister = () => {
           </SubmitButton>
         </Flex>
       </FormProvider>
-    </main>
+    </>
   );
 };
 

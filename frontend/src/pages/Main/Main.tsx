@@ -26,7 +26,7 @@ const Main = () => {
   } = useReviewerListOptions();
 
   return (
-    <main css={{ paddingTop: "6rem", width: "100%", maxWidth: LAYOUT.LG, margin: "0 auto" }}>
+    <>
       <h2 css={{ fontSize: "1.25rem", fontWeight: 600 }}>리뷰어 찾기</h2>
       <Flex css={{ flexDirection: "column", width: "100%" }}>
         <Flex>
@@ -76,7 +76,7 @@ const Main = () => {
           sort={sort}
         />
       </Suspense>
-    </main>
+    </>
   );
 };
 

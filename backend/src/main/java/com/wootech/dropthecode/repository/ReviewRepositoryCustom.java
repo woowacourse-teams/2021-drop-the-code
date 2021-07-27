@@ -1,6 +1,6 @@
 package com.wootech.dropthecode.repository;
 
-import com.wootech.dropthecode.domain.ReviewSummary;
+import com.wootech.dropthecode.dto.ReviewSummary;
 import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
 
 import org.springframework.data.domain.Page;

@@ -3,7 +3,7 @@ package com.wootech.dropthecode.dto.response;
 import java.time.LocalDateTime;
 
 import com.wootech.dropthecode.domain.Progress;
-import com.wootech.dropthecode.domain.ReviewSummary;
+import com.wootech.dropthecode.dto.ReviewSummary;
 import com.wootech.dropthecode.util.LocalDateTimeToArray;
 
 public class ReviewResponse {

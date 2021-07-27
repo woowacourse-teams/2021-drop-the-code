@@ -8,7 +8,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.wootech.dropthecode.domain.Progress;
 import com.wootech.dropthecode.domain.QMember;
 import com.wootech.dropthecode.domain.Review;
-import com.wootech.dropthecode.domain.ReviewSummary;
+import com.wootech.dropthecode.dto.ReviewSummary;
 import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
 import com.wootech.dropthecode.repository.support.Querydsl4RepositorySupport;
 

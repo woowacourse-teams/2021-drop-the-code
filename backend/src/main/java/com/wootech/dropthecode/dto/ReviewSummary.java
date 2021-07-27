@@ -1,6 +1,8 @@
-package com.wootech.dropthecode.domain;
+package com.wootech.dropthecode.dto;
 
 import java.time.LocalDateTime;
+
+import com.wootech.dropthecode.domain.Progress;
 
 public class ReviewSummary {
     private Long id;

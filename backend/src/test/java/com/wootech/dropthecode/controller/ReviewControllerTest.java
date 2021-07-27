@@ -133,7 +133,7 @@ public class ReviewControllerTest extends RestApiDocumentTest {
         data.add(secondReviewResponse);
 
         doNothing().when(authService).validatesAccessToken(ACCESS_TOKEN);
-        given(reviewService.findStudentReview(anyLong(), any(), any())).willReturn(new ReviewsResponse(data));
+        given(reviewService.findStudentReview(anyLong(), any(), any())).willReturn(new ReviewsResponse(data, 2));
 
         // when
         ResultActions result = restDocsMockMvc.perform(

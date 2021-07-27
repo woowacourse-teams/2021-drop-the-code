@@ -73,7 +73,7 @@ public class ReviewController {
         data.add(firstReviewResponse);
         data.add(secondReviewResponse);
 
-        ReviewsResponse reviewsResponse = new ReviewsResponse(data);
+        ReviewsResponse reviewsResponse = new ReviewsResponse(data, 0);
         return ResponseEntity.status(HttpStatus.OK)
                              .body(reviewsResponse);
     }

@@ -120,8 +120,4 @@ public class Review extends BaseEntity {
     public Progress getProgress() {
         return progress;
     }
-
-    public void setProgress(Progress progress) {
-        this.progress = progress;
-    }
 }

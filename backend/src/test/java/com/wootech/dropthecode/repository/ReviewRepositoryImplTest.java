@@ -58,14 +58,14 @@ class ReviewRepositoryImplTest {
         em.persist(teacherProfile2);
 
         Review review1 = new Review(teacher1, student1, "review title1", "review content1", "prUrl1", 3);
-        Review review2 = new Review(teacher2, student1, "review title2", "review content2", "prUrl2", 4);
+        Review review2 = new Review(teacher2, student1, "review title2", "review content2", "prUrl2", 4, Progress.FINISHED);
         Review review3 = new Review(teacher1, student2, "review title3", "review content3", "prUrl3", 4);
         Review review4 = new Review(teacher2, student2, "review title4", "review content4", "prUrl4", 7);
         Review review5 = new Review(teacher1, student1, "review title5", "review content5", "prUrl5", 8);
         Review review6 = new Review(teacher1, student2, "review title6", "review content6", "prUrl6", 7);
         Review review7 = new Review(teacher2, student1, "review title7", "review content7", "prUrl7", 2);
         Review review8 = new Review(teacher1, student2, "review title8", "review content8", "prUrl8", 2);
-        Review review9 = new Review(teacher1, student1, "review title9", "review content9", "prUrl9", 1);
+        Review review9 = new Review(teacher1, student1, "review title9", "review content9", "prUrl9", 1, Progress.FINISHED);
         Review review10 = new Review(teacher2, student2, "review title10", "review content10", "prUrl10", 4);
         Review review11 = new Review(teacher2, student1, "review title11", "review content11", "prUrl11", 3);
 

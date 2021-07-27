@@ -8,5 +8,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface ReviewRepositoryCustom {
     Page<ReviewSummary> searchPageByStudentId(Long id, ReviewSearchCondition condition, Pageable pageable);
+
     Page<ReviewSummary> searchPageByTeacherId(Long id, ReviewSearchCondition condition, Pageable pageable);
 }

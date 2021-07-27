@@ -1,8 +1,6 @@
 package com.wootech.dropthecode.controller;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import javax.validation.Valid;
 
 import com.wootech.dropthecode.domain.Progress;

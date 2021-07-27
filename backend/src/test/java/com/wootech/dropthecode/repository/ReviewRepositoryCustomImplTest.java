@@ -2,20 +2,21 @@ package com.wootech.dropthecode.repository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import javax.persistence.EntityManager;
 
+import com.wootech.dropthecode.config.JpaConfig;
 import com.wootech.dropthecode.domain.*;
 import com.wootech.dropthecode.dto.ReviewSummary;
 import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,13 +24,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
-@Transactional
+@DataJpaTest
+@Import(JpaConfig.class)
 @ActiveProfiles("test")
 class ReviewRepositoryCustomImplTest {
 
     @Autowired
-    private EntityManager em;
+    private TestEntityManager em;
 
     @Autowired
     private ReviewRepository reviewRepository;

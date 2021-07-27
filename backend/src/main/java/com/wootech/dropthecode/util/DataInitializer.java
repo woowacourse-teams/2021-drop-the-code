@@ -20,7 +20,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-@Profile({"prod-init"})
+@Profile({"prod-init", "local-init"})
 @Component
 public class DataInitializer implements ApplicationRunner {
 

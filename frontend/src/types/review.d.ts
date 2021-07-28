@@ -13,6 +13,7 @@ export interface Review {
   title: string;
   content: string;
   progress: Progress;
+  prUrl: string;
   teacherProfile: {
     id: number;
     name: string;
@@ -23,7 +24,7 @@ export interface Review {
     name: string;
     imageUrl: string;
   };
-  createAt: [number, number, number];
+  createdAt: [number, number, number];
 }
 
-export type ReviewListMode = "teacher" | "student";
+export type Role = "teacher" | "student";

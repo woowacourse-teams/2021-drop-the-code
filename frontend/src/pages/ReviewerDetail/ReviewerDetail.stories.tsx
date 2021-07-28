@@ -2,7 +2,7 @@ import { MemoryRouter, Route } from "react-router-dom";
 
 import { Story, Meta } from "@storybook/react";
 
-import ReviewerDetail from "./ReviewerDetail";
+import ReviewerDetail from "pages/ReviewerDetail/ReviewerDetail";
 
 export default {
   title: "pages/ReviewerDetail",

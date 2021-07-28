@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
+import { Progress as ProgressShape, Review } from "types/review";
 
-import { Progress as ProgressShape, Review } from "../../../types/review";
-import { COLOR } from "../../../utils/constants/color";
-import { toPassedTimeString } from "../../../utils/formatter";
-import { Flex, FlexAlignCenter } from "../../shared/Flexbox/Flexbox";
+import { Flex, FlexAlignCenter } from "components/shared/Flexbox/Flexbox";
+import { COLOR } from "utils/constants/color";
+import { toPassedTimeString } from "utils/formatter";
 
 const ReviewLink = styled(Link)`
   margin-bottom: 1.25rem;
@@ -31,7 +31,6 @@ const Progress = styled.div<ProgressProps>`
 
 const ContentWrapper = styled(Flex)`
   width: calc(100% - 8.75rem);
-  word-break: break-all;
   flex-direction: column;
   margin-right: 1.25rem;
 `;
@@ -60,7 +59,7 @@ const RequestTime = styled.div`
   text-align: right;
 `;
 
-const ReviewCard = ({ id, title, content, progress, createAt }: Review) => (
+const ReviewCard = ({ id, title, content, progress, createdAt }: Review) => (
   <ReviewLink to={`/review/${id}`}>
     <Inner>
       <Progress progress={progress}>
@@ -71,7 +70,7 @@ const ReviewCard = ({ id, title, content, progress, createAt }: Review) => (
         <Content>{content}</Content>
       </ContentWrapper>
       <RequestTime>
-        <p>{toPassedTimeString(...createAt)}</p>
+        <p>{toPassedTimeString(...createdAt)}</p>
       </RequestTime>
     </Inner>
   </ReviewLink>

@@ -20,7 +20,7 @@ public class PrettyPrintingUtils implements ContentModifier {
             try {
                 return new JsonPrettyPrinter().prettyPrint(originalContent);
             } catch (Exception e) {
-                e.getMessage();
+                e.printStackTrace();
             }
         }
 

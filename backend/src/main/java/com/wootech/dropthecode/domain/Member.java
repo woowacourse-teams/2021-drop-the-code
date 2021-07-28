@@ -23,17 +23,13 @@ public class Member extends BaseEntity {
     @OneToOne(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private TeacherProfile teacherProfile;
 
-    @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Review> reviewsAsTeacher;
 
-    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Review> reviewsAsStudent;
 
     protected Member() {
-    }
-
-    public Member(String oauthId, String name, String email, String imageUrl, Role role, TeacherProfile teacherProfile) {
-        this(null, oauthId, name, email, imageUrl, role, teacherProfile);
     }
 
     public Member(Long id, String oauthId, String name, String email, String imageUrl, Role role, TeacherProfile teacherProfile) {
@@ -46,12 +42,16 @@ public class Member extends BaseEntity {
         this.teacherProfile = teacherProfile;
     }
 
+    public Member(String oauthId, String name, String email, String imageUrl, Role role, TeacherProfile teacherProfile) {
+        this(null, oauthId, name, email, imageUrl, role, teacherProfile);
+    }
+
     public Member(String oauthId, String email, String name, String imageUrl, Role role) {
-        this.oauthId = oauthId;
-        this.email = email;
-        this.name = name;
-        this.imageUrl = imageUrl;
-        this.role = role;
+        this(null, oauthId, email, name, imageUrl, role, null);
+    }
+
+    public Member(String email, String name, String imageUrl, Role role) {
+        this(null, null, email, name, imageUrl, role, null);
     }
 
     public String getOauthId() {
@@ -92,5 +92,9 @@ public class Member extends BaseEntity {
 
     public boolean hasRole(Role role) {
         return this.role == role;
+    }
+
+    public boolean hasSameId(Long id) {
+        return this.id.equals(id);
     }
 }

@@ -1,14 +1,25 @@
 package com.wootech.dropthecode.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.wootech.dropthecode.controller.auth.AuthenticationInterceptor;
 import com.wootech.dropthecode.controller.auth.GetAuthenticationInterceptor;
 import com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils;
+import com.wootech.dropthecode.domain.Progress;
 import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
+import com.wootech.dropthecode.dto.response.ProfileResponse;
+import com.wootech.dropthecode.dto.response.ReviewResponse;
+import com.wootech.dropthecode.dto.response.ReviewsResponse;
 import com.wootech.dropthecode.exception.AuthorizationException;
 import com.wootech.dropthecode.exception.GlobalExceptionHandler;
+import com.wootech.dropthecode.service.ReviewService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
@@ -25,20 +36,25 @@ import static capital.scalable.restdocs.jackson.JacksonResultHandlers.prepareJac
 import static com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils.OBJECT_MAPPER;
 import static com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils.restDocumentation;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ReviewController.class)
 public class ReviewControllerTest extends RestApiDocumentTest {
 
     @Autowired
     private ReviewController reviewController;
+
+    @MockBean
+    private ReviewService reviewService;
 
     @BeforeEach
     void setUp(RestDocumentationContextProvider provider) {
@@ -100,9 +116,28 @@ public class ReviewControllerTest extends RestApiDocumentTest {
     @Test
     @DisplayName("내가 요청한 리뷰 목록")
     void studentReviews() throws Exception {
+        // given
+        ProfileResponse firstTeacher = new ProfileResponse(1L, "user1", "image1");
+        ProfileResponse firstStudent = new ProfileResponse(2L, "user2", "image2");
+
+        ProfileResponse secondTeacher = new ProfileResponse(3L, "user3", "image3");
+        ProfileResponse secondStudent = new ProfileResponse(2L, "user2", "image2");
+
+        ReviewResponse firstReviewResponse = new ReviewResponse(1L, "title1", "content1", Progress.ON_GOING,
+                firstTeacher, firstStudent, "prUrl1", LocalDateTime.now());
+        ReviewResponse secondReviewResponse = new ReviewResponse(2L, "title2", "content2", Progress.ON_GOING,
+                secondTeacher, secondStudent, "prUrl2", LocalDateTime.now());
+
+        List<ReviewResponse> data = new ArrayList<>();
+        data.add(firstReviewResponse);
+        data.add(secondReviewResponse);
+
+        doNothing().when(authService).validatesAccessToken(ACCESS_TOKEN);
+        given(reviewService.findStudentReview(anyLong(), any(), any())).willReturn(new ReviewsResponse(data, 2));
+
         // when
         ResultActions result = restDocsMockMvc.perform(
-                get("/reviews/student/{id}", 1)
+                get("/reviews/student/2")
                         .with(userToken()));
 
         // then
@@ -157,9 +192,27 @@ public class ReviewControllerTest extends RestApiDocumentTest {
     @Test
     @DisplayName("내가 리뷰한 목록")
     void teacherReviews() throws Exception {
+        // given
+        ProfileResponse firstTeacher = new ProfileResponse(1L, "user1", "image1");
+        ProfileResponse firstStudent = new ProfileResponse(2L, "user2", "image2");
+
+        ProfileResponse secondTeacher = new ProfileResponse(1L, "user1", "image1");
+        ProfileResponse secondStudent = new ProfileResponse(3L, "user3", "image3");
+
+        ReviewResponse firstReviewResponse = new ReviewResponse(1L, "title1", "content1", Progress.ON_GOING,
+                firstTeacher, firstStudent, "prUrl1", LocalDateTime.now());
+        ReviewResponse secondReviewResponse = new ReviewResponse(2L, "title2", "content2", Progress.ON_GOING,
+                secondTeacher, secondStudent, "prUrl2", LocalDateTime.now());
+
+        List<ReviewResponse> data = new ArrayList<>();
+        data.add(firstReviewResponse);
+        data.add(secondReviewResponse);
+
+        given(reviewService.findTeacherReview(anyLong(), any(), any())).willReturn(new ReviewsResponse(data, 2));
+
         // when
         ResultActions result = restDocsMockMvc.perform(
-                get("/reviews/teacher/{id}", 1));
+                get("/reviews/teacher/1"));
 
         // then
         result.andExpect(status().isOk());
@@ -170,6 +223,14 @@ public class ReviewControllerTest extends RestApiDocumentTest {
     @Test
     @DisplayName("리뷰 상세 페이지")
     void reviewDetail() throws Exception {
+        // given
+        ProfileResponse teacher = new ProfileResponse(1L, "user1", "image1");
+        ProfileResponse student = new ProfileResponse(2L, "user2", "image2");
+        ReviewResponse review = new ReviewResponse(1L, "title1", "content1", Progress.ON_GOING,
+                teacher, student, "prUrl1", LocalDateTime.now());
+
+        given(reviewService.findReviewSummaryById(1L)).willReturn(review);
+
         // when
         ResultActions result = restDocsMockMvc.perform(
                 get("/reviews/{id}", 1));
@@ -178,35 +239,20 @@ public class ReviewControllerTest extends RestApiDocumentTest {
         result.andExpect(status().isOk());
     }
 
-    // TODO ID에 해당하는 리소스가 없는 경우
-
     @Test
-    @DisplayName("리뷰 상태 변경")
-    void changeReviewProgress() throws Exception {
+    @DisplayName("리뷰 상태 변경 (ON_GOING -> TEACHER_COMPLETE)")
+    void updateReviewToComplete() throws Exception {
         // when
-        ResultActions result = restDocsMockMvc.perform(patch("/reviews/{id}", 1)
+        ResultActions result = restDocsMockMvc.perform(patch("/reviews/1/complete")
                 .with(userToken()));
 
         // then
         result.andExpect(status().isNoContent());
     }
 
-    /**
-     * .apply(documentationConfiguration(provider)
-     * .uris()
-     * .withScheme("http")
-     * .withHost("localhost")
-     * .withPort(8080)
-     * .and()
-     * .snippets()
-     * .withDefaults(
-     * HttpDocumentation.httpResponse()
-     * ))
-     */
-
-    @DisplayName("리뷰 상태 변경 - Authorization Header 가 없을 경우 실패")
+    @DisplayName("리뷰 상태 변경 (ON_GOING -> TEACHER_COMPLETE) - Authorization Header 가 없을 경우 실패")
     @Test
-    void changeReviewProgressFailIfAuthorizationHeaderNotExists(RestDocumentationContextProvider provider) throws Exception {
+    void updateReviewToCompleteFailIfAuthorizationHeaderNotExists(RestDocumentationContextProvider provider) throws Exception {
         // given
         doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
                 .when(authService).validatesAccessToken(any());
@@ -231,12 +277,55 @@ public class ReviewControllerTest extends RestApiDocumentTest {
 
         // when
         final ResultActions result = this.failRestDocsMockMvc
-                .perform(patch("/reviews/{id}", 1));
+                .perform(patch("/reviews/1/complete"));
 
         // then
         result.andExpect(status().isUnauthorized())
               .andDo(print());
     }
 
-    // TODO ID에 해당하는 리소스가 없는 경우
+    @Test
+    @DisplayName("리뷰 상태 변경 (TEACHER_COMPLETE -> FINISHED)")
+    void updateReviewToFinish() throws Exception {
+        // when
+        ResultActions result = restDocsMockMvc.perform(patch("/reviews/1/finish")
+                .with(userToken()));
+
+        // then
+        result.andExpect(status().isNoContent());
+    }
+
+    @DisplayName("리뷰 상태 변경 (TEACHER_COMPLETE -> FINISHED) - Authorization Header 가 없을 경우 실패")
+    @Test
+    void updateReviewToFinishFailIfAuthorizationHeaderNotExists(RestDocumentationContextProvider provider) throws Exception {
+        // given
+        doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+                .when(authService).validatesAccessToken(any());
+        this.failRestDocsMockMvc = MockMvcBuilders.standaloneSetup(reviewController)
+                                                  .addFilters(new CharacterEncodingFilter("UTF-8", true))
+                                                  .addInterceptors(new AuthenticationInterceptor(authService))
+                                                  .setControllerAdvice(new GlobalExceptionHandler())
+                                                  .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
+                                                  .alwaysDo(prepareJackson(OBJECT_MAPPER))
+                                                  .alwaysDo(restDocumentation())
+                                                  .apply(documentationConfiguration(provider)
+                                                          .uris()
+                                                          .withScheme("http")
+                                                          .withHost("localhost")
+                                                          .withPort(8080)
+                                                          .and()
+                                                          .snippets()
+                                                          .withDefaults(
+                                                                  HttpDocumentation.httpResponse()
+                                                          ))
+                                                  .build();
+
+        // when
+        final ResultActions result = this.failRestDocsMockMvc
+                .perform(patch("/reviews/1/finish"));
+
+        // then
+        result.andExpect(status().isUnauthorized())
+              .andDo(print());
+    }
 }

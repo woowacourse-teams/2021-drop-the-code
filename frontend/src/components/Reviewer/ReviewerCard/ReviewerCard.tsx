@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
+import { Reviewer } from "types/reviewer";
 
-import { Reviewer } from "../../../types/reviewer";
-import { COLOR } from "../../../utils/constants/color";
-import Avatar from "../../shared/Avatar/Avatar";
-import Chip from "../../shared/Chip/Chip";
-import { Flex, FlexSpaceBetween } from "../../shared/Flexbox/Flexbox";
+import Avatar from "components/shared/Avatar/Avatar";
+import Chip from "components/shared/Chip/Chip";
+import { Flex, FlexSpaceBetween } from "components/shared/Flexbox/Flexbox";
+import { COLOR } from "utils/constants/color";
 
 const ReviewerLink = styled(Link)`
   margin-bottom: 1.25rem;
@@ -33,7 +33,7 @@ const Title = styled.p`
 const ReviewerCard = ({ id, imageUrl, career, sumReviewCount, averageReviewTime, title, techSpec }: Reviewer) => (
   <ReviewerLink to={`/reviewer/${id}`}>
     <Inner>
-      <Avatar imageUrl={imageUrl} width="6.25rem" height="6.25rem" shape="rounded" css={{ marginRight: "1.875rem" }} />
+      <Avatar imageUrl={imageUrl} width="6.25rem" height="6.25rem" css={{ marginRight: "1.875rem" }} />
       <FlexSpaceBetween css={{ flexDirection: "column", flex: 1 }}>
         <ChipWrapper>
           <Chip themeColor="career" css={{ fontSize: "0.875rem" }}>

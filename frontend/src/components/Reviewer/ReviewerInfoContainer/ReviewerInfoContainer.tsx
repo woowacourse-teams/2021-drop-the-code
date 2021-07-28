@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
 
-import { getReviewer } from "../../../apis/reviewer";
-import ReviewList from "../../Review/ReviewList/ReviewList";
-import Button from "../../shared/Button/Button";
-import { Flex, FlexCenter } from "../../shared/Flexbox/Flexbox";
-import ReviewerContentBox from "../ReviewerContentBox/ReviewerContentBox";
-import ReviewerFloatingBox from "../ReviewerFloatingBox/ReviewerFloatingBox";
+import { Role } from "types/review";
+
+import { getReviewer } from "apis/reviewer";
+import ReviewList from "components/Review/ReviewList/ReviewList";
+import ReviewerFloatingBox from "components/Reviewer/ReviewerFloatingBox/ReviewerFloatingBox";
+import Button from "components/shared/Button/Button";
+import ReviewerContentBox from "components/shared/ContentBox/ContentBox";
+import { Flex, FlexCenter } from "components/shared/Flexbox/Flexbox";
 
 interface Props {
   reviewerId: number;
@@ -32,13 +34,15 @@ const ReviewerInfoContainer = ({ reviewerId }: Props) => {
       {
         <Flex>
           <div css={{ flex: 1, paddingRight: "6.25rem" }}>
-            {/* <ReviewerContentBox reviewer={data} /> */}
+            {/* <ContentBox title={reviewer.title} reviewer={data}>
+              {reviewer.content}
+            </ContentBox> */}
             <FlexCenter css={{ width: "100%" }}>
               <Button themeColor="secondary" hover={false} onClick={() => setOpen(!isOpen)}>
                 {isOpen ? "접기" : "리뷰 목록 확인하기"}
               </Button>
             </FlexCenter>
-            {isOpen && <ReviewList id={reviewerId} mode="teacher" />}
+            {isOpen && <ReviewList id={reviewerId} mode={"teacher"} />}
           </div>
           <div css={{ width: "18.75rem" }}>{/* <ReviewerFloatingBox reviewer={data} /> */}</div>
         </Flex>

@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
-import LgWhiteLogo from "../../../assets/lg-white-github-logo.png";
-import SmBlackLogo from "../../../assets/sm-black-github-logo.png";
-import { FlexCenter } from "../../shared/Flexbox/Flexbox";
+import LgWhiteLogo from "assets/lg-white-github-logo.png";
+import SmBlackLogo from "assets/sm-black-github-logo.png";
+import { FlexCenter } from "components/shared/Flexbox/Flexbox";
+import { ALT } from "utils/constants/message";
 
 const Inner = styled(FlexCenter)`
   width: 18.75rem;
@@ -27,12 +28,12 @@ const LoginButtonImage = styled.img`
 const GithubOAuth = () => {
   return (
     <Inner>
-      <img src={LgWhiteLogo} alt="깃허브 로고 이미지" />
+      <img src={LgWhiteLogo} alt={ALT.GITHUB_LOGO} />
       <LoginAnchor
         href={`https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_OAUTH_CLIENT_ID}&redirect_uri=${process.env.CLIENT_BASE_URL}${process.env.GITHUB_OAUTH_REDIRECT_URL}`}
       >
         <FlexCenter>
-          <LoginButtonImage src={SmBlackLogo} alt="깃허브 로그인 버튼 이미지" />
+          <LoginButtonImage src={SmBlackLogo} alt={ALT.GITHUB_LOGIN_BUTTON} />
           Github으로 로그인 하기
         </FlexCenter>
       </LoginAnchor>

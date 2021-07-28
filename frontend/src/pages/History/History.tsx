@@ -1,13 +1,13 @@
 import { Suspense, useEffect, useState } from "react";
 
 import styled, { css } from "styled-components";
+import { Role } from "types/review";
 
-import Loading from "../../components/Loading/Loading";
-import ReviewList from "../../components/Review/ReviewList/ReviewList";
-import useAuthContext from "../../hooks/useAuthContext";
-import { ReviewListMode } from "../../types/review";
-import { COLOR } from "../../utils/constants/color";
-import { LAYOUT } from "../../utils/constants/size";
+import Loading from "components/Loading/Loading";
+import ReviewList from "components/Review/ReviewList/ReviewList";
+import useAuthContext from "hooks/useAuthContext";
+import { COLOR } from "utils/constants/color";
+import { LAYOUT } from "utils/constants/size";
 
 const Item = styled.li<{ active: boolean }>`
   position: relative;
@@ -35,14 +35,14 @@ const Item = styled.li<{ active: boolean }>`
 const History = () => {
   const { user } = useAuthContext();
 
-  const [activeTab, setActiveTab] = useState<ReviewListMode | null>(null);
+  const [activeTab, setActiveTab] = useState<Role | null>(null);
 
   // const { user } = useAuthContext();
 
   // const isReviewer = user.role === "teacher";
   const isReviewer = "teacher" === "teacher";
 
-  const myTabs: { name: string; mode: ReviewListMode }[] = isReviewer
+  const myTabs: { name: string; mode: Role }[] = isReviewer
     ? [
         { name: "내가 맡은 리뷰", mode: "teacher" },
         { name: "내가 요청한 리뷰", mode: "student" },
@@ -54,7 +54,7 @@ const History = () => {
   }, []);
 
   return (
-    <main css={{ paddingTop: "6rem", width: "100%", maxWidth: LAYOUT.LG, margin: "0 auto" }}>
+    <>
       <h2 css={{ fontSize: "1.25rem", fontWeight: 600 }}>히스토리</h2>
       <ul css={{ display: "flex", borderBottom: `1px solid ${COLOR.GRAY_400}`, marginBottom: "1.25rem" }}>
         {myTabs.map(({ name, mode }) => (
@@ -70,7 +70,7 @@ const History = () => {
         ))}
       </ul>
       <Suspense fallback={<Loading />}>{activeTab && <ReviewList id={1} mode={activeTab} />}</Suspense>
-    </main>
+    </>
   );
 };
 

@@ -1,6 +1,11 @@
+import { Role } from "./review";
+
 export interface User {
-  email: string;
+  id: number;
   name: string;
+  email: string;
   imageUrl: string;
+  role: Role;
   accessToken: string;
+  refreshToken: string;
 }

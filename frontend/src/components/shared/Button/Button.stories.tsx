@@ -1,6 +1,6 @@
 import { Story, Meta } from "@storybook/react";
 
-import Button, { Props } from "./Button";
+import Button, { Props } from "components/shared/Button/Button";
 
 export default {
   title: "components/shared/Button",
@@ -13,6 +13,13 @@ export const Basic = BasicTemplate.bind({});
 
 Basic.args = {
   children: "내용물",
+};
+
+export const Disabled = BasicTemplate.bind({});
+
+Disabled.args = {
+  children: "내용물",
+  disabled: true,
 };
 
 const ToggleTemplate: Story<Props> = (args) => (

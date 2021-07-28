@@ -2,11 +2,13 @@ import { ReactNode, useState } from "react";
 
 import styled from "styled-components";
 
-import { COLOR } from "../../utils/constants/color";
-import Button, { Props as ButtonProps } from "../shared/Button/Button";
+import Button, { Props as ButtonProps } from "components/shared/Button/Button";
+import { COLOR } from "utils/constants/color";
 
 const Inner = styled.div`
-  display: flex;
+  display: inline-flex;
+  position: relative;
+  z-index: ${({ theme }) => theme.common.zIndex.menuItem};
 `;
 
 const Dimmed = styled.div`
@@ -26,7 +28,7 @@ const Menu = styled.div`
   overflow: auto;
   right: 0;
   padding: 1.875rem;
-  z-index: ${({ theme }) => theme.common.zIndex.menuItem};
+  z-index: 1;
 `;
 
 export interface Props extends Omit<ButtonProps, "active" | "onClick"> {

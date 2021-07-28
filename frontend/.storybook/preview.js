@@ -1,16 +1,16 @@
+import { Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router";
 
 import axios from "axios";
 import { ThemeProvider } from "styled-components";
 
-import GlobalStyle from "../src/components/GlobalStyle/GlobalStyle";
-import { THEME } from "../src/utils/constants/theme";
-
-import ModalProvider from "../src/components/ModalProvider/ModalProvider";
-import AuthProvider from "../src/components/Auth/AuthProvider/AuthProvider";
-import { LAYOUT } from "../src/utils/constants/size";
-import { FlexCenter } from "../src/components/shared/Flexbox/Flexbox";
+import GlobalStyle from "components/GlobalStyle/GlobalStyle";
+import ModalProvider from "components/ModalProvider/ModalProvider";
+import AuthProvider from "components/Auth/AuthProvider/AuthProvider";
+import ToastProvider from "components/ToastProvider/ToastProvider";
+import Loading from "components/Loading/Loading";
+import { THEME } from "utils/constants/theme";
 
 axios.defaults.baseURL = process.env.SERVER_BASE_URL;
 
@@ -38,13 +38,17 @@ export const decorators = [
       <QueryClientProvider client={queryClient}>
         <GlobalStyle />
         <MemoryRouter>
-          <AuthProvider>
-            <ModalProvider>
-              <FlexCenter>
-                <Story />
-              </FlexCenter>
-            </ModalProvider>
-          </AuthProvider>
+          <Suspense fallback={<Loading />}>
+            <ToastProvider>
+              <AuthProvider>
+                <ModalProvider>
+                  <main>
+                    <Story />
+                  </main>
+                </ModalProvider>
+              </AuthProvider>
+            </ToastProvider>
+          </Suspense>
         </MemoryRouter>
       </QueryClientProvider>
     </ThemeProvider>

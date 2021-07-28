@@ -1,12 +1,11 @@
 import styled from "styled-components";
 
-import { Reviewer } from "../../../types/reviewer";
-import { COLOR } from "../../../utils/constants/color";
-import { Flex } from "../../shared/Flexbox/Flexbox";
+import { Flex } from "components/shared/Flexbox/Flexbox";
+import { COLOR } from "utils/constants/color";
 
 const Inner = styled(Flex)`
   flex-direction: column;
-  padding: 1.25rem;
+  padding: 2.5rem;
   box-shadow: 0.4375rem 0.375rem 0.375rem rgb(0 0 0 / 10%);
   border-radius: ${({ theme }) => theme.common.shape.rounded};
 `;
@@ -26,18 +25,17 @@ const Content = styled.p`
 `;
 
 export interface Props {
-  reviewer: Reviewer;
+  title?: React.ReactNode;
+  children?: React.ReactNode;
 }
 
-const ReviewerContentBox = ({ reviewer }: Props) => {
-  const { title, content } = reviewer;
-
+const ContextBox = ({ title, children }: Props) => {
   return (
     <Inner>
       <Title>{title}</Title>
-      <Content>{content}</Content>
+      <Content>{children}</Content>
     </Inner>
   );
 };
 
-export default ReviewerContentBox;
+export default ContextBox;

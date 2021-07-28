@@ -1,15 +1,17 @@
 import { Link } from "react-router-dom";
 
 import styled from "styled-components";
+import { Reviewer } from "types/reviewer";
 
-import SmBlackLogo from "../../../assets/sm-white-github-logo.png";
-import useModalContext from "../../../hooks/useModalContext";
-import { Reviewer } from "../../../types/reviewer";
-import ReviewRequest from "../../Review/ReviewRequest/ReviewRequest";
-import Avatar from "../../shared/Avatar/Avatar";
-import Button from "../../shared/Button/Button";
-import Chip from "../../shared/Chip/Chip";
-import { Flex, FlexAlignCenter, FlexCenter } from "../../shared/Flexbox/Flexbox";
+import SmBlackLogo from "assets/sm-white-github-logo.png";
+import ReviewRequest from "components/Review/ReviewRequest/ReviewRequest";
+import Avatar from "components/shared/Avatar/Avatar";
+import Button from "components/shared/Button/Button";
+import Chip from "components/shared/Chip/Chip";
+import { Flex, FlexAlignCenter, FlexCenter } from "components/shared/Flexbox/Flexbox";
+import useAuthContext from "hooks/useAuthContext";
+import useModalContext from "hooks/useModalContext";
+import { ALT } from "utils/constants/message";
 
 const Inner = styled(Flex)`
   flex-direction: column;
@@ -51,21 +53,22 @@ const ReviewerFloatingBox = ({ reviewer }: Props) => {
 
   const { id, imageUrl, career, sumReviewCount, averageReviewTime } = reviewer;
 
+  const { user } = useAuthContext();
+
   return (
     <Inner>
       <ProfileWrapper>
         <AvatarWrapper>
           <Avatar
-            alt="리뷰어 프로필 이미지"
+            alt={ALT.REVIEWER_PROFILE_AVATAR}
             height="6.25rem"
             imageUrl={imageUrl}
             width="6.25rem"
-            shape="rounded"
             css={{ marginBottom: "0.3125rem" }}
           />
           <Link to={"/"}>
             <FlexAlignCenter>
-              <LoginButtonImage src={SmBlackLogo} alt="깃허브 로그인 버튼 이미지" />
+              <LoginButtonImage src={SmBlackLogo} alt={ALT.GITHUB_LOGIN_BUTTON} />
               <p>seojihwan</p>
             </FlexAlignCenter>
           </Link>
@@ -82,18 +85,20 @@ const ReviewerFloatingBox = ({ reviewer }: Props) => {
           </Chip>
         </ChipWrapper>
       </ProfileWrapper>
-      <FlexCenter>
-        <Button
-          themeColor="secondary"
-          hover={false}
-          css={{ fontWeight: 900 }}
-          onClick={() => {
-            open(<ReviewRequest reviewerId={id} />);
-          }}
-        >
-          리뷰 요청하기
-        </Button>
-      </FlexCenter>
+      {user !== null && user.id !== id && (
+        <FlexCenter>
+          <Button
+            themeColor="secondary"
+            hover={false}
+            css={{ fontWeight: 900 }}
+            onClick={() => {
+              open(<ReviewRequest reviewerId={id} />);
+            }}
+          >
+            리뷰 요청하기
+          </Button>
+        </FlexCenter>
+      )}
     </Inner>
   );
 };

@@ -1,19 +1,21 @@
 import { useMutation } from "react-query";
 
-import { requestReview } from "../../../apis/review";
-import useAuthContext from "../../../hooks/useAuthContext";
-import { ReviewRequestFormData } from "../../../types/review";
-import { COLOR } from "../../../utils/constants/color";
-import { PLACE_HOLDER } from "../../../utils/constants/message";
-import { LAYOUT } from "../../../utils/constants/size";
-import { STANDARD } from "../../../utils/constants/standard";
-import reviewRequestValidators from "../../../utils/validators/reviewRequestValidators";
-import FormProvider from "../../FormProvider/FormProvider";
-import InputField from "../../FormProvider/InputField";
-import TextareaField from "../../FormProvider/TextareaField";
-import Loading from "../../Loading/Loading";
-import Button from "../../shared/Button/Button";
-import { Flex } from "../../shared/Flexbox/Flexbox";
+import { ReviewRequestFormData } from "types/review";
+
+import { requestReview } from "apis/review";
+import FormProvider from "components/FormProvider/FormProvider";
+import InputField from "components/FormProvider/InputField";
+import SubmitButton from "components/FormProvider/SubmitButton";
+import TextareaField from "components/FormProvider/TextareaField";
+import Loading from "components/Loading/Loading";
+import { Flex } from "components/shared/Flexbox/Flexbox";
+import useAuthContext from "hooks/useAuthContext";
+import useRevalidate from "hooks/useRevalidate";
+import { COLOR } from "utils/constants/color";
+import { PLACE_HOLDER } from "utils/constants/message";
+import { LAYOUT } from "utils/constants/size";
+import { STANDARD } from "utils/constants/standard";
+import reviewRequestValidators from "utils/validators/reviewRequestValidators";
 
 interface Props {
   reviewerId: number;
@@ -22,10 +24,12 @@ interface Props {
 const ReviewRequest = ({ reviewerId }: Props) => {
   const { user } = useAuthContext();
 
+  const { revalidate } = useRevalidate();
   const mutation = useMutation(
-    (reviewRequestFormData: ReviewRequestFormData) => {
-      return requestReview(reviewRequestFormData);
-    },
+    (reviewRequestFormData: ReviewRequestFormData) =>
+      revalidate(() => {
+        return requestReview(reviewRequestFormData);
+      }),
     {
       onSuccess: () => {
         alert("성공");
@@ -81,9 +85,9 @@ const ReviewRequest = ({ reviewerId }: Props) => {
           css={{ minHeight: "12.5rem" }}
         />
         <Flex css={{ margin: "1.25rem 0 2.5rem" }}>
-          <Button type="submit" themeColor="primary" shape="rounded" css={{ marginLeft: "auto" }}>
+          <SubmitButton themeColor="primary" shape="rounded" css={{ marginLeft: "auto" }}>
             요청
-          </Button>
+          </SubmitButton>
         </Flex>
       </FormProvider>
     </div>

@@ -1,9 +1,8 @@
 import { DefaultTheme } from "styled-components";
+import { Common } from "types/styled/common";
+import { Components } from "types/styled/components";
 
-import { Common } from "../../types/styled/common";
-import { Components } from "../../types/styled/components";
-
-import { COLOR } from "./color";
+import { COLOR } from "utils/constants/color";
 
 const components: Components = {
   button: {
@@ -45,6 +44,8 @@ const common: Common = {
     secondary: "inherit",
     dark: COLOR.BLACK,
     light: COLOR.WHITE,
+    success: COLOR.GREEN_500,
+    error: COLOR.RED_500,
   },
   shape: {
     rounded: "0.25rem",
@@ -52,6 +53,7 @@ const common: Common = {
     circle: "100%",
   },
   zIndex: {
+    toast: 111,
     modal: 99,
     menuItem: 88,
   },

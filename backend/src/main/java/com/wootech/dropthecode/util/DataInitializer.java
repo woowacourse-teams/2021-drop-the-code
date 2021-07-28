@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-@Profile({"prod-init"})
+@Profile({"prod-init", "local-init"})
 @Component
 public class DataInitializer implements ApplicationRunner {
 

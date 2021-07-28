@@ -6,7 +6,7 @@ export interface Shape {
   circle: string;
 }
 
-export type ZIndex = "toast" | "modal" | "menuItem";
+export type ZIndex = "toast" | "modal" | "header" | "menuItem";
 
 export interface Common {
   color: { [key in ThemeColor]: string };

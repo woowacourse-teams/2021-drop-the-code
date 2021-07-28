@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
@@ -211,6 +212,8 @@ class AuthenticationInterceptorTest {
             doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
             ReviewCreateRequest reviewCreateRequest =
                     new ReviewCreateRequest(1L, 2L, "review title", "review content", "pr link");
+
+            given(reviewService.create(any())).willReturn(1L);
 
             // when
             WebTestClient.ResponseSpec response = webTestClient.post()

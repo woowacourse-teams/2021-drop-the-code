@@ -1,7 +1,6 @@
 package com.wootech.dropthecode.controller;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +44,8 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ReviewController.class)
 public class ReviewControllerTest extends RestApiDocumentTest {
@@ -66,8 +66,9 @@ public class ReviewControllerTest extends RestApiDocumentTest {
     @DisplayName("새로운 리뷰 등록")
     void newReview() throws Exception {
         // given
-        String body = objectMapper.writeValueAsString(
-                new ReviewCreateRequest(1L, 2L, "title1", "content1", "https://github.com/KJunseo"));
+        ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest(1L, 2L, "title1", "content1", "https://github.com/KJunseo");
+        String body = objectMapper.writeValueAsString(reviewCreateRequest);
+        given(reviewService.create(any())).willReturn(1L);
 
         // when
         ResultActions result = this.restDocsMockMvc.perform(

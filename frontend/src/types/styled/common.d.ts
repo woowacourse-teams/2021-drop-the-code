@@ -1,4 +1,4 @@
-export type ThemeColor = "primary" | "secondary" | "dark" | "light";
+export type ThemeColor = "primary" | "secondary" | "dark" | "light" | "success" | "error";
 
 export interface Shape {
   rounded: string;
@@ -6,7 +6,7 @@ export interface Shape {
   circle: string;
 }
 
-export type ZIndex = "menuItem" | "header" | "modal";
+export type ZIndex = "toast" | "modal" | "menuItem";
 
 export interface Common {
   color: { [key in ThemeColor]: string };

@@ -40,6 +40,12 @@ public class TeacherService {
         this.teacherProfileRepository = teacherProfileRepository;
     }
 
+    @Transactional(readOnly = true)
+    public TeacherProfile findById(Long id) {
+        return teacherProfileRepository.findById(id)
+                                       .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 리뷰어입니다."));
+    }
+
     @Transactional
     public TeacherProfile save(TeacherProfile teacherProfile) {
         return teacherProfileRepository.save(teacherProfile);
@@ -84,8 +90,10 @@ public class TeacherService {
 
     @Transactional(readOnly = true)
     public TeacherPaginationResponse findAll(TeacherFilterRequest teacherFilterRequest, Pageable pageable) {
-        List<Language> languages = validateLanguageNamesExists(Collections.singletonList(teacherFilterRequest.getTechSpec()), languageService.findAllToMap());
-        List<Skill> skills = validateSkillNamesExists(Collections.singletonList(teacherFilterRequest.getTechSpec()), skillService.findAllToMap());
+        List<Language> languages = validateLanguageNamesExists(Collections.singletonList(teacherFilterRequest.getTechSpec()), languageService
+                .findAllToMap());
+        List<Skill> skills = validateSkillNamesExists(Collections.singletonList(teacherFilterRequest.getTechSpec()), skillService
+                .findAllToMap());
 
         Page<TeacherProfile> teacherProfilePage = teacherProfileRepository.findAll(
                 languages,
@@ -107,6 +115,12 @@ public class TeacherService {
 
     public TeacherProfile findTeacherProfileById(Long id) {
         return teacherProfileRepository.findById(id).orElseThrow(() -> new TeacherException("존재하지 않는 리뷰어의 ID 입니다."));
+    }
+
+    public void updateAverageReviewTime(Long id, Long reviewTime) {
+        TeacherProfile teacher = findById(id);
+        teacher.updateReviewCountAndTime(reviewTime);
+        save(teacher);
     }
 }
 

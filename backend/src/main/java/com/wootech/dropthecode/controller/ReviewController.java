@@ -3,7 +3,9 @@ package com.wootech.dropthecode.controller;
 import java.time.LocalDateTime;
 import javax.validation.Valid;
 
+import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Progress;
+import com.wootech.dropthecode.domain.oauth.Login;
 import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
 import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
 import com.wootech.dropthecode.dto.response.ProfileResponse;
@@ -12,7 +14,6 @@ import com.wootech.dropthecode.dto.response.ReviewsResponse;
 import com.wootech.dropthecode.service.ReviewService;
 
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ public class ReviewController {
     public ReviewController(ReviewService reviewService) {
         this.reviewService = reviewService;
     }
+
 
     /**
      * @title 리뷰 생성
@@ -66,18 +68,28 @@ public class ReviewController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<ReviewResponse> showReviewDetail(@PathVariable Long id) {
-        ReviewResponse reviewResponse = reviewService.findById(id);
+        ReviewResponse reviewResponse = reviewService.findReviewSummaryById(id);
         return ResponseEntity.status(HttpStatus.OK)
                              .body(reviewResponse);
     }
 
     /**
      * @param id 리뷰 id
-     * @title 리뷰 상태 업데이트
+     * @title 리뷰 상태 업데이트(ON_GOING -> TEACHER_COMPLETE)
      */
-    @PatchMapping("/{id}")
-    public ResponseEntity<Void> changeProgress(@PathVariable Long id, @RequestHeader HttpHeaders headers) {
+    @PatchMapping("/{id}/complete")
+    public ResponseEntity<Void> updateToCompleteReview(@Login LoginMember loginMember, @PathVariable Long id) {
+        reviewService.updateToCompleteReview(loginMember, id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    /**
+     * @param id 리뷰 id
+     * @title 리뷰 상태 업데이트(TEACHER_COMPLETE -> FINISHED)
+     */
+    @PatchMapping("/{id}/finish")
+    public ResponseEntity<Void> updateToFinishReview(@Login LoginMember loginMember, @PathVariable Long id) {
+        reviewService.updateToFinishReview(loginMember, id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }

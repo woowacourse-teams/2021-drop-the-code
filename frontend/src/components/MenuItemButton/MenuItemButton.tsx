@@ -6,7 +6,7 @@ import Button, { Props as ButtonProps } from "components/shared/Button/Button";
 import { COLOR } from "utils/constants/color";
 
 const Inner = styled.div`
-  display: flex;
+  display: inline-flex;
   position: relative;
   z-index: ${({ theme }) => theme.common.zIndex.menuItem};
 `;

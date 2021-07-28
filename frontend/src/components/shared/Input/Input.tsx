@@ -26,9 +26,8 @@ const Inner = styled(Flex)<InnerProps>`
     padding: 0.625rem 1.25rem;
     border: 1px solid;
     border-radius: 4px;
-
-    border-color: ${({ isEmpty, isError }) => css`
-      ${isEmpty ? COLOR.BLACK : isError ? COLOR.RED_500 : COLOR.GREEN_500}
+    border-color: ${({ isEmpty, isError, theme }) => css`
+      ${isEmpty ? COLOR.BLACK : isError ? theme.common.color.error : theme.common.color.success}
     `};
   }
 `;

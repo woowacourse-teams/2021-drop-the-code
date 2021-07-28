@@ -121,7 +121,7 @@ class ReviewServiceTest {
         given(reviewRepository.findByReviewId(reviewId)).willReturn(Optional.of(reviewSummary));
 
         // when
-        ReviewResponse result = reviewService.findById(reviewId);
+        ReviewResponse result = reviewService.findReviewSummaryById(reviewId);
 
         // then
         assertThat(result).usingRecursiveComparison()
@@ -137,7 +137,7 @@ class ReviewServiceTest {
 
         // when
         // then
-        assertThatThrownBy(() -> reviewService.findById(reviewId))
+        assertThatThrownBy(() -> reviewService.findReviewSummaryById(reviewId))
                 .isInstanceOf(NotFoundException.class);
     }
 }

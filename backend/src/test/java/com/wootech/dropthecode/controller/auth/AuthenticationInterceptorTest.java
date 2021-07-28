@@ -127,7 +127,7 @@ class AuthenticationInterceptorTest {
         @DisplayName("GET /reviews/{id}")
         void reviewDetail() {
             // given
-            given(reviewService.findById(1L)).willReturn(new ReviewResponse());
+            given(reviewService.findReviewSummaryById(1L)).willReturn(new ReviewResponse());
 
             // when
             WebTestClient.ResponseSpec response = webTestClient.get()
@@ -258,15 +258,15 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("PATCH /reviews/{id}")
-        void updateReview() {
+        @DisplayName("PATCH /reviews/{id}/finish")
+        void updateReviewToFinish() {
             // given
             doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
                     .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
 
             // when
             WebTestClient.ResponseSpec response = webTestClient.patch()
-                                                               .uri("/reviews/1")
+                                                               .uri("/reviews/1/finish")
                                                                .header("Authorization", BEARER + INVALID_ACCESS_TOKEN)
                                                                .exchange();
 
@@ -275,14 +275,47 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("PATCH /reviews/{id} with token")
-        void updateReviewWithToken() {
+        @DisplayName("PATCH /reviews/{id}/finish with token")
+        void updateReviewToFinishWithToken() {
             // given
             doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
 
             // when
             WebTestClient.ResponseSpec response = webTestClient.patch()
-                                                               .uri("/reviews/1")
+                                                               .uri("/reviews/1/finish")
+                                                               .header("Authorization", BEARER + VALID_ACCESS_TOKEN)
+                                                               .exchange();
+
+            // then
+            response.expectStatus().isNoContent();
+        }
+
+        @Test
+        @DisplayName("PATCH /reviews/{id}/complete")
+        void updateReviewToComplete() {
+            // given
+            doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+                    .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
+
+            // when
+            WebTestClient.ResponseSpec response = webTestClient.patch()
+                                                               .uri("/reviews/1/complete")
+                                                               .header("Authorization", BEARER + INVALID_ACCESS_TOKEN)
+                                                               .exchange();
+
+            // then
+            response.expectStatus().isUnauthorized();
+        }
+
+        @Test
+        @DisplayName("PATCH /reviews/{id}/complete with token")
+        void updateReviewToCompleteWithToken() {
+            // given
+            doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
+
+            // when
+            WebTestClient.ResponseSpec response = webTestClient.patch()
+                                                               .uri("/reviews/1/complete")
                                                                .header("Authorization", BEARER + VALID_ACCESS_TOKEN)
                                                                .exchange();
 

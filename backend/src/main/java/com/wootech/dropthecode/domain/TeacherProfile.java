@@ -77,6 +77,12 @@ public class TeacherProfile {
         return id;
     }
 
+    public void updateReviewCountAndTime(Long newReviewTime) {
+        double newAverageReviewTime = (newReviewTime + averageReviewTime * sumReviewCount * 24) / 24 / (sumReviewCount + 1);
+        sumReviewCount++;
+        averageReviewTime = Math.round(newAverageReviewTime * 10) / 10.0;
+    }
+
     public String getTitle() {
         return title;
     }

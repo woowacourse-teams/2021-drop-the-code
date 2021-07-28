@@ -29,7 +29,7 @@ public class QReview extends EntityPathBase<Review> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
-    public final NumberPath<Integer> elapsedTime = createNumber("elapsedTime", Integer.class);
+    public final NumberPath<Long> elapsedTime = createNumber("elapsedTime", Long.class);
 
     //inherited
     public final NumberPath<Long> id = _super.id;

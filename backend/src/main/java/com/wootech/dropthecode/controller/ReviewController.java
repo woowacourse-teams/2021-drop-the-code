@@ -3,7 +3,6 @@ package com.wootech.dropthecode.controller;
 import javax.validation.Valid;
 
 import com.wootech.dropthecode.domain.LoginMember;
-import com.wootech.dropthecode.domain.Review;
 import com.wootech.dropthecode.domain.oauth.Login;
 import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
 import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
@@ -30,9 +29,9 @@ public class ReviewController {
      */
     @PostMapping
     public ResponseEntity<Void> create(@RequestBody @Valid ReviewCreateRequest reviewCreateRequest) {
-        Review review = reviewService.create(reviewCreateRequest);
+        Long id = reviewService.create(reviewCreateRequest);
         return ResponseEntity.status(HttpStatus.CREATED)
-                             .header("Location", "/reviews/" + review.getId())
+                             .header("Location", "/reviews/" + id)
                              .build();
     }
 

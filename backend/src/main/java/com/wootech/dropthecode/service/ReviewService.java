@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Member;
-import com.wootech.dropthecode.domain.Progress;
 import com.wootech.dropthecode.domain.Review;
 import com.wootech.dropthecode.dto.ReviewSummary;
 import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
@@ -33,7 +32,7 @@ public class ReviewService {
     }
 
     @Transactional
-    public Review create(ReviewCreateRequest reviewCreateRequest) {
+    public Long create(ReviewCreateRequest reviewCreateRequest) {
         Member teacher = memberService.findById(reviewCreateRequest.getTeacherId());
         Member student = memberService.findById(reviewCreateRequest.getStudentId());
         Review review = new Review
@@ -43,7 +42,8 @@ public class ReviewService {
                         reviewCreateRequest.getContent(),
                         reviewCreateRequest.getPrUrl()
                 );
-        return reviewRepository.save(review);
+        Review savedReview = reviewRepository.save(review);
+        return savedReview.getId();
     }
 
     @Transactional(readOnly = true)

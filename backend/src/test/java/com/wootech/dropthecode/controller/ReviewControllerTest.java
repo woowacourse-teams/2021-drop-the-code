@@ -62,41 +62,41 @@ public class ReviewControllerTest extends RestApiDocumentTest {
         this.failRestDocsMockMvc = RestDocsMockMvcUtils.failRestDocsMockMvc(provider, reviewController);
     }
 
-//    @Test
-//    @DisplayName("새로운 리뷰 등록")
-//    void newReview() throws Exception {
-//        // given
-//        ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest(1L, 2L, "title1", "content1", "https://github.com/KJunseo");
-//        String body = objectMapper.writeValueAsString(reviewCreateRequest);
-//        given(reviewService.create(any())).willReturn(1L);
-//
-//        // when
-//        ResultActions result = this.restDocsMockMvc.perform(
-//                post("/reviews")
-//                        .with(userToken())
-//                        .content(body)
-//                        .contentType(MediaType.APPLICATION_JSON));
-//
-//        // then
-//        result.andExpect(header().string("Location", "/reviews/1"))
-//              .andExpect(status().isCreated());
-//    }
-//
-//    @DisplayName("새로운 리뷰 등록 - 필드가 null 인 경우 실패")
-//    @Test
-//    void newReviewFailIfFieldIsNullTest() throws Exception {
-//        // given
-//        String body = objectMapper.writeValueAsString(
-//                new ReviewCreateRequest(null, null, " ", "content1", "https://github.com/KJunseo"));
-//
-//        // when
-//        final ResultActions result = this.failRestDocsMockMvc
-//                .perform(post("/reviews").contentType(MediaType.APPLICATION_JSON).content(body));
-//
-//        // then
-//        result.andExpect(status().isBadRequest())
-//              .andDo(print());
-//    }
+    @Test
+    @DisplayName("새로운 리뷰 등록")
+    void newReview() throws Exception {
+        // given
+        ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest(1L, 2L, "title1", "content1", "https://github.com/KJunseo");
+        String body = objectMapper.writeValueAsString(reviewCreateRequest);
+        given(reviewService.create(any())).willReturn(1L);
+
+        // when
+        ResultActions result = this.restDocsMockMvc.perform(
+                post("/reviews")
+                        .with(userToken())
+                        .content(body)
+                        .contentType(MediaType.APPLICATION_JSON));
+
+        // then
+        result.andExpect(header().string("Location", "/reviews/1"))
+              .andExpect(status().isCreated());
+    }
+
+    @DisplayName("새로운 리뷰 등록 - 필드가 null 인 경우 실패")
+    @Test
+    void newReviewFailIfFieldIsNullTest() throws Exception {
+        // given
+        String body = objectMapper.writeValueAsString(
+                new ReviewCreateRequest(null, null, " ", "content1", "https://github.com/KJunseo"));
+
+        // when
+        final ResultActions result = this.failRestDocsMockMvc
+                .perform(post("/reviews").contentType(MediaType.APPLICATION_JSON).content(body));
+
+        // then
+        result.andExpect(status().isBadRequest())
+              .andDo(print());
+    }
 
     //    @DisplayName("새로운 리뷰 등록 - id(student or teacher)가 DB에 저장되어 있지 않은 경우 실패")
     //    @Test

@@ -4,14 +4,15 @@ import styled from "styled-components";
 import { Shape } from "types/styled/common";
 import { ChipThemeColor } from "types/styled/components";
 
-import { FlexCenter } from "components/shared/Flexbox/Flexbox";
-
 interface InnerProps {
   themeColor?: ChipThemeColor;
   shape?: keyof Shape;
 }
 
-const Inner = styled(FlexCenter)<InnerProps>`
+const Inner = styled.div<InnerProps>`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: ${({ theme, shape = "rounded" }) => theme.common.shape[shape]};
   padding: 0.375rem 0.5rem;
   color: ${({ theme, themeColor = "primary" }) => theme.components.chip[themeColor].color};

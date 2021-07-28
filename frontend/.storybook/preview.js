@@ -6,13 +6,11 @@ import axios from "axios";
 import { ThemeProvider } from "styled-components";
 
 import GlobalStyle from "components/GlobalStyle/GlobalStyle";
-import { THEME } from "utils/constants/theme";
-
 import ModalProvider from "components/ModalProvider/ModalProvider";
 import AuthProvider from "components/Auth/AuthProvider/AuthProvider";
-
 import ToastProvider from "components/ToastProvider/ToastProvider";
 import Loading from "components/Loading/Loading";
+import { THEME } from "utils/constants/theme";
 
 axios.defaults.baseURL = process.env.SERVER_BASE_URL;
 

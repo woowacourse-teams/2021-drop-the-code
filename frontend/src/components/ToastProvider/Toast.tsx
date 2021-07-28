@@ -28,7 +28,7 @@ const exit: CSSObject = {
 };
 
 const Inner = styled.li<InnerProps>`
-  display: flex;
+  display: inline-flex;
   margin: 0 auto;
   background-color: ${({ type, theme }) =>
     type === "success" ? theme.common.color.success : theme.common.color.error};

@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 import styled, { css } from "styled-components";
 
-import notFoundImage from "assets/not-found.png";
+import notFoundGif from "assets/not-found.gif";
 import { FlexCenter } from "components/shared/Flexbox/Flexbox";
 import { PATH } from "utils/constants/path";
 
@@ -34,7 +34,7 @@ const Image = styled.img`
 
 const NotFound = () => (
   <FlexCenter css={{ position: "absolute", flexDirection: "column", width: "100vw", height: "100vh" }}>
-    <Image src={notFoundImage} alt="404 not found 이미지" />
+    <Image src={notFoundGif} alt="404 not found 이미지" />
     <HomeLink to={PATH.MAIN}>GO BACK HOME</HomeLink>
   </FlexCenter>
 );

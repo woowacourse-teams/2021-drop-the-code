@@ -95,7 +95,7 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
                       css={{ marginRight: "1.25rem" }}
                     />
                     <p css={{ marginRight: "1.25rem" }}>{data.studentProfile.name}</p>
-                    {/* <p>{data.createAt.join(".")}</p> */}
+                    {/* <p>{data.createdAt.join(".")}</p> */}
                     <p css={{ width: "5.625rem" }}>2021.06.07</p>
                   </Profile>
                 </Flex>

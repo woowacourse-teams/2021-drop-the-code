@@ -14,7 +14,6 @@ import com.wootech.dropthecode.dto.response.ReviewsResponse;
 import com.wootech.dropthecode.service.ReviewService;
 
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,11 +27,6 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-    private final ReviewService reviewService;
-
-    public ReviewController(ReviewService reviewService) {
-        this.reviewService = reviewService;
-    }
 
     /**
      * @title 리뷰 생성

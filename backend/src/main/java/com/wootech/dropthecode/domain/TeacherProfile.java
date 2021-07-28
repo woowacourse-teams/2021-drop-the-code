@@ -61,15 +61,6 @@ public class TeacherProfile {
         this.member = member;
     }
 
-    public TeacherProfile(String title, String content, int career, int sumReviewCount, Double averageReviewTime, Member member) {
-        this.title = title;
-        this.content = content;
-        this.career = career;
-        this.sumReviewCount = sumReviewCount;
-        this.averageReviewTime = averageReviewTime;
-        this.member = member;
-    }
-
     public TeacherProfile(String title, String content, Integer career, Integer sumReviewCount, Double averageReviewTime, Member member) {
         this(title, content, career, member);
         this.sumReviewCount = sumReviewCount;

@@ -32,9 +32,7 @@ public class ReviewService {
         review.completeProgress(loginMember.getId());
         reviewRepository.save(review);
 
-        TeacherProfile teacher = teacherService.findById(loginMember.getId());
-        teacher.updateReviewCountAndTime(review.calculateElapsedTime());
-        teacherService.save(teacher);
+        teacherService.updateAverageReviewTime(loginMember.getId(), review.calculateElapsedTime());
     }
 
     @Transactional

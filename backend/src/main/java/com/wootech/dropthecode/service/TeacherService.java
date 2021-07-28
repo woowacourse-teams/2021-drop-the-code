@@ -112,5 +112,11 @@ public class TeacherService {
 
         return new TeacherPaginationResponse(teacherProfileResponses, teacherProfilePage.getTotalPages());
     }
+
+    public void updateAverageReviewTime(Long id, Long reviewTime) {
+        TeacherProfile teacher = findById(id);
+        teacher.updateReviewCountAndTime(reviewTime);
+        save(teacher);
+    }
 }
 

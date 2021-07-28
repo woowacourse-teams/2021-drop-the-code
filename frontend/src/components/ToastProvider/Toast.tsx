@@ -67,7 +67,7 @@ const Close = styled(CloseSvg)`
 
 const Toast = ({ id, message, type = "success", removeToast }: Props) => {
   return (
-    <Transition initial={initial} exit={exit} duration={[500, 111111, 500]}>
+    <Transition initial={initial} exit={exit} duration={[500, 2000, 500]}>
       {({ css, onClose }) => {
         return (
           <Inner type={type} css={css}>

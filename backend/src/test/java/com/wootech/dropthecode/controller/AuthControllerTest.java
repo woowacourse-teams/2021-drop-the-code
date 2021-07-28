@@ -5,6 +5,7 @@ import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.dto.response.AccessTokenResponse;
 import com.wootech.dropthecode.dto.response.LoginResponse;
 import com.wootech.dropthecode.exception.AuthorizationException;
+import com.wootech.dropthecode.exception.OauthProviderNameException;
 import com.wootech.dropthecode.service.OauthService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
@@ -67,6 +69,26 @@ class AuthControllerTest extends RestApiDocumentTest {
               .andExpect(jsonPath("$.tokenType").value(BEARER))
               .andExpect(jsonPath("$.accessToken").value(ACCESS_TOKEN))
               .andExpect(jsonPath("$.refreshToken").value(REFRESH_TOKEN));
+    }
+
+    @Test
+    @DisplayName("유효하지 않은 Oauth ProviderName이 들어온 경우")
+    void invalidProviderName() throws Exception {
+        // given
+        doThrow(new OauthProviderNameException("유효하지 않은 Oauth Provider입니다."))
+                .when(oauthService).login(any());
+
+        //when
+        ResultActions resultAction = this.failRestDocsMockMvc.perform(
+                get("/login/oauth?providerName=" + "invalid" + "&code=" + CODE)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        //then
+        resultAction.andExpect(status().isBadRequest())
+                    .andExpect(result -> assertEquals("유효하지 않은 Oauth Provider입니다.", result.getResolvedException()
+                                                                                          .getMessage()));
     }
 
     @Test

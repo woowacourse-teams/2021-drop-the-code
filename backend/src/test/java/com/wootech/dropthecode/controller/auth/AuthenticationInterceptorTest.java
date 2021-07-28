@@ -10,6 +10,7 @@ import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
 import com.wootech.dropthecode.dto.response.LoginResponse;
 import com.wootech.dropthecode.dto.response.MemberResponse;
+import com.wootech.dropthecode.dto.response.ReviewResponse;
 import com.wootech.dropthecode.exception.AuthorizationException;
 import com.wootech.dropthecode.service.*;
 
@@ -126,6 +127,8 @@ class AuthenticationInterceptorTest {
         @DisplayName("GET /reviews/{id}")
         void reviewDetail() {
             // given
+            given(reviewService.findReviewSummaryById(1L)).willReturn(new ReviewResponse());
+
             // when
             WebTestClient.ResponseSpec response = webTestClient.get()
                                                                .uri("/reviews/1")

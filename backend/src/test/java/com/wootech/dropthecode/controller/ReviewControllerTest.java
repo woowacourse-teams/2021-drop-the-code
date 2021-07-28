@@ -208,13 +208,11 @@ public class ReviewControllerTest extends RestApiDocumentTest {
         data.add(firstReviewResponse);
         data.add(secondReviewResponse);
 
-        doNothing().when(authService).validatesAccessToken(ACCESS_TOKEN);
         given(reviewService.findTeacherReview(anyLong(), any(), any())).willReturn(new ReviewsResponse(data, 2));
 
         // when
         ResultActions result = restDocsMockMvc.perform(
-                get("/reviews/teacher/1")
-                        .with(userToken()));
+                get("/reviews/teacher/1"));
 
         // then
         result.andExpect(status().isOk());
@@ -225,6 +223,14 @@ public class ReviewControllerTest extends RestApiDocumentTest {
     @Test
     @DisplayName("리뷰 상세 페이지")
     void reviewDetail() throws Exception {
+        // given
+        ProfileResponse teacher = new ProfileResponse(1L, "user1", "image1");
+        ProfileResponse student = new ProfileResponse(2L, "user2", "image2");
+        ReviewResponse review = new ReviewResponse(1L, "title1", "content1", Progress.ON_GOING,
+                teacher, student, "prUrl1", LocalDateTime.now());
+
+        given(reviewService.findReviewSummaryById(1L)).willReturn(review);
+
         // when
         ResultActions result = restDocsMockMvc.perform(
                 get("/reviews/{id}", 1));

@@ -54,13 +54,12 @@ public class ReviewResponse {
         this.createdAt = LocalDateTimeToArray.convert(createdAt);
     }
 
-    public static ReviewResponse of(ReviewSummary review) {
+    public static ReviewResponse from(ReviewSummary review) {
         return new ReviewResponse(review.getId(), review.getTitle(), review.getContent(), review.getProgress(),
                 ProfileResponse.of(review.getTeacherId(), review.getTeacherName(), review.getTeacherImageUrl()),
                 ProfileResponse.of(review.getStudentId(), review.getStudentName(), review.getStudentImageUrl()),
                 review.getPrUrl(), review.getCreatedAt());
     }
-
 
     public Long getId() {
         return id;

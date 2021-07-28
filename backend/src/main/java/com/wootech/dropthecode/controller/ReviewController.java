@@ -68,12 +68,7 @@ public class ReviewController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<ReviewResponse> showReviewDetail(@PathVariable Long id) {
-        ProfileResponse firstTeacher = new ProfileResponse(1L, "user1", "image1");
-        ProfileResponse firstStudent = new ProfileResponse(2L, "user2", "image2");
-
-        ReviewResponse reviewResponse = new ReviewResponse(1L, "title1", "content1", Progress.ON_GOING,
-                firstTeacher, firstStudent, "prUrl1", LocalDateTime.now());
-
+        ReviewResponse reviewResponse = reviewService.findReviewSummaryById(id);
         return ResponseEntity.status(HttpStatus.OK)
                              .body(reviewResponse);
     }

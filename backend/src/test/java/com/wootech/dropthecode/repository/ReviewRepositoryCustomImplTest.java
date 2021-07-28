@@ -3,6 +3,7 @@ package com.wootech.dropthecode.repository;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Optional;
 
 import com.wootech.dropthecode.config.JpaConfig;
 import com.wootech.dropthecode.domain.*;
@@ -297,5 +298,21 @@ class ReviewRepositoryCustomImplTest {
             assertThat(results.getContent()).extracting("title")
                                             .contains(airSeed1.getTitle(), airSeed2.getTitle(), airSeed3.getTitle());
         }
+    }
+
+    @Test
+    @DisplayName("리뷰 상세 조회 테스트")
+    void reviewDetail() {
+        // given
+        Long reviewId = 1L;
+
+        // when
+        Optional<ReviewSummary> result = reviewRepository.findByReviewId(reviewId);
+
+        // then
+        assertThat(result).isNotEmpty();
+        assertThat(result.get()).extracting("title").isEqualTo("review title1");
+        assertThat(result.get()).extracting("content").isEqualTo("review content1");
+        assertThat(result.get()).extracting("prUrl").isEqualTo("prUrl1");
     }
 }

@@ -213,8 +213,7 @@ public class ReviewControllerTest extends RestApiDocumentTest {
 
         // when
         ResultActions result = restDocsMockMvc.perform(
-                get("/reviews/teacher/1")
-                        .with(userToken()));
+                get("/reviews/teacher/1"));
 
         // then
         result.andExpect(status().isOk());

@@ -1,14 +1,12 @@
 package com.wootech.dropthecode.controller;
 
-import java.time.LocalDateTime;
 import javax.validation.Valid;
 
 import com.wootech.dropthecode.domain.LoginMember;
-import com.wootech.dropthecode.domain.Progress;
+import com.wootech.dropthecode.domain.Review;
 import com.wootech.dropthecode.domain.oauth.Login;
 import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
 import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
-import com.wootech.dropthecode.dto.response.ProfileResponse;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
 import com.wootech.dropthecode.dto.response.ReviewsResponse;
 import com.wootech.dropthecode.service.ReviewService;
@@ -27,12 +25,12 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-
     /**
      * @title 리뷰 생성
      */
     @PostMapping
     public ResponseEntity<Void> create(@RequestBody @Valid ReviewCreateRequest reviewCreateRequest) {
+        Review review = reviewService.create(reviewCreateRequest);
         return ResponseEntity.status(HttpStatus.CREATED)
                              .header("Location", "/reviews/1")
                              .build();
@@ -92,4 +90,5 @@ public class ReviewController {
         reviewService.updateToFinishReview(loginMember, id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
 }

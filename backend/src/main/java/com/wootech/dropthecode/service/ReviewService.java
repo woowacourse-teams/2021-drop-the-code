@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.wootech.dropthecode.domain.LoginMember;
+import com.wootech.dropthecode.domain.Member;
+import com.wootech.dropthecode.domain.Progress;
 import com.wootech.dropthecode.domain.Review;
 import com.wootech.dropthecode.dto.ReviewSummary;
+import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
 import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
 import com.wootech.dropthecode.dto.response.ReviewsResponse;
@@ -19,14 +22,28 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ReviewService {
-
+    private final MemberService memberService;
     private final TeacherService teacherService;
-
     private final ReviewRepository reviewRepository;
 
-    public ReviewService(TeacherService teacherService, ReviewRepository reviewRepository) {
+    public ReviewService(MemberService memberService, TeacherService teacherService, ReviewRepository reviewRepository) {
+        this.memberService = memberService;
         this.teacherService = teacherService;
         this.reviewRepository = reviewRepository;
+    }
+
+    @Transactional
+    public Review create(ReviewCreateRequest reviewCreateRequest) {
+        Member teacher = memberService.findById(reviewCreateRequest.getTeacherId());
+        Member student = memberService.findById(reviewCreateRequest.getStudentId());
+        Review review = new Review
+                (
+                        teacher, student,
+                        reviewCreateRequest.getTitle(),
+                        reviewCreateRequest.getContent(),
+                        reviewCreateRequest.getPrUrl()
+                );
+        return reviewRepository.save(review);
     }
 
     @Transactional(readOnly = true)

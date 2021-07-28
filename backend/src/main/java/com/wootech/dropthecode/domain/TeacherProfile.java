@@ -26,7 +26,6 @@ public class TeacherProfile {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-
     @Column(nullable = false)
     private String title;
 
@@ -37,6 +36,7 @@ public class TeacherProfile {
     @Column(nullable = false)
     private Integer career;
 
+    @MapsId
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id", unique = true, foreignKey = @ForeignKey(name = "fk_teacherProfile_to_member"))
     private Member member;
@@ -49,7 +49,7 @@ public class TeacherProfile {
 
     private Integer sumReviewCount = 0;
 
-    private Double averageReviewTime = (double) 0;;
+    private Double averageReviewTime = (double) 0;
 
     protected TeacherProfile() {
     }
@@ -101,11 +101,11 @@ public class TeacherProfile {
         return skills;
     }
 
-    public int getSumReviewCount() {
+    public Integer getSumReviewCount() {
         return sumReviewCount;
     }
 
-    public double getAverageReviewTime() {
+    public Double getAverageReviewTime() {
         return averageReviewTime;
     }
 }

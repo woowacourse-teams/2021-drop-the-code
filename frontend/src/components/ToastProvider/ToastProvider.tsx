@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import { nanoid } from "nanoid";
 import styled from "styled-components";
 
 import { ToastContext } from "hooks/useToastContext";
@@ -11,7 +12,7 @@ interface Props {
 }
 
 interface ToastState extends Options {
-  id: number;
+  id: string;
   message?: string;
 }
 
@@ -29,16 +30,13 @@ const Ul = styled.ul`
 
 const ToastProvider = ({ children }: Props) => {
   const [toasts, setToasts] = useState<ToastState[]>([]);
-  const [id, setId] = useState(0);
 
   const createToast = (message: string, options?: Options) => {
-    setToasts((prevToasts) => [...prevToasts, { ...options, message, id }]);
-    setId((prevId) => prevId + 1);
+    setToasts((prevToasts) => [...prevToasts, { ...options, message, id: nanoid() }]);
   };
 
-  const removeToast = (toastId: number) => {
+  const removeToast = (toastId: string) => {
     setToasts((prevToasts) => prevToasts.filter(({ id }) => id !== toastId));
-    setId((prevId) => prevId - 1);
   };
 
   return (

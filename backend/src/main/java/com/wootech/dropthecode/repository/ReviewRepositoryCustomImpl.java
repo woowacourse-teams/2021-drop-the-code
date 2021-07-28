@@ -1,13 +1,12 @@
 package com.wootech.dropthecode.repository;
 
 import java.util.List;
-import java.util.function.Function;
+import java.util.Optional;
 import javax.persistence.EntityManager;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.wootech.dropthecode.domain.Progress;
 import com.wootech.dropthecode.domain.QMember;
 import com.wootech.dropthecode.domain.Review;
@@ -31,16 +30,22 @@ public class ReviewRepositoryCustomImpl extends Querydsl4RepositorySupport imple
 
     @Override
     public Page<ReviewSummary> searchPageByStudentId(Long id, ReviewSearchCondition condition, Pageable pageable) {
-        return applyPagination(pageable, getPageReviewContentQuery(studentReviewCondition(id, condition)));
+        return applyPagination(pageable, contentQuery -> reviewSummaryContentQuery(studentReviewCondition(id, condition)));
     }
 
     @Override
     public Page<ReviewSummary> searchPageByTeacherId(Long id, ReviewSearchCondition condition, Pageable pageable) {
-        return applyPagination(pageable, getPageReviewContentQuery(teacherReviewCondition(id, condition)));
+        return applyPagination(pageable, contentQuery -> reviewSummaryContentQuery(teacherReviewCondition(id, condition)));
     }
 
-    private Function<JPAQueryFactory, JPAQuery<ReviewSummary>> getPageReviewContentQuery(BooleanExpression condition) {
-        return contentQuery -> contentQuery
+    @Override
+    public Optional<ReviewSummary> findByReviewId(Long id) {
+        return Optional.ofNullable(reviewSummaryContentQuery(reviewIdEq(id))
+                .fetchOne());
+    }
+
+    private JPAQuery<ReviewSummary> reviewSummaryContentQuery(BooleanExpression condition) {
+        return getQueryFactory()
                 .select(
                         Projections.constructor(ReviewSummary.class,
                                 review.id, review.title, review.content, review.progress,
@@ -71,6 +76,10 @@ public class ReviewRepositoryCustomImpl extends Querydsl4RepositorySupport imple
 
     private BooleanExpression teacherIdEq(Long id) {
         return review.teacher.id.eq(id);
+    }
+
+    private BooleanExpression reviewIdEq(Long id) {
+        return review.id.eq(id);
     }
 
     private BooleanExpression memberNameEq(String name, QMember qMember) {

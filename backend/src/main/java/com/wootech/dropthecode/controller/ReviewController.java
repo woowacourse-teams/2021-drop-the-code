@@ -32,7 +32,7 @@ public class ReviewController {
     public ResponseEntity<Void> create(@RequestBody @Valid ReviewCreateRequest reviewCreateRequest) {
         Review review = reviewService.create(reviewCreateRequest);
         return ResponseEntity.status(HttpStatus.CREATED)
-                             .header("Location", "/reviews/1")
+                             .header("Location", "/reviews/" + review.getId())
                              .build();
     }
 

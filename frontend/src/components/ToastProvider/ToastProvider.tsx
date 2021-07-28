@@ -20,6 +20,7 @@ const Ul = styled.ul`
   position: fixed;
   bottom: 0;
   flex-direction: column;
+  z-index: ${({ theme }) => theme.common.zIndex.toast};
 
   > li {
     margin-bottom: 0.3125rem;

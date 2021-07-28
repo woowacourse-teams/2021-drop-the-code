@@ -17,7 +17,7 @@ const ToastSuccessButton = () => {
   return (
     <Button
       onClick={() => {
-        toast("성공성공성공공성공성공성공성공성공성공성공");
+        toast("리뷰요청을 성공했습니다.");
       }}
     >
       success toast
@@ -31,7 +31,7 @@ const ToastErrorButton = () => {
   return (
     <Button
       onClick={() => {
-        toast("실패실패실패실패실패실패실패실패실패실패", { type: "error" });
+        toast("요청에 실패했습니다. 요청에 실패했습니다!", { type: "error" });
       }}
     >
       error toast

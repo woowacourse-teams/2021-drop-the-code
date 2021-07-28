@@ -30,7 +30,8 @@ const exit: CSSObject = {
 const Inner = styled.li<InnerProps>`
   display: flex;
   margin: 0 auto;
-  background-color: ${({ type, theme }) => (type === "success" ? "green" : "red")};
+  background-color: ${({ type, theme }) =>
+    type === "success" ? theme.common.color.success : theme.common.color.error};
   color: ${({ theme }) => theme.common.color.light};
   opacity: 0;
 
@@ -46,12 +47,12 @@ const Left = styled(Flex)`
 
 const Message = styled.p`
   padding: 1.25rem 0;
-  min-width: 9.375rem;
   max-width: 12.5rem;
+  font-weight: 600;
 `;
 
 const Right = styled(Flex)`
-  width: 3.125rem;
+  width: 1.875rem;
   padding: 0.625rem 0.625rem 0 0;
 `;
 
@@ -60,7 +61,7 @@ const Close = styled(CloseSvg)`
   height: 0.75rem;
   margin-left: auto;
   stroke: ${({ theme }) => theme.common.color.light};
-  stroke-width: 1px;
+  stroke-width: 2px;
   cursor: pointer;
 `;
 

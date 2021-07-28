@@ -44,6 +44,8 @@ const common: Common = {
     secondary: "inherit",
     dark: COLOR.BLACK,
     light: COLOR.WHITE,
+    success: COLOR.GREEN_500,
+    error: COLOR.RED_500,
   },
   shape: {
     rounded: "0.25rem",
@@ -51,9 +53,9 @@ const common: Common = {
     circle: "100%",
   },
   zIndex: {
-    menuItem: 1,
-    header: 10,
-    modal: 20,
+    toast: 111,
+    modal: 99,
+    menuItem: 88,
   },
 };
 

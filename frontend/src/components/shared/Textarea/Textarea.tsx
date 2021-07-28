@@ -30,8 +30,8 @@ const Inner = styled(Flex)<InnerProps>`
     line-height: 2rem;
     white-space: break-spaces;
 
-    border-color: ${({ isEmpty, isError }) => css`
-      ${isEmpty ? COLOR.BLACK : isError ? COLOR.RED_500 : COLOR.GREEN_500}
+    border-color: ${({ isEmpty, isError, theme }) => css`
+      ${isEmpty ? COLOR.BLACK : isError ? theme.common.color.error : theme.common.color.success}
     `};
   }
 `;

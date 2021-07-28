@@ -39,11 +39,15 @@ public class Review extends BaseEntity {
     @Column(nullable = false)
     private Progress progress;
 
-    public Review() {
+    protected Review() {
     }
 
     public Review(Member teacher, Member student, String title, String content, String prUrl) {
         this(teacher, student, title, content, prUrl, 0L, Progress.ON_GOING);
+    }
+
+    public Review(Member teacher, Member student, String title, String content, String prUrl, Long elapsedTime) {
+        this(teacher, student, title, content, prUrl, elapsedTime, Progress.ON_GOING);
     }
 
     public Review(Member teacher, Member student, String title, String content, String prUrl, Long elapsedTime, Progress progress) {

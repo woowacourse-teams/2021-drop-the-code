@@ -31,10 +31,39 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 public class RestDocsMockMvcUtils {
 
     private static final String PUBLIC_AUTHORIZATION = "Resource is public.";
+
     public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
+    private static final Snippet[] SUCCESS_SNIPPETS = new Snippet[]{
+            HttpDocumentation.httpRequest(),
+            HttpDocumentation.httpResponse(),
+            AutoDocumentation.requestFields(),
+            AutoDocumentation.responseFields(),
+            AutoDocumentation.pathParameters(),
+            AutoDocumentation.requestParameters(),
+            AutoDocumentation.description(),
+            AutoDocumentation.methodAndPath(),
+            AutoDocumentation.modelAttribute(Arrays.asList(
+                    MockMvcConfig.pageableHandlerMethodArgumentResolver(),
+                    MockMvcConfig.modelAttributeMethodProcessor())),
+            AutoDocumentation.sectionBuilder().snippetNames(
+                    AUTO_METHOD_PATH,
+                    AUTO_DESCRIPTION,
+                    AUTO_AUTHORIZATION,
+                    AUTO_PATH_PARAMETERS,
+                    AUTO_MODELATTRIBUTE,
+                    AUTO_REQUEST_PARAMETERS,
+                    AUTO_REQUEST_FIELDS,
+                    AUTO_RESPONSE_FIELDS,
+                    HTTP_REQUEST,
+                    HTTP_RESPONSE
+            ).skipEmpty(true).build(),
+            AutoDocumentation.authorization(PUBLIC_AUTHORIZATION)};
+
+    private static final Snippet[] FAIL_SNIPPETS = new Snippet[]{HttpDocumentation.httpResponse()};
+
     @TestConfiguration
-    private static class MockMvcConfig {
+    public static class MockMvcConfig {
 
         @Bean
         public static GlobalExceptionHandler controllerAdvice() {
@@ -55,75 +84,31 @@ public class RestDocsMockMvcUtils {
         public static ContentModifyingOperationPreprocessor prettyPrintPreProcessor() {
             return new ContentModifyingOperationPreprocessor(prettyPrintingUtils());
         }
+
+        @Bean
+        public static ModelAttributeMethodProcessor modelAttributeMethodProcessor() {
+            return new ModelAttributeMethodProcessor(false);
+        }
+
+        @Bean
+        public static PageableHandlerMethodArgumentResolver pageableHandlerMethodArgumentResolver() {
+            return new PageableHandlerMethodArgumentResolver();
+        }
     }
 
     public static MockMvc successRestDocsMockMvc(RestDocumentationContextProvider provider, Object... controllers) {
-        return MockMvcBuilders.standaloneSetup(controllers)
-                              .addFilters(MockMvcConfig.utf8Filter())
-                              .setControllerAdvice(MockMvcConfig.controllerAdvice())
-                              .alwaysDo(prepareJackson(OBJECT_MAPPER))
-                              .alwaysDo(restDocumentation())
-                              .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
-                              /*
-                                   RestDocumentationContextProvider 은 RestDocumentationContext 에 접근하기 위한 인터페이스.
-                                   RestDocumentationContext 은 문서화할 API 문서를 캡슐화한 클래스.
-
-                                   documentationConfiguration 은RestDocumentationContextProvider 을 인수로 받는다.
-                                   RestDocumentationExtension 클래스가 @ExtendWith 으로 선언되어 있을 경우 @BeforeEach 로 각 테스트가 시작 될 때마다,
-                                   ManualRestDocumentation 의 context 를 초기화한다.
-
-                                   만약 @BeforeEach 를 사용하지 않거나 해서 어쨌든 ManualRestDocumentation#beforeTest() 를 실행하지 않을 경우
-                                   ManualRestDocumentation 의 context 가 null 에서 초기화 되지 않아 NPE 발생
-
-                                   현재 이 메소드에서 new ManualRestDocumentation() 을 하지 않은 이유가 위의 이유 때문이다.
-                                   ManualRestDocumentation#beforeTest() 메소드를 실행하려면, 실행 테스트의 클래스와 이름을 알아야 하는데,
-                                   이것을 여기서는 알지 못한다.
-
-                                   또한 매 테스트마다 provider 가 초기화되어야 하기 때문에 상태가 계속 변한다.
-                                   그래서 이 클래스를 빈으로 등록하지 않았다.
-                               */
-                              .apply(documentationConfiguration(provider)
-                                      .uris()
-                                      .withScheme("http")
-                                      .withHost("localhost")
-                                      .withPort(8080)
-                                      .and()
-                                      .snippets()
-                                      .withDefaults(
-                                              HttpDocumentation.httpRequest(),
-                                              HttpDocumentation.httpResponse(),
-                                              AutoDocumentation.requestFields(),
-                                              AutoDocumentation.responseFields(),
-                                              AutoDocumentation.pathParameters(),
-                                              AutoDocumentation.requestParameters(),
-                                              AutoDocumentation.description(),
-                                              AutoDocumentation.methodAndPath(),
-                                              AutoDocumentation.modelAttribute(Arrays.asList(new PageableHandlerMethodArgumentResolver(), new ModelAttributeMethodProcessor(false))),
-                                              AutoDocumentation.sectionBuilder()
-                                                               .snippetNames(
-                                                                       AUTO_METHOD_PATH,
-                                                                       AUTO_DESCRIPTION,
-                                                                       AUTO_AUTHORIZATION,
-                                                                       AUTO_PATH_PARAMETERS,
-                                                                       AUTO_MODELATTRIBUTE,
-                                                                       AUTO_REQUEST_PARAMETERS,
-                                                                       AUTO_REQUEST_FIELDS,
-                                                                       AUTO_RESPONSE_FIELDS,
-                                                                       HTTP_REQUEST,
-                                                                       HTTP_RESPONSE
-                                                               )
-                                                               .skipEmpty(true)
-                                                               .build(),
-                                              AutoDocumentation.authorization(PUBLIC_AUTHORIZATION)
-                                      ))
-                              .build();
+        return restDocsMockMvc(provider, SUCCESS_SNIPPETS, controllers);
     }
 
     public static MockMvc failRestDocsMockMvc(RestDocumentationContextProvider provider, Object... controllers) {
+        return restDocsMockMvc(provider, FAIL_SNIPPETS, controllers);
+    }
+
+    public static MockMvc restDocsMockMvc(RestDocumentationContextProvider provider, Snippet[] snippets, Object... controllers) {
         return MockMvcBuilders.standaloneSetup(controllers)
                               .addFilters(MockMvcConfig.utf8Filter())
                               .setControllerAdvice(MockMvcConfig.controllerAdvice())
-                              .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
+                              .setCustomArgumentResolvers(MockMvcConfig.pageableHandlerMethodArgumentResolver())
                               .alwaysDo(prepareJackson(OBJECT_MAPPER))
                               .alwaysDo(restDocumentation())
                               .apply(documentationConfiguration(provider)
@@ -133,9 +118,7 @@ public class RestDocsMockMvcUtils {
                                       .withPort(8080)
                                       .and()
                                       .snippets()
-                                      .withDefaults(
-                                              HttpDocumentation.httpResponse()
-                                      ))
+                                      .withDefaults(snippets))
                               .build();
     }
 

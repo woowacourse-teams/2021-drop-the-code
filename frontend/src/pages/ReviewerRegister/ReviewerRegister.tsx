@@ -2,6 +2,8 @@ import { Suspense, useState } from "react";
 import { useMutation } from "react-query";
 import { useHistory } from "react-router-dom";
 
+import { ReviewerRegisterFormData } from "types/reviewer";
+
 import { registerReviewer } from "apis/reviewer";
 import FormProvider from "components/FormProvider/FormProvider";
 import InputField from "components/FormProvider/InputField";
@@ -10,6 +12,7 @@ import TextareaField from "components/FormProvider/TextareaField";
 import SpecPicker from "components/Language/SpecPicker";
 import Loading from "components/Loading/Loading";
 import { Flex } from "components/shared/Flexbox/Flexbox";
+import useRevalidate from "hooks/useRevalidate";
 import { PLACE_HOLDER } from "utils/constants/message";
 import { PATH } from "utils/constants/path";
 import { LAYOUT } from "utils/constants/size";
@@ -25,24 +28,30 @@ const ReviewerRegister = () => {
   const [filterLanguage, setFilterLanguage] = useState<string | null>(null);
   const [specs, setSpecs] = useState<Specs>({});
 
+  const { revalidate } = useRevalidate();
+
   // const { user } = useAuthContext();
   const history = useHistory();
 
-  const mutation = useMutation(registerReviewer, {
-    onSuccess: () => {
-      history.push(PATH.MAIN);
-    },
-    onError: () => {
-      history.push(PATH.MAIN);
-      alert("에러");
-    },
-  });
+  const mutation = useMutation(
+    (reviewerRegisterFormData: ReviewerRegisterFormData) =>
+      revalidate(() => registerReviewer(reviewerRegisterFormData)),
+    {
+      onSuccess: () => {
+        history.push(PATH.MAIN);
+      },
+      onError: () => {
+        history.push(PATH.MAIN);
+        alert("에러");
+      },
+    }
+  );
 
   if (mutation.isLoading) return <Loading />;
 
   // TODO 반복되는 메인 컴포넌트 + 테마로 관리하기
   return (
-    <main css={{ paddingTop: "6rem", width: "100%", maxWidth: LAYOUT.LG, margin: "0 auto" }}>
+    <>
       <h2 css={{ fontSize: "1.25rem", fontWeight: 600 }}>리뷰어 등록</h2>
       <FormProvider
         submit={async ({ career, title, content }) => {
@@ -108,7 +117,7 @@ const ReviewerRegister = () => {
           </SubmitButton>
         </Flex>
       </FormProvider>
-    </main>
+    </>
   );
 };
 

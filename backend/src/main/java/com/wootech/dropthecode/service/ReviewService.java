@@ -1,10 +1,18 @@
 package com.wootech.dropthecode.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Review;
-import com.wootech.dropthecode.domain.TeacherProfile;
+import com.wootech.dropthecode.dto.ReviewSummary;
+import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
+import com.wootech.dropthecode.dto.response.ReviewResponse;
+import com.wootech.dropthecode.dto.response.ReviewsResponse;
 import com.wootech.dropthecode.repository.ReviewRepository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +32,24 @@ public class ReviewService {
     public Review findById(Long id) {
         return reviewRepository.findById(id)
                                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 리뷰입니다."));
+    }
+
+    public ReviewsResponse findStudentReview(Long id, ReviewSearchCondition condition, Pageable pageable) {
+        Page<ReviewSummary> pageReviews = reviewRepository.searchPageByStudentId(id, condition, pageable);
+
+        List<ReviewResponse> reviews = pageReviews.stream()
+                                                  .map(ReviewResponse::of)
+                                                  .collect(Collectors.toList());
+        return new ReviewsResponse(reviews, pageReviews.getTotalPages());
+    }
+
+    public ReviewsResponse findTeacherReview(Long id, ReviewSearchCondition condition, Pageable pageable) {
+        Page<ReviewSummary> pageReviews = reviewRepository.searchPageByTeacherId(id, condition, pageable);
+
+        List<ReviewResponse> reviews = pageReviews.stream()
+                                                  .map(ReviewResponse::of)
+                                                  .collect(Collectors.toList());
+        return new ReviewsResponse(reviews, pageReviews.getTotalPages());
     }
 
     @Transactional

@@ -59,7 +59,7 @@ const RequestTime = styled.div`
   text-align: right;
 `;
 
-const ReviewCard = ({ id, title, content, progress, createAt }: Review) => (
+const ReviewCard = ({ id, title, content, progress, createdAt }: Review) => (
   <ReviewLink to={`/review/${id}`}>
     <Inner>
       <Progress progress={progress}>
@@ -70,7 +70,7 @@ const ReviewCard = ({ id, title, content, progress, createAt }: Review) => (
         <Content>{content}</Content>
       </ContentWrapper>
       <RequestTime>
-        <p>{toPassedTimeString(...createAt)}</p>
+        <p>{toPassedTimeString(...createdAt)}</p>
       </RequestTime>
     </Inner>
   </ReviewLink>

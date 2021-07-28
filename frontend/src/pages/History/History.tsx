@@ -54,7 +54,7 @@ const History = () => {
   }, []);
 
   return (
-    <main css={{ paddingTop: "6rem", width: "100%", maxWidth: LAYOUT.LG, margin: "0 auto" }}>
+    <>
       <h2 css={{ fontSize: "1.25rem", fontWeight: 600 }}>히스토리</h2>
       <ul css={{ display: "flex", borderBottom: `1px solid ${COLOR.GRAY_400}`, marginBottom: "1.25rem" }}>
         {myTabs.map(({ name, mode }) => (
@@ -70,7 +70,7 @@ const History = () => {
         ))}
       </ul>
       <Suspense fallback={<Loading />}>{activeTab && <ReviewList id={1} mode={activeTab} />}</Suspense>
-    </main>
+    </>
   );
 };
 

@@ -16,7 +16,7 @@ const OAuthReceiver = () => {
   const query = new URLSearchParams(location.search);
   const [providerName, code] = [query.get("providerName"), query.get("code")];
 
-  const { data } = useQuery("oauthLogin", async () => {
+  const { data } = useQuery(["oauthLogin", providerName, code], async () => {
     if (!providerName || !code) return;
 
     const response = await oauthLogin(toURLSearchParams({ providerName, code }));

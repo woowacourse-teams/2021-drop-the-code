@@ -1,9 +1,18 @@
 package com.wootech.dropthecode.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.wootech.dropthecode.controller.auth.AuthenticationInterceptor;
 import com.wootech.dropthecode.controller.auth.GetAuthenticationInterceptor;
 import com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils;
+import com.wootech.dropthecode.domain.Progress;
 import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
+import com.wootech.dropthecode.dto.response.ProfileResponse;
+import com.wootech.dropthecode.dto.response.ReviewResponse;
+import com.wootech.dropthecode.dto.response.ReviewsResponse;
 import com.wootech.dropthecode.exception.AuthorizationException;
 import com.wootech.dropthecode.exception.GlobalExceptionHandler;
 import com.wootech.dropthecode.service.ReviewService;
@@ -27,14 +36,16 @@ import static capital.scalable.restdocs.jackson.JacksonResultHandlers.prepareJac
 import static com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils.OBJECT_MAPPER;
 import static com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils.restDocumentation;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ReviewController.class)
 public class ReviewControllerTest extends RestApiDocumentTest {
@@ -105,9 +116,28 @@ public class ReviewControllerTest extends RestApiDocumentTest {
     @Test
     @DisplayName("내가 요청한 리뷰 목록")
     void studentReviews() throws Exception {
+        // given
+        ProfileResponse firstTeacher = new ProfileResponse(1L, "user1", "image1");
+        ProfileResponse firstStudent = new ProfileResponse(2L, "user2", "image2");
+
+        ProfileResponse secondTeacher = new ProfileResponse(3L, "user3", "image3");
+        ProfileResponse secondStudent = new ProfileResponse(2L, "user2", "image2");
+
+        ReviewResponse firstReviewResponse = new ReviewResponse(1L, "title1", "content1", Progress.ON_GOING,
+                firstTeacher, firstStudent, "prUrl1", LocalDateTime.now());
+        ReviewResponse secondReviewResponse = new ReviewResponse(2L, "title2", "content2", Progress.ON_GOING,
+                secondTeacher, secondStudent, "prUrl2", LocalDateTime.now());
+
+        List<ReviewResponse> data = new ArrayList<>();
+        data.add(firstReviewResponse);
+        data.add(secondReviewResponse);
+
+        doNothing().when(authService).validatesAccessToken(ACCESS_TOKEN);
+        given(reviewService.findStudentReview(anyLong(), any(), any())).willReturn(new ReviewsResponse(data, 2));
+
         // when
         ResultActions result = restDocsMockMvc.perform(
-                get("/reviews/student/{id}", 1)
+                get("/reviews/student/2")
                         .with(userToken()));
 
         // then
@@ -162,9 +192,29 @@ public class ReviewControllerTest extends RestApiDocumentTest {
     @Test
     @DisplayName("내가 리뷰한 목록")
     void teacherReviews() throws Exception {
+        // given
+        ProfileResponse firstTeacher = new ProfileResponse(1L, "user1", "image1");
+        ProfileResponse firstStudent = new ProfileResponse(2L, "user2", "image2");
+
+        ProfileResponse secondTeacher = new ProfileResponse(1L, "user1", "image1");
+        ProfileResponse secondStudent = new ProfileResponse(3L, "user3", "image3");
+
+        ReviewResponse firstReviewResponse = new ReviewResponse(1L, "title1", "content1", Progress.ON_GOING,
+                firstTeacher, firstStudent, "prUrl1", LocalDateTime.now());
+        ReviewResponse secondReviewResponse = new ReviewResponse(2L, "title2", "content2", Progress.ON_GOING,
+                secondTeacher, secondStudent, "prUrl2", LocalDateTime.now());
+
+        List<ReviewResponse> data = new ArrayList<>();
+        data.add(firstReviewResponse);
+        data.add(secondReviewResponse);
+
+        doNothing().when(authService).validatesAccessToken(ACCESS_TOKEN);
+        given(reviewService.findTeacherReview(anyLong(), any(), any())).willReturn(new ReviewsResponse(data, 2));
+
         // when
         ResultActions result = restDocsMockMvc.perform(
-                get("/reviews/teacher/{id}", 1));
+                get("/reviews/teacher/1")
+                        .with(userToken()));
 
         // then
         result.andExpect(status().isOk());

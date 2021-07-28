@@ -24,7 +24,7 @@ export interface Review {
     name: string;
     imageUrl: string;
   };
-  createAt: [number, number, number];
+  createdAt: [number, number, number];
 }
 
 export type Role = "teacher" | "student";

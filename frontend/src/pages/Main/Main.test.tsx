@@ -9,17 +9,17 @@ beforeEach(() => {
 
 describe("메인페이지 테스트", () => {
   it("메인 페이지가 진입 시 언어 기술 목록을 조회 요청을 보내면 로딩 컴포넌트가 나타나고, 언어 기술 목록 조회가 끝나면 언어 필터링 버튼을 찾을 수 있다.", async () => {
-    const FilteringBtnBeforeLoaded = queryByText(/javascript/);
+    const filteringbuttonBeforeLoaded = queryByText(/javascript/);
 
-    expect(FilteringBtnBeforeLoaded).not.toBeInTheDocument();
+    expect(filteringbuttonBeforeLoaded).not.toBeInTheDocument();
 
-    const FilteringBtnAfterLoaded = await findByRole("button", { name: /javascript/ });
-    expect(FilteringBtnAfterLoaded).toBeInTheDocument();
+    const filteringbuttonAfterLoaded = await findByRole("button", { name: /javascript/ });
+    expect(filteringbuttonAfterLoaded).toBeInTheDocument();
   });
 
   it("언어를 선택하면 선택된 언어에 맞는 기술 버튼들이 화면에 나타난다.", async () => {
-    const SkillButtonBeforeLoaded = queryByText(/react/);
-    expect(SkillButtonBeforeLoaded).not.toBeInTheDocument();
+    const skillButtonBeforeLoaded = queryByText(/react/);
+    expect(skillButtonBeforeLoaded).not.toBeInTheDocument();
 
     const languageButton = await findByRole("button", { name: /javascript/ });
     fireEvent.click(languageButton);

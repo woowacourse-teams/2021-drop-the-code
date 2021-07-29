@@ -1,4 +1,5 @@
 import { rest } from "msw";
+import { setupServer } from "msw/node";
 
 import { languages } from "__mock__/data/languages";
 import { reviewers } from "__mock__/data/reviewers";
@@ -15,4 +16,6 @@ const requestHandlers = [
   }),
 ];
 
-export default requestHandlers;
+const server = setupServer(...requestHandlers);
+
+export default server;

@@ -74,7 +74,7 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
   // const isAnonymous = ![data.studentProfile.id, data.teacherProfile.id].includes(user.id);
 
   // const [buttonText, disabled] =
-  //   user.role === "student"
+  //   user.role === "STUDENT"
   //     ? [user?.id === data?.studentProfile.id && "리뷰 종료", data?.progress !== "ON_GOING"]
   //     : [user?.id === data?.teacherProfile.id && "리뷰 완료", data?.progress !== "TEACHER_COMPLETED"];
 

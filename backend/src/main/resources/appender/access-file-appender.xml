@@ -1,0 +1,18 @@
+<included>
+    <appender name="ACCESS_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${FILE_PATH}/access.txt</file>
+
+        <encoder>
+            <pattern>
+                [%t{yy-MM-dd} %t{HH:mm:ss}]%n[REQUEST]%n%fullRequest%n[RESPONSE]%n%fullResponse
+            </pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>{FILE_PATH}/access.%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+</included>

@@ -42,7 +42,7 @@ const ReviewerInfoContainer = ({ reviewerId }: Props) => {
                 {isOpen ? "접기" : "리뷰 목록 확인하기"}
               </Button>
             </FlexCenter>
-            {isOpen && <ReviewList id={reviewerId} mode={"teacher"} />}
+            {isOpen && <ReviewList id={reviewerId} mode={"TEACHER"} />}
           </div>
           <div css={{ width: "18.75rem" }}>{/* <ReviewerFloatingBox reviewer={data} /> */}</div>
         </Flex>

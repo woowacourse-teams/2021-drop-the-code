@@ -27,4 +27,4 @@ export interface Review {
   createdAt: [number, number, number];
 }
 
-export type Role = "teacher" | "student";
+export type Role = "TEACHER" | "STUDENT";

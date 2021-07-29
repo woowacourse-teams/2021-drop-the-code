@@ -39,15 +39,15 @@ const History = () => {
 
   // const { user } = useAuthContext();
 
-  // const isReviewer = user.role === "teacher";
-  const isReviewer = "teacher" === "teacher";
+  // const isReviewer = user.role === "TEACHER";
+  const isReviewer = "TEACHER" === "TEACHER";
 
   const myTabs: { name: string; mode: Role }[] = isReviewer
     ? [
-        { name: "내가 맡은 리뷰", mode: "teacher" },
-        { name: "내가 요청한 리뷰", mode: "student" },
+        { name: "내가 맡은 리뷰", mode: "TEACHER" },
+        { name: "내가 요청한 리뷰", mode: "STUDENT" },
       ]
-    : [{ name: "내가 요청한 리뷰", mode: "student" }];
+    : [{ name: "내가 요청한 리뷰", mode: "STUDENT" }];
 
   useEffect(() => {
     setActiveTab(myTabs[0].mode);

@@ -12,7 +12,7 @@ import Loading from "components/Loading/Loading";
 import ModalProvider from "components/ModalProvider/ModalProvider";
 import { THEME } from "utils/constants/theme";
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       suspense: true,

@@ -16,7 +16,7 @@ const Title = styled.div`
   border-bottom: 1px solid ${COLOR.GRAY_300};
 `;
 
-const Content = styled.p`
+const Content = styled.div`
   margin-top: 0.9375rem;
   white-space: break-spaces;
   color: ${COLOR.GRAY_700};

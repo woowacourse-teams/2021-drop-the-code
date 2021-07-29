@@ -7,6 +7,12 @@ export interface RouteShape {
   exact: boolean;
 }
 
+export interface RoleNavMenuShape {
+  to: string;
+  children: ReactNode;
+  isTeacher: boolean;
+}
+
 export interface NavMenuShape {
   to: string;
   children: ReactNode;

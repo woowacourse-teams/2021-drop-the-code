@@ -28,7 +28,7 @@ describe("헤더 컴포넌트 테스트", () => {
     mockingTeacherAuth();
     render(<Header />);
 
-    const reviewerRegisterButton = await findByRole("link", { name: "리뷰어 등록하기" });
+    const reviewerRegisterButton = queryByRole("link", { name: "리뷰어 등록하기" });
 
     expect(reviewerRegisterButton).not.toBeInTheDocument();
   });

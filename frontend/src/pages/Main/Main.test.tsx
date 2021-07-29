@@ -51,7 +51,7 @@ describe("메인페이지 테스트", () => {
   });
 
   it("리뷰어 목록이 나타난 후 리뷰어를 추가로 조회할 수 있는 더보기 버튼이 나타난다.", async () => {
-    const languageButton = getByRole("button", { name: /javascript/ });
+    const languageButton = await findByRole("button", { name: /javascript/ });
     fireEvent.click(languageButton);
 
     const skillButton = getByRole("button", { name: "vue" });

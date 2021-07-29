@@ -15,7 +15,7 @@
         </encoder>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>{FILE_PATH}/application.%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
+            <fileNamePattern>${FILE_PATH}/application.%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
             <maxFileSize>100MB</maxFileSize>
             <maxHistory>10</maxHistory>
             <totalSizeCap>1GB</totalSizeCap>

@@ -32,12 +32,12 @@ public class TeacherFilterRepositoryImpl extends Querydsl4RepositorySupport impl
 
     @Override
     public Page<TeacherProfile> findAll(List<Language> languages, List<Skill> skills, int career, Pageable pageable) {
-        final QueryResults<Long> teacherProfileIds = findTeacherProfileIdsByPageable(languages, skills, career, pageable);
-        final List<TeacherProfile> teacherProfiles = findAllByIds(teacherProfileIds);
-        return new PageImpl<>(teacherProfiles, pageable, teacherProfileIds.getTotal());
+        final QueryResults<TeacherProfile> queryResults = findTeacherProfileIdsByPageable(languages, skills, career, pageable);
+        final List<TeacherProfile> teacherProfiles = findAllByIds(queryResults);
+        return new PageImpl<>(teacherProfiles, pageable, queryResults.getTotal());
     }
 
-    private List<TeacherProfile> findAllByIds(QueryResults<Long> teacherProfileIds) {
+    private List<TeacherProfile> findAllByIds(QueryResults<TeacherProfile> teacherProfiles) {
         return getQueryFactory().select(teacherProfile)
                                 .from(teacherProfile).distinct()
                                 .innerJoin(teacherProfile.languages, teacherLanguage).fetchJoin()
@@ -45,11 +45,11 @@ public class TeacherFilterRepositoryImpl extends Querydsl4RepositorySupport impl
                                 .innerJoin(teacherProfile.skills, teacherSkill).fetchJoin()
                                 .innerJoin(teacherSkill.skill, skill).fetchJoin()
                                 .innerJoin(teacherProfile.member).fetchJoin()
-                                .where(teacherProfile.id.in(teacherProfileIds.getResults()))
+                                .where(teacherProfile.in(teacherProfiles.getResults()))
                                 .fetch();
     }
 
-    private QueryResults<Long> findTeacherProfileIdsByPageable(List<Language> languages, List<Skill> skills, int career, Pageable pageable) {
+    private QueryResults<TeacherProfile> findTeacherProfileIdsByPageable(List<Language> languages, List<Skill> skills, int career, Pageable pageable) {
         BooleanBuilder builder = new BooleanBuilder();
         builder.and(language.in(languages));
         if (!skills.isEmpty()) {
@@ -57,13 +57,13 @@ public class TeacherFilterRepositoryImpl extends Querydsl4RepositorySupport impl
         }
         builder.and(teacherProfile.career.goe(career));
 
-        final JPQLQuery<Long> query = getQueryFactory().select(teacherProfile.id).distinct()
-                                                       .from(teacherProfile)
-                                                       .innerJoin(teacherProfile.languages, teacherLanguage)
-                                                       .innerJoin(teacherLanguage.language, language)
-                                                       .innerJoin(teacherProfile.skills, teacherSkill)
-                                                       .innerJoin(teacherSkill.skill, skill)
-                                                       .where(builder);
+        final JPQLQuery<TeacherProfile> query = getQueryFactory().select(teacherProfile).distinct()
+                                                                 .from(teacherProfile)
+                                                                 .innerJoin(teacherProfile.languages, teacherLanguage)
+                                                                 .innerJoin(teacherLanguage.language, language)
+                                                                 .innerJoin(teacherProfile.skills, teacherSkill)
+                                                                 .innerJoin(teacherSkill.skill, skill)
+                                                                 .where(builder);
 
         return Objects.requireNonNull(getQuerydsl())
                       .applyPagination(pageable, query)

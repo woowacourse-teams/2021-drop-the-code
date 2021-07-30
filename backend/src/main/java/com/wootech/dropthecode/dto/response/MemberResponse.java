@@ -25,6 +25,11 @@ public class MemberResponse {
     private String imageUrl;
 
     /**
+     * 로그인 한 유저 github url
+     */
+    private String githubUrl;
+
+    /**
      * 로그인 한 유저의 Role
      */
     private Role role;
@@ -32,16 +37,17 @@ public class MemberResponse {
     public MemberResponse() {
     }
 
-    public MemberResponse(Long id, String name, String email, String imageUrl, Role role) {
+    public MemberResponse(Long id, String name, String email, String imageUrl, String githubUrl, Role role) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.imageUrl = imageUrl;
+        this.githubUrl = githubUrl;
         this.role = role;
     }
 
     public static MemberResponse of(Member member) {
-        return new MemberResponse(member.getId(), member.getName(), member.getEmail(), member.getImageUrl(), member.getRole());
+        return new MemberResponse(member.getId(), member.getName(), member.getEmail(), member.getImageUrl(), member.getGithubUrl(), member.getRole());
     }
 
     public Long getId() {
@@ -58,6 +64,10 @@ public class MemberResponse {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public String getGithubUrl() {
+        return githubUrl;
     }
 
     public Role getRole() {

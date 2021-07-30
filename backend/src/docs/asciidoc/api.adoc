@@ -135,6 +135,11 @@ include::{snippets}/member-controller-test/find-all-teacher-test/auto-section.ad
 
 include::{snippets}/member-controller-test/find-all-teacher-fail-test/http-response.adoc[]
 
+include::{snippets}/member-controller-test/find-teacher-test/auto-section.adoc[]
+
+*등록되지 않은 리뷰어의 ID일 때의 응답*
+
+include::{snippets}/member-controller-test/find-teacher-fail-if-id-is-invalid-test/http-response.adoc[]
 == Review API
 
 include::{snippets}/review-controller-test/new-review/auto-section.adoc[]

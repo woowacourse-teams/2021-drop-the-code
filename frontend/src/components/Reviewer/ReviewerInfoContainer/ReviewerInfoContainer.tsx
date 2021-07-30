@@ -7,6 +7,7 @@ import ReviewerFloatingBox from "components/Reviewer/ReviewerFloatingBox/Reviewe
 import Button from "components/shared/Button/Button";
 import ContentBox from "components/shared/ContentBox/ContentBox";
 import { Flex, FlexCenter } from "components/shared/Flexbox/Flexbox";
+import useToastContext from "hooks/useToastContext";
 
 interface Props {
   reviewerId: number;
@@ -14,13 +15,14 @@ interface Props {
 
 const ReviewerInfoContainer = ({ reviewerId }: Props) => {
   const [isOpen, setOpen] = useState(false);
+  const toast = useToastContext();
 
   const { data } = useQuery("getReviewer", async () => {
     const response = await getReviewer(reviewerId);
 
     if (!response.isSuccess) {
-      // TODO: 스낵바에 전달
-      // response.error.message;
+      toast(response.error.message, { type: "error" });
+
       return;
     }
 

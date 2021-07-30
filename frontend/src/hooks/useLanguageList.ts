@@ -1,13 +1,15 @@
 import { useQuery } from "react-query";
 
 import { getLanguageList } from "apis/reviewer";
+import useToastContext from "hooks/useToastContext";
 
 const useLanguageList = () => {
+  const toast = useToastContext();
   const { data: languages } = useQuery("getLanguageList", async () => {
     const response = await getLanguageList();
     if (!response.isSuccess) {
-      // TODO:스낵바에 전달
-      // response.error.message;
+      toast(response.error.message);
+
       return [];
     }
 

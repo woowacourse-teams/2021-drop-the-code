@@ -5,6 +5,7 @@ import { Role } from "types/review";
 import { getReviewList } from "apis/review";
 import ReviewCard from "components/Review/ReviewCard/ReviewCard";
 import useRevalidate from "hooks/useRevalidate";
+import useToastContext from "hooks/useToastContext";
 
 interface Props {
   id: number;
@@ -13,13 +14,13 @@ interface Props {
 
 const ReviewList = ({ id, mode }: Props) => {
   const { revalidate } = useRevalidate();
+  const toast = useToastContext();
 
   const { data } = useQuery(["getReviewList", mode], async () => {
-    // const response = await getReviewList(user.id, mode);
     const response = await revalidate(() => getReviewList(id, mode));
     if (!response.isSuccess) {
-      // TODO:스낵바에 전달
-      // response.error.message;
+      toast(response.error.message, { type: "error" });
+
       return { reviews: [] };
     }
 

@@ -1,6 +1,5 @@
 import { Suspense, useState } from "react";
 import { useMutation } from "react-query";
-import { useHistory } from "react-router-dom";
 
 import { ReviewerRegisterFormData } from "types/reviewer";
 
@@ -13,12 +12,10 @@ import SpecPicker from "components/Language/SpecPicker";
 import Loading from "components/Loading/Loading";
 import { Flex } from "components/shared/Flexbox/Flexbox";
 import useRevalidate from "hooks/useRevalidate";
-import { PLACE_HOLDER } from "utils/constants/message";
-import { PATH } from "utils/constants/path";
-import { LAYOUT } from "utils/constants/size";
+import useToastContext from "hooks/useToastContext";
+import { ERROR_MESSAGE, PLACE_HOLDER, SUCCESS_MESSAGE } from "utils/constants/message";
 import { STANDARD } from "utils/constants/standard";
 import reviewerRegisterValidators from "utils/validators/reviewerRegisterValidators";
-// import useAuthContext from "hooks/useAuthContext";
 
 interface Specs {
   [language: string]: string[];
@@ -30,26 +27,24 @@ const ReviewerRegister = () => {
 
   const { revalidate } = useRevalidate();
 
-  // const { user } = useAuthContext();
-  const history = useHistory();
+  const toast = useToastContext();
 
-  const mutation = useMutation(
-    (reviewerRegisterFormData: ReviewerRegisterFormData) =>
-      revalidate(() => registerReviewer(reviewerRegisterFormData)),
-    {
-      onSuccess: () => {
-        history.push(PATH.MAIN);
-      },
-      onError: () => {
-        history.push(PATH.MAIN);
-        alert("에러");
-      },
-    }
+  const mutation = useMutation((reviewerRegisterFormData: ReviewerRegisterFormData) =>
+    revalidate(async () => {
+      const response = await registerReviewer(reviewerRegisterFormData);
+
+      if (!response.isSuccess) {
+        toast(response.error.message);
+      } else {
+        toast(SUCCESS_MESSAGE.API.REVIEW.REQUEST);
+      }
+
+      return response;
+    })
   );
 
   if (mutation.isLoading) return <Loading />;
 
-  // TODO 반복되는 메인 컴포넌트 + 테마로 관리하기
   return (
     <>
       <h2 css={{ fontSize: "1.25rem", fontWeight: 600 }}>리뷰어 등록</h2>
@@ -58,7 +53,7 @@ const ReviewerRegister = () => {
           const techSpecs = Object.entries(specs).map(([language, skills]) => ({ language, skills }));
 
           if (techSpecs.length === 0) {
-            alert("기술을 선택해주세요");
+            toast(ERROR_MESSAGE.VALIDATON.REVIEWER_REGISTER.TECH_SPEC);
 
             return;
           }

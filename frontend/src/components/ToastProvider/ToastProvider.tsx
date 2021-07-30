@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { ToastContext } from "hooks/useToastContext";
 
 import Toast, { Options } from "./Toast";
+import ToastPortal from "./ToastPortal";
 
 interface Props {
   children: React.ReactNode;
@@ -42,11 +43,13 @@ const ToastProvider = ({ children }: Props) => {
   return (
     <ToastContext.Provider value={createToast}>
       {children}
-      <Ul>
-        {toasts.map((toast) => (
-          <Toast key={toast.id} {...toast} removeToast={removeToast} />
-        ))}
-      </Ul>
+      {ToastPortal(
+        <Ul>
+          {toasts.map((toast) => (
+            <Toast key={toast.id} {...toast} removeToast={removeToast} />
+          ))}
+        </Ul>
+      )}
     </ToastContext.Provider>
   );
 };

@@ -12,6 +12,7 @@ import ErrorBoundary from "components/Error/ErrorBoundary";
 import GlobalStyle from "components/GlobalStyle/GlobalStyle";
 import Loading from "components/Loading/Loading";
 import ModalProvider from "components/ModalProvider/ModalProvider";
+import ToastProvider from "components/ToastProvider/ToastProvider";
 import { THEME } from "utils/constants/theme";
 
 axios.defaults.baseURL = process.env.SERVER_BASE_URL;
@@ -27,20 +28,22 @@ const queryClient = new QueryClient({
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={THEME}>
-      <QueryClientProvider client={queryClient}>
-        <Suspense fallback={<Loading />}>
-          <AuthProvider>
-            <ModalProvider>
-              <GlobalStyle />
-              <BrowserRouter>
-                <ErrorBoundary>
-                  <App />
-                </ErrorBoundary>
-              </BrowserRouter>
-            </ModalProvider>
-          </AuthProvider>
-        </Suspense>
-      </QueryClientProvider>
+      <ToastProvider>
+        <QueryClientProvider client={queryClient}>
+          <Suspense fallback={<Loading />}>
+            <AuthProvider>
+              <ModalProvider>
+                <GlobalStyle />
+                <BrowserRouter>
+                  <ErrorBoundary>
+                    <App />
+                  </ErrorBoundary>
+                </BrowserRouter>
+              </ModalProvider>
+            </AuthProvider>
+          </Suspense>
+        </QueryClientProvider>
+      </ToastProvider>
     </ThemeProvider>
   </React.StrictMode>,
   document.getElementById("root")

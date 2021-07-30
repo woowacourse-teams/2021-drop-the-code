@@ -1,4 +1,4 @@
-import { RouteShape, NavMenuShape } from "types/route";
+import { RouteShape, NavMenuShape, RoleNavMenuShape } from "types/route";
 
 import History from "pages/History/History";
 import Main from "pages/Main/Main";
@@ -17,7 +17,8 @@ export const ROUTE: RouteShape[] = [
   { path: PATH.REDIRECT_OAUTH, Component: RedirectOAuth, isPrivate: false, exact: true },
 ];
 
-export const NAV_MENU: NavMenuShape[] = [
-  { to: PATH.REVIEWER_REGISTER, children: "리뷰어 등록하기", isPrivate: true },
-  { to: PATH.HISTORY, children: "히스토리", isPrivate: true },
+export const ROLE_MENU: RoleNavMenuShape[] = [
+  { to: PATH.REVIEWER_REGISTER, children: "리뷰어 등록하기", isTeacher: false },
 ];
+
+export const NAV_MENU: NavMenuShape[] = [{ to: PATH.HISTORY, children: "히스토리", isPrivate: true }];

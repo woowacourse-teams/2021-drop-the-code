@@ -200,4 +200,136 @@ export const reviewers: Reviewer[] = [
       ],
     },
   },
+  {
+    id: 7,
+    email: "seed@gmail.com",
+    content: "콘텐츠",
+    name: "seed",
+    imageUrl: "https://avatars.githubusercontent.com/u/32974201?v=4",
+    career: 3,
+    sumReviewCount: 300,
+    averageReviewTime: 1,
+    title: "안녕하세요~ 알리입니다~ 인프라는 저에게 맡겨주세요~",
+    techSpec: {
+      languages: [
+        {
+          id: 1,
+          name: "java",
+        },
+        {
+          id: 2,
+          name: "javascript",
+        },
+      ],
+      skills: [
+        {
+          id: 1,
+          name: "spring",
+        },
+        {
+          id: 2,
+          name: "react",
+        },
+      ],
+    },
+  },
+  {
+    id: 8,
+    email: "seed@gmail.com",
+    content: "콘텐츠",
+    name: "seed",
+    imageUrl: "https://avatars.githubusercontent.com/u/32974201?v=4",
+    career: 3,
+    sumReviewCount: 300,
+    averageReviewTime: 1,
+    title: "안녕하세요~ 알리입니다~ 인프라는 저에게 맡겨주세요~",
+    techSpec: {
+      languages: [
+        {
+          id: 1,
+          name: "java",
+        },
+        {
+          id: 2,
+          name: "javascript",
+        },
+      ],
+      skills: [
+        {
+          id: 1,
+          name: "spring",
+        },
+        {
+          id: 2,
+          name: "react",
+        },
+      ],
+    },
+  },
+  {
+    id: 9,
+    email: "seed@gmail.com",
+    content: "콘텐츠",
+    name: "seed",
+    imageUrl: "https://avatars.githubusercontent.com/u/32974201?v=4",
+    career: 3,
+    sumReviewCount: 300,
+    averageReviewTime: 1,
+    title: "안녕하세요~ 알리입니다~ 인프라는 저에게 맡겨주세요~",
+    techSpec: {
+      languages: [
+        {
+          id: 1,
+          name: "java",
+        },
+        {
+          id: 2,
+          name: "javascript",
+        },
+      ],
+      skills: [
+        {
+          id: 1,
+          name: "spring",
+        },
+        {
+          id: 2,
+          name: "react",
+        },
+      ],
+    },
+  },
+  {
+    id: 10,
+    email: "seed@gmail.com",
+    content: "콘텐츠",
+    name: "seed",
+    imageUrl: "https://avatars.githubusercontent.com/u/32974201?v=4",
+    career: 3,
+    sumReviewCount: 300,
+    averageReviewTime: 1,
+    title: "안녕하세요~ 알리입니다~ 인프라는 저에게 맡겨주세요~",
+    techSpec: {
+      languages: [
+        {
+          id: 1,
+          name: "java",
+        },
+        {
+          id: 2,
+          name: "javascript",
+        },
+      ],
+      skills: [
+        {
+          id: 1,
+          name: "spring",
+        },
+        {
+          id: 2,
+          name: "react",
+        },
+      ],
+    },
+  },
 ];

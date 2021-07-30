@@ -47,7 +47,7 @@ const Right = styled.div`
 `;
 
 const Loading = () => (
-  <LoadingBlock>
+  <LoadingBlock role="alert" aria-label="로딩중입니다.">
     <Left />
     <Center />
     <Right />

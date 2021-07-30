@@ -1,13 +1,11 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
 
-import { Role } from "types/review";
-
 import { getReviewer } from "apis/reviewer";
 import ReviewList from "components/Review/ReviewList/ReviewList";
 import ReviewerFloatingBox from "components/Reviewer/ReviewerFloatingBox/ReviewerFloatingBox";
 import Button from "components/shared/Button/Button";
-import ReviewerContentBox from "components/shared/ContentBox/ContentBox";
+import ContentBox from "components/shared/ContentBox/ContentBox";
 import { Flex, FlexCenter } from "components/shared/Flexbox/Flexbox";
 
 interface Props {
@@ -31,22 +29,22 @@ const ReviewerInfoContainer = ({ reviewerId }: Props) => {
 
   return (
     <>
-      {
+      {data && (
         <Flex>
           <div css={{ flex: 1, paddingRight: "6.25rem" }}>
-            {/* <ContentBox title={reviewer.title} reviewer={data}>
-              {reviewer.content}
-            </ContentBox> */}
+            <ContentBox title={data.title}>{data.content}</ContentBox>
             <FlexCenter css={{ width: "100%" }}>
               <Button themeColor="secondary" hover={false} onClick={() => setOpen(!isOpen)}>
                 {isOpen ? "접기" : "리뷰 목록 확인하기"}
               </Button>
             </FlexCenter>
-            {isOpen && <ReviewList id={reviewerId} mode={"teacher"} />}
+            {isOpen && <ReviewList id={reviewerId} mode={"TEACHER"} />}
           </div>
-          <div css={{ width: "18.75rem" }}>{/* <ReviewerFloatingBox reviewer={data} /> */}</div>
+          <div css={{ width: "18.75rem" }}>
+            <ReviewerFloatingBox reviewer={data} />
+          </div>
         </Flex>
-      }
+      )}
     </>
   );
 };

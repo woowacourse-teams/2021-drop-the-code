@@ -1,6 +1,9 @@
 package com.wootech.dropthecode.exception;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +15,25 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import org.apache.logging.log4j.util.Strings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleException(Exception e) {
+        final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
+        final List<String> stackTraces = Arrays.stream(e.getStackTrace())
+                                               .map(StackTraceElement::toString)
+                                               .collect(Collectors.toList());
+
+        final String stackTrace = Strings.join(stackTraces, '\n');
+        logger.error(e + System.lineSeparator() + stackTrace);
+        return ResponseEntity.internalServerError().body(new ErrorResponse("서버가 죄송합니다.."));
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleBindingException(BindingResult bindingResult) {

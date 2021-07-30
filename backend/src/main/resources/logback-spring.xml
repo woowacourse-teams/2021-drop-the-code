@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="10 seconds">
+
+    <!--    Log Level Color Setting    -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wEx"
+                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+
+    <property name="CONSOLE_LOG_PATTERN"
+              value="%clr([%-5p]) %clr([%-40.40logger{0}]){cyan} %clr(:){faint} %m%n"/>
+
+    <springProfile name="local">
+        <include resource="appender/all-console-appender.xml"/>
+
+        <logger name="org.hibernate.SQL" level="DEBUG">
+            <appender-ref ref="CONSOLE_APPENDER"/>
+        </logger>
+        <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE">
+            <appender-ref ref="CONSOLE_APPENDER"/>
+        </logger>
+
+        <root level="INFO">
+            <appender-ref ref="CONSOLE_APPENDER"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="prod">
+        <include resource="appender/application-file-appender.xml"/>
+        <include resource="appender/error-file-appender.xml"/>
+        <include resource="appender/sql-file-appender.xml"/>
+
+        <logger name="org.hibernate.SQL" level="DEBUG">
+            <appender-ref ref="SQL_FILE"/>
+        </logger>
+        <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE">
+            <appender-ref ref="SQL_FILE"/>
+        </logger>
+        <logger name="org.springframework.web.servlet.DispatcherServlet" level="DEBUG">
+            <appender-ref ref="SQL_FILE"/>
+        </logger>
+        <logger name="org.springframework.orm.jpa.JpaTransactionManager" level="DEBUG">
+            <appender-ref ref="SQL_FILE"/>
+        </logger>
+
+        <root level="DEBUG">
+            <appender-ref ref="APPLICATION_FILE"/>
+            <appender-ref ref="ERROR_FILE"/>
+        </root>
+    </springProfile>
+</configuration>

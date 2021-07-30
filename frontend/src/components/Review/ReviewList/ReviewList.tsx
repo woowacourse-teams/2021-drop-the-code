@@ -26,8 +26,6 @@ const ReviewList = ({ id, mode }: Props) => {
     return response.data;
   });
 
-  console.log(data);
-
   return (
     <>
       {data && (

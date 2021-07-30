@@ -51,7 +51,7 @@ export interface Props {
 const ReviewerFloatingBox = ({ reviewer }: Props) => {
   const { open } = useModalContext();
 
-  const { id, imageUrl, career, sumReviewCount, averageReviewTime } = reviewer;
+  const { id, imageUrl, name, career, sumReviewCount, averageReviewTime } = reviewer;
 
   const { user } = useAuthContext();
 
@@ -69,7 +69,7 @@ const ReviewerFloatingBox = ({ reviewer }: Props) => {
           <Link to={"/"}>
             <FlexAlignCenter>
               <LoginButtonImage src={SmBlackLogo} alt={ALT.GITHUB_LOGIN_BUTTON} />
-              <p>seojihwan</p>
+              <p>{name}</p>
             </FlexAlignCenter>
           </Link>
         </AvatarWrapper>

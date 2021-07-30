@@ -10,10 +10,9 @@ import TextareaField from "components/FormProvider/TextareaField";
 import Loading from "components/Loading/Loading";
 import { Flex } from "components/shared/Flexbox/Flexbox";
 import useAuthContext from "hooks/useAuthContext";
+import useModalContext from "hooks/useModalContext";
 import useRevalidate from "hooks/useRevalidate";
-import { COLOR } from "utils/constants/color";
 import { PLACE_HOLDER } from "utils/constants/message";
-import { LAYOUT } from "utils/constants/size";
 import { STANDARD } from "utils/constants/standard";
 import reviewRequestValidators from "utils/validators/reviewRequestValidators";
 
@@ -23,6 +22,7 @@ interface Props {
 
 const ReviewRequest = ({ reviewerId }: Props) => {
   const { user } = useAuthContext();
+  const { close } = useModalContext();
 
   const { revalidate } = useRevalidate();
   const mutation = useMutation(
@@ -33,6 +33,7 @@ const ReviewRequest = ({ reviewerId }: Props) => {
     {
       onSuccess: () => {
         alert("성공");
+        close();
       },
       onError: () => {
         alert("에러");
@@ -46,14 +47,16 @@ const ReviewRequest = ({ reviewerId }: Props) => {
     <div css={{ width: "40.625rem", margin: "0 auto" }}>
       <h2 css={{ fontSize: "1.25rem", fontWeight: 600, margin: "20px 0 40px", textAlign: "center" }}>리뷰 신청</h2>
       <FormProvider
-        submit={async ({ studentId, reviewerId, title, prUrl, content }) => {
-          // mutation.mutate({
-          //   studentId: user.id
-          //   teacherId: reviewerId,
-          //   title,
-          //   prUrl,
-          //   content,
-          // });
+        submit={async ({ title, prUrl, content }) => {
+          if (!user) return;
+
+          mutation.mutate({
+            studentId: user.id,
+            teacherId: reviewerId,
+            title,
+            prUrl,
+            content,
+          });
         }}
         validators={reviewRequestValidators}
         css={{ marginTop: "1.25rem", width: "100%" }}
@@ -85,9 +88,11 @@ const ReviewRequest = ({ reviewerId }: Props) => {
           css={{ minHeight: "12.5rem" }}
         />
         <Flex css={{ margin: "1.25rem 0 2.5rem" }}>
-          <SubmitButton themeColor="primary" shape="rounded" css={{ marginLeft: "auto" }}>
-            요청
-          </SubmitButton>
+          {user && (
+            <SubmitButton themeColor="primary" shape="rounded" css={{ marginLeft: "auto" }}>
+              요청
+            </SubmitButton>
+          )}
         </Flex>
       </FormProvider>
     </div>

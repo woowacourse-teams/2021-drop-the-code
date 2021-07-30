@@ -8,15 +8,55 @@ import com.wootech.dropthecode.domain.bridge.TeacherLanguage;
 import com.wootech.dropthecode.domain.bridge.TeacherSkill;
 
 public class TeacherProfileResponse {
+
+    /**
+     * ID
+     */
     private final Long id;
+
+    /**
+     * Email
+     */
     private final String email;
+
+    /**
+     * 이름
+     */
     private final String name;
+
+    /**
+     * Image Url
+     */
     private final String imageUrl;
+
+    /**
+     * 자기소개 제목
+     */
     private final String title;
+
+    /**
+     * 자기소개 내용
+     */
     private final String content;
+
+    /**
+     * 연차
+     */
     private final Integer career;
+
+    /**
+     * 총 리뷰한 개수
+     */
     private final Integer sumReviewCount;
+
+    /**
+     * 평균 리뷰 응답 시간
+     */
     private final Double averageReviewTime;
+
+    /**
+     * 기술 및 언어 목록
+     */
     private final TechSpecResponse techSpec;
 
     public TeacherProfileResponse(Long id, String email, String name, String imageUrl, String title, String content, Integer career, Integer sumReviewCount, Double averageReviewTime, TechSpecResponse techSpec) {

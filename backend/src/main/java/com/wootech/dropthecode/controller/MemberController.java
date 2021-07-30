@@ -75,7 +75,7 @@ public class MemberController {
 
     /**
      * @title 리뷰어 단일 조회
-     * @param id 리뷰어의 id
+     * @param id 리뷰어의 ID
      */
     @GetMapping("/teachers/{id}")
     public ResponseEntity<TeacherProfileResponse> findTeacher(@PathVariable Long id) {

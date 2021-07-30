@@ -1,4 +1,5 @@
 import { Suspense, useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
 
 import styled, { css } from "styled-components";
 import { Role } from "types/review";
@@ -7,7 +8,7 @@ import Loading from "components/Loading/Loading";
 import ReviewList from "components/Review/ReviewList/ReviewList";
 import useAuthContext from "hooks/useAuthContext";
 import { COLOR } from "utils/constants/color";
-import { LAYOUT } from "utils/constants/size";
+import { PATH } from "utils/constants/path";
 
 const Item = styled.li<{ active: boolean }>`
   position: relative;
@@ -37,10 +38,9 @@ const History = () => {
 
   const [activeTab, setActiveTab] = useState<Role | null>(null);
 
-  // const { user } = useAuthContext();
+  if (!user) return <Redirect to={PATH.MAIN} />;
 
-  // const isReviewer = user.role === "TEACHER";
-  const isReviewer = "TEACHER" === "TEACHER";
+  const isReviewer = user.role === "TEACHER";
 
   const myTabs: { name: string; mode: Role }[] = isReviewer
     ? [
@@ -69,7 +69,7 @@ const History = () => {
           </Item>
         ))}
       </ul>
-      <Suspense fallback={<Loading />}>{activeTab && <ReviewList id={1} mode={activeTab} />}</Suspense>
+      <Suspense fallback={<Loading />}>{activeTab && <ReviewList id={user.id} mode={activeTab} />}</Suspense>
     </>
   );
 };

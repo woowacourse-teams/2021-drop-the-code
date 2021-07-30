@@ -11,14 +11,6 @@
 
     <springProfile name="local">
         <include resource="appender/all-console-appender.xml"/>
-
-        <logger name="org.hibernate.SQL" level="DEBUG">
-            <appender-ref ref="CONSOLE_APPENDER"/>
-        </logger>
-        <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE">
-            <appender-ref ref="CONSOLE_APPENDER"/>
-        </logger>
-
         <root level="INFO">
             <appender-ref ref="CONSOLE_APPENDER"/>
         </root>

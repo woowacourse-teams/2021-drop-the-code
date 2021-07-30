@@ -16,6 +16,8 @@ public class Member extends BaseEntity {
     @Column(nullable = false)
     private String imageUrl;
 
+    private String githubUrl;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
@@ -33,23 +35,20 @@ public class Member extends BaseEntity {
     }
 
     public Member(String email, String name, String imageUrl, Role role) {
-        this(null, null, email, name, imageUrl, role, null);
+        this(null, null, email, name, imageUrl, null, role, null);
     }
 
-    public Member(String oauthId, String email, String name, String imageUrl, Role role) {
-        this(null, oauthId, email, name, imageUrl, role, null);
+    public Member(String oauthId, String email, String name, String imageUrl, String githubUrl, Role role) {
+        this(null, oauthId, email, name, imageUrl, githubUrl, role, null);
     }
 
-    public Member(String oauthId, String email, String name, String imageUrl, Role role, TeacherProfile teacherProfile) {
-        this(null, oauthId, email, name, imageUrl, role, teacherProfile);
-    }
-
-    public Member(Long id, String oauthId, String email, String name, String imageUrl, Role role, TeacherProfile teacherProfile) {
+    public Member(Long id, String oauthId, String email, String name, String imageUrl, String githubUrl, Role role, TeacherProfile teacherProfile) {
         this.id = id;
         this.oauthId = oauthId;
         this.email = email;
         this.name = name;
         this.imageUrl = imageUrl;
+        this.githubUrl = githubUrl;
         this.role = role;
         this.teacherProfile = teacherProfile;
     }
@@ -83,6 +82,10 @@ public class Member extends BaseEntity {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public String getGithubUrl() {
+        return githubUrl;
     }
 
     public Role getRole() {

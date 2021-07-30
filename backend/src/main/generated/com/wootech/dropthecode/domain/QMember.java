@@ -29,6 +29,8 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath email = createString("email");
 
+    public final StringPath githubUrl = createString("githubUrl");
+
     //inherited
     public final NumberPath<Long> id = _super.id;
 

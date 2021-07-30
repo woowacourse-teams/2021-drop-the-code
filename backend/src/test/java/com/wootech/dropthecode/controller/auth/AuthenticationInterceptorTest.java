@@ -71,7 +71,7 @@ class AuthenticationInterceptorTest {
         void login() {
             // given
             LoginResponse loginResponse = new LoginResponse(1L, "air", "air.junseo@gmail.com",
-                    "image url", Role.STUDENT, "Bearer", "access-token", "refresh-token");
+                    "image url", "github Url", Role.STUDENT, "Bearer", "access-token", "refresh-token");
 
             given(oauthService.login(any())).willReturn(loginResponse);
 

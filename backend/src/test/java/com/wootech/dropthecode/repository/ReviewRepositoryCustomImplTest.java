@@ -58,13 +58,13 @@ class ReviewRepositoryCustomImplTest {
     @BeforeEach
     void setUp() {
         // given
-        airTe = new Member("oauth1", "email1@gmail.com", "name1", "s3://imageUrl1", Role.TEACHER);
-        allieTe = new Member("oauth2", "email2@gmail.com", "name2", "s3://imageUrl2", Role.TEACHER);
+        airTe = new Member("oauth1", "email1@gmail.com", "name1", "s3://imageUrl1", "github url1", Role.TEACHER);
+        allieTe = new Member("oauth2", "email2@gmail.com", "name2", "s3://imageUrl2", "github url2", Role.TEACHER);
         TeacherProfile teacherProfile1 = new TeacherProfile("title1", "content1", 10, airTe);
         TeacherProfile teacherProfile2 = new TeacherProfile("title2", "content2", 20, allieTe);
 
-        seedStu = new Member("oauth3", "email3@gmail.com", "name3", "s3://imageUrl3", Role.STUDENT);
-        fafiStu = new Member("oauth4", "email4@gmail.com", "name4", "s3://imageUrl4", Role.STUDENT);
+        seedStu = new Member("oauth3", "email3@gmail.com", "name3", "s3://imageUrl3", "github url3", Role.STUDENT);
+        fafiStu = new Member("oauth4", "email4@gmail.com", "name4", "s3://imageUrl4", "github url4", Role.STUDENT);
 
         em.persist(airTe);
         em.persist(allieTe);

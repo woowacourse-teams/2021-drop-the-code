@@ -49,7 +49,7 @@ class MemberServiceTest {
         // given
         LoginMember loginMember = new LoginMember(1L);
         given(memberRepository.findById(1L))
-                .willReturn(Optional.of(new Member(1L, "oauthId", "air.junseo@gmail.com", "air", "s3://image", Role.STUDENT, null)));
+                .willReturn(Optional.of(new Member(1L, "oauthId", "air.junseo@gmail.com", "air", "s3://image", "githubUrl", Role.STUDENT, null)));
 
         // when
         MemberResponse result = memberService.findByLoginMember(loginMember);
@@ -65,14 +65,14 @@ class MemberServiceTest {
         // given
         Long id = 1L;
         given(memberRepository.findById(id))
-                .willReturn(Optional.of(new Member(1L, "oauthId", "air", "air.junseo@gmail.com", "s3://image", Role.STUDENT, null)));
+                .willReturn(Optional.of(new Member(1L, "oauthId", "air", "air.junseo@gmail.com", "s3://image", "github Url", Role.STUDENT, null)));
 
         // when
         Member member = memberService.findById(id);
 
         // then
         assertThat(member).usingRecursiveComparison()
-                          .isEqualTo(new Member(1L, "oauthId", "air", "air.junseo@gmail.com", "s3://image", Role.STUDENT, null));
+                          .isEqualTo(new Member(1L, "oauthId", "air", "air.junseo@gmail.com", "s3://image", "github Url", Role.STUDENT, null));
     }
 
     @Test

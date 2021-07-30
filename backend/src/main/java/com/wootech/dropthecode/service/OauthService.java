@@ -51,7 +51,7 @@ public class OauthService {
 
         redisUtil.setData(String.valueOf(member.getId()), refreshToken);
 
-        return new LoginResponse(member.getId(), member.getName(), member.getEmail(), member.getImageUrl(), member.getRole(), "Bearer", accessToken, refreshToken);
+        return new LoginResponse(member.getId(), member.getName(), member.getEmail(), member.getImageUrl(), member.getGithubUrl(), member.getRole(), "Bearer", accessToken, refreshToken);
     }
 
     private Member saveOrUpdate(UserProfile userProfile) {

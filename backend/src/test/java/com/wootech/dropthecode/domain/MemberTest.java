@@ -41,7 +41,7 @@ class MemberTest {
     @DisplayName("Id 비교")
     void hasSameId() {
         // given
-        Member member = new Member(1L, "oauthId", "air.junseo@gmail.com", "air", "s3://image", Role.STUDENT, null);
+        Member member = new Member(1L, "oauthId", "air.junseo@gmail.com", "air", "s3://image", "github Url", Role.STUDENT, null);
 
         // when
         boolean success = member.hasSameId(1L);

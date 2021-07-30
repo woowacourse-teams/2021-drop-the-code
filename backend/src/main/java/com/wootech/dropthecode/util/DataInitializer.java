@@ -116,12 +116,12 @@ public class DataInitializer implements ApplicationRunner {
     private List<Member> insertMember(long i) {
         if (i == 0) {
             List<Member> members = Arrays.asList(
-                    new Member("56301069", "seed@gmail.com", "Seed", "https://avatars.githubusercontent.com/u/56301069?v=4", Role.TEACHER),
-                    new Member("32974201", "allie@gmail.com", "Allie", "https://avatars.githubusercontent.com/u/32974201?v=4", Role.TEACHER),
-                    new Member("52202474", "bran@gmail.com", "Bran", "https://avatars.githubusercontent.com/u/52202474?v=4", Role.TEACHER),
-                    new Member("45876793", "air@gmail.com", "Air", "https://avatars.githubusercontent.com/u/45876793?v=4", Role.TEACHER),
-                    new Member("50273712", "fafi@gmail.com", "Fafi", "https://avatars.githubusercontent.com/u/50273712?v=44", Role.TEACHER),
-                    new Member("67591151", "shinse@gmail.com", "Shinsehantan", "https://avatars.githubusercontent.com/u/50273712?v=44", Role.TEACHER)
+                    new Member("56301069", "seed@gmail.com", "Seed", "https://avatars.githubusercontent.com/u/56301069?v=4", "https://github.com/hsik0225", Role.TEACHER),
+                    new Member("32974201", "allie@gmail.com", "Allie", "https://avatars.githubusercontent.com/u/32974201?v=4", "https://github.com/jh8579", Role.TEACHER),
+                    new Member("52202474", "bran@gmail.com", "Bran", "https://avatars.githubusercontent.com/u/52202474?v=4", "https://github.com/seojihwan", Role.TEACHER),
+                    new Member("45876793", "air@gmail.com", "Air", "https://avatars.githubusercontent.com/u/45876793?v=4", "https://github.com/KJunseo", Role.TEACHER),
+                    new Member("50273712", "fafi@gmail.com", "Fafi", "https://avatars.githubusercontent.com/u/50273712?v=44", "https://github.com/TaewanKimmmm", Role.TEACHER),
+                    new Member("67591151", "shinse@gmail.com", "Shinsehantan", "https://avatars.githubusercontent.com/u/50273712?v=44", "https://github.com/shinsehantan", Role.TEACHER)
             );
             return memberRepository.saveAll(members);
         }

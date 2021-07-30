@@ -5,6 +5,8 @@ import { ReviewerSortOption } from "types/reviewer";
 import { getReviewerList } from "apis/reviewer";
 import { toURLSearchParams } from "utils/formatter";
 
+import useToastContext from "./useToastContext";
+
 export interface Options {
   filterLanguage: string | null;
   filterSkills: string[];
@@ -14,6 +16,8 @@ export interface Options {
 
 const useReviewerList = (options: Options) => {
   const { filterLanguage, filterSkills, filterCareer, sort } = options;
+
+  const toast = useToastContext();
 
   const { data, fetchNextPage } = useInfiniteQuery(
     ["getReviewerList", ...Object.values(options)],
@@ -31,8 +35,8 @@ const useReviewerList = (options: Options) => {
       );
 
       if (!response.isSuccess) {
-        // TODO: 스낵바에 전달
-        // response.error.message;
+        toast(response.error.message, { type: "error" });
+
         return { teacherProfiles: [], pageCount: 0 };
       }
 

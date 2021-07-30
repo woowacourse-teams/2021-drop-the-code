@@ -1,6 +1,5 @@
 import { Suspense, useState } from "react";
-import { useMutation } from "react-query";
-import { useHistory } from "react-router-dom";
+import { useMutation, useQueryClient } from "react-query";
 
 import { ReviewerRegisterFormData } from "types/reviewer";
 
@@ -13,12 +12,10 @@ import SpecPicker from "components/Language/SpecPicker";
 import Loading from "components/Loading/Loading";
 import { Flex } from "components/shared/Flexbox/Flexbox";
 import useRevalidate from "hooks/useRevalidate";
-import { PLACE_HOLDER } from "utils/constants/message";
-import { PATH } from "utils/constants/path";
-import { LAYOUT } from "utils/constants/size";
+import useToastContext from "hooks/useToastContext";
+import { ERROR_MESSAGE, PLACE_HOLDER, SUCCESS_MESSAGE } from "utils/constants/message";
 import { STANDARD } from "utils/constants/standard";
 import reviewerRegisterValidators from "utils/validators/reviewerRegisterValidators";
-// import useAuthContext from "hooks/useAuthContext";
 
 interface Specs {
   [language: string]: string[];
@@ -28,28 +25,30 @@ const ReviewerRegister = () => {
   const [filterLanguage, setFilterLanguage] = useState<string | null>(null);
   const [specs, setSpecs] = useState<Specs>({});
 
+  const queryClient = useQueryClient();
+
   const { revalidate } = useRevalidate();
+  const toast = useToastContext();
 
-  // const { user } = useAuthContext();
-  const history = useHistory();
+  const mutation = useMutation((reviewerRegisterFormData: ReviewerRegisterFormData) =>
+    revalidate(async () => {
+      const response = await registerReviewer(reviewerRegisterFormData);
 
-  const mutation = useMutation(
-    (reviewerRegisterFormData: ReviewerRegisterFormData) =>
-      revalidate(() => registerReviewer(reviewerRegisterFormData)),
-    {
-      onSuccess: () => {
-        history.push(PATH.MAIN);
-      },
-      onError: () => {
-        history.push(PATH.MAIN);
-        alert("에러");
-      },
-    }
+      if (!response.isSuccess) {
+        toast(response.error.message);
+      } else {
+        queryClient.invalidateQueries("getReviewList");
+        queryClient.invalidateQueries("checkMember");
+
+        toast(SUCCESS_MESSAGE.API.REVIEWER.REGISTER);
+      }
+
+      return response;
+    })
   );
 
   if (mutation.isLoading) return <Loading />;
 
-  // TODO 반복되는 메인 컴포넌트 + 테마로 관리하기
   return (
     <>
       <h2 css={{ fontSize: "1.25rem", fontWeight: 600 }}>리뷰어 등록</h2>
@@ -58,7 +57,7 @@ const ReviewerRegister = () => {
           const techSpecs = Object.entries(specs).map(([language, skills]) => ({ language, skills }));
 
           if (techSpecs.length === 0) {
-            alert("기술을 선택해주세요");
+            toast(ERROR_MESSAGE.VALIDATON.REVIEWER_REGISTER.TECH_SPEC);
 
             return;
           }

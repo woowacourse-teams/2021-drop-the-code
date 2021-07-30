@@ -1,18 +1,46 @@
 import { STANDARD } from "utils/constants/standard";
 
-export const ERROR_MESSAGE = {
-  REVIEWER_REGISTER: {
-    TITLE: `${STANDARD.REVIEWER_REGISTER.TITLE.MAX_LENGTH}자 이내로 작성해주세요.`,
-    CAREER: `${STANDARD.REVIEWER_REGISTER.CAREER.MIN}에서 ${STANDARD.REVIEWER_REGISTER.CAREER.MAX}까지만 입력 가능합니다.`,
-    CONTENT: `${STANDARD.REVIEWER_REGISTER.CONTENT.MAX_LENGTH}자 이내로 작성해주세요.`,
-  },
-  REVIEW_REQUEST: {
-    TITLE: `${STANDARD.REVIEW_REQUEST.TITLE.MAX_LENGTH}자 이내로 작성해주세요.`,
-    PR_URL: {
-      FORMAT: `올바른 Pull Request URL 형식이 아닙니다.`,
-      LENGTH: `${STANDARD.REVIEW_REQUEST.PR_URL.MAX_LENGTH}자 이내로 작성해주세요.`,
+export const SUCCESS_MESSAGE = {
+  API: {
+    AUTH: {},
+    REVIEW: {
+      PATCH_PROGRESS: "리뷰 상태를 갱신했습니다.",
+      REQUEST: "리뷰 요청에 성공했습니다.",
     },
-    CONTENT: `${STANDARD.REVIEW_REQUEST.CONTENT.MAX_LENGTH}자 이내로 작성해주세요.`,
+    REVIEWER: {
+      REGISTER: "리뷰어 등록에 성공했습니다.",
+    },
+  },
+};
+
+export const ERROR_MESSAGE = {
+  VALIDATON: {
+    REVIEWER_REGISTER: {
+      TITLE: `${STANDARD.REVIEWER_REGISTER.TITLE.MAX_LENGTH}자 이내로 작성해주세요.`,
+      CAREER: `${STANDARD.REVIEWER_REGISTER.CAREER.MIN}에서 ${STANDARD.REVIEWER_REGISTER.CAREER.MAX}까지만 입력 가능합니다.`,
+      CONTENT: `${STANDARD.REVIEWER_REGISTER.CONTENT.MAX_LENGTH}자 이내로 작성해주세요.`,
+      TECH_SPEC: "기술스택을 선택해주세요.",
+    },
+    REVIEW_REQUEST: {
+      TITLE: `${STANDARD.REVIEW_REQUEST.TITLE.MAX_LENGTH}자 이내로 작성해주세요.`,
+      PR_URL: {
+        FORMAT: `올바른 Pull Request URL 형식이 아닙니다.`,
+        LENGTH: `${STANDARD.REVIEW_REQUEST.PR_URL.MAX_LENGTH}자 이내로 작성해주세요.`,
+      },
+      CONTENT: `${STANDARD.REVIEW_REQUEST.CONTENT.MAX_LENGTH}자 이내로 작성해주세요.`,
+    },
+    REVIEW_LIST: {
+      GET_LIST: "리뷰목록을 불러오는데 실패했습니다.",
+    },
+  },
+  API: {
+    AUTH: {},
+    REVIEW: {
+      GET_LIST: "리뷰 목록을 조회하는데 실패했습니다.",
+    },
+    REVIEWER: {
+      REGISTER: "리뷰어 등록에 실패했습니다.",
+    },
   },
 };
 

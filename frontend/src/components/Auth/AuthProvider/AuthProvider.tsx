@@ -21,26 +21,30 @@ const AuthProvider = ({ children }: Props) => {
   const { revalidate } = useRevalidate();
 
   const queryClient = useQueryClient();
-  const logoutMutation = useMutation(() => revalidate(() => requestLogout()), {
-    onSuccess: () => {
-      queryClient.invalidateQueries("oauthLogin");
+  const logoutMutation = useMutation(() => {
+    return revalidate(async () => {
+      const response = await requestLogout();
 
-      removeAccessToken();
-      removeRefreshToken();
+      if (response.isSuccess) {
+        queryClient.invalidateQueries("oauthLogin");
 
-      setUser(null);
-    },
+        removeAccessToken();
+        removeRefreshToken();
+
+        setUser(null);
+      }
+
+      return response;
+    });
   });
 
   const { data } = useQuery(
     "checkMember",
     async () => {
-      axios.defaults.headers.Authorization = `Bearer ${accessToken}`;
+      axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
       const response = await revalidate(() => checkMember());
 
       if (!response.isSuccess) {
-        // TODO: 스낵바
-
         return;
       }
 
@@ -73,7 +77,7 @@ const AuthProvider = ({ children }: Props) => {
     if (!data) return;
 
     login(data);
-  }, []);
+  }, [data]);
 
   return <AuthContext.Provider value={{ user: user, login, logout }}>{children}</AuthContext.Provider>;
 };

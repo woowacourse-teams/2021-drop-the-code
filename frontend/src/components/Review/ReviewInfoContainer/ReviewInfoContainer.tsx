@@ -11,8 +11,9 @@ import ContentBox from "components/shared/ContentBox/ContentBox";
 import { FlexAlignCenter, Flex, FlexCenter } from "components/shared/Flexbox/Flexbox";
 import useAuthContext from "hooks/useAuthContext";
 import useRevalidate from "hooks/useRevalidate";
+import useToastContext from "hooks/useToastContext";
 import { COLOR } from "utils/constants/color";
-import { ALT } from "utils/constants/message";
+import { ALT, SUCCESS_MESSAGE } from "utils/constants/message";
 
 const Title = styled.p`
   font-weight: 900;
@@ -35,7 +36,7 @@ interface Props {
 
 const ReviewInfoContainer = ({ reviewId }: Props) => {
   const { user } = useAuthContext();
-
+  const toast = useToastContext();
   const { revalidate } = useRevalidate();
 
   const queryClient = useQueryClient();
@@ -44,25 +45,29 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
     const response = await getReview(reviewId);
 
     if (!response.isSuccess) {
-      // TODO: 스낵바에 전달
-      // response.error.message;
+      toast(response.error.message, { type: "error" });
+
       return;
     }
 
     return response.data;
   });
-  //id, progress
-  const mutation = useMutation(
-    ({ id, progress }: { id: number; progress: Progress }) => revalidate(() => patchReviewProgress(id, progress)),
-    {
-      onSuccess: () => {
+
+  const mutation = useMutation(({ id, progress }: { id: number; progress: Progress }) => {
+    return revalidate(async () => {
+      const response = await patchReviewProgress(id, progress);
+
+      if (!response.isSuccess) {
+        toast(response.error.message);
+      } else {
         queryClient.invalidateQueries("getReview");
-      },
-      onError: () => {
-        /**/
-      },
-    }
-  );
+
+        toast(SUCCESS_MESSAGE.API.REVIEW.PATCH_PROGRESS);
+      }
+
+      return response;
+    });
+  });
 
   if (!data) return <></>;
 

@@ -1,4 +1,4 @@
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 import { ReviewRequestFormData } from "types/review";
 
@@ -12,7 +12,8 @@ import { Flex } from "components/shared/Flexbox/Flexbox";
 import useAuthContext from "hooks/useAuthContext";
 import useModalContext from "hooks/useModalContext";
 import useRevalidate from "hooks/useRevalidate";
-import { PLACE_HOLDER } from "utils/constants/message";
+import useToastContext from "hooks/useToastContext";
+import { PLACE_HOLDER, SUCCESS_MESSAGE } from "utils/constants/message";
 import { STANDARD } from "utils/constants/standard";
 import reviewRequestValidators from "utils/validators/reviewRequestValidators";
 
@@ -22,23 +23,28 @@ interface Props {
 
 const ReviewRequest = ({ reviewerId }: Props) => {
   const { user } = useAuthContext();
-  const { close } = useModalContext();
-
   const { revalidate } = useRevalidate();
-  const mutation = useMutation(
-    (reviewRequestFormData: ReviewRequestFormData) =>
-      revalidate(() => {
-        return requestReview(reviewRequestFormData);
-      }),
-    {
-      onSuccess: () => {
-        alert("성공");
+
+  const { close } = useModalContext();
+  const toast = useToastContext();
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation((reviewRequestFormData: ReviewRequestFormData) =>
+    revalidate(async () => {
+      const response = await requestReview(reviewRequestFormData);
+
+      if (!response.isSuccess) {
+        toast(response.error.message);
+      } else {
         close();
-      },
-      onError: () => {
-        alert("에러");
-      },
-    }
+        toast(SUCCESS_MESSAGE.API.REVIEW.REQUEST);
+
+        queryClient.invalidateQueries("getReview");
+      }
+
+      return response;
+    })
   );
 
   if (mutation.isLoading) return <Loading />;

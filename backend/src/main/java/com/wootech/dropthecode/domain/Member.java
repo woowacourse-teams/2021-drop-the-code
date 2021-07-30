@@ -32,26 +32,41 @@ public class Member extends BaseEntity {
     protected Member() {
     }
 
-    public Member(Long id, String oauthId, String name, String email, String imageUrl, Role role, TeacherProfile teacherProfile) {
-        this.id = id;
-        this.oauthId = oauthId;
-        this.name = name;
-        this.email = email;
-        this.imageUrl = imageUrl;
-        this.role = role;
-        this.teacherProfile = teacherProfile;
-    }
-
-    public Member(String oauthId, String name, String email, String imageUrl, Role role, TeacherProfile teacherProfile) {
-        this(null, oauthId, name, email, imageUrl, role, teacherProfile);
+    public Member(String email, String name, String imageUrl, Role role) {
+        this(null, null, email, name, imageUrl, role, null);
     }
 
     public Member(String oauthId, String email, String name, String imageUrl, Role role) {
         this(null, oauthId, email, name, imageUrl, role, null);
     }
 
-    public Member(String email, String name, String imageUrl, Role role) {
-        this(null, null, email, name, imageUrl, role, null);
+    public Member(String oauthId, String email, String name, String imageUrl, Role role, TeacherProfile teacherProfile) {
+        this(null, oauthId, email, name, imageUrl, role, teacherProfile);
+    }
+
+    public Member(Long id, String oauthId, String email, String name, String imageUrl, Role role, TeacherProfile teacherProfile) {
+        this.id = id;
+        this.oauthId = oauthId;
+        this.email = email;
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.role = role;
+        this.teacherProfile = teacherProfile;
+    }
+
+    public boolean hasRole(Role role) {
+        return this.role == role;
+    }
+
+    public boolean hasSameId(Long id) {
+        return this.id.equals(id);
+    }
+
+    public Member update(String email, String name, String imageUrl) {
+        this.email = email;
+        this.name = name;
+        this.imageUrl = imageUrl;
+        return this;
     }
 
     public String getOauthId() {
@@ -88,13 +103,5 @@ public class Member extends BaseEntity {
 
     public void setRole(Role role) {
         this.role = role;
-    }
-
-    public boolean hasRole(Role role) {
-        return this.role == role;
-    }
-
-    public boolean hasSameId(Long id) {
-        return this.id.equals(id);
     }
 }

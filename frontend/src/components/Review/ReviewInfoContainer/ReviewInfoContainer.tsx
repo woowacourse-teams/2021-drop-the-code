@@ -60,7 +60,7 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
       if (!response.isSuccess) {
         toast(response.error.message);
       } else {
-        queryClient.refetchQueries("getReview");
+        queryClient.invalidateQueries("getReview");
 
         toast(SUCCESS_MESSAGE.API.REVIEW.PATCH_PROGRESS);
       }

@@ -40,7 +40,7 @@ const ReviewRequest = ({ reviewerId }: Props) => {
         close();
         toast(SUCCESS_MESSAGE.API.REVIEW.REQUEST);
 
-        queryClient.refetchQueries("getReview");
+        queryClient.invalidateQueries("getReview");
       }
 
       return response;

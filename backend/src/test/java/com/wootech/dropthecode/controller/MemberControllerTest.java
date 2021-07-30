@@ -60,7 +60,7 @@ public class MemberControllerTest extends RestApiDocumentTest {
     @Test
     void membersMe() throws Exception {
         // given
-        MemberResponse memberResponse = new MemberResponse(1L, "air", "air.junseo@gmail.com", "s3://image url", Role.TEACHER);
+        MemberResponse memberResponse = new MemberResponse(1L, "air", "air.junseo@gmail.com", "s3://image url", "github url", Role.TEACHER);
         given(memberService.findByLoginMember(any())).willReturn(memberResponse);
 
         // when
@@ -128,6 +128,7 @@ public class MemberControllerTest extends RestApiDocumentTest {
                                 "seed@gmail.com",
                                 "seed",
                                 "s3://seed.jpg",
+                                "githubUrl",
                                 "배민 개발자",
                                 "열심히 가르쳐드리겠습니다.",
                                 3,
@@ -216,6 +217,7 @@ public class MemberControllerTest extends RestApiDocumentTest {
                 "seed@gmail.com",
                 "seed",
                 "s3://seed.jpg",
+                "githubUrl",
                 "배민 개발자",
                 "열심히 가르쳐드리겠습니다.",
                 3,

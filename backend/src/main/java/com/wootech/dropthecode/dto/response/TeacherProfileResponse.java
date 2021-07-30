@@ -30,6 +30,11 @@ public class TeacherProfileResponse {
     private final String imageUrl;
 
     /**
+     * Github Url
+     */
+    private final String githubUrl;
+
+    /**
      * 자기소개 제목
      */
     private final String title;
@@ -59,11 +64,12 @@ public class TeacherProfileResponse {
      */
     private final TechSpecResponse techSpec;
 
-    public TeacherProfileResponse(Long id, String email, String name, String imageUrl, String title, String content, Integer career, Integer sumReviewCount, Double averageReviewTime, TechSpecResponse techSpec) {
+    public TeacherProfileResponse(Long id, String email, String name, String imageUrl, String githubUrl, String title, String content, Integer career, Integer sumReviewCount, Double averageReviewTime, TechSpecResponse techSpec) {
         this.id = id;
         this.email = email;
         this.name = name;
         this.imageUrl = imageUrl;
+        this.githubUrl = githubUrl;
         this.title = title;
         this.content = content;
         this.career = career;
@@ -91,6 +97,7 @@ public class TeacherProfileResponse {
                 teacherProfile.getMember().getEmail(),
                 teacherProfile.getMember().getName(),
                 teacherProfile.getMember().getImageUrl(),
+                teacherProfile.getMember().getGithubUrl(),
                 teacherProfile.getTitle(),
                 teacherProfile.getContent(),
                 teacherProfile.getCareer(),
@@ -113,6 +120,10 @@ public class TeacherProfileResponse {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public String getGithubUrl() {
+        return githubUrl;
     }
 
     public String getTitle() {

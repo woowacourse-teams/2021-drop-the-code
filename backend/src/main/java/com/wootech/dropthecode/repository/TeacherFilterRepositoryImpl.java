@@ -36,7 +36,7 @@ public class TeacherFilterRepositoryImpl extends Querydsl4RepositorySupport impl
     public Page<TeacherProfile> findAll(List<Language> languages, List<Skill> skills, int career, Pageable pageable) {
         final Page<TeacherProfile> queryResults = findTeacherProfileIdsByPageable(languages, skills, career, pageable);
         final List<TeacherProfile> teacherProfiles = findAllByIds(queryResults, pageable);
-        return new PageImpl<>(teacherProfiles, pageable, queryResults.getTotalPages());
+        return new PageImpl<>(teacherProfiles, pageable, queryResults.getTotalElements());
     }
 
     private List<TeacherProfile> findAllByIds(Page<TeacherProfile> teacherProfiles, Pageable pageable) {

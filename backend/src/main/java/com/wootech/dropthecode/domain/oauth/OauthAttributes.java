@@ -11,7 +11,8 @@ public enum OauthAttributes {
                     String.valueOf(attributes.get("id")),
                     (String) attributes.get("email"),
                     (String) attributes.get("name"),
-                    (String) attributes.get("avatar_url")
+                    (String) attributes.get("avatar_url"),
+                    (String) attributes.get("html_url")
             );
         }
     },
@@ -23,7 +24,8 @@ public enum OauthAttributes {
                     (String) response.get("id"),
                     (String) response.get("email"),
                     (String) response.get("name"),
-                    (String) response.get("profile_image")
+                    (String) response.get("profile_image"),
+                    null
             );
         }
     },
@@ -34,7 +36,8 @@ public enum OauthAttributes {
                     String.valueOf(attributes.get("sub")),
                     (String) attributes.get("email"),
                     (String) attributes.get("name"),
-                    (String) attributes.get("picture")
+                    (String) attributes.get("picture"),
+                    null
             );
         }
     };

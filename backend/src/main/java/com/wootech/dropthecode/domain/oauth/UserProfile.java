@@ -8,16 +8,18 @@ public class UserProfile {
     private final String email;
     private final String name;
     private final String imageUrl;
+    private final String githubUrl;
 
-    public UserProfile(String oauthId, String email, String name, String imageUrl) {
+    public UserProfile(String oauthId, String email, String name, String imageUrl, String githubUrl) {
         this.oauthId = oauthId;
         this.email = email;
         this.name = name;
         this.imageUrl = imageUrl;
+        this.githubUrl = githubUrl;
     }
 
     public Member toMember() {
-        return new Member(oauthId, email, name, imageUrl, Role.STUDENT);
+        return new Member(oauthId, email, name, imageUrl, githubUrl, Role.STUDENT);
     }
 
     public String getOauthId() {
@@ -34,5 +36,9 @@ public class UserProfile {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public String getGithubUrl() {
+        return githubUrl;
     }
 }

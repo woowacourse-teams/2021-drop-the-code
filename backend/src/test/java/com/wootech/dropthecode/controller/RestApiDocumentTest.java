@@ -21,6 +21,7 @@ public abstract class RestApiDocumentTest {
     protected static final String NAME = "air";
     protected static final String EMAIL = "air.junseo@gmail.com";
     protected static final String IMAGE_URL = "https://ssl.pstatic.net/static/pwe/address/img_profile.png";
+    protected static final String GITHUB_URL = "https://github.com/";
     protected static final String STUDENT_ROLE = "STUDENT";
     protected static final String BEARER = "Bearer";
     protected static final String ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";

@@ -24,6 +24,11 @@ public class LoginResponse {
     private String imageUrl;
 
     /**
+     * 사용자 github 주소
+     */
+    private String githubUrl;
+
+    /**
      * 선생님 등록 여부(STUDENT, TEACHER)
      */
     private Role role;
@@ -46,11 +51,12 @@ public class LoginResponse {
     public LoginResponse() {
     }
 
-    public LoginResponse(Long id, String name, String email, String imageUrl, Role role, String tokenType, String accessToken, String refreshToken) {
+    public LoginResponse(Long id, String name, String email, String imageUrl, String githubUrl, Role role, String tokenType, String accessToken, String refreshToken) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.imageUrl = imageUrl;
+        this.githubUrl = githubUrl;
         this.role = role;
         this.tokenType = tokenType;
         this.accessToken = accessToken;
@@ -71,6 +77,10 @@ public class LoginResponse {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public String getGithubUrl() {
+        return githubUrl;
     }
 
     public Role getRole() {

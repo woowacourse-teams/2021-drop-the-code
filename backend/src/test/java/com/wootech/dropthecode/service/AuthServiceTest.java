@@ -60,7 +60,7 @@ class AuthServiceTest {
         given(jwtTokenProvider.validateToken(validAccessToken)).willReturn(true);
         given(jwtTokenProvider.getPayload(validAccessToken)).willReturn("1");
         given(memberService.findById(1L))
-                .willReturn(new Member(1L, "oauthId", "air", "air.junseo@gmail.com", "s3://image", Role.STUDENT, null));
+                .willReturn(new Member(1L, "oauthId", "air", "air.junseo@gmail.com", "s3://image", "github url", Role.STUDENT, null));
 
         // when
         LoginMember loginMember = authService.findMemberByToken(validAccessToken);

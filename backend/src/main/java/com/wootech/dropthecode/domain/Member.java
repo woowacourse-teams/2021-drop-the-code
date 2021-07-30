@@ -47,7 +47,7 @@ public class Member extends BaseEntity {
     }
 
     public Member(String oauthId, String email, String name, String imageUrl, Role role) {
-        this(null, oauthId, email, name, imageUrl, role, null);
+        this(null, oauthId, name, email, imageUrl, role, null);
     }
 
     public Member(String email, String name, String imageUrl, Role role) {

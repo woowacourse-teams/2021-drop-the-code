@@ -21,8 +21,8 @@ const AuthProvider = ({ children }: Props) => {
   const { revalidate } = useRevalidate();
 
   const queryClient = useQueryClient();
-  const logoutMutation = useMutation(() =>
-    revalidate(async () => {
+  const logoutMutation = useMutation(() => {
+    return revalidate(async () => {
       const response = await requestLogout();
 
       if (response.isSuccess) {
@@ -35,13 +35,13 @@ const AuthProvider = ({ children }: Props) => {
       }
 
       return response;
-    })
-  );
+    });
+  });
 
   const { data } = useQuery(
     "checkMember",
     async () => {
-      axios.defaults.headers.Authorization = `Bearer ${accessToken}`;
+      axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
       const response = await revalidate(() => checkMember());
 
       if (!response.isSuccess) {
@@ -77,7 +77,7 @@ const AuthProvider = ({ children }: Props) => {
     if (!data) return;
 
     login(data);
-  }, []);
+  }, [data]);
 
   return <AuthContext.Provider value={{ user: user, login, logout }}>{children}</AuthContext.Provider>;
 };

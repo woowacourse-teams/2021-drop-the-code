@@ -16,8 +16,6 @@ const LanguageList = ({ filterLanguage, filterSkills, onSetFilterLanguage, onSet
   // TODO: 텅빈화면
   if (languages?.length === 0) return <></>;
 
-  // 초기 메인페이지에서 필터 언어를 첫번째로 선택
-
   useEffect(() => {
     if (languages && !filterLanguage) onSetFilterLanguage(languages[0].language.name);
   }, []);

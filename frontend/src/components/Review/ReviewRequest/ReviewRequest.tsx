@@ -1,4 +1,4 @@
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 import { ReviewRequestFormData } from "types/review";
 
@@ -23,10 +23,13 @@ interface Props {
 
 const ReviewRequest = ({ reviewerId }: Props) => {
   const { user } = useAuthContext();
+  const { revalidate } = useRevalidate();
+
   const { close } = useModalContext();
   const toast = useToastContext();
 
-  const { revalidate } = useRevalidate();
+  const queryClient = useQueryClient();
+
   const mutation = useMutation((reviewRequestFormData: ReviewRequestFormData) =>
     revalidate(async () => {
       const response = await requestReview(reviewRequestFormData);
@@ -36,6 +39,8 @@ const ReviewRequest = ({ reviewerId }: Props) => {
       } else {
         close();
         toast(SUCCESS_MESSAGE.API.REVIEW.REQUEST);
+
+        queryClient.refetchQueries("getReview");
       }
 
       return response;

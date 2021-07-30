@@ -1,5 +1,5 @@
 import { Suspense, useState } from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 import { ReviewerRegisterFormData } from "types/reviewer";
 
@@ -25,8 +25,9 @@ const ReviewerRegister = () => {
   const [filterLanguage, setFilterLanguage] = useState<string | null>(null);
   const [specs, setSpecs] = useState<Specs>({});
 
-  const { revalidate } = useRevalidate();
+  const queryClient = useQueryClient();
 
+  const { revalidate } = useRevalidate();
   const toast = useToastContext();
 
   const mutation = useMutation((reviewerRegisterFormData: ReviewerRegisterFormData) =>
@@ -36,7 +37,10 @@ const ReviewerRegister = () => {
       if (!response.isSuccess) {
         toast(response.error.message);
       } else {
-        toast(SUCCESS_MESSAGE.API.REVIEW.REQUEST);
+        queryClient.invalidateQueries("getReviewList");
+        queryClient.invalidateQueries("checkMember");
+
+        toast(SUCCESS_MESSAGE.API.REVIEWER.REGISTER);
       }
 
       return response;

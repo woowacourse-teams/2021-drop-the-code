@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 import styled from "styled-components";
 import { Progress } from "types/review";
@@ -39,6 +39,8 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
   const toast = useToastContext();
   const { revalidate } = useRevalidate();
 
+  const queryClient = useQueryClient();
+
   const { data } = useQuery("getReview", async () => {
     const response = await getReview(reviewId);
 
@@ -58,6 +60,8 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
       if (!response.isSuccess) {
         toast(response.error.message);
       } else {
+        queryClient.refetchQueries("getReview");
+
         toast(SUCCESS_MESSAGE.API.REVIEW.PATCH_PROGRESS);
       }
 

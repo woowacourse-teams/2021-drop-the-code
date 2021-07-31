@@ -3,7 +3,7 @@ import { User } from "types/auth";
 import apiClient from "apis/apiClient";
 
 export const checkMember = () => {
-  return apiClient.get<User>("/members/me");
+  return apiClient.get<Omit<User, "accessToken" | "refreshToken">>("/members/me");
 };
 
 export const oauthLogin = (queryString: string) => {

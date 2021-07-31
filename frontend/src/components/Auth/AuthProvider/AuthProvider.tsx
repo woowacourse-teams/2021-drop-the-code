@@ -8,6 +8,7 @@ import { checkMember, requestLogout } from "apis/auth";
 import { AuthContext } from "hooks/useAuthContext";
 import useLocalStorage from "hooks/useLocalStorage";
 import useRevalidate from "hooks/useRevalidate";
+import { LOCAL_STORAGE_KEY } from "utils/constants/key";
 
 export interface Props {
   children: ReactNode;
@@ -15,12 +16,48 @@ export interface Props {
 
 const AuthProvider = ({ children }: Props) => {
   const [user, setUser] = useState<User | null>(null);
-  const [accessToken, setAccessToken, removeAccessToken] = useLocalStorage("accessToken", "");
-  const [refreshToken, setRefreshToken, removeRefreshToken] = useLocalStorage("refreshToken", "");
-
+  const [accessToken, setAccessToken, removeAccessToken] = useLocalStorage<string | null>(
+    LOCAL_STORAGE_KEY.ACCESS_TOKEN,
+    null
+  );
+  const [refreshToken, setRefreshToken, removeRefreshToken] = useLocalStorage<string | null>(
+    LOCAL_STORAGE_KEY.REFRESH_TOKEN,
+    null
+  );
   const { revalidate } = useRevalidate();
-
   const queryClient = useQueryClient();
+
+  axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+
+  const { data } = useQuery(
+    "checkMember",
+    async () => {
+      const response = await revalidate(() => checkMember());
+
+      if (!response.isSuccess) {
+        return;
+      }
+
+      return { ...response.data };
+    },
+    {
+      refetchInterval: false,
+      refetchIntervalInBackground: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  const login = (user: User) => {
+    const { accessToken, refreshToken } = user;
+
+    setAccessToken(accessToken);
+    setRefreshToken(refreshToken);
+
+    setUser(user);
+  };
+
   const logoutMutation = useMutation(() => {
     return revalidate(async () => {
       const response = await requestLogout();
@@ -38,45 +75,19 @@ const AuthProvider = ({ children }: Props) => {
     });
   });
 
-  const { data } = useQuery(
-    "checkMember",
-    async () => {
-      axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-      const response = await revalidate(() => checkMember());
-
-      if (!response.isSuccess) {
-        return;
-      }
-
-      return { ...response.data, accessToken, refreshToken };
-    },
-    {
-      refetchInterval: false,
-      refetchIntervalInBackground: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      refetchOnWindowFocus: false,
-    }
-  );
-
-  const login = (user: User) => {
-    const { accessToken, refreshToken } = user;
-    axios.defaults.headers.Authorization = `Bearer ${accessToken}`;
-
-    setAccessToken(accessToken);
-    setRefreshToken(refreshToken);
-
-    setUser(user);
-  };
-
   const logout = () => {
     logoutMutation.mutate();
   };
 
   useEffect(() => {
-    if (!data) return;
+    axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+  }, [accessToken]);
 
-    login(data);
+  useEffect(() => {
+    if (!data) return;
+    if (!accessToken || !refreshToken) return;
+
+    login({ ...data, accessToken, refreshToken });
   }, [data]);
 
   return <AuthContext.Provider value={{ user: user, login, logout }}>{children}</AuthContext.Provider>;

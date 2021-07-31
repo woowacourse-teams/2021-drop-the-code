@@ -68,7 +68,7 @@ const ReviewerInfoContainer = ({ reviewerId }: Props) => {
                 )}
               </Button>
             </FlexCenter>
-            {isOpen && <ReviewList id={reviewerId} mode={"TEACHER"} />}
+            {isOpen && <ReviewList id={reviewerId} mode="TEACHER" />}
           </div>
         </Flex>
       )}

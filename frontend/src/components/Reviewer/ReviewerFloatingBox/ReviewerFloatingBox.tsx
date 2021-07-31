@@ -55,6 +55,8 @@ const ReviewerFloatingBox = ({ reviewer }: Props) => {
 
   const { user } = useAuthContext();
 
+  console.log(id, user?.id);
+
   return (
     <Inner>
       <ProfileWrapper>

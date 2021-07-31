@@ -1,7 +1,7 @@
 import { User } from "types/auth";
 
 export const studentAuth: User = {
-  id: 61,
+  id: 2,
   name: "서지환",
   email: "seojihwan213@naver.com",
   imageUrl: "https://avatars.githubusercontent.com/u/52202474?v=4",
@@ -13,7 +13,7 @@ export const studentAuth: User = {
 };
 
 export const teacherAuth: User = {
-  id: 61,
+  id: 1,
   name: "서지환",
   email: "seojihwan213@naver.com",
   imageUrl: "https://avatars.githubusercontent.com/u/52202474?v=4",

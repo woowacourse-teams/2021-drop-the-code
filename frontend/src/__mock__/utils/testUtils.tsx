@@ -11,7 +11,7 @@ import GlobalStyle from "components/GlobalStyle/GlobalStyle";
 import Loading from "components/Loading/Loading";
 import ModalProvider from "components/ModalProvider/ModalProvider";
 import ToastProvider from "components/ToastProvider/ToastProvider";
-import { THEME } from "utils/constants/theme";
+import { THEME } from "theme/theme";
 
 export const queryClient = new QueryClient({
   defaultOptions: {

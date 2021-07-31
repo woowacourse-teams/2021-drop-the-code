@@ -20,7 +20,8 @@ interface ToastState extends Options {
 const Ul = styled.ul`
   display: flex;
   position: fixed;
-  bottom: 0;
+  left: 1.5%;
+  bottom: 3%;
   flex-direction: column;
   z-index: ${({ theme }) => theme.common.zIndex.toast};
 

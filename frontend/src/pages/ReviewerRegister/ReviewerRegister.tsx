@@ -1,5 +1,6 @@
 import { Suspense, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { useHistory } from "react-router-dom";
 
 import { ReviewerRegisterFormData } from "types/reviewer";
 
@@ -14,6 +15,7 @@ import { Flex } from "components/shared/Flexbox/Flexbox";
 import useRevalidate from "hooks/useRevalidate";
 import useToastContext from "hooks/useToastContext";
 import { ERROR_MESSAGE, PLACE_HOLDER, SUCCESS_MESSAGE } from "utils/constants/message";
+import { PATH } from "utils/constants/path";
 import { STANDARD } from "utils/constants/standard";
 import reviewerRegisterValidators from "utils/validators/reviewerRegisterValidators";
 
@@ -25,6 +27,7 @@ const ReviewerRegister = () => {
   const [filterLanguage, setFilterLanguage] = useState<string | null>(null);
   const [specs, setSpecs] = useState<Specs>({});
 
+  const history = useHistory();
   const queryClient = useQueryClient();
 
   const { revalidate } = useRevalidate();
@@ -35,7 +38,7 @@ const ReviewerRegister = () => {
       const response = await registerReviewer(reviewerRegisterFormData);
 
       if (!response.isSuccess) {
-        toast(response.error.message);
+        toast(response.error.message, { type: "error" });
       } else {
         queryClient.invalidateQueries("getReviewList");
         queryClient.invalidateQueries("checkMember");
@@ -51,13 +54,13 @@ const ReviewerRegister = () => {
 
   return (
     <>
-      <h2 css={{ fontSize: "1.25rem", fontWeight: 600 }}>리뷰어 등록</h2>
+      <h2>리뷰어 등록</h2>
       <FormProvider
         submit={async ({ career, title, content }) => {
           const techSpecs = Object.entries(specs).map(([language, skills]) => ({ language, skills }));
 
           if (techSpecs.length === 0) {
-            toast(ERROR_MESSAGE.VALIDATON.REVIEWER_REGISTER.TECH_SPEC);
+            toast(ERROR_MESSAGE.VALIDATON.REVIEWER_REGISTER.TECH_SPEC, { type: "error" });
 
             return;
           }
@@ -68,6 +71,8 @@ const ReviewerRegister = () => {
             title,
             content,
           });
+
+          history.push(PATH.MAIN);
         }}
         validators={reviewerRegisterValidators}
         css={{ marginTop: "1.25rem", width: "100%" }}

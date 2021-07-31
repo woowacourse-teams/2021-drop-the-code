@@ -1,15 +1,9 @@
-import { studentAuth } from "__mock__/data/auth";
-import { reviews } from "__mock__/data/reviews";
-import { mockingStudentAuth, mockingTeacherAuth } from "__mock__/utils/mockingAuth";
+import { mockingStudentAuth } from "__mock__/utils/mockingAuth";
 import { mockingToken } from "__mock__/utils/mockingToken";
 import { render, screen, fireEvent } from "__mock__/utils/testUtils";
 import ReviewRequest from "components/Review/ReviewRequest/ReviewRequest";
 
-const { getByRole, findByRole, findByText } = screen;
-
-const mockReviewRequest = () => {
-  render(<ReviewRequest reviewerId={1} />);
-};
+const { getByRole, findByRole } = screen;
 
 beforeEach(() => {
   mockingToken();
@@ -31,7 +25,7 @@ describe("리뷰 요청 컴포넌트 테스트", () => {
     expect(submitButton).toBeDisabled();
   });
 
-  it("prUrl이 유효하지 않은 경우 리뷰를 요청할 수 없다.", async () => {
+  it("pr주소가 유효하지 않은 경우 리뷰를 요청할 수 없다.", async () => {
     const titleInput = await findByRole("textbox", { name: "타이틀" });
     const prUrlInput = getByRole("textbox", { name: "리뷰 요청 Pull Request주소" });
     const contentTextarea = getByRole("textbox", { name: "본문" });

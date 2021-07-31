@@ -44,10 +44,10 @@ const History = () => {
 
   const myTabs: { name: string; mode: Role }[] = isReviewer
     ? [
-        { name: "내가 맡은 리뷰", mode: "TEACHER" },
-        { name: "내가 요청한 리뷰", mode: "STUDENT" },
+        { name: "맡은 리뷰", mode: "TEACHER" },
+        { name: "요청한 리뷰", mode: "STUDENT" },
       ]
-    : [{ name: "내가 요청한 리뷰", mode: "STUDENT" }];
+    : [{ name: "요청한 리뷰", mode: "STUDENT" }];
 
   useEffect(() => {
     setActiveTab(myTabs[0].mode);
@@ -55,8 +55,15 @@ const History = () => {
 
   return (
     <>
-      <h2 css={{ fontSize: "1.25rem", fontWeight: 600 }}>히스토리</h2>
-      <ul css={{ display: "flex", borderBottom: `1px solid ${COLOR.GRAY_400}`, marginBottom: "1.25rem" }}>
+      <h2>히스토리</h2>
+      <ul
+        css={{
+          display: "flex",
+          height: "1.875rem",
+          borderBottom: `1px solid ${COLOR.GRAY_400}`,
+          marginBottom: "1.25rem",
+        }}
+      >
         {myTabs.map(({ name, mode }) => (
           <Item key={name} active={mode === activeTab}>
             <button

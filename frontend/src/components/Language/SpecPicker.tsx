@@ -14,11 +14,11 @@ const SpecButton = styled(Button)`
   margin: 0.5rem 0.5rem 0 0;
 `;
 
-const Close = styled(CloseSvg)`
+const Close = styled(CloseSvg)<{ $isLanguage: boolean }>`
   width: 0.625rem;
   height: 0.625rem;
-  stroke: ${({ isLanguage, theme }) => css`
-    ${isLanguage ? theme.common.color.primary : COLOR.GREEN_400}
+  stroke: ${({ $isLanguage, theme }) => css`
+    ${$isLanguage ? theme.common.color.primary : COLOR.GREEN_400}
   `};
   stroke-width: 0.125rem;
 `;
@@ -144,7 +144,7 @@ const SpecPicker = ({ filterLanguage, specs, onSetFilterLanguage, onSetSpecs }: 
                     }}
                   >
                     {`${spec} `}
-                    <Close isLanguage={isLanguage} />
+                    <Close $isLanguage={isLanguage} />
                   </SpecButton>
                 );
               })

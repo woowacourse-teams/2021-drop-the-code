@@ -16,7 +16,11 @@ const Inner = styled(Flex)`
   width: 100%;
   padding: 1.25rem;
   border-radius: ${({ theme }) => theme.common.shape.rounded};
-  box-shadow: 0.4375rem 0.375rem 0.375rem rgb(0 0 0 / 10%);
+  box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
+
+  :hover {
+    background-color: ${COLOR.GRAY_100};
+  }
 `;
 
 const ChipWrapper = styled(Flex)`

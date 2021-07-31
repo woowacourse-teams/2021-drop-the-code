@@ -9,7 +9,7 @@ const ReviewDetail = () => {
 
   return (
     <>
-      <h2 css={{ fontSize: "1.25rem", fontWeight: 600 }}>리뷰 상세</h2>
+      <h2>리뷰 상세</h2>
       <Suspense fallback={<Loading />}>
         <ReviewInfoContainer reviewId={Number(reviewId)} />
       </Suspense>

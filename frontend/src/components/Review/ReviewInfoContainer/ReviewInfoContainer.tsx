@@ -53,12 +53,12 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
     return response.data;
   });
 
-  const mutation = useMutation(({ id, progress }: { id: number; progress: Progress }) => {
+  const mutation = useMutation(({ id, progress }: { id: number; progress: string }) => {
     return revalidate(async () => {
       const response = await patchReviewProgress(id, progress);
 
       if (!response.isSuccess) {
-        toast(response.error.message);
+        toast(response.error.message, { type: "error" });
       } else {
         queryClient.invalidateQueries("getReview");
 
@@ -71,13 +71,22 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
 
   if (!data) return <></>;
 
-  const isFinished = data.progress === "FINISHED";
+  const currentProgress = data.progress;
+  const isFinished = currentProgress === "FINISHED";
   const isAnonymous = !user || ![data.studentProfile.id, data.teacherProfile.id].includes(user.id);
 
   const [buttonText, disabled] =
-    user?.role === "STUDENT"
-      ? [user?.id === data.studentProfile.id && "리뷰 종료", data.progress !== "ON_GOING"]
-      : [user?.id === data.teacherProfile.id && "리뷰 완료", data.progress !== "TEACHER_COMPLETED"];
+    user?.id === data.studentProfile.id
+      ? [user?.id === data.studentProfile.id && "리뷰 종료", currentProgress !== "TEACHER_COMPLETED"]
+      : [user?.id === data.teacherProfile.id && "리뷰 완료", currentProgress !== "ON_GOING"];
+
+  const nextProgressData: { [key in Progress]: string } = {
+    ON_GOING: "complete",
+    TEACHER_COMPLETED: "finish",
+    FINISHED: "finish",
+  };
+
+  const nextProgress = nextProgressData[currentProgress];
 
   return (
     <>
@@ -97,28 +106,26 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
                 <p css={{ width: "5.625rem" }}>{data.createdAt.join(".")}</p>
               </Profile>
             </Flex>
-            <p>{data.progress !== "FINISHED" ? "진행중" : "완료"}</p>
+            <p>{data.progress === "FINISHED" ? "완료" : data.progress === "ON_GOING" ? "리뷰 준비중" : "확인중"}</p>
           </FlexAlignCenter>
         }
       >
         <Flex css={{ flexDirection: "column" }}>
-          <p css={{ fontSize: "14px", marginBottom: "50px" }}>{data.content}</p>
+          <p css={{ fontSize: "14px", marginBottom: "3.125rem", minHeight: "15.625rem" }}>{data.content}</p>
           <PrUrl href={data.prUrl} target="_blank" rel="noopener">
             PR 링크 바로가기
           </PrUrl>
         </Flex>
       </ContentBox>
-      <div css={{ width: "100%", marginBottom: "3.125rem" }}>
-        <img src={Notification} alt={ALT.REVIEW_DETAIL_NOTIFICATION} />
-      </div>
+      <img src={Notification} alt={ALT.REVIEW_DETAIL_NOTIFICATION} css={{ width: "350px", marginBottom: "3.125rem" }} />
       <FlexCenter css={{ marginBottom: "6.25rem" }}>
-        {!isFinished && !isAnonymous && (
+        {!isFinished && !isAnonymous && buttonText && (
           <Button
             disabled={disabled}
             onClick={() => {
               if (isFinished || isAnonymous || disabled) return;
 
-              mutation.mutate({ id: reviewId, progress: data.progress });
+              mutation.mutate({ id: reviewId, progress: nextProgress });
             }}
           >
             {buttonText}

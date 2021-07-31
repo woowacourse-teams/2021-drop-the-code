@@ -22,7 +22,7 @@ const GlobalStyle = createGlobalStyle`
 
   * {
     box-sizing: border-box;
-    word-break: break-word;
+    word-break: break-all;
   }
 
   button {
@@ -37,7 +37,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   h2 {
-    font-size: 1.25rem;
+    font-size: 1.625rem;
     font-weight: 600;
     margin: 2.5rem 0;
   }

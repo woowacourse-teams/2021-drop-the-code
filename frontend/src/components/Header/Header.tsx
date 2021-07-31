@@ -38,12 +38,12 @@ const Header = () => {
         </NavLink>
       ))}
       {!user && (
-        <Button themeColor="secondary" hover={false} css={{ fontWeight: 900 }} onClick={() => open(<GithubOAuth />)}>
+        <Button themeColor="primary" hover={false} css={{ fontWeight: 900 }} onClick={() => open(<GithubOAuth />)}>
           로그인
         </Button>
       )}
       {!!user && (
-        <Button themeColor="secondary" hover={false} css={{ fontWeight: 900 }} onClick={() => logout()}>
+        <Button themeColor="primary" hover={false} css={{ fontWeight: 900 }} onClick={() => logout()}>
           로그아웃
         </Button>
       )}

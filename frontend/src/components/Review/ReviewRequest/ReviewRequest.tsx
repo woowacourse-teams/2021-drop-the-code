@@ -51,7 +51,7 @@ const ReviewRequest = ({ reviewerId }: Props) => {
 
   return (
     <div css={{ width: "40.625rem", margin: "0 auto" }}>
-      <h2 css={{ fontSize: "1.25rem", fontWeight: 600, margin: "20px 0 40px", textAlign: "center" }}>리뷰 신청</h2>
+      <h2 css={{ fontSize: "1.25rem", fontWeight: 600, margin: "1.25rem 0 2.5rem", textAlign: "center" }}>리뷰 신청</h2>
       <FormProvider
         submit={async ({ title, prUrl, content }) => {
           if (!user) return;

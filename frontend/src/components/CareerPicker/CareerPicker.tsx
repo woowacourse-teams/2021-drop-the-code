@@ -29,11 +29,11 @@ const Career = styled.input`
     cursor: pointer;
   }
   ::-webkit-slider-thumb {
-    margin-top: -10px;
-    width: 15px;
-    height: 20px;
+    margin-top: -0.625rem;
+    width: 0.9375rem;
+    height: 1.25rem;
     background: ${({ theme }) => theme.common.color.primary};
-    border-radius: 5px;
+    border-radius: 0.3125rem;
     cursor: pointer;
     -webkit-appearance: none;
   }
@@ -42,12 +42,15 @@ const Career = styled.input`
 const DataList = styled.datalist`
   display: flex;
   justify-content: space-between;
-  width: 92%;
-  padding: 0 2px;
+  width: 95%;
+  padding: 0 1px;
   margin-top: 0.3125rem;
 
   > option {
+    display: flex;
+    justify-content: center;
     font-size: 14px;
+    width: 22px;
     color: ${COLOR.GRAY_600};
   }
 `;
@@ -73,8 +76,8 @@ const CareerPicker = ({ filterCareer, onSetFilterCareer }: Props) => {
         type="range"
         value={career}
         min={0}
-        max={5}
-        step={1}
+        max={15}
+        step={3}
         list="tickmarks"
         onChange={({ target }) => {
           const { valueAsNumber } = target;
@@ -83,12 +86,9 @@ const CareerPicker = ({ filterCareer, onSetFilterCareer }: Props) => {
         }}
       />
       <DataList id="tickmarks">
-        <option>0</option>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
+        {[0, 3, 6, 9, 12, 15].map((val) => (
+          <option key={val}>{val}</option>
+        ))}
       </DataList>
       <ResultWrapper>
         <CareerText>{career ? `${career}년 이상` : "경력 무관"}</CareerText>

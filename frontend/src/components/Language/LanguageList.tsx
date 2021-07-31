@@ -41,7 +41,7 @@ const LanguageList = ({ filterLanguage, filterSkills, onSetFilterLanguage, onSet
           ))}
         </ul>
       </Flex>
-      <Flex css={{ marginBottom: "15px" }}>
+      <Flex css={{ marginBottom: "0.9375rem" }}>
         <FlexAlignCenter css={{ width: "5.625rem", fontWeight: 900 }}>기술 스택</FlexAlignCenter>
         <ul css={{ display: "flex" }}>
           {languages

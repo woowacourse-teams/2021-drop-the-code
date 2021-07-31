@@ -6,7 +6,7 @@ import { COLOR } from "utils/constants/color";
 const Inner = styled(Flex)`
   flex-direction: column;
   padding: 2.5rem;
-  box-shadow: 0.4375rem 0.375rem 0.375rem rgb(0 0 0 / 10%);
+  box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
   border-radius: ${({ theme }) => theme.common.shape.rounded};
 `;
 
@@ -29,9 +29,9 @@ export interface Props {
   children?: React.ReactNode;
 }
 
-const ContextBox = ({ title, children }: Props) => {
+const ContextBox = ({ title, children, ...props }: Props) => {
   return (
-    <Inner>
+    <Inner {...props}>
       <Title>{title}</Title>
       <Content>{children}</Content>
     </Inner>

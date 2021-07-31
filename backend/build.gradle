@@ -56,6 +56,8 @@ dependencies {
     testImplementation 'com.h2database:h2:1.4.199'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation 'io.rest-assured:rest-assured:4.4.0'
+
 
     // Spring Auto REST Docs
     testImplementation 'capital.scalable:spring-auto-restdocs-core:2.0.11'

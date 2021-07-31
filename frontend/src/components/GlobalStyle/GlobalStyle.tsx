@@ -3,7 +3,6 @@ import normalize from "styled-normalize";
 import reset from "styled-reset";
 
 import { COLOR } from "utils/constants/color";
-import { LAYOUT } from "utils/constants/size";
 
 const GlobalStyle = createGlobalStyle`
   ${normalize}
@@ -49,7 +48,7 @@ const GlobalStyle = createGlobalStyle`
   main {
     padding-top: 6rem; 
     width: 100%; 
-    max-width: ${LAYOUT.LG}; 
+    max-width: ${({ theme }) => theme.common.layout.lg}; 
     margin: 0 auto; 
   }
 `;

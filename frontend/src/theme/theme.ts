@@ -61,6 +61,11 @@ const common: Common = {
     header: 88,
     menuItem: 77,
   },
+  layout: {
+    sm: "480px",
+    md: "768px",
+    lg: "1024px",
+  },
 };
 
 export const THEME: DefaultTheme = {

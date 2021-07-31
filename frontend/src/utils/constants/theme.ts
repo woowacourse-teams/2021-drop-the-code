@@ -23,16 +23,16 @@ const components: Components = {
   },
   chip: {
     primary: {
-      bg: COLOR.PURPLE_600,
+      bg: COLOR.INDIGO_500,
       color: COLOR.BLACK,
     },
-    career: { bg: COLOR.RED_350, color: COLOR.BLACK },
+    career: { bg: "rgb(197, 202, 233)", color: COLOR.BLACK },
     count: {
-      bg: COLOR.GREEN_350,
+      bg: "rgb(225, 190, 231)",
       color: COLOR.BLACK,
     },
     averageReview: {
-      bg: COLOR.TEAL_350,
+      bg: "rgb(248, 187, 208)",
       color: COLOR.BLACK,
     },
   },

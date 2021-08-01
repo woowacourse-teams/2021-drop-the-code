@@ -14,15 +14,19 @@ import com.wootech.dropthecode.domain.oauth.UserProfile;
 import com.wootech.dropthecode.dto.request.AuthorizationRequest;
 import com.wootech.dropthecode.dto.response.LoginResponse;
 import com.wootech.dropthecode.dto.response.OauthTokenResponse;
+import com.wootech.dropthecode.exception.OauthTokenException;
 import com.wootech.dropthecode.repository.MemberRepository;
 
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import reactor.core.publisher.Mono;
 
 @Service
 public class OauthService {
@@ -62,19 +66,31 @@ public class OauthService {
     }
 
     private OauthTokenResponse getToken(AuthorizationRequest authorizationRequest, OauthProvider oauthProvider) {
-        return WebClient.create()
-                        .post()
-                        .uri(oauthProvider.getTokenUrl())
-                        .headers(header -> {
-                            header.setBasicAuth(oauthProvider.getClientId(), oauthProvider.getClientSecret());
-                            header.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-                            header.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-                            header.setAcceptCharset(Collections.singletonList(StandardCharsets.UTF_8));
-                        })
-                        .bodyValue(tokenRequest(authorizationRequest, oauthProvider))
-                        .retrieve()
-                        .bodyToMono(OauthTokenResponse.class)
-                        .block();
+        Mono<OauthTokenResponse> tokenResponse = WebClient.create()
+                                                          .post()
+                                                          .uri(oauthProvider.getTokenUrl())
+                                                          .headers(header -> {
+                                                              header.setBasicAuth(oauthProvider.getClientId(), oauthProvider
+                                                                      .getClientSecret());
+                                                              header.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+                                                              header.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+                                                              header.setAcceptCharset(Collections.singletonList(StandardCharsets.UTF_8));
+                                                          })
+                                                          .bodyValue(tokenRequest(authorizationRequest, oauthProvider))
+                                                          .retrieve()
+                                                          .onStatus(httpStatus -> httpStatus.is4xxClientError(), clientResponse -> {
+                                                              System.out.println("exception occur");
+                                                              throw new OauthTokenException("Exception");
+                                                          })
+                                                          .onStatus(httpStatus -> httpStatus.is2xxSuccessful(), clientResponse -> {
+                                                              System.out.println("success");
+                                                              throw new OauthTokenException("Success");
+                                                          })
+                                                          .bodyToMono(OauthTokenResponse.class);
+
+        OauthTokenResponse block = tokenResponse.block();
+        System.out.println("asdf");
+        return tokenResponse.block();
     }
 
     private MultiValueMap<String, String> tokenRequest(AuthorizationRequest authorizationRequest, OauthProvider oauthProvider) {
@@ -91,6 +107,9 @@ public class OauthService {
                         .uri(oauthProvider.getUserInfoUrl())
                         .headers(header -> header.setBearerAuth(accessToken.getAccessToken()))
                         .retrieve()
+                        .onStatus(HttpStatus::is4xxClientError, clientResponse -> {
+                            throw new OauthTokenException("유효하지 않은 토큰 요청 정보가 포함되어 있습니다.");
+                        })
                         .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
                         .block();
     }

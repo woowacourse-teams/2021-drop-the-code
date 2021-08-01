@@ -4,6 +4,7 @@ import com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils;
 import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.dto.response.AccessTokenResponse;
 import com.wootech.dropthecode.dto.response.LoginResponse;
+import com.wootech.dropthecode.exception.OauthTokenException;
 import com.wootech.dropthecode.exception.AuthorizationException;
 import com.wootech.dropthecode.exception.OauthProviderNameException;
 import com.wootech.dropthecode.service.OauthService;
@@ -89,6 +90,27 @@ class AuthControllerTest extends RestApiDocumentTest {
         resultAction.andExpect(status().isBadRequest())
                     .andExpect(result -> assertEquals("유효하지 않은 Oauth Provider입니다.", result.getResolvedException()
                                                                                           .getMessage()));
+    }
+
+    @Test
+    @DisplayName("Oauth Access Token 요청 시 포함된 정보가 유효하지 않은 경우 - client_id, client_secret, redirect_url, authorization code")
+    void invalidOauthTokenRequest() throws Exception {
+        // given
+        doThrow(new OauthTokenException("유효하지 않은 토큰 요청 정보가 포함되어 있습니다."))
+                .when(oauthService).login(any());
+
+        //when
+        ResultActions resultAction = this.failRestDocsMockMvc.perform(
+                get("/login/oauth?providerName=" + GITHUB + "&code=" + "invalid")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        //then
+        resultAction.andExpect(status().isBadRequest())
+                    .andExpect(
+                            result -> assertEquals("유효하지 않은 토큰 요청 정보가 포함되어 있습니다.", result.getResolvedException().getMessage())
+                    );
     }
 
     @Test

@@ -13,6 +13,7 @@ import useAuthContext from "hooks/useAuthContext";
 import useModalContext from "hooks/useModalContext";
 import useRevalidate from "hooks/useRevalidate";
 import useToastContext from "hooks/useToastContext";
+import { QUERY_KEY } from "utils/constants/key";
 import { PLACE_HOLDER, SUCCESS_MESSAGE } from "utils/constants/message";
 import { STANDARD } from "utils/constants/standard";
 import reviewRequestValidators from "utils/validators/reviewRequestValidators";
@@ -40,7 +41,7 @@ const ReviewRequest = ({ reviewerId }: Props) => {
         close();
         toast(SUCCESS_MESSAGE.API.REVIEW.REQUEST);
 
-        queryClient.invalidateQueries("getReview");
+        queryClient.invalidateQueries(QUERY_KEY.GET_REVIEW);
       }
 
       return response;

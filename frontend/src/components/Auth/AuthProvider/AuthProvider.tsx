@@ -8,7 +8,7 @@ import { checkMember, requestLogout } from "apis/auth";
 import { AuthContext } from "hooks/useAuthContext";
 import useLocalStorage from "hooks/useLocalStorage";
 import useRevalidate from "hooks/useRevalidate";
-import { LOCAL_STORAGE_KEY } from "utils/constants/key";
+import { LOCAL_STORAGE_KEY, QUERY_KEY } from "utils/constants/key";
 
 export interface Props {
   children: ReactNode;
@@ -30,7 +30,7 @@ const AuthProvider = ({ children }: Props) => {
   axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
   const { data } = useQuery(
-    "checkMember",
+    QUERY_KEY.CHECK_MEMBER,
     async () => {
       const response = await revalidate(() => checkMember());
 
@@ -63,7 +63,7 @@ const AuthProvider = ({ children }: Props) => {
       const response = await requestLogout();
 
       if (response.isSuccess) {
-        queryClient.invalidateQueries("oauthLogin");
+        queryClient.invalidateQueries(QUERY_KEY.OAUTH_LOGIN);
 
         removeAccessToken();
         removeRefreshToken();

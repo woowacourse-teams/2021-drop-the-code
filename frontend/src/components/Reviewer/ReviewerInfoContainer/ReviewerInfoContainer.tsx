@@ -13,6 +13,7 @@ import ContentBox from "components/shared/ContentBox/ContentBox";
 import { Flex, FlexCenter } from "components/shared/Flexbox/Flexbox";
 import useToastContext from "hooks/useToastContext";
 import { COLOR } from "utils/constants/color";
+import { QUERY_KEY } from "utils/constants/key";
 
 interface Props {
   reviewerId: number;
@@ -28,7 +29,7 @@ const ReviewerInfoContainer = ({ reviewerId }: Props) => {
   const [isOpen, setOpen] = useState(false);
   const toast = useToastContext();
 
-  const { data } = useQuery("getReviewer", async () => {
+  const { data } = useQuery([QUERY_KEY.GET_REVIEWER, reviewerId], async () => {
     const response = await getReviewer(reviewerId);
 
     if (!response.isSuccess) {

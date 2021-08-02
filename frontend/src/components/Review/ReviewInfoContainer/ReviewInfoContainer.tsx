@@ -13,6 +13,7 @@ import useAuthContext from "hooks/useAuthContext";
 import useRevalidate from "hooks/useRevalidate";
 import useToastContext from "hooks/useToastContext";
 import { COLOR } from "utils/constants/color";
+import { QUERY_KEY } from "utils/constants/key";
 import { ALT, SUCCESS_MESSAGE } from "utils/constants/message";
 
 const Title = styled.p`
@@ -41,7 +42,7 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
 
   const queryClient = useQueryClient();
 
-  const { data } = useQuery("getReview", async () => {
+  const { data } = useQuery([QUERY_KEY.GET_REVIEW, reviewId], async () => {
     const response = await getReview(reviewId);
 
     if (!response.isSuccess) {
@@ -60,7 +61,7 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
       if (!response.isSuccess) {
         toast(response.error.message, { type: "error" });
       } else {
-        queryClient.invalidateQueries("getReview");
+        queryClient.invalidateQueries(QUERY_KEY.GET_REVIEW);
 
         toast(SUCCESS_MESSAGE.API.REVIEW.PATCH_PROGRESS);
       }

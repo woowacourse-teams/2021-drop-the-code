@@ -14,6 +14,7 @@ import Loading from "components/Loading/Loading";
 import { Flex } from "components/shared/Flexbox/Flexbox";
 import useRevalidate from "hooks/useRevalidate";
 import useToastContext from "hooks/useToastContext";
+import { QUERY_KEY } from "utils/constants/key";
 import { ERROR_MESSAGE, PLACE_HOLDER, SUCCESS_MESSAGE } from "utils/constants/message";
 import { PATH } from "utils/constants/path";
 import { STANDARD } from "utils/constants/standard";
@@ -40,8 +41,8 @@ const ReviewerRegister = () => {
       if (!response.isSuccess) {
         toast(response.error.message, { type: "error" });
       } else {
-        queryClient.invalidateQueries("getReviewList");
-        queryClient.invalidateQueries("checkMember");
+        queryClient.invalidateQueries(QUERY_KEY.GET_REVIEWER_LIST);
+        queryClient.invalidateQueries(QUERY_KEY.CHECK_MEMBER);
 
         toast(SUCCESS_MESSAGE.API.REVIEWER.REGISTER);
       }

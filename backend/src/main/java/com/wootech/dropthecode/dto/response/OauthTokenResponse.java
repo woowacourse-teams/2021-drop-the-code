@@ -1,5 +1,7 @@
 package com.wootech.dropthecode.dto.response;
 
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class OauthTokenResponse {
@@ -24,5 +26,9 @@ public class OauthTokenResponse {
 
     public String getTokenType() {
         return tokenType;
+    }
+
+    public boolean isNotValid() {
+        return Objects.isNull(accessToken);
     }
 }

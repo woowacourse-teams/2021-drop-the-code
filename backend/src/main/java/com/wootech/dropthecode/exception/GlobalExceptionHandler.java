@@ -24,6 +24,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(Exception e) {
+        e.printStackTrace();
         final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
         final List<String> stackTraces = Arrays.stream(e.getStackTrace())

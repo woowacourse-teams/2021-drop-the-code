@@ -44,8 +44,8 @@ public class TeacherFilterRepositoryImpl extends Querydsl4RepositorySupport impl
                                                                 .from(teacherProfile).distinct()
                                                                 .innerJoin(teacherProfile.languages, teacherLanguage).fetchJoin()
                                                                 .innerJoin(teacherLanguage.language, language).fetchJoin()
-                                                                .innerJoin(teacherProfile.skills, teacherSkill).fetchJoin()
-                                                                .innerJoin(teacherSkill.skill, skill).fetchJoin()
+                                                                .leftJoin(teacherProfile.skills, teacherSkill).fetchJoin()
+                                                                .leftJoin(teacherSkill.skill, skill).fetchJoin()
                                                                 .innerJoin(teacherProfile.member).fetchJoin()
                                                                 .where(teacherProfile.in(teacherProfiles.getContent()));
 
@@ -75,8 +75,8 @@ public class TeacherFilterRepositoryImpl extends Querydsl4RepositorySupport impl
                                 .from(teacherProfile)
                                 .innerJoin(teacherProfile.languages, teacherLanguage)
                                 .innerJoin(teacherLanguage.language, language)
-                                .innerJoin(teacherProfile.skills, teacherSkill)
-                                .innerJoin(teacherSkill.skill, skill)
+                                .leftJoin(teacherProfile.skills, teacherSkill)
+                                .leftJoin(teacherSkill.skill, skill)
                                 .where(builder);
     }
 }

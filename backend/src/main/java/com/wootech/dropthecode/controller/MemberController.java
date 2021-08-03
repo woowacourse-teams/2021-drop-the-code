@@ -39,7 +39,17 @@ public class MemberController {
     }
 
     /**
+     * @title 유저 본인 삭제
+     */
+    @DeleteMapping("/members/me")
+    public ResponseEntity<Void> deleteMemberMyself(@Login LoginMember loginMember) {
+        memberService.deleteMember(loginMember);
+        return ResponseEntity.noContent().build();
+    }
+
+    /**
      * @title 유저 삭제
+     * @param id 유저의 ID
      */
     @DeleteMapping("/members/{id}")
     public ResponseEntity<Void> deleteMember(@PathVariable Long id) {

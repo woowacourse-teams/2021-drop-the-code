@@ -75,6 +75,14 @@ public class MemberControllerTest extends RestApiDocumentTest {
 
     }
 
+    @DisplayName("멤버 본인 삭제 테스트 - 성공")
+    @Test
+    void deleteMemberMyselfTest() throws Exception {
+        this.restDocsMockMvc.perform(delete("/members/me").with(userToken()))
+                            .andExpect(status().isNoContent())
+                            .andDo(print());
+    }
+
     @DisplayName("멤버 삭제 테스트 - 성공")
     @Test
     void deleteMemberTest() throws Exception {

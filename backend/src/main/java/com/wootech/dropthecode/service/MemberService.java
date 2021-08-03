@@ -40,4 +40,9 @@ public class MemberService {
     public void deleteMember(Long id) {
         memberRepository.deleteById(id);
     }
+
+    @Transactional
+    public void deleteMember(LoginMember loginMember) {
+        memberRepository.deleteById(loginMember.getId());
+    }
 }

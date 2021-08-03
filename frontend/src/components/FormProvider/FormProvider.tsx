@@ -52,8 +52,8 @@ const FormProvider = ({ submit, validators, children, ...props }: Props) => {
     submit(values);
   };
 
-  const register = (name: string) => {
-    setValues((prevState) => ({ ...prevState, [name]: "" }));
+  const register = (name: string, initialValue = "") => {
+    setValues((prevState) => ({ ...prevState, [name]: initialValue }));
   };
 
   return (

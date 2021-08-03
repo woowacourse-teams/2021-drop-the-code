@@ -60,7 +60,7 @@ public class MemberController {
     /**
      * @title 리뷰어 수정
      */
-    @PutMapping(value = "/teachers")
+    @PutMapping(value = "/teachers/me")
     public ResponseEntity<Void> updateTeacher(@Login LoginMember loginMember, @Valid @RequestBody TeacherRegistrationRequest teacherRegistrationRequest) {
         teacherService.updateTeacher(loginMember, teacherRegistrationRequest);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

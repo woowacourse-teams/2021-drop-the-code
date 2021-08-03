@@ -129,7 +129,7 @@ public class MemberControllerTest extends RestApiDocumentTest {
         TeacherRegistrationRequest request
                 = new TeacherRegistrationRequest("백엔드 개발자입니다.", "환영합니다.", 3, techSpecs);
 
-        this.restDocsMockMvc.perform(put("/teachers")
+        this.restDocsMockMvc.perform(put("/teachers/me")
                 .with(userToken())
                 .content(OBJECT_MAPPER.writeValueAsString(request))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -147,7 +147,7 @@ public class MemberControllerTest extends RestApiDocumentTest {
         TeacherRegistrationRequest request =
                 new TeacherRegistrationRequest("백엔드 개발자입니다.", "환영합니다.", null, techSpecs);
 
-        this.failRestDocsMockMvc.perform(post("/teachers")
+        this.failRestDocsMockMvc.perform(post("/teachers/me")
                 .with(userToken())
                 .content(OBJECT_MAPPER.writeValueAsString(request))
                 .contentType(MediaType.APPLICATION_JSON))

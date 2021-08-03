@@ -122,5 +122,10 @@ public class TeacherService {
         teacher.updateReviewCountAndTime(reviewTime);
         save(teacher);
     }
+
+    public void deleteTeacher(LoginMember loginMember) {
+        findById(loginMember.getId());
+        teacherProfileRepository.deleteById(loginMember.getId());
+    }
 }
 

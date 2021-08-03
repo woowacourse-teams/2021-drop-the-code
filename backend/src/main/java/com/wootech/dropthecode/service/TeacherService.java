@@ -138,9 +138,8 @@ public class TeacherService {
         teacherSkillService.deleteAllWithTeacher(teacher);
         teacherSkillService.saveAllWithTeacher(skills, teacher);
 
-        teacher.setTitle(teacherRegistrationRequest.getTitle());
-        teacher.setContent(teacherRegistrationRequest.getContent());
-        teacher.setCareer(teacherRegistrationRequest.getCareer());
+        teacher.update(teacherRegistrationRequest.getTitle(), teacherRegistrationRequest.getContent(), teacherRegistrationRequest.getCareer());
+
         save(teacher);
     }
 }

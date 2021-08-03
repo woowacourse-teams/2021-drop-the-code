@@ -114,4 +114,16 @@ public class TeacherProfile {
     public Double getAverageReviewTime() {
         return averageReviewTime;
     }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setCareer(Integer career) {
+        this.career = career;
+    }
 }

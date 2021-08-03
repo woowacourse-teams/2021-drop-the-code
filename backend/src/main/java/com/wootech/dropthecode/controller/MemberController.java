@@ -58,6 +58,15 @@ public class MemberController {
     }
 
     /**
+     * @title 리뷰어 수정
+     */
+    @PutMapping(value = "/teachers")
+    public ResponseEntity<Void> updateTeacher(@Login LoginMember loginMember, @Valid @RequestBody TeacherRegistrationRequest teacherRegistrationRequest) {
+        teacherService.updateTeacher(loginMember, teacherRegistrationRequest);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    /**
      * @title 리뷰어 목록 조회
      */
     @GetMapping("/teachers")

@@ -122,5 +122,26 @@ public class TeacherService {
         teacher.updateReviewCountAndTime(reviewTime);
         save(teacher);
     }
+
+    @Transactional
+    public void updateTeacher(LoginMember loginMember, TeacherRegistrationRequest teacherRegistrationRequest) {
+        Map<String, Language> languageMap = languageService.findAllToMap();
+        List<Language> languages = validateLanguageNamesExists(teacherRegistrationRequest.getTechSpecs(), languageMap);
+        List<Skill> skills = validateSkillNamesExists(teacherRegistrationRequest.getTechSpecs(), skillService.findAllToMap());
+        teacherRegistrationRequest.validateSkillsInLanguage(languageMap);
+
+        TeacherProfile teacher = findById(loginMember.getId());
+
+        teacherLanguageService.deleteAllWithTeacher(teacher);
+        teacherLanguageService.saveAllWithTeacher(languages, teacher);
+
+        teacherSkillService.deleteAllWithTeacher(teacher);
+        teacherSkillService.saveAllWithTeacher(skills, teacher);
+
+        teacher.setTitle(teacherRegistrationRequest.getTitle());
+        teacher.setContent(teacherRegistrationRequest.getContent());
+        teacher.setCareer(teacherRegistrationRequest.getCareer());
+        save(teacher);
+    }
 }
 

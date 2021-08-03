@@ -137,7 +137,7 @@ public class MemberControllerTest extends RestApiDocumentTest {
                             .andDo(print());
     }
 
-    @DisplayName("리뷰어 등록 테스트 - 필드 값이 하나라도 들어있지 않은 경우 실패")
+    @DisplayName("리뷰어 수정 테스트 - 필드 값이 하나라도 들어있지 않은 경우 실패")
     @Test
     void updateTeacherFailTest() throws Exception {
         List<TechSpec> techSpecs = Arrays.asList(
@@ -147,7 +147,7 @@ public class MemberControllerTest extends RestApiDocumentTest {
         TeacherRegistrationRequest request =
                 new TeacherRegistrationRequest("백엔드 개발자입니다.", "환영합니다.", null, techSpecs);
 
-        this.failRestDocsMockMvc.perform(post("/teachers/me")
+        this.failRestDocsMockMvc.perform(put("/teachers/me")
                 .with(userToken())
                 .content(OBJECT_MAPPER.writeValueAsString(request))
                 .contentType(MediaType.APPLICATION_JSON))

@@ -126,8 +126,8 @@ public class TeacherService {
     @Transactional
     public void updateTeacher(LoginMember loginMember, TeacherRegistrationRequest teacherRegistrationRequest) {
         Map<String, Language> languageMap = languageService.findAllToMap();
-        List<Language> languages = validateLanguageNamesExists(teacherRegistrationRequest.getTechSpecs(), languageMap);
-        List<Skill> skills = validateSkillNamesExists(teacherRegistrationRequest.getTechSpecs(), skillService.findAllToMap());
+        List<Language> languages = findLanguageByNames(teacherRegistrationRequest.getTechSpecs(), languageMap);
+        List<Skill> skills = findSkillsByNames(teacherRegistrationRequest.getTechSpecs(), skillService.findAllToMap());
         teacherRegistrationRequest.validateSkillsInLanguage(languageMap);
 
         TeacherProfile teacher = findById(loginMember.getId());

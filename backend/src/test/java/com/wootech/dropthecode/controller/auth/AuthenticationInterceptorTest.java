@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.dto.TechSpec;
-import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
+import com.wootech.dropthecode.dto.request.ReviewRequest;
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
 import com.wootech.dropthecode.dto.response.LoginResponse;
 import com.wootech.dropthecode.dto.response.MemberResponse;
@@ -67,7 +67,7 @@ class AuthenticationInterceptorTest {
     class NoApplyInterceptor {
 
         @Test
-        @DisplayName("GET /login/oauth")
+        @DisplayName("GET /login/oauth - 토큰 검증을 하지 않음")
         void login() {
             // given
             LoginResponse loginResponse = new LoginResponse(1L, "air", "air.junseo@gmail.com",
@@ -85,7 +85,7 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("GET /languages")
+        @DisplayName("GET /languages - 토큰 검증을 하지 않음")
         void languages() {
             // given
             // when
@@ -98,7 +98,7 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("GET /teachers")
+        @DisplayName("GET /teachers - 토큰 검증을 하지 않음")
         void teachers() {
             // given
             // when
@@ -111,7 +111,7 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("GET /reviews/teacher/{id}")
+        @DisplayName("GET /reviews/teacher/{id} - 토큰 검증을 하지 않음")
         void teacherReview() {
             // given
             // when
@@ -124,7 +124,7 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("GET /reviews/{id}")
+        @DisplayName("GET /reviews/{id} - 토큰 검증을 하지 않음")
         void reviewDetail() {
             // given
             given(reviewService.findReviewSummaryById(1L)).willReturn(new ReviewResponse());
@@ -144,7 +144,7 @@ class AuthenticationInterceptorTest {
     class ApplyInterceptor {
 
         @Test
-        @DisplayName("POST /teachers")
+        @DisplayName("POST /teachers - 적절하지 않은 토큰인 경우")
         void teachers() {
             // given
             doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
@@ -165,7 +165,7 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("POST /teachers with token")
+        @DisplayName("POST /teachers - 적절한 토큰인 경우")
         void teachersWithToken() {
             // given
             doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
@@ -185,7 +185,7 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("PUT /teachers/me")
+        @DisplayName("PUT /teachers/me - 적절하지 않은 토큰인 경우")
         void updateTeacher() {
             // given
             doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
@@ -206,7 +206,7 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("PUT /teachers/me with token")
+        @DisplayName("PUT /teachers/me - 적절한 토큰인 경우")
         void updateTeacherWithToken() {
             // given
             doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
@@ -226,7 +226,7 @@ class AuthenticationInterceptorTest {
 
         }
 
-        @DisplayName("DELETE /teachers/me")
+        @DisplayName("DELETE /teachers/me - 적절하지 않은 토큰인 경우")
         void deleteTeachers() {
             // given
             doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
@@ -242,7 +242,7 @@ class AuthenticationInterceptorTest {
             response.expectStatus().isUnauthorized();
         }
 
-        @DisplayName("DELETE /teachers/me with token")
+        @DisplayName("DELETE /teachers/me - 적절한 토큰인 경우")
         void deleteTeachersWithToken() {
             // given
             doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
@@ -258,19 +258,19 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("POST /reviews")
+        @DisplayName("POST /reviews - 적절하지 않은 토큰인 경우")
         void createReview() {
             // given
             doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
                     .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
-            ReviewCreateRequest reviewCreateRequest =
-                    new ReviewCreateRequest(1L, 2L, "review title", "review content", "pr link");
+            ReviewRequest reviewRequest =
+                    new ReviewRequest(1L, 2L, "review title", "review content", "pr link");
 
             // when
             WebTestClient.ResponseSpec response = webTestClient.post()
                                                                .uri("/reviews")
                                                                .header("Authorization", BEARER + INVALID_ACCESS_TOKEN)
-                                                               .body(Mono.just(reviewCreateRequest), ReviewCreateRequest.class)
+                                                               .body(Mono.just(reviewRequest), ReviewRequest.class)
                                                                .exchange();
 
             // then
@@ -278,12 +278,12 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("POST /reviews with token")
+        @DisplayName("POST /reviews - 적절한 토큰인 경우")
         void createReviewWithToken() {
             // given
             doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
-            ReviewCreateRequest reviewCreateRequest =
-                    new ReviewCreateRequest(1L, 2L, "review title", "review content", "pr link");
+            ReviewRequest reviewRequest =
+                    new ReviewRequest(1L, 2L, "review title", "review content", "pr link");
 
             given(reviewService.create(any())).willReturn(1L);
 
@@ -291,7 +291,7 @@ class AuthenticationInterceptorTest {
             WebTestClient.ResponseSpec response = webTestClient.post()
                                                                .uri("/reviews")
                                                                .header("Authorization", BEARER + VALID_ACCESS_TOKEN)
-                                                               .body(Mono.just(reviewCreateRequest), ReviewCreateRequest.class)
+                                                               .body(Mono.just(reviewRequest), ReviewRequest.class)
                                                                .exchange();
 
             // then
@@ -299,7 +299,7 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("GET /reviews/student/{id}")
+        @DisplayName("GET /reviews/student/{id} - 적절하지 않은 토큰인 경우")
         void studentReview() {
             // given
             doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
@@ -317,7 +317,7 @@ class AuthenticationInterceptorTest {
 
 
         @Test
-        @DisplayName("GET /reviews/student/{id} with token")
+        @DisplayName("GET /reviews/student/{id} - 적절한 토큰인 경우")
         void studentReviewWithToken() {
             // given
             doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
@@ -333,7 +333,7 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("PATCH /reviews/{id}/finish")
+        @DisplayName("PATCH /reviews/{id}/finish - 적절하지 않은 토큰인 경우")
         void updateReviewToFinish() {
             // given
             doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
@@ -350,7 +350,7 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("PATCH /reviews/{id}/finish with token")
+        @DisplayName("PATCH /reviews/{id}/finish - 적절한 토큰인 경우")
         void updateReviewToFinishWithToken() {
             // given
             doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
@@ -366,7 +366,7 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("PATCH /reviews/{id}/complete")
+        @DisplayName("PATCH /reviews/{id}/complete - 적절하지 않은 토큰인 경우")
         void updateReviewToComplete() {
             // given
             doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
@@ -383,7 +383,7 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("PATCH /reviews/{id}/complete with token")
+        @DisplayName("PATCH /reviews/{id}/complete - 적절한 토큰인 경우")
         void updateReviewToCompleteWithToken() {
             // given
             doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
@@ -399,7 +399,7 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("POST /token")
+        @DisplayName("POST /token - 적절하지 않은 토큰인 경우")
         void refreshingToken() {
             // given
             doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
@@ -418,7 +418,7 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("POST /token with token")
+        @DisplayName("POST /token - 적절한 토큰인 경우")
         void refreshingTokenWithToken() {
             // given
             doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
@@ -436,7 +436,7 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("GET /members/me")
+        @DisplayName("GET /members/me - 적절하지 않은 토큰인 경우")
         void membersMe() {
             // given
             doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
@@ -453,7 +453,7 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("GET /members/me with token")
+        @DisplayName("GET /members/me - 적절한 토큰인 경우")
         void membersMeWithToken() {
             // given
             doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
@@ -470,7 +470,7 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("POST /logout")
+        @DisplayName("POST /logout - 적절하지 않은 토큰인 경우")
         void logout() {
             // given
             doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
@@ -487,7 +487,7 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("POST /logout with token")
+        @DisplayName("POST /logout - 적절한 토큰인 경우")
         void logoutWithToken() {
             // given
             doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
@@ -496,6 +496,45 @@ class AuthenticationInterceptorTest {
             WebTestClient.ResponseSpec response = webTestClient.post()
                                                                .uri("/logout")
                                                                .header("Authorization", BEARER + VALID_ACCESS_TOKEN)
+                                                               .exchange();
+
+            // then
+            response.expectStatus().isNoContent();
+        }
+
+        @Test
+        @DisplayName("PATCH /reviews/{id} - 적절하지 않은 토큰인 경우")
+        void reviewUpdate() {
+            // given
+            doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+                    .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
+            ReviewRequest reviewRequest =
+                    new ReviewRequest(1L, 2L, "review title", "review content", "pr link");
+
+            // when
+            WebTestClient.ResponseSpec response = webTestClient.patch()
+                                                               .uri("/reviews/1")
+                                                               .header("Authorization", BEARER + INVALID_ACCESS_TOKEN)
+                                                               .body(Mono.just(reviewRequest), ReviewRequest.class)
+                                                               .exchange();
+
+            // then
+            response.expectStatus().isUnauthorized();
+        }
+
+        @Test
+        @DisplayName("PATCH /reviews/{id} - 적절한 토큰인 경우")
+        void reviewUpdateWithToken() {
+            // given
+            doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
+            ReviewRequest reviewRequest =
+                    new ReviewRequest(1L, 2L, "review title", "review content", "pr link");
+
+            // when
+            WebTestClient.ResponseSpec response = webTestClient.patch()
+                                                               .uri("/reviews/1")
+                                                               .header("Authorization", BEARER + VALID_ACCESS_TOKEN)
+                                                               .body(Mono.just(reviewRequest), ReviewRequest.class)
                                                                .exchange();
 
             // then

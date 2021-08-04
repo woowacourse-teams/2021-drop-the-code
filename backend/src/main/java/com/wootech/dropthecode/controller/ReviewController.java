@@ -4,7 +4,7 @@ import javax.validation.Valid;
 
 import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.oauth.Login;
-import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
+import com.wootech.dropthecode.dto.request.ReviewRequest;
 import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
 import com.wootech.dropthecode.dto.response.ReviewsResponse;
@@ -28,8 +28,8 @@ public class ReviewController {
      * @title 리뷰 생성
      */
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody @Valid ReviewCreateRequest reviewCreateRequest) {
-        Long id = reviewService.create(reviewCreateRequest);
+    public ResponseEntity<Void> create(@RequestBody @Valid ReviewRequest reviewRequest) {
+        Long id = reviewService.create(reviewRequest);
         return ResponseEntity.status(HttpStatus.CREATED)
                              .header("Location", "/reviews/" + id)
                              .build();
@@ -90,4 +90,13 @@ public class ReviewController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    /**
+     * @param id 리뷰 id
+     * @title 리뷰 내용 수정
+     */
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> updateReview(@Login LoginMember loginMember, @PathVariable Long id, @RequestBody @Valid ReviewRequest request) {
+        reviewService.updateReview(loginMember, id, request);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }

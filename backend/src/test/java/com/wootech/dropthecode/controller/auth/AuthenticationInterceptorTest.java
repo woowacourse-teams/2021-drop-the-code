@@ -430,7 +430,7 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("PUT /reviews/{id}")
+        @DisplayName("PATCH /reviews/{id}")
         void reviewUpdate() {
             // given
             doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
@@ -439,7 +439,7 @@ class AuthenticationInterceptorTest {
                     new ReviewRequest(1L, 2L, "review title", "review content", "pr link");
 
             // when
-            WebTestClient.ResponseSpec response = webTestClient.put()
+            WebTestClient.ResponseSpec response = webTestClient.patch()
                                                                .uri("/reviews/1")
                                                                .header("Authorization", BEARER + INVALID_ACCESS_TOKEN)
                                                                .body(Mono.just(reviewRequest), ReviewRequest.class)
@@ -450,7 +450,7 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("PUT /reviews/{id} with token")
+        @DisplayName("PATCH /reviews/{id} with token")
         void reviewUpdateWithToken() {
             // given
             doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
@@ -458,7 +458,7 @@ class AuthenticationInterceptorTest {
                     new ReviewRequest(1L, 2L, "review title", "review content", "pr link");
 
             // when
-            WebTestClient.ResponseSpec response = webTestClient.put()
+            WebTestClient.ResponseSpec response = webTestClient.patch()
                                                                .uri("/reviews/1")
                                                                .header("Authorization", BEARER + VALID_ACCESS_TOKEN)
                                                                .body(Mono.just(reviewRequest), ReviewRequest.class)

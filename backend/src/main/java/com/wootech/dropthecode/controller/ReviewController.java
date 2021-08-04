@@ -94,7 +94,7 @@ public class ReviewController {
      * @param id 리뷰 id
      * @title 리뷰 내용 수정
      */
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Void> updateReview(@PathVariable Long id, @RequestBody @Valid ReviewRequest request) {
         reviewService.updateReview(id, request);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

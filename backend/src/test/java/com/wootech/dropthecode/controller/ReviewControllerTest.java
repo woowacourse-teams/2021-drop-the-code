@@ -340,7 +340,7 @@ public class ReviewControllerTest extends RestApiDocumentTest {
         doNothing().when(reviewService).updateReview(anyLong(), any());
 
         // when
-        ResultActions result = restDocsMockMvc.perform(put("/reviews/1")
+        ResultActions result = restDocsMockMvc.perform(patch("/reviews/1")
                 .with(userToken())
                 .content(body)
                 .contentType(MediaType.APPLICATION_JSON));

@@ -68,6 +68,15 @@ public class MemberController {
     }
 
     /**
+     * @title 리뷰어 수정
+     */
+    @PutMapping(value = "/teachers/me")
+    public ResponseEntity<Void> updateTeacher(@Login LoginMember loginMember, @Valid @RequestBody TeacherRegistrationRequest teacherRegistrationRequest) {
+        teacherService.updateTeacher(loginMember, teacherRegistrationRequest);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    /**
      * @title 리뷰어 목록 조회
      */
     @GetMapping("/teachers")
@@ -90,5 +99,15 @@ public class MemberController {
     @GetMapping("/teachers/{id}")
     public ResponseEntity<TeacherProfileResponse> findTeacher(@PathVariable Long id) {
         return ResponseEntity.ok(teacherService.findTeacherResponseById(id));
+    }
+
+    /**
+     * @title 리뷰어 삭제
+     */
+    @DeleteMapping("/teachers/me")
+    public ResponseEntity<Void> deleteTeacher(@Login LoginMember loginMember) {
+        // todo 유저 삭제는 관리자나 본인만 할 수 있도록 허용하는 기능 추가
+        teacherService.deleteTeacher(loginMember);
+        return ResponseEntity.noContent().build();
     }
 }

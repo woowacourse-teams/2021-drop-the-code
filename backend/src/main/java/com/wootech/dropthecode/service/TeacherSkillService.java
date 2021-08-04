@@ -9,6 +9,7 @@ import com.wootech.dropthecode.domain.bridge.TeacherSkill;
 import com.wootech.dropthecode.repository.bridge.TeacherSkillRepository;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TeacherSkillService {
@@ -24,5 +25,10 @@ public class TeacherSkillService {
                                                  .map(skill -> new TeacherSkill(teacher, skill))
                                                  .collect(Collectors.toList());
         teacherSkillRepository.saveAll(teacherSkills);
+    }
+
+    @Transactional
+    public void deleteAllWithTeacher(TeacherProfile teacher) {
+        teacherSkillRepository.deleteByTeacherProfile(teacher);
     }
 }

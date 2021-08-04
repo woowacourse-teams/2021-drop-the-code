@@ -131,6 +131,12 @@ include::{snippets}/member-controller-test/register-teacher-test/auto-section.ad
 
 include::{snippets}/member-controller-test/register-teacher-fail-test/http-response.adoc[]
 
+include::{snippets}/member-controller-test/update-teacher-test/auto-section.adoc[]
+
+*필드 값이 하나라도 들어있지 않을 때의 응답*
+
+include::{snippets}/member-controller-test/update-teacher-fail-test/http-response.adoc[]
+
 include::{snippets}/member-controller-test/find-all-teacher-test/auto-section.adoc[]
 
 *필수 필드 값이 없을 때의 응답*
@@ -142,6 +148,9 @@ include::{snippets}/member-controller-test/find-teacher-test/auto-section.adoc[]
 *등록되지 않은 리뷰어의 ID일 때의 응답*
 
 include::{snippets}/member-controller-test/find-teacher-fail-if-id-is-invalid-test/http-response.adoc[]
+
+include::{snippets}/member-controller-test/delete-teacher-test/auto-section.adoc[]
+
 == Review API
 
 include::{snippets}/review-controller-test/new-review/auto-section.adoc[]
@@ -171,4 +180,3 @@ include::{snippets}/review-controller-test/update-review-to-finish/auto-section.
 *Authorization Header 가 없을 때의 응답*
 
 include::{snippets}/review-controller-test/update-review-to-finish-fail-if-authorization-header-not-exists/http-response.adoc[]
-

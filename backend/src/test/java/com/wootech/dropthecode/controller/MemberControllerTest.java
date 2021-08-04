@@ -127,6 +127,42 @@ public class MemberControllerTest extends RestApiDocumentTest {
                                 .andDo(print());
     }
 
+    @DisplayName("리뷰어 수정 테스트 - 성공")
+    @Test
+    void updateTeacherTest() throws Exception {
+        List<TechSpec> techSpecs = Arrays.asList(
+                new TechSpec("java", Arrays.asList("spring", "servlet")),
+                new TechSpec("javascript", Arrays.asList("vue", "react"))
+        );
+        TeacherRegistrationRequest request
+                = new TeacherRegistrationRequest("백엔드 개발자입니다.", "환영합니다.", 3, techSpecs);
+
+        this.restDocsMockMvc.perform(put("/teachers/me")
+                .with(userToken())
+                .content(OBJECT_MAPPER.writeValueAsString(request))
+                .contentType(MediaType.APPLICATION_JSON))
+                            .andExpect(status().isNoContent())
+                            .andDo(print());
+    }
+
+    @DisplayName("리뷰어 수정 테스트 - 필드 값이 하나라도 들어있지 않은 경우 실패")
+    @Test
+    void updateTeacherFailTest() throws Exception {
+        List<TechSpec> techSpecs = Arrays.asList(
+                new TechSpec("java", Arrays.asList("spring", "servlet")),
+                new TechSpec("javascript", Arrays.asList("vue", "react"))
+        );
+        TeacherRegistrationRequest request =
+                new TeacherRegistrationRequest("백엔드 개발자입니다.", "환영합니다.", null, techSpecs);
+
+        this.failRestDocsMockMvc.perform(put("/teachers/me")
+                .with(userToken())
+                .content(OBJECT_MAPPER.writeValueAsString(request))
+                .contentType(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isBadRequest())
+                                .andDo(print());
+    }
+
     @DisplayName("리뷰어 목록 조회 테스트 - 성공")
     @Test
     void findAllTeacherTest() throws Exception {
@@ -259,5 +295,13 @@ public class MemberControllerTest extends RestApiDocumentTest {
                 .perform(get("/teachers/1"))
                 .andExpect(status().isBadRequest())
                 .andDo(print());
+    }
+
+    @DisplayName("리뷰어 삭제 테스트 - 성공")
+    @Test
+    void deleteTeacherTest() throws Exception {
+        this.restDocsMockMvc.perform(delete("/teachers/me").with(userToken()))
+                            .andExpect(status().isNoContent())
+                            .andDo(print());
     }
 }

@@ -39,6 +39,9 @@ public class Review extends BaseEntity {
     @Column(nullable = false)
     private Progress progress;
 
+    @OneToOne(mappedBy = "review", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private Feedback feedback;
+
     protected Review() {
     }
 
@@ -69,10 +72,11 @@ public class Review extends BaseEntity {
         updateElapsedTime();
     }
 
-    public void finishProgress(Long memberId) {
+    public void finishProgress(Long memberId, Feedback feedback) {
         validateMemberIdAsStudent(memberId);
         validateReviewProgressIsTeacherCompleted();
 
+        this.feedback = feedback;
         this.progress = Progress.FINISHED;
     }
 
@@ -158,5 +162,9 @@ public class Review extends BaseEntity {
 
     public Progress getProgress() {
         return progress;
+    }
+
+    public Feedback getFeedback() {
+        return feedback;
     }
 }

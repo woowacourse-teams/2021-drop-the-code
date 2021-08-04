@@ -288,4 +288,12 @@ public class MemberControllerTest extends RestApiDocumentTest {
                 .andExpect(status().isBadRequest())
                 .andDo(print());
     }
+
+    @DisplayName("리뷰어 삭제 테스트 - 성공")
+    @Test
+    void deleteTeacherTest() throws Exception {
+        this.restDocsMockMvc.perform(delete("/teachers/me").with(userToken()))
+                            .andExpect(status().isNoContent())
+                            .andDo(print());
+    }
 }

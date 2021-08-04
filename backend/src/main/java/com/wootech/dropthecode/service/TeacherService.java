@@ -138,9 +138,20 @@ public class TeacherService {
         teacherSkillService.deleteAllWithTeacher(teacher);
         teacherSkillService.saveAllWithTeacher(skills, teacher);
 
-        teacher.update(teacherRegistrationRequest.getTitle(), teacherRegistrationRequest.getContent(), teacherRegistrationRequest.getCareer());
+        teacher.update(teacherRegistrationRequest.getTitle(), teacherRegistrationRequest.getContent(), teacherRegistrationRequest
+                .getCareer());
 
         save(teacher);
+    }
+
+    @Transactional
+    public void deleteTeacher(LoginMember loginMember) {
+        Member member = memberService.findById(loginMember.getId());
+        member.setRole(Role.STUDENT);
+        memberService.save(member);
+
+        TeacherProfile teacher = member.getTeacherProfile();
+        teacherProfileRepository.delete(teacher);
     }
 }
 

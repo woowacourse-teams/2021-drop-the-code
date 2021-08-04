@@ -223,6 +223,38 @@ class AuthenticationInterceptorTest {
 
             // then
             response.expectStatus().isNoContent();
+
+        }
+
+        @DisplayName("DELETE /teachers/me")
+        void deleteTeachers() {
+            // given
+            doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+                    .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
+
+            // when
+            WebTestClient.ResponseSpec response = webTestClient.delete()
+                                                               .uri("/teachers/me")
+                                                               .header("Authorization", BEARER + INVALID_ACCESS_TOKEN)
+                                                               .exchange();
+
+            // then
+            response.expectStatus().isUnauthorized();
+        }
+
+        @DisplayName("DELETE /teachers/me with token")
+        void deleteTeachersWithToken() {
+            // given
+            doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
+
+            // when
+            WebTestClient.ResponseSpec response = webTestClient.delete()
+                                                               .uri("/teachers/me")
+                                                               .header("Authorization", BEARER + VALID_ACCESS_TOKEN)
+                                                               .exchange();
+
+            // then
+            response.expectStatus().isNoContent();
         }
 
         @Test

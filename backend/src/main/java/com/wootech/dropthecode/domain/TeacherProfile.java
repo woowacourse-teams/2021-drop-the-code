@@ -41,7 +41,7 @@ public class TeacherProfile {
     @JoinColumn(name = "id", unique = true, foreignKey = @ForeignKey(name = "fk_teacherProfile_to_member"))
     private Member member;
 
-    @OneToMany(mappedBy = "teacherProfile", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "teacherProfile", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private Set<TeacherLanguage> languages = new HashSet<>();
 
     @OneToMany(mappedBy = "teacherProfile", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
@@ -83,6 +83,12 @@ public class TeacherProfile {
         double newAverageReviewTime = (newReviewTime + averageReviewTime * sumReviewCount * 24) / 24 / (sumReviewCount + 1);
         sumReviewCount++;
         averageReviewTime = Math.round(newAverageReviewTime * 10) / 10.0;
+    }
+
+    public void deleteWithMember() {
+        this.title = "탈퇴한 사용자입니다.";
+        this.content = "내용 없음";
+        this.career = 0;
     }
 
     public Long getId() {

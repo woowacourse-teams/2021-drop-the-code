@@ -52,6 +52,11 @@ public class TeacherService {
     }
 
     @Transactional
+    public void delete(TeacherProfile teacherProfile) {
+        teacherProfileRepository.delete(teacherProfile);
+    }
+
+    @Transactional
     public void registerTeacher(LoginMember loginMember, TeacherRegistrationRequest teacherRegistrationRequest) {
         Member member = memberService.findById(loginMember.getId());
 
@@ -151,7 +156,7 @@ public class TeacherService {
         memberService.save(member);
 
         TeacherProfile teacher = member.getTeacherProfile();
-        teacherProfileRepository.delete(teacher);
+        delete(teacher);
     }
 }
 

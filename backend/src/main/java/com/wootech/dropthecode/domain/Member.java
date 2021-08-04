@@ -68,6 +68,17 @@ public class Member extends BaseEntity {
         return this;
     }
 
+    public void delete(String email, String name, String imageUrl) {
+        if(this.role == Role.TEACHER) {
+            this.teacherProfile.deleteWithMember();
+        }
+
+        this.email =email;
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.role = Role.DELETED;
+    }
+
     public String getOauthId() {
         return oauthId;
     }

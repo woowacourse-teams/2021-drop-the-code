@@ -185,3 +185,11 @@ include::{snippets}/review-controller-test/update-review/auto-section.adoc[]
 
 *본인이 아닌 멤버가 수정 요청했을 때의 응답*
 include::{snippets}/review-controller-test/update-review-no-authorization/http-response.adoc[]
+
+include::{snippets}/review-controller-test/cancel-review/auto-section.adoc[]
+
+*Pending 상태가 아닌 경우 응답*
+include::{snippets}/review-controller-test/cancel-review-no-pending/http-response.adoc[]
+
+*본인이 아닌 멤버가 취소 요청했을 때의 응답*
+include::{snippets}/review-controller-test/cancel-review-no-owner/http-response.adoc[]

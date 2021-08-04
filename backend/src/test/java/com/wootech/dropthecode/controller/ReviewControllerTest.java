@@ -43,6 +43,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -331,6 +332,7 @@ public class ReviewControllerTest extends RestApiDocumentTest {
               .andDo(print());
     }
 
+
     @Test
     @DisplayName("리뷰 정보 수정")
     void updateReview() throws Exception {
@@ -363,6 +365,47 @@ public class ReviewControllerTest extends RestApiDocumentTest {
                 .with(userToken())
                 .content(body)
                 .contentType(MediaType.APPLICATION_JSON));
+
+        // then
+        result.andExpect(status().isUnauthorized());
+    }
+  
+    @Test
+    @DisplayName("리뷰 요청 취소 - Pending")
+    void cancelReview() throws Exception {
+        // when
+        ResultActions result = restDocsMockMvc.perform(delete("/reviews/1")
+                .with(userToken()));
+
+        // then
+        result.andExpect(status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("리뷰 요청 취소 - Pending이 아닌 경우")
+    void cancelReviewNoPending() throws Exception {
+        // given
+        doThrow(new ReviewException("취소할 수 없는 리뷰입니다!"))
+                .when(reviewService).cancelRequest(any(), anyLong());
+
+        // when
+        ResultActions result = failRestDocsMockMvc.perform(delete("/reviews/1")
+                .with(userToken()));
+
+        // then
+        result.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("리뷰 요청 취소 - 본인이 아닌 경우")
+    void cancelReviewNoOwner() throws Exception {
+        // given
+        doThrow(new AuthorizationException("리뷰를 수정할 권한이 없습니다!"))
+                .when(reviewService).cancelRequest(any(), anyLong());
+
+        // when
+        ResultActions result = failRestDocsMockMvc.perform(delete("/reviews/1")
+                .with(userToken()));
 
         // then
         result.andExpect(status().isUnauthorized());

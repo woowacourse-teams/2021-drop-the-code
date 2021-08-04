@@ -100,7 +100,7 @@ public class ReviewTest {
     }
 
     @Test
-    @DisplayName("리뷰 내용 수정 - 권힌이 있는 경우")
+    @DisplayName("리뷰 내용 수정 - 권한이 있는 경우")
     void update() {
         // given
         Member teacher = new Member(1L, "1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER, null);
@@ -118,7 +118,7 @@ public class ReviewTest {
     }
 
     @Test
-    @DisplayName("리뷰 내용 수정 - 권힌이 없는 경우")
+    @DisplayName("리뷰 내용 수정 - 권한이 없는 경우")
     void updateNoAuthorization() {
         // given
         Member teacher = new Member(1L, "1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER, null);
@@ -129,6 +129,45 @@ public class ReviewTest {
         // when
         // then
         assertThatThrownBy(() -> review.update(1L, "new title", "new content", "new pr link"))
+                .isInstanceOf(AuthorizationException.class);
+    }
+  
+    @Test
+    @DisplayName("Pending 상태인지 확인")
+    void isPending() {
+        // given
+        Review pendingReview = new Review(null, null, "title1", "content1", "pr1", 0L, Progress.PENDING);
+        Review deniedReview = new Review(null, null, "title1", "content1", "pr1", 0L, Progress.DENIED);
+        Review onGoingReview = new Review(null, null, "title1", "content1", "pr1", 0L, Progress.ON_GOING);
+        Review teacherCompletedReview = new Review(null, null, "title1", "content1", "pr1", 0L, Progress.TEACHER_COMPLETED);
+        Review finishedReview = new Review(null, null, "title1", "content1", "pr1", 0L, Progress.FINISHED);
+
+        // when
+        boolean pending = pendingReview.isPending();
+        boolean denied = deniedReview.isPending();
+        boolean onGoing = onGoingReview.isPending();
+        boolean teacherCompleted = teacherCompletedReview.isPending();
+        boolean finished = finishedReview.isPending();
+
+        // then
+        assertThat(pending).isTrue();
+        assertThat(denied).isFalse();
+        assertThat(onGoing).isFalse();
+        assertThat(teacherCompleted).isFalse();
+        assertThat(finished).isFalse();
+    }
+
+    @Test
+    @DisplayName("Review 주인이 아닌 경우 검증 테스트")
+    void validatesOwnerByLoginId() {
+        // given
+        Member teacher = new Member(1L, "1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER, null);
+        Member student = new Member(2L, "2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT, null);
+        Review review = new Review(teacher, student, "title", "content", "pr link", 0L, Progress.PENDING);
+
+        // when
+        // then
+        assertThatThrownBy(() -> review.validatesOwnerByLoginId(teacher.getId()))
                 .isInstanceOf(AuthorizationException.class);
     }
 }

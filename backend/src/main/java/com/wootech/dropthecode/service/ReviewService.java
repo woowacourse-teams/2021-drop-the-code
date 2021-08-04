@@ -12,6 +12,7 @@ import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
 import com.wootech.dropthecode.dto.response.ReviewsResponse;
 import com.wootech.dropthecode.exception.NotFoundException;
+import com.wootech.dropthecode.exception.ReviewException;
 import com.wootech.dropthecode.repository.ReviewRepository;
 
 import org.springframework.data.domain.Page;
@@ -94,10 +95,20 @@ public class ReviewService {
         review.finishProgress(loginMember.getId());
         reviewRepository.save(review);
     }
-
+  
     @Transactional
     public void updateReview(LoginMember loginMember, Long id, ReviewRequest request) {
         Review review = findById(id);
         review.update(loginMember.getId(), request.getTitle(), request.getContent(), request.getPrUrl());
+    }
+  
+    @Transactional
+    public void cancelRequest(LoginMember loginMember, Long id) {
+        Review review = findById(id);
+        review.validatesOwnerByLoginId(loginMember.getId());
+        if (!review.isPending()) {
+            throw new ReviewException("취소할 수 없는 리뷰입니다!");
+        }
+        reviewRepository.delete(review);
     }
 }

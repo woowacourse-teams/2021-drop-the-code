@@ -21,45 +21,43 @@ import org.slf4j.LoggerFactory;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(Exception e) {
-        e.printStackTrace();
-        final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
-
-        final List<String> stackTraces = Arrays.stream(e.getStackTrace())
-                                               .map(StackTraceElement::toString)
-                                               .collect(Collectors.toList());
-
-        final String stackTrace = Strings.join(stackTraces, '\n');
-        logger.error(e + System.lineSeparator() + stackTrace);
+        generateLogging(e);
         return ResponseEntity.internalServerError().body(new ErrorResponse("서버가 죄송합니다.."));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleBindingException(BindingResult bindingResult) {
+    public ResponseEntity<ErrorResponse> handleBindingException(MethodArgumentNotValidException e, BindingResult bindingResult) {
         String message = bindingResult.getAllErrors().get(0).getDefaultMessage();
+        generateLogging(e);
         return ResponseEntity.badRequest().body(new ErrorResponse(message));
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<ErrorResponse> handleMissingParams(MissingServletRequestParameterException e) {
         String message = e.getParameterName() + " parameter is missing";
+        generateLogging(e);
         return ResponseEntity.badRequest().body(new ErrorResponse(message));
     }
 
     @ExceptionHandler(BindException.class)
     public ResponseEntity<ErrorResponse> handleBindException(BindException e) {
+        generateLogging(e);
         return ResponseEntity.badRequest().body(new ErrorResponse(polishErrorMessage(e)));
     }
 
     @ExceptionHandler(PropertyReferenceException.class)
     public ResponseEntity<ErrorResponse> handlePropertyReferenceException(PropertyReferenceException e) {
+        generateLogging(e);
         return ResponseEntity.badRequest().body(new ErrorResponse("[" + e.getPropertyName() + "](은)는 없는 정렬 조건입니다."));
     }
 
     @ExceptionHandler(DropTheCodeException.class)
     public ResponseEntity<ErrorResponse> dropTheCodeExceptionHandler(DropTheCodeException e) {
+        generateLogging(e);
         return ResponseEntity.status(e.getHttpStatus()).body(new ErrorResponse(e.getMessage()));
     }
 
@@ -74,5 +72,14 @@ public class GlobalExceptionHandler {
         builder.append(fieldError.getRejectedValue());
         builder.append("] 입니다.");
         return builder.toString();
+    }
+
+    private void generateLogging(Exception e) {
+        final List<String> stackTraces = Arrays.stream(e.getStackTrace())
+                                               .map(StackTraceElement::toString)
+                                               .collect(Collectors.toList());
+
+        final String stackTrace = Strings.join(stackTraces, '\n');
+        logger.error(e + System.lineSeparator() + stackTrace);
     }
 }

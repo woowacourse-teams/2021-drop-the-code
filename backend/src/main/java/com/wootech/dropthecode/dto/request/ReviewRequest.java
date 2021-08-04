@@ -3,8 +3,6 @@ package com.wootech.dropthecode.dto.request;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.wootech.dropthecode.domain.Review;
-
 public class ReviewRequest {
     /**
      * 학생 id

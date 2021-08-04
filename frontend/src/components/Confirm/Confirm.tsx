@@ -18,7 +18,7 @@ const Title = styled.section`
   justify-content: center;
   flex-basis: 100%;
   height: 60%;
-  border-bottom: 1px solid ${COLOR.GRAY_50};
+  border-bottom: 1px solid ${COLOR.GRAY_100};
 `;
 
 const ButtonControls = styled.section`
@@ -38,7 +38,7 @@ const ButtonControls = styled.section`
   }
 
   > button:last-child {
-    border-left: 1px solid ${COLOR.GRAY_50};
+    border-left: 1px solid ${COLOR.GRAY_100};
   }
 `;
 

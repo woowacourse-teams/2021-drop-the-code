@@ -8,7 +8,7 @@ import com.wootech.dropthecode.controller.auth.AuthenticationInterceptor;
 import com.wootech.dropthecode.controller.auth.GetAuthenticationInterceptor;
 import com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils;
 import com.wootech.dropthecode.domain.Progress;
-import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
+import com.wootech.dropthecode.dto.request.ReviewRequest;
 import com.wootech.dropthecode.dto.response.ProfileResponse;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
 import com.wootech.dropthecode.dto.response.ReviewsResponse;
@@ -66,8 +66,8 @@ public class ReviewControllerTest extends RestApiDocumentTest {
     @DisplayName("새로운 리뷰 등록")
     void newReview() throws Exception {
         // given
-        ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest(1L, 2L, "title1", "content1", "https://github.com/KJunseo");
-        String body = objectMapper.writeValueAsString(reviewCreateRequest);
+        ReviewRequest reviewRequest = new ReviewRequest(1L, 2L, "title1", "content1", "https://github.com/KJunseo");
+        String body = objectMapper.writeValueAsString(reviewRequest);
         given(reviewService.create(any())).willReturn(1L);
 
         // when
@@ -87,7 +87,7 @@ public class ReviewControllerTest extends RestApiDocumentTest {
     void newReviewFailIfFieldIsNullTest() throws Exception {
         // given
         String body = objectMapper.writeValueAsString(
-                new ReviewCreateRequest(null, null, " ", "content1", "https://github.com/KJunseo"));
+                new ReviewRequest(null, null, " ", "content1", "https://github.com/KJunseo"));
 
         // when
         final ResultActions result = this.failRestDocsMockMvc

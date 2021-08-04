@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.dto.TechSpec;
-import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
+import com.wootech.dropthecode.dto.request.ReviewRequest;
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
 import com.wootech.dropthecode.dto.response.LoginResponse;
 import com.wootech.dropthecode.dto.response.MemberResponse;
@@ -190,14 +190,14 @@ class AuthenticationInterceptorTest {
             // given
             doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
                     .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
-            ReviewCreateRequest reviewCreateRequest =
-                    new ReviewCreateRequest(1L, 2L, "review title", "review content", "pr link");
+            ReviewRequest reviewRequest =
+                    new ReviewRequest(1L, 2L, "review title", "review content", "pr link");
 
             // when
             WebTestClient.ResponseSpec response = webTestClient.post()
                                                                .uri("/reviews")
                                                                .header("Authorization", BEARER + INVALID_ACCESS_TOKEN)
-                                                               .body(Mono.just(reviewCreateRequest), ReviewCreateRequest.class)
+                                                               .body(Mono.just(reviewRequest), ReviewRequest.class)
                                                                .exchange();
 
             // then
@@ -209,8 +209,8 @@ class AuthenticationInterceptorTest {
         void createReviewWithToken() {
             // given
             doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
-            ReviewCreateRequest reviewCreateRequest =
-                    new ReviewCreateRequest(1L, 2L, "review title", "review content", "pr link");
+            ReviewRequest reviewRequest =
+                    new ReviewRequest(1L, 2L, "review title", "review content", "pr link");
 
             given(reviewService.create(any())).willReturn(1L);
 
@@ -218,7 +218,7 @@ class AuthenticationInterceptorTest {
             WebTestClient.ResponseSpec response = webTestClient.post()
                                                                .uri("/reviews")
                                                                .header("Authorization", BEARER + VALID_ACCESS_TOKEN)
-                                                               .body(Mono.just(reviewCreateRequest), ReviewCreateRequest.class)
+                                                               .body(Mono.just(reviewRequest), ReviewRequest.class)
                                                                .exchange();
 
             // then
@@ -423,6 +423,45 @@ class AuthenticationInterceptorTest {
             WebTestClient.ResponseSpec response = webTestClient.post()
                                                                .uri("/logout")
                                                                .header("Authorization", BEARER + VALID_ACCESS_TOKEN)
+                                                               .exchange();
+
+            // then
+            response.expectStatus().isNoContent();
+        }
+
+        @Test
+        @DisplayName("PUT /reviews/{id}")
+        void reviewUpdate() {
+            // given
+            doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+                    .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
+            ReviewRequest reviewRequest =
+                    new ReviewRequest(1L, 2L, "review title", "review content", "pr link");
+
+            // when
+            WebTestClient.ResponseSpec response = webTestClient.put()
+                                                               .uri("/reviews/1")
+                                                               .header("Authorization", BEARER + INVALID_ACCESS_TOKEN)
+                                                               .body(Mono.just(reviewRequest), ReviewRequest.class)
+                                                               .exchange();
+
+            // then
+            response.expectStatus().isUnauthorized();
+        }
+
+        @Test
+        @DisplayName("PUT /reviews/{id} with token")
+        void reviewUpdateWithToken() {
+            // given
+            doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
+            ReviewRequest reviewRequest =
+                    new ReviewRequest(1L, 2L, "review title", "review content", "pr link");
+
+            // when
+            WebTestClient.ResponseSpec response = webTestClient.put()
+                                                               .uri("/reviews/1")
+                                                               .header("Authorization", BEARER + VALID_ACCESS_TOKEN)
+                                                               .body(Mono.just(reviewRequest), ReviewRequest.class)
                                                                .exchange();
 
             // then

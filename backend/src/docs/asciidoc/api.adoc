@@ -129,6 +129,12 @@ include::{snippets}/member-controller-test/register-teacher-test/auto-section.ad
 
 include::{snippets}/member-controller-test/register-teacher-fail-test/http-response.adoc[]
 
+include::{snippets}/member-controller-test/update-teacher-test/auto-section.adoc[]
+
+*필드 값이 하나라도 들어있지 않을 때의 응답*
+
+include::{snippets}/member-controller-test/update-teacher-fail-test/http-response.adoc[]
+
 include::{snippets}/member-controller-test/find-all-teacher-test/auto-section.adoc[]
 
 *필수 필드 값이 없을 때의 응답*

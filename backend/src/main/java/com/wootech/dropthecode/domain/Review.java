@@ -71,7 +71,7 @@ public class Review extends BaseEntity {
 
     public void finishProgress(Long memberId) {
         validateMemberIdAsStudent(memberId);
-        validateReviewProgressIsTeacherCompeted();
+        validateReviewProgressIsTeacherCompleted();
 
         this.progress = Progress.FINISHED;
     }
@@ -93,7 +93,7 @@ public class Review extends BaseEntity {
             throw new ReviewException("현재 리뷰는 리뷰 진행중 상태가 아닙니다. 리뷰 완료로 진행시킬 수 없습니다.");
         }
     }
-    private void validateReviewProgressIsTeacherCompeted() {
+    private void validateReviewProgressIsTeacherCompleted() {
         if (this.progress != Progress.TEACHER_COMPLETED) {
             throw new ReviewException("현재 리뷰는 리뷰 완료 상태가 아닙니다. 리뷰 종료로 진행시킬 수 없습니다.");
         }

@@ -12,9 +12,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MemberService {
 
+    private static final String DELETED_USER_EMAIL = "unknown@dropthecode.co.kr";
+    public static final String DELETED_USER_NAME = "탈퇴한 사용자";
+    public static final String DELETED_USER_IMAGE_URL = "https://static.thenounproject.com/png/994628-200.png";
+
+    private final TeacherLanguageService teacherLanguageService;
+    private final TeacherSkillService teacherSkillService;
     private final MemberRepository memberRepository;
 
-    public MemberService(MemberRepository memberRepository) {
+
+    public MemberService(TeacherLanguageService teacherLanguageService, TeacherSkillService teacherSkillService, MemberRepository memberRepository) {
+        this.teacherLanguageService = teacherLanguageService;
+        this.teacherSkillService = teacherSkillService;
         this.memberRepository = memberRepository;
     }
 
@@ -39,5 +48,15 @@ public class MemberService {
     @Transactional
     public void deleteMember(Long id) {
         memberRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void deleteMember(LoginMember loginMember) {
+        Member member = findById(loginMember.getId());
+        member.delete(DELETED_USER_EMAIL, DELETED_USER_NAME, DELETED_USER_IMAGE_URL);
+        save(member);
+
+        teacherLanguageService.deleteAllWithTeacher(member.getTeacherProfile());
+        teacherSkillService.deleteAllWithTeacher(member.getTeacherProfile());
     }
 }

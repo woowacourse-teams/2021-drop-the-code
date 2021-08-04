@@ -85,6 +85,12 @@ public class TeacherProfile {
         averageReviewTime = Math.round(newAverageReviewTime * 10) / 10.0;
     }
 
+    public void deleteWithMember() {
+        this.title = "탈퇴한 사용자입니다.";
+        this.content = "내용 없음";
+        this.career = 0;
+    }
+
     public Long getId() {
         return id;
     }

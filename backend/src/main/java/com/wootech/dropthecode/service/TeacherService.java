@@ -124,7 +124,11 @@ public class TeacherService {
     }
 
     public void deleteTeacher(LoginMember loginMember) {
-        TeacherProfile teacher = findById(loginMember.getId());
+        Member member = memberService.findById(loginMember.getId());
+        member.setRole(Role.STUDENT);
+        memberService.save(member);
+
+        TeacherProfile teacher = member.getTeacherProfile();
         teacherProfileRepository.delete(teacher);
     }
 }

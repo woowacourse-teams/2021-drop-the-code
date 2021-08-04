@@ -95,7 +95,13 @@ public class ReviewService {
         review.finishProgress(loginMember.getId());
         reviewRepository.save(review);
     }
-
+  
+    @Transactional
+    public void updateReview(LoginMember loginMember, Long id, ReviewRequest request) {
+        Review review = findById(id);
+        review.update(loginMember.getId(), request.getTitle(), request.getContent(), request.getPrUrl());
+    }
+  
     @Transactional
     public void cancelRequest(LoginMember loginMember, Long id) {
         Review review = findById(id);

@@ -17,6 +17,7 @@ const GlobalStyle = createGlobalStyle`
 
   html {
     font-family: 'IBMPlexSansKR-Regular', 'sans-serif'; 
+    overflow-y: scroll;
   }
 
   * {

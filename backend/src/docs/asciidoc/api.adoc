@@ -172,3 +172,5 @@ include::{snippets}/review-controller-test/update-review-to-finish-fail-if-autho
 
 include::{snippets}/review-controller-test/update-review/auto-section.adoc[]
 
+*본인이 아닌 멤버가 수정 요청했을 때의 응답*
+include::{snippets}/review-controller-test/update-review-no-authorization/http-response.adoc[]

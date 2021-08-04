@@ -96,8 +96,8 @@ public class ReviewService {
     }
 
     @Transactional
-    public void updateReview(Long id, ReviewRequest request) {
+    public void updateReview(LoginMember loginMember, Long id, ReviewRequest request) {
         Review review = findById(id);
-        review.update(request.getTitle(), request.getContent(), request.getPrUrl());
+        review.update(loginMember.getId(), request.getTitle(), request.getContent(), request.getPrUrl());
     }
 }

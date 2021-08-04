@@ -1,9 +1,6 @@
 package com.wootech.dropthecode.integration.review;
 
-import com.wootech.dropthecode.domain.Member;
-import com.wootech.dropthecode.domain.Progress;
-import com.wootech.dropthecode.domain.Review;
-import com.wootech.dropthecode.domain.Role;
+import com.wootech.dropthecode.domain.*;
 import com.wootech.dropthecode.dto.request.ReviewRequest;
 import com.wootech.dropthecode.repository.MemberRepository;
 import com.wootech.dropthecode.repository.ReviewRepository;
@@ -40,7 +37,8 @@ public class ReviewServiceIntegrationTest {
         Member teacher = new Member("1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER);
         Member student = new Member("2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT);
         memberRepository.save(teacher);
-        memberRepository.save(student);
+        Member savedStudent = memberRepository.save(student);
+        LoginMember loginMember = new LoginMember(savedStudent.getId());
 
         Review review = new Review(teacher, student, "original title", "original content", "original pr link", 0L, Progress.ON_GOING);
         Review originalReview = reviewRepository.save(review);
@@ -49,7 +47,7 @@ public class ReviewServiceIntegrationTest {
                 new ReviewRequest(1L, 2L, "new title", "new content", "new pr link");
 
         // when
-        reviewService.updateReview(originalReview.getId(), request);
+        reviewService.updateReview(loginMember, originalReview.getId(), request);
         Review updatedReview = reviewRepository.findById(originalReview.getId()).get();
 
         // then

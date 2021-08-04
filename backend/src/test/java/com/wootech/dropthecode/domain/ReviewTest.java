@@ -100,7 +100,7 @@ public class ReviewTest {
     }
 
     @Test
-    @DisplayName("리뷰 내용 수정")
+    @DisplayName("리뷰 내용 수정 - 권힌이 있는 경우")
     void update() {
         // given
         Member teacher = new Member(1L, "1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER, null);
@@ -109,11 +109,26 @@ public class ReviewTest {
         Review review = new Review(teacher, student, "original title", "original content", "original pr link", 0L, Progress.ON_GOING);
 
         // when
-        review.update("new title", "new content", "new pr link");
+        review.update(2L, "new title", "new content", "new pr link");
 
         // then
         assertThat(review).extracting("title").isEqualTo("new title");
         assertThat(review).extracting("content").isEqualTo("new content");
         assertThat(review).extracting("prUrl").isEqualTo("new pr link");
+    }
+
+    @Test
+    @DisplayName("리뷰 내용 수정 - 권힌이 없는 경우")
+    void updateNoAuthorization() {
+        // given
+        Member teacher = new Member(1L, "1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER, null);
+        Member student = new Member(2L, "2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT, null);
+
+        Review review = new Review(teacher, student, "original title", "original content", "original pr link", 0L, Progress.ON_GOING);
+
+        // when
+        // then
+        assertThatThrownBy(() -> review.update(1L, "new title", "new content", "new pr link"))
+                .isInstanceOf(AuthorizationException.class);
     }
 }

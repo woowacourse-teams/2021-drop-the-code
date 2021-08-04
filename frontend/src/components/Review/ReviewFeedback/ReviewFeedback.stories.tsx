@@ -1,6 +1,6 @@
 import { Story, Meta } from "@storybook/react";
 
-import ReviewFeedback, { Props } from "components/Review/ReviewFeedback/ReviewFeedback";
+import ReviewFeedback, { Props } from "./ReviewFeedback";
 
 export default {
   title: "components/ReviewFeedback",

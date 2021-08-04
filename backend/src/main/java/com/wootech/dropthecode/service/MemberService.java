@@ -5,7 +5,6 @@ import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.dto.response.MemberResponse;
 import com.wootech.dropthecode.exception.AuthorizationException;
 import com.wootech.dropthecode.repository.MemberRepository;
-import com.wootech.dropthecode.repository.bridge.TeacherSkillRepository;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,9 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MemberService {
 
+    private static final String DELETED_USER_EMAIL = "unknown@dropthecode.co.kr";
+    public static final String DELETED_USER_NAME = "탈퇴한 사용자";
+    public static final String DELETED_USER_IMAGE_URL = "https://static.thenounproject.com/png/994628-200.png";
+
     private final TeacherLanguageService teacherLanguageService;
     private final TeacherSkillService teacherSkillService;
     private final MemberRepository memberRepository;
+
 
     public MemberService(TeacherLanguageService teacherLanguageService, TeacherSkillService teacherSkillService, MemberRepository memberRepository) {
         this.teacherLanguageService = teacherLanguageService;
@@ -49,7 +53,7 @@ public class MemberService {
     @Transactional
     public void deleteMember(LoginMember loginMember) {
         Member member = findById(loginMember.getId());
-        member.delete("unknown@dropthecode.co.kr", "탈퇴한 사용자", "https://static.thenounproject.com/png/994628-200.png");
+        member.delete(DELETED_USER_EMAIL, DELETED_USER_NAME, DELETED_USER_IMAGE_URL);
         save(member);
 
         teacherLanguageService.deleteAllWithTeacher(member.getTeacherProfile());

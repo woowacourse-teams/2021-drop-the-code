@@ -1,5 +1,6 @@
 package com.wootech.dropthecode.dto.response;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -83,12 +84,14 @@ public class TeacherProfileResponse {
                                                                        .stream()
                                                                        .map(TeacherLanguage::getLanguage)
                                                                        .map(lang -> new LanguageResponse(lang.getId(), lang.getName()))
+                                                                       .sorted(Comparator.comparing(LanguageResponse::getId))
                                                                        .collect(Collectors.toList());
 
         final List<SkillResponse> skillsResponse = teacherProfile.getSkills()
                                                                  .stream()
                                                                  .map(TeacherSkill::getSkill)
                                                                  .map(skill -> new SkillResponse(skill.getId(), skill.getName()))
+                                                                 .sorted(Comparator.comparing(SkillResponse::getId))
                                                                  .collect(Collectors.toList());
 
         final TechSpecResponse techSpecResponse = new TechSpecResponse(languageResponses, skillsResponse);

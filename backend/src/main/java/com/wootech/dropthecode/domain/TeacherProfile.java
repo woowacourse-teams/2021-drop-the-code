@@ -41,7 +41,7 @@ public class TeacherProfile {
     @JoinColumn(name = "id", unique = true, foreignKey = @ForeignKey(name = "fk_teacherProfile_to_member"))
     private Member member;
 
-    @OneToMany(mappedBy = "teacherProfile", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "teacherProfile", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private Set<TeacherLanguage> languages = new HashSet<>();
 
     @OneToMany(mappedBy = "teacherProfile", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)

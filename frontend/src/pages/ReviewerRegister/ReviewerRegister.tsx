@@ -117,9 +117,7 @@ const ReviewerRegister = () => {
           css={{ minHeight: "31.25rem" }}
         />
         <Flex css={{ margin: "1.25rem 0 2.5rem" }}>
-          <SubmitButton themeColor="primary" shape="rounded" css={{ marginLeft: "auto" }}>
-            등록
-          </SubmitButton>
+          <SubmitButton css={{ marginLeft: "auto" }}>등록</SubmitButton>
         </Flex>
       </FormProvider>
     </>

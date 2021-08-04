@@ -18,6 +18,7 @@ import { QUERY_KEY } from "utils/constants/key";
 import { ALT, SUCCESS_MESSAGE } from "utils/constants/message";
 
 import ReviewAmmend from "../ReviewAmmend/ReviewAmmend";
+import ReviewFeedback from "../ReviewFeedback/ReviewFeedback";
 import ReviewRequest from "../ReviewRequest/ReviewRequest";
 
 const Title = styled.p`
@@ -131,6 +132,7 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
             </PrUrl>
             <Flex css={{ marginLeft: "auto" }}>
               <Button
+                themeColor="secondary"
                 css={{ marginRight: "0.625rem" }}
                 onClick={() => {
                   open(<ReviewAmmend review={data} />);
@@ -139,6 +141,7 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
                 수정
               </Button>
               <Button
+                themeColor="secondary"
                 onClick={() => {
                   open(
                     <Confirm
@@ -166,6 +169,12 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
           <Button
             disabled={disabled}
             onClick={() => {
+              if (currentProgress === "TEACHER_COMPLETED" && isStudent) {
+                open(<ReviewFeedback reviewId={reviewId} teacherProfile={data.teacherProfile} />);
+
+                return;
+              }
+
               if (isFinished || isAnonymous || disabled) return;
 
               mutation.mutate({ id: reviewId, progress: nextProgress });

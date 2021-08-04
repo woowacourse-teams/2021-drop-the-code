@@ -58,7 +58,7 @@ const FormProvider = ({ submit, validators, children, ...props }: Props) => {
 
   return (
     <FormContext.Provider value={{ values, errorMessages, isValid, isEmpty, register, onChange }}>
-      <form onSubmit={onSubmit} {...props}>
+      <form onSubmit={onSubmit} {...props} css={{ width: "100%" }}>
         {children}
       </form>
     </FormContext.Provider>

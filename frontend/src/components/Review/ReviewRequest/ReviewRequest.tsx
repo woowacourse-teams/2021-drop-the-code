@@ -95,11 +95,7 @@ const ReviewRequest = ({ reviewerId }: Props) => {
           css={{ minHeight: "12.5rem" }}
         />
         <Flex css={{ margin: "1.25rem 0 2.5rem" }}>
-          {user && (
-            <SubmitButton themeColor="primary" shape="rounded" css={{ marginLeft: "auto" }}>
-              요청
-            </SubmitButton>
-          )}
+          {user && <SubmitButton css={{ marginLeft: "auto" }}>요청</SubmitButton>}
         </Flex>
       </FormProvider>
     </div>

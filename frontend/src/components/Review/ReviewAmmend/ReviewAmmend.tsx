@@ -55,14 +55,9 @@ const ReviewAmmend = ({ review }: Props) => {
       <h2 css={{ fontSize: "1.25rem", fontWeight: 600, margin: "1.25rem 0 2.5rem", textAlign: "center" }}>리뷰 수정</h2>
       <FormProvider
         submit={async ({ title, prUrl, content }) => {
-          if (!user) return;
-
-          // mutation.mutate({
-          //   reviewId,
-          //   title,
-          //   prUrl,
-          //   content,
-          // });
+          /*
+            request
+          */
         }}
         validators={reviewRequestValidators}
         css={{ marginTop: "1.25rem", width: "100%" }}
@@ -97,11 +92,9 @@ const ReviewAmmend = ({ review }: Props) => {
           css={{ minHeight: "12.5rem" }}
         />
         <Flex css={{ margin: "1.25rem 0 2.5rem" }}>
-          {user && (
-            <SubmitButton themeColor="primary" shape="rounded" css={{ marginLeft: "auto" }}>
-              수정
-            </SubmitButton>
-          )}
+          <SubmitButton themeColor="primary" css={{ marginLeft: "auto" }}>
+            수정
+          </SubmitButton>
         </Flex>
       </FormProvider>
     </div>

@@ -115,6 +115,12 @@ public class Review extends BaseEntity {
         return elapsedTime / (ONE_SECOND_TO_MILLISECONDS * ONE_MINUTE_TO_SECONDS * ONE_HOUR_TO_MINUTES);
     }
 
+    public void update(String title, String content, String prUrl) {
+        this.title = title;
+        this.content = content;
+        this.prUrl = prUrl;
+    }
+
     public Member getTeacher() {
         return teacher;
     }

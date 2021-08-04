@@ -7,7 +7,7 @@ import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.domain.Review;
 import com.wootech.dropthecode.dto.ReviewSummary;
-import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
+import com.wootech.dropthecode.dto.request.ReviewRequest;
 import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
 import com.wootech.dropthecode.dto.response.ReviewsResponse;
@@ -32,15 +32,15 @@ public class ReviewService {
     }
 
     @Transactional
-    public Long create(ReviewCreateRequest reviewCreateRequest) {
-        Member teacher = memberService.findById(reviewCreateRequest.getTeacherId());
-        Member student = memberService.findById(reviewCreateRequest.getStudentId());
+    public Long create(ReviewRequest reviewRequest) {
+        Member teacher = memberService.findById(reviewRequest.getTeacherId());
+        Member student = memberService.findById(reviewRequest.getStudentId());
         Review review = new Review
                 (
                         teacher, student,
-                        reviewCreateRequest.getTitle(),
-                        reviewCreateRequest.getContent(),
-                        reviewCreateRequest.getPrUrl()
+                        reviewRequest.getTitle(),
+                        reviewRequest.getContent(),
+                        reviewRequest.getPrUrl()
                 );
         Review savedReview = reviewRepository.save(review);
         return savedReview.getId();
@@ -93,5 +93,11 @@ public class ReviewService {
         Review review = findById(id);
         review.finishProgress(loginMember.getId());
         reviewRepository.save(review);
+    }
+
+    @Transactional
+    public void updateReview(Long id, ReviewRequest request) {
+        Review review = findById(id);
+        review.update(request.getTitle(), request.getContent(), request.getPrUrl());
     }
 }

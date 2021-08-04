@@ -43,6 +43,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -328,5 +329,23 @@ public class ReviewControllerTest extends RestApiDocumentTest {
         // then
         result.andExpect(status().isUnauthorized())
               .andDo(print());
+    }
+
+    @Test
+    @DisplayName("리뷰 정보 수정")
+    void updateReview() throws Exception {
+        // given
+        ReviewRequest reviewRequest = new ReviewRequest(1L, 2L, "new title", "new content", "new pr link");
+        String body = objectMapper.writeValueAsString(reviewRequest);
+        doNothing().when(reviewService).updateReview(anyLong(), any());
+
+        // when
+        ResultActions result = restDocsMockMvc.perform(put("/reviews/1")
+                .with(userToken())
+                .content(body)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        // then
+        result.andExpect(status().isNoContent());
     }
 }

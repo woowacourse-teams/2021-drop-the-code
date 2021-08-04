@@ -170,3 +170,5 @@ include::{snippets}/review-controller-test/update-review-to-finish/auto-section.
 
 include::{snippets}/review-controller-test/update-review-to-finish-fail-if-authorization-header-not-exists/http-response.adoc[]
 
+include::{snippets}/review-controller-test/update-review/auto-section.adoc[]
+

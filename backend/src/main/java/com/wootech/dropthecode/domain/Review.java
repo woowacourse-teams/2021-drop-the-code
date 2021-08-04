@@ -115,6 +115,10 @@ public class Review extends BaseEntity {
         return elapsedTime / (ONE_SECOND_TO_MILLISECONDS * ONE_MINUTE_TO_SECONDS * ONE_HOUR_TO_MINUTES);
     }
 
+    public boolean isPending() {
+        return Progress.PENDING == this.progress;
+    }
+
     public Member getTeacher() {
         return teacher;
     }

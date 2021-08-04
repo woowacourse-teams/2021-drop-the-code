@@ -22,4 +22,8 @@ export const STANDARD = {
       MAX_LENGTH: 1000,
     },
   },
+  REVIEW_FEEDBACK: {
+    MIN_GRADE: 1,
+    MAX_GRADE: 5,
+  },
 };

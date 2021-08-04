@@ -172,3 +172,8 @@ include::{snippets}/review-controller-test/update-review-to-finish/auto-section.
 *Authorization Header 가 없을 때의 응답*
 
 include::{snippets}/review-controller-test/update-review-to-finish-fail-if-authorization-header-not-exists/http-response.adoc[]
+
+include::{snippets}/review-controller-test/cancel-review/auto-section.adoc[]
+
+*Pending 상태가 아닌 경우 응답*
+include::{snippets}/review-controller-test/cancel-review-no-pending/http-response.adoc[]

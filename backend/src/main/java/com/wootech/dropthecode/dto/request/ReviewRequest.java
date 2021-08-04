@@ -3,9 +3,7 @@ package com.wootech.dropthecode.dto.request;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.wootech.dropthecode.domain.Review;
-
-public class ReviewCreateRequest {
+public class ReviewRequest {
     /**
      * 학생 id
      */
@@ -32,10 +30,10 @@ public class ReviewCreateRequest {
     @NotBlank
     private String prUrl;
 
-    public ReviewCreateRequest() {
+    public ReviewRequest() {
     }
 
-    public ReviewCreateRequest(Long studentId, Long teacherId, String title, String content, String prUrl) {
+    public ReviewRequest(Long studentId, Long teacherId, String title, String content, String prUrl) {
         this.studentId = studentId;
         this.teacherId = teacherId;
         this.title = title;

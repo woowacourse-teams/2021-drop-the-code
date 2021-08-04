@@ -8,8 +8,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 @ActiveProfiles("test")
 public class ReviewTest {
@@ -98,5 +97,30 @@ public class ReviewTest {
 
         assertThatThrownBy(() -> onGoingReview.validateMemberIdAsTeacher(student.getId()))
                 .isInstanceOf(AuthorizationException.class);
+    }
+
+    @Test
+    @DisplayName("Pending 상태인지 확인")
+    void isPending() {
+        // given
+        Review pendingReview = new Review(null, null, "title1", "content1", "pr1", 0L, Progress.PENDING);
+        Review deniedReview = new Review(null, null, "title1", "content1", "pr1", 0L, Progress.DENIED);
+        Review onGoingReview = new Review(null, null, "title1", "content1", "pr1", 0L, Progress.ON_GOING);
+        Review teacherCompletedReview = new Review(null, null, "title1", "content1", "pr1", 0L, Progress.TEACHER_COMPLETED);
+        Review finishedReview = new Review(null, null, "title1", "content1", "pr1", 0L, Progress.FINISHED);
+
+        // when
+        boolean pending = pendingReview.isPending();
+        boolean denied = deniedReview.isPending();
+        boolean onGoing = onGoingReview.isPending();
+        boolean teacherCompleted = teacherCompletedReview.isPending();
+        boolean finished = finishedReview.isPending();
+
+        // then
+        assertThat(pending).isTrue();
+        assertThat(denied).isFalse();
+        assertThat(onGoing).isFalse();
+        assertThat(teacherCompleted).isFalse();
+        assertThat(finished).isFalse();
     }
 }

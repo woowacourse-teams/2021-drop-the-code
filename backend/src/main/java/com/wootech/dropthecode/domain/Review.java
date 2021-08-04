@@ -115,6 +115,12 @@ public class Review extends BaseEntity {
         return elapsedTime / (ONE_SECOND_TO_MILLISECONDS * ONE_MINUTE_TO_SECONDS * ONE_HOUR_TO_MINUTES);
     }
 
+    public void validatesOwnerByLoginId(Long id) {
+        if (!this.student.hasSameId(id)) {
+            throw new AuthorizationException("리뷰를 수정할 권한이 없습니다!");
+        }
+    }
+
     public boolean isPending() {
         return Progress.PENDING == this.progress;
     }

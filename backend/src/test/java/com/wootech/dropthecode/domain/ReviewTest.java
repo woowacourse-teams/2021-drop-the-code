@@ -123,4 +123,18 @@ public class ReviewTest {
         assertThat(teacherCompleted).isFalse();
         assertThat(finished).isFalse();
     }
+
+    @Test
+    @DisplayName("Review 주인이 아닌 경우 검증 테스트")
+    void validatesOwnerByLoginId() {
+        // given
+        Member teacher = new Member(1L, "1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER, null);
+        Member student = new Member(2L, "2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT, null);
+        Review review = new Review(teacher, student, "title", "content", "pr link", 0L, Progress.PENDING);
+
+        // when
+        // then
+        assertThatThrownBy(() -> review.validatesOwnerByLoginId(teacher.getId()))
+                .isInstanceOf(AuthorizationException.class);
+    }
 }

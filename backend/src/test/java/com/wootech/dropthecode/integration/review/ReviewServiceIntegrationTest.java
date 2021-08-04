@@ -2,10 +2,8 @@ package com.wootech.dropthecode.integration.review;
 
 import java.util.Optional;
 
-import com.wootech.dropthecode.domain.Member;
-import com.wootech.dropthecode.domain.Progress;
-import com.wootech.dropthecode.domain.Review;
-import com.wootech.dropthecode.domain.Role;
+import com.wootech.dropthecode.domain.*;
+import com.wootech.dropthecode.exception.AuthorizationException;
 import com.wootech.dropthecode.exception.ReviewException;
 import com.wootech.dropthecode.repository.MemberRepository;
 import com.wootech.dropthecode.repository.ReviewRepository;
@@ -45,13 +43,15 @@ public class ReviewServiceIntegrationTest {
         Member teacher = new Member("1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER);
         Member student = new Member("2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT);
         memberRepository.save(teacher);
-        memberRepository.save(student);
+        Member savedStudent = memberRepository.save(student);
+
+        LoginMember loginMember = new LoginMember(savedStudent.getId());
 
         Review review = new Review(teacher, student, "original title", "original content", "original pr link", 0L, Progress.PENDING);
         Review savedReview = reviewRepository.save(review);
 
         // when
-        reviewService.cancelRequest(savedReview.getId());
+        reviewService.cancelRequest(loginMember, savedReview.getId());
         Optional<Review> foundReview = reviewRepository.findById(savedReview.getId());
 
         // then
@@ -66,15 +66,40 @@ public class ReviewServiceIntegrationTest {
         Member teacher = new Member("1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER);
         Member student = new Member("2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT);
         memberRepository.save(teacher);
-        memberRepository.save(student);
+        Member savedStudent = memberRepository.save(student);
+
+        LoginMember loginMember = new LoginMember(savedStudent.getId());
 
         Review review = new Review(teacher, student, "original title", "original content", "original pr link", 0L, progress);
         Review savedReview = reviewRepository.save(review);
 
         // when
         // then
-        assertThatThrownBy(() -> reviewService.cancelRequest(savedReview.getId()))
+        assertThatThrownBy(() -> reviewService.cancelRequest(loginMember, savedReview.getId()))
                 .isInstanceOf(ReviewException.class);
+
+        Optional<Review> foundReview = reviewRepository.findById(savedReview.getId());
+        assertThat(foundReview.isPresent()).isEqualTo(true);
+    }
+
+    @Test
+    @DisplayName("리뷰 요청 취소 동작 확인 - 권한이 없는 경우")
+    void cancelReviewNoAuthorization() {
+        // given
+        Member teacher = new Member("1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER);
+        Member student = new Member("2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT);
+        Member savedTeacher = memberRepository.save(teacher);
+        memberRepository.save(student);
+
+        LoginMember loginMember = new LoginMember(savedTeacher.getId());
+
+        Review review = new Review(teacher, student, "original title", "original content", "original pr link", 0L, Progress.PENDING);
+        Review savedReview = reviewRepository.save(review);
+
+        // when
+        // then
+        assertThatThrownBy(() -> reviewService.cancelRequest(loginMember, savedReview.getId()))
+                .isInstanceOf(AuthorizationException.class);
 
         Optional<Review> foundReview = reviewRepository.findById(savedReview.getId());
         assertThat(foundReview.isPresent()).isEqualTo(true);

@@ -348,7 +348,7 @@ public class ReviewControllerTest extends RestApiDocumentTest {
     void cancelReviewNoPending() throws Exception {
         // given
         doThrow(new ReviewException("취소할 수 없는 리뷰입니다!"))
-                .when(reviewService).cancelRequest(anyLong());
+                .when(reviewService).cancelRequest(any(), anyLong());
 
         // when
         ResultActions result = failRestDocsMockMvc.perform(delete("/reviews/1")
@@ -356,5 +356,20 @@ public class ReviewControllerTest extends RestApiDocumentTest {
 
         // then
         result.andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("리뷰 요청 취소 - 본인이 아닌 경우")
+    void cancelReviewNoOwner() throws Exception {
+        // given
+        doThrow(new AuthorizationException("리뷰를 수정할 권한이 없습니다!"))
+                .when(reviewService).cancelRequest(any(), anyLong());
+
+        // when
+        ResultActions result = failRestDocsMockMvc.perform(delete("/reviews/1")
+                .with(userToken()));
+
+        // then
+        result.andExpect(status().isUnauthorized());
     }
 }

@@ -97,8 +97,9 @@ public class ReviewService {
     }
 
     @Transactional
-    public void cancelRequest(Long id) {
+    public void cancelRequest(LoginMember loginMember, Long id) {
         Review review = findById(id);
+        review.validatesOwnerByLoginId(loginMember.getId());
         if (!review.isPending()) {
             throw new ReviewException("취소할 수 없는 리뷰입니다!");
         }

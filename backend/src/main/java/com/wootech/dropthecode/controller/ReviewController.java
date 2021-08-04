@@ -95,8 +95,8 @@ public class ReviewController {
      * @title Pending 상태의 리뷰 요청을 취소
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> cancelReviewRequest(@PathVariable Long id) {
-        reviewService.cancelRequest(id);
+    public ResponseEntity<Void> cancelReviewRequest(@Login LoginMember loginMember, @PathVariable Long id) {
+        reviewService.cancelRequest(loginMember, id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

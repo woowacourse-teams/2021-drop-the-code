@@ -112,7 +112,6 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
 
   return (
     <>
-      w
       <ContentBox
         title={
           <FlexAlignCenter>

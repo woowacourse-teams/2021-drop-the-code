@@ -15,9 +15,10 @@ export const requestLogout = () => {
 };
 
 export const renewToken = (refreshToken: string) => {
-  return apiClient.post<{ accessToken: string }>(
-    "/token",
-    { refreshToken },
-    { headers: { "content-type": "application/x-www-form-urlencoded" } }
-  );
+  const params = new URLSearchParams();
+  params.append("refreshToken", refreshToken);
+
+  return apiClient.post<{ accessToken: string }>("/token", params, {
+    headers: { "content-type": "application/x-www-form-urlencoded" },
+  });
 };

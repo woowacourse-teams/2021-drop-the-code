@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { Link } from "react-router-dom";
 
 import styled from "styled-components";
 
 import { getReview, patchReviewProgress } from "apis/review";
 import Notification from "assets/notification.png";
 import Confirm from "components/Confirm/Confirm";
-import Avatar from "components/shared/Avatar/Avatar";
 import Button from "components/shared/Button/Button";
 import ContentBox from "components/shared/ContentBox/ContentBox";
 import { FlexAlignCenter, Flex, FlexCenter } from "components/shared/Flexbox/Flexbox";
@@ -27,6 +27,12 @@ const Title = styled.p`
 const PrUrl = styled.a`
   font-weight: 900;
   color: ${({ theme }) => theme.common.color.primary};
+  margin-bottom: 0.625rem;
+`;
+
+const Info = styled(Flex)`
+  font-size: 14px;
+  color: ${COLOR.GRAY_500};
 `;
 
 const Profile = styled(FlexAlignCenter)`
@@ -79,8 +85,11 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
   const currentProgress = data.progress;
   const isFinished = currentProgress === "FINISHED";
 
-  const isStudent = data.studentProfile.id === user?.id;
-  const isTeacher = data.teacherProfile.id === user?.id;
+  const student = data.studentProfile;
+  const teacher = data.teacherProfile;
+
+  const isStudent = student.id === user?.id;
+  const isTeacher = teacher.id === user?.id;
   const isAnonymous = !(isStudent || isTeacher);
 
   const nextProgressData = {
@@ -108,16 +117,19 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
           <FlexAlignCenter>
             <Flex css={{ width: "100%", flex: "1", flexDirection: "column", paddingRight: "1.25rem" }}>
               <Title css={{ marginBottom: "1.25rem" }}>{data.title}</Title>
-              <Profile>
-                <Avatar
-                  imageUrl={data.studentProfile.imageUrl}
-                  width="1.875rem"
-                  height="1.875rem"
-                  css={{ marginRight: "1.25rem" }}
-                />
-                <p css={{ marginRight: "1.25rem" }}>{data.studentProfile.name}</p>
+              <Info>
+                <Profile>
+                  신청자:
+                  <p css={{ marginRight: "1.25rem" }}>{student.name}</p>
+                </Profile>
+                <Link to={`/reviewer/${teacher.id}`}>
+                  <Profile>
+                    리뷰어:
+                    <p css={{ marginRight: "1.25rem" }}>{teacher.name}</p>
+                  </Profile>
+                </Link>
                 <p css={{ width: "5.625rem" }}>{data.createdAt.join(".")}</p>
-              </Profile>
+              </Info>
             </Flex>
             <p>{progress}</p>
           </FlexAlignCenter>
@@ -126,9 +138,11 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
         <Flex css={{ flexDirection: "column" }}>
           <p css={{ fontSize: "14px", marginBottom: "3.125rem", minHeight: "15.625rem" }}>{data.content}</p>
           <Flex>
-            <PrUrl href={data.prUrl} target="_blank" rel="noopener">
-              PR 링크 바로가기
-            </PrUrl>
+            <Flex css={{ flexDirection: "column" }}>
+              <PrUrl href={data.prUrl} target="_blank" rel="noopener">
+                PR 링크 바로가기
+              </PrUrl>
+            </Flex>
             <Flex css={{ marginLeft: "auto" }}>
               <Button
                 themeColor="secondary"
@@ -169,7 +183,7 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
             disabled={disabled}
             onClick={() => {
               if (currentProgress === "TEACHER_COMPLETED" && isStudent) {
-                open(<ReviewFeedback reviewId={reviewId} teacherProfile={data.teacherProfile} />);
+                open(<ReviewFeedback reviewId={reviewId} teacherProfile={teacher} />);
 
                 return;
               }

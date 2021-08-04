@@ -61,7 +61,7 @@ const ReviewerRegister = () => {
           const techSpecs = Object.entries(specs).map(([language, skills]) => ({ language, skills }));
 
           if (techSpecs.length === 0) {
-            toast(ERROR_MESSAGE.VALIDATON.REVIEWER_REGISTER.TECH_SPEC, { type: "error" });
+            toast(ERROR_MESSAGE.VALIDATION.REVIEWER_REGISTER.TECH_SPEC, { type: "error" });
 
             return;
           }

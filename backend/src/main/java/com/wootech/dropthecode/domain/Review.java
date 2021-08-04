@@ -115,6 +115,15 @@ public class Review extends BaseEntity {
         return elapsedTime / (ONE_SECOND_TO_MILLISECONDS * ONE_MINUTE_TO_SECONDS * ONE_HOUR_TO_MINUTES);
     }
 
+    public void update(Long id, String title, String content, String prUrl) {
+        if (!this.student.hasSameId(id)) {
+            throw new AuthorizationException("리뷰를 수정할 권한이 없습니다!");
+        }
+        this.title = title;
+        this.content = content;
+        this.prUrl = prUrl;
+    }
+
     public Member getTeacher() {
         return teacher;
     }

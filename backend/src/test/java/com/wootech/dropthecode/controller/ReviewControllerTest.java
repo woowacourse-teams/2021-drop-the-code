@@ -8,12 +8,13 @@ import com.wootech.dropthecode.controller.auth.AuthenticationInterceptor;
 import com.wootech.dropthecode.controller.auth.GetAuthenticationInterceptor;
 import com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils;
 import com.wootech.dropthecode.domain.Progress;
-import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
+import com.wootech.dropthecode.dto.request.ReviewRequest;
 import com.wootech.dropthecode.dto.response.ProfileResponse;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
 import com.wootech.dropthecode.dto.response.ReviewsResponse;
 import com.wootech.dropthecode.exception.AuthorizationException;
 import com.wootech.dropthecode.exception.GlobalExceptionHandler;
+import com.wootech.dropthecode.exception.ReviewException;
 import com.wootech.dropthecode.service.ReviewService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,8 +67,8 @@ public class ReviewControllerTest extends RestApiDocumentTest {
     @DisplayName("새로운 리뷰 등록")
     void newReview() throws Exception {
         // given
-        ReviewCreateRequest reviewCreateRequest = new ReviewCreateRequest(1L, 2L, "title1", "content1", "https://github.com/KJunseo");
-        String body = objectMapper.writeValueAsString(reviewCreateRequest);
+        ReviewRequest reviewRequest = new ReviewRequest(1L, 2L, "title1", "content1", "https://github.com/KJunseo");
+        String body = objectMapper.writeValueAsString(reviewRequest);
         given(reviewService.create(any())).willReturn(1L);
 
         // when
@@ -87,7 +88,7 @@ public class ReviewControllerTest extends RestApiDocumentTest {
     void newReviewFailIfFieldIsNullTest() throws Exception {
         // given
         String body = objectMapper.writeValueAsString(
-                new ReviewCreateRequest(null, null, " ", "content1", "https://github.com/KJunseo"));
+                new ReviewRequest(null, null, " ", "content1", "https://github.com/KJunseo"));
 
         // when
         final ResultActions result = this.failRestDocsMockMvc
@@ -328,5 +329,42 @@ public class ReviewControllerTest extends RestApiDocumentTest {
         // then
         result.andExpect(status().isUnauthorized())
               .andDo(print());
+    }
+
+    @Test
+    @DisplayName("리뷰 정보 수정")
+    void updateReview() throws Exception {
+        // given
+        ReviewRequest reviewRequest = new ReviewRequest(1L, 2L, "new title", "new content", "new pr link");
+        String body = objectMapper.writeValueAsString(reviewRequest);
+        doNothing().when(reviewService).updateReview(any(), anyLong(), any());
+
+        // when
+        ResultActions result = restDocsMockMvc.perform(patch("/reviews/1")
+                .with(userToken())
+                .content(body)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        // then
+        result.andExpect(status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("리뷰 정보 수정 - 권한이 없는 경우")
+    void updateReviewNoAuthorization() throws Exception {
+        // given
+        ReviewRequest reviewRequest = new ReviewRequest(1L, 2L, "new title", "new content", "new pr link");
+        String body = objectMapper.writeValueAsString(reviewRequest);
+        doThrow(new AuthorizationException("리뷰를 수정할 권한이 없습니다!"))
+                .when(reviewService).updateReview(any(), anyLong(), any());
+
+        // when
+        ResultActions result = failRestDocsMockMvc.perform(patch("/reviews/1")
+                .with(userToken())
+                .content(body)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        // then
+        result.andExpect(status().isUnauthorized());
     }
 }

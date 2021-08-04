@@ -49,10 +49,9 @@ public class TeacherFilterRepositoryImpl extends Querydsl4RepositorySupport impl
                                                                 .innerJoin(teacherProfile.member).fetchJoin()
                                                                 .where(teacherProfile.in(teacherProfiles.getContent()));
 
-        for (Sort.Order o : pageable.getSort()) {
-            PathBuilder<Object> orderByExpression = new PathBuilder<>(Object.class, "teacherProfile");
-
-            query.orderBy(new OrderSpecifier(o.isAscending() ? Order.ASC : Order.DESC, orderByExpression.get(o.getProperty())));
+        for (Sort.Order order : pageable.getSort()) {
+            PathBuilder<TeacherProfile> orderByExpression = new PathBuilder<>(TeacherProfile.class, "teacherProfile");
+            query.orderBy(new OrderSpecifier(order.isAscending() ? Order.ASC : Order.DESC, orderByExpression.get(order.getProperty())));
         }
 
         return query.fetch();
@@ -67,10 +66,10 @@ public class TeacherFilterRepositoryImpl extends Querydsl4RepositorySupport impl
         }
         builder.and(teacherProfile.career.goe(career));
 
-        return applyPagination(pageable, contentQuery -> query(builder));
+        return applyPagination(pageable, contentQuery -> findTeacherProfileIdsByPageable(builder));
     }
 
-    private JPAQuery<TeacherProfile> query(BooleanBuilder builder) {
+    private JPAQuery<TeacherProfile> findTeacherProfileIdsByPageable(BooleanBuilder builder) {
         return getQueryFactory().select(teacherProfile).distinct()
                                 .from(teacherProfile)
                                 .innerJoin(teacherProfile.languages, teacherLanguage)

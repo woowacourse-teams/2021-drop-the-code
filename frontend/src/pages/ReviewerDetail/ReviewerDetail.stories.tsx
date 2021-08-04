@@ -9,7 +9,7 @@ export default {
   component: ReviewerDetail,
   decorators: [
     (Story) => (
-      <MemoryRouter initialEntries={["/reviewer/1"]}>
+      <MemoryRouter initialEntries={["/reviewer/2"]}>
         <Route path="/reviewer/:reviewerId">
           <Story />
         </Route>

@@ -129,7 +129,7 @@ public class Review extends BaseEntity {
     }
 
     public boolean isPending() {
-        return Progress.PENDING == this.progress;
+        return progress.isPending();
     }
 
     public Member getTeacher() {

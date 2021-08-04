@@ -13,6 +13,10 @@ public enum Progress {
         this.description = description;
     }
 
+    public boolean isPending() {
+        return PENDING == this;
+    }
+
     public String getDescription() {
         return description;
     }

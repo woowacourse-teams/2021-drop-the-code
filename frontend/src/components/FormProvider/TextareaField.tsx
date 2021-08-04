@@ -5,13 +5,14 @@ import useFormContext from "hooks/useFormContext";
 
 export interface Props extends TextareaProps {
   name: string;
+  initialValue?: string;
 }
 
-const TextareaField = ({ name, ...props }: Props) => {
+const TextareaField = ({ name, initialValue, ...props }: Props) => {
   const { values, errorMessages, register, onChange } = useFormContext();
 
   useEffect(() => {
-    register(name);
+    register(name, initialValue);
   }, []);
 
   return (

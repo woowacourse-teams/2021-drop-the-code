@@ -73,14 +73,20 @@ public class TeacherProfile {
         this.skills = skills;
     }
 
-    public Long getId() {
-        return id;
+    public void update(String title, String content, int career) {
+        this.title = title;
+        this.content = content;
+        this.career = career;
     }
 
     public void updateReviewCountAndTime(Long newReviewTime) {
         double newAverageReviewTime = (newReviewTime + averageReviewTime * sumReviewCount * 24) / 24 / (sumReviewCount + 1);
         sumReviewCount++;
         averageReviewTime = Math.round(newAverageReviewTime * 10) / 10.0;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getTitle() {

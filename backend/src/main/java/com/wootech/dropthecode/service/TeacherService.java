@@ -60,8 +60,8 @@ public class TeacherService {
         }
 
         Map<String, Language> languageMap = languageService.findAllToMap();
-        List<Language> languages = validateLanguageNamesExists(teacherRegistrationRequest.getTechSpecs(), languageMap);
-        List<Skill> skills = validateSkillNamesExists(teacherRegistrationRequest.getTechSpecs(), skillService.findAllToMap());
+        List<Language> languages = findLanguageByNames(teacherRegistrationRequest.getTechSpecs(), languageMap);
+        List<Skill> skills = findSkillsByNames(teacherRegistrationRequest.getTechSpecs(), skillService.findAllToMap());
         teacherRegistrationRequest.validateSkillsInLanguage(languageMap);
 
         TeacherProfile teacher = save(teacherRegistrationRequest.toTeacherProfileWithMember(member));
@@ -71,7 +71,7 @@ public class TeacherService {
         memberService.save(member);
     }
 
-    private List<Language> validateLanguageNamesExists(List<TechSpec> techSpecs, Map<String, Language> languageMap) {
+    private List<Language> findLanguageByNames(List<TechSpec> techSpecs, Map<String, Language> languageMap) {
         return techSpecs.stream()
                         .map(TechSpec::getLanguage)
                         .map(languageName -> Optional.ofNullable(languageMap.get(languageName)))
@@ -79,7 +79,7 @@ public class TeacherService {
                         .collect(Collectors.toList());
     }
 
-    private List<Skill> validateSkillNamesExists(List<TechSpec> techSpecs, Map<String, Skill> skillMap) {
+    private List<Skill> findSkillsByNames(List<TechSpec> techSpecs, Map<String, Skill> skillMap) {
         return techSpecs.stream()
                         .map(TechSpec::getSkills)
                         .flatMap(Collection::stream)
@@ -90,9 +90,9 @@ public class TeacherService {
 
     @Transactional(readOnly = true)
     public TeacherPaginationResponse findAll(TeacherFilterRequest teacherFilterRequest, Pageable pageable) {
-        List<Language> languages = validateLanguageNamesExists(Collections.singletonList(teacherFilterRequest.getTechSpec()), languageService
+        List<Language> languages = findLanguageByNames(Collections.singletonList(teacherFilterRequest.getTechSpec()), languageService
                 .findAllToMap());
-        List<Skill> skills = validateSkillNamesExists(Collections.singletonList(teacherFilterRequest.getTechSpec()), skillService
+        List<Skill> skills = findSkillsByNames(Collections.singletonList(teacherFilterRequest.getTechSpec()), skillService
                 .findAllToMap());
 
         Page<TeacherProfile> teacherProfilePage = teacherProfileRepository.findAll(
@@ -121,6 +121,37 @@ public class TeacherService {
         TeacherProfile teacher = findById(id);
         teacher.updateReviewCountAndTime(reviewTime);
         save(teacher);
+    }
+
+    @Transactional
+    public void updateTeacher(LoginMember loginMember, TeacherRegistrationRequest teacherRegistrationRequest) {
+        Map<String, Language> languageMap = languageService.findAllToMap();
+        List<Language> languages = findLanguageByNames(teacherRegistrationRequest.getTechSpecs(), languageMap);
+        List<Skill> skills = findSkillsByNames(teacherRegistrationRequest.getTechSpecs(), skillService.findAllToMap());
+        teacherRegistrationRequest.validateSkillsInLanguage(languageMap);
+
+        TeacherProfile teacher = findById(loginMember.getId());
+
+        teacherLanguageService.deleteAllWithTeacher(teacher);
+        teacherLanguageService.saveAllWithTeacher(languages, teacher);
+
+        teacherSkillService.deleteAllWithTeacher(teacher);
+        teacherSkillService.saveAllWithTeacher(skills, teacher);
+
+        teacher.update(teacherRegistrationRequest.getTitle(), teacherRegistrationRequest.getContent(), teacherRegistrationRequest
+                .getCareer());
+
+        save(teacher);
+    }
+
+    @Transactional
+    public void deleteTeacher(LoginMember loginMember) {
+        Member member = memberService.findById(loginMember.getId());
+        member.setRole(Role.STUDENT);
+        memberService.save(member);
+
+        TeacherProfile teacher = member.getTeacherProfile();
+        teacherProfileRepository.delete(teacher);
     }
 }
 

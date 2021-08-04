@@ -9,6 +9,7 @@ import com.wootech.dropthecode.domain.bridge.TeacherLanguage;
 import com.wootech.dropthecode.repository.bridge.TeacherLanguageRepository;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TeacherLanguageService {
@@ -24,5 +25,10 @@ public class TeacherLanguageService {
                                                           .map(language -> new TeacherLanguage(teacher, language))
                                                           .collect(Collectors.toList());
         teacherLanguageRepository.saveAll(teacherLanguages);
+    }
+
+    @Transactional
+    public void deleteAllWithTeacher(TeacherProfile teacher) {
+        teacherLanguageRepository.deleteByTeacherProfile(teacher);
     }
 }

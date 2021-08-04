@@ -52,13 +52,13 @@ const FormProvider = ({ submit, validators, children, ...props }: Props) => {
     submit(values);
   };
 
-  const register = (name: string) => {
-    setValues((prevState) => ({ ...prevState, [name]: "" }));
+  const register = (name: string, initialValue = "") => {
+    setValues((prevState) => ({ ...prevState, [name]: initialValue }));
   };
 
   return (
     <FormContext.Provider value={{ values, errorMessages, isValid, isEmpty, register, onChange }}>
-      <form onSubmit={onSubmit} {...props}>
+      <form onSubmit={onSubmit} {...props} css={{ width: "100%" }}>
         {children}
       </form>
     </FormContext.Provider>

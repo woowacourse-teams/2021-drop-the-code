@@ -185,6 +185,79 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
+        @DisplayName("PUT /teachers/me - 적절하지 않은 토큰인 경우")
+        void updateTeacher() {
+            // given
+            doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+                    .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
+            List<TechSpec> techSpecs = Collections.singletonList(new TechSpec("java", Arrays.asList("Spring", "Servlet")));
+            TeacherRegistrationRequest request
+                    = new TeacherRegistrationRequest("백엔드 개발자입니다.", "환영합니다.", 3, techSpecs);
+
+            // when
+            WebTestClient.ResponseSpec response = webTestClient.put()
+                                                               .uri("/teachers/me")
+                                                               .header("Authorization", BEARER + INVALID_ACCESS_TOKEN)
+                                                               .body(Mono.just(request), TeacherRegistrationRequest.class)
+                                                               .exchange();
+
+            // then
+            response.expectStatus().isUnauthorized();
+        }
+
+        @Test
+        @DisplayName("PUT /teachers/me - 적절한 토큰인 경우")
+        void updateTeacherWithToken() {
+            // given
+            doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
+            List<TechSpec> techSpecs = Collections.singletonList(new TechSpec("java", Arrays.asList("Spring", "Servlet")));
+            TeacherRegistrationRequest request
+                    = new TeacherRegistrationRequest("백엔드 개발자입니다.", "환영합니다.", 3, techSpecs);
+
+            // when
+            WebTestClient.ResponseSpec response = webTestClient.put()
+                                                               .uri("/teachers/me")
+                                                               .header("Authorization", BEARER + VALID_ACCESS_TOKEN)
+                                                               .body(Mono.just(request), TeacherRegistrationRequest.class)
+                                                               .exchange();
+
+            // then
+            response.expectStatus().isNoContent();
+
+        }
+
+        @DisplayName("DELETE /teachers/me - 적절하지 않은 토큰인 경우")
+        void deleteTeachers() {
+            // given
+            doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+                    .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
+
+            // when
+            WebTestClient.ResponseSpec response = webTestClient.delete()
+                                                               .uri("/teachers/me")
+                                                               .header("Authorization", BEARER + INVALID_ACCESS_TOKEN)
+                                                               .exchange();
+
+            // then
+            response.expectStatus().isUnauthorized();
+        }
+
+        @DisplayName("DELETE /teachers/me - 적절한 토큰인 경우")
+        void deleteTeachersWithToken() {
+            // given
+            doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
+
+            // when
+            WebTestClient.ResponseSpec response = webTestClient.delete()
+                                                               .uri("/teachers/me")
+                                                               .header("Authorization", BEARER + VALID_ACCESS_TOKEN)
+                                                               .exchange();
+
+            // then
+            response.expectStatus().isNoContent();
+        }
+
+        @Test
         @DisplayName("POST /reviews - 적절하지 않은 토큰인 경우")
         void createReview() {
             // given

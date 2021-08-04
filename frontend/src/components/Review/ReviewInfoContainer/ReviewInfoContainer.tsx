@@ -17,7 +17,7 @@ import { COLOR } from "utils/constants/color";
 import { QUERY_KEY } from "utils/constants/key";
 import { ALT, SUCCESS_MESSAGE } from "utils/constants/message";
 
-import ReviewAmend from "../ReviewAmend/ReviewAmend";
+import ReviewEdit from "../ReviewEdit/ReviewEdit";
 import ReviewFeedback from "../ReviewFeedback/ReviewFeedback";
 
 const Title = styled.p`
@@ -134,7 +134,7 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
                 themeColor="secondary"
                 css={{ marginRight: "0.625rem" }}
                 onClick={() => {
-                  open(<ReviewAmend review={data} />);
+                  open(<ReviewEdit review={data} />);
                 }}
               >
                 수정

@@ -22,7 +22,7 @@ interface Props {
   review: Review;
 }
 
-const ReviewAmmend = ({ review }: Props) => {
+const ReviewEdit = ({ review }: Props) => {
   const { user } = useAuthContext();
   const { revalidate } = useRevalidate();
 
@@ -101,4 +101,4 @@ const ReviewAmmend = ({ review }: Props) => {
   );
 };
 
-export default ReviewAmmend;
+export default ReviewEdit;

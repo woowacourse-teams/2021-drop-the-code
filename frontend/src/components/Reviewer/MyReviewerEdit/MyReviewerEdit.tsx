@@ -47,7 +47,7 @@ const MyReviewerEdit = ({ reviewer }: Props) => {
         close();
         toast(SUCCESS_MESSAGE.API.REVIEWER.EDIT);
 
-        queryClient.invalidateQueries(QUERY_KEY.GET_REVIEWER);
+        queryClient.invalidateQueries([QUERY_KEY.GET_REVIEWER, reviewer.id]);
         queryClient.invalidateQueries(QUERY_KEY.CHECK_MEMBER);
       }
 

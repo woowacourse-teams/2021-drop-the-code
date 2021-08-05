@@ -27,6 +27,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.wootech.dropthecode.builder.MemberBuilder.dummyMember;
 import static com.wootech.dropthecode.builder.ReviewBuilder.dummyReview;
+import static com.wootech.dropthecode.builder.TeacherProfileBuilder.dummyTeacherProfile;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -62,8 +63,8 @@ class ReviewRepositoryCustomImplTest {
         // given
         airTe = dummyMember("oauth1", "email1@gmail.com", "name1", "s3://imageUrl1", "github url1", Role.TEACHER);
         allieTe = dummyMember("oauth2", "email2@gmail.com", "name2", "s3://imageUrl2", "github url2", Role.TEACHER);
-        TeacherProfile teacherProfile1 = new TeacherProfile("title1", "content1", 10, airTe);
-        TeacherProfile teacherProfile2 = new TeacherProfile("title2", "content2", 20, allieTe);
+        TeacherProfile teacherProfile1 = dummyTeacherProfile("title1", "content1", 10, airTe);
+        TeacherProfile teacherProfile2 = dummyTeacherProfile("title2", "content2", 20, allieTe);
 
         seedStu = dummyMember("oauth3", "email3@gmail.com", "name3", "s3://imageUrl3", "github url3", Role.STUDENT);
         fafiStu = dummyMember("oauth4", "email4@gmail.com", "name4", "s3://imageUrl4", "github url4", Role.STUDENT);

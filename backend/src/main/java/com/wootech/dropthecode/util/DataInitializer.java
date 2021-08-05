@@ -88,11 +88,11 @@ public class DataInitializer implements ApplicationRunner {
 
     private List<Skill> insertSkill() {
         List<Skill> skills = Arrays.asList(
-                new Skill("spring"),
-                new Skill("vue"),
-                new Skill("react"),
-                new Skill("angular"),
-                new Skill("django")
+                Skill.builder().name("spring").build(),
+                Skill.builder().name("vue").build(),
+                Skill.builder().name("react").build(),
+                Skill.builder().name("angular").build(),
+                Skill.builder().name("django").build()
         );
         return skillRepository.saveAll(skills);
     }
@@ -175,73 +175,84 @@ public class DataInitializer implements ApplicationRunner {
 
     private List<TeacherProfile> insertTeacherProfile(Map<Long, Member> memberMap) {
         List<TeacherProfile> teacherProfiles = Arrays.asList(
-                new TeacherProfile("우아한형제들 백엔드 개발자", "객체 지향, 클린 코드를 지향합니다.\n" + "주입식이 아닌 생각할 수 있는 코드리뷰를 제공해드립니다.", random
+                dummyTeacherProfile("우아한형제들 백엔드 개발자", "객체 지향, 클린 코드를 지향합니다.\n" + "주입식이 아닌 생각할 수 있는 코드리뷰를 제공해드립니다.", random
                         .nextInt(20) + 1, random.nextInt(100) + 1, Math.round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap
                         .get(2L)),
-                new TeacherProfile("우아한형제들 백엔드 개발자", "코드 한 줄도 놓치지 않고 꼼꼼하게 봐드립니다.\n" + "명쾌한 리뷰 해드립니다.", random.nextInt(20) + 1, random
+                dummyTeacherProfile("우아한형제들 백엔드 개발자", "코드 한 줄도 놓치지 않고 꼼꼼하게 봐드립니다.\n" + "명쾌한 리뷰 해드립니다.", random.nextInt(20) + 1, random
                         .nextInt(100) + 1, Math.round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(3L)),
-                new TeacherProfile("우아한형제들 인프라 담당자", "코드의 변화를 직접 느껴보세요.\n" + "여러 강의나 멘토링도 제공하고 있습니다.", random.nextInt(20) + 1, random
+                dummyTeacherProfile("우아한형제들 인프라 담당자", "코드의 변화를 직접 느껴보세요.\n" + "여러 강의나 멘토링도 제공하고 있습니다.", random.nextInt(20) + 1, random
                         .nextInt(100) + 1, Math.round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(4L)),
-                new TeacherProfile("우아한형제들 프론트엔드 개발자", "노하우를 전수해드립니다.\n" + "지식 공유를 좋아합니다.\n" + "후회하지 않으실 거에요.", random.nextInt(20) + 1, random
+                dummyTeacherProfile("우아한형제들 프론트엔드 개발자", "노하우를 전수해드립니다.\n" + "지식 공유를 좋아합니다.\n" + "후회하지 않으실 거에요.", random.nextInt(20) + 1, random
                         .nextInt(100) + 1, Math.round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(5L)),
-                new TeacherProfile("우아한형제들 백엔드 개발자", "당신의 코드를 레벨업 시켜드립니다!\n" + "여러 분야에 대한 경험이 많습니다.", random.nextInt(20) + 1, random
+                dummyTeacherProfile("우아한형제들 백엔드 개발자", "당신의 코드를 레벨업 시켜드립니다!\n" + "여러 분야에 대한 경험이 많습니다.", random.nextInt(20) + 1, random
                         .nextInt(100) + 1, Math.round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(6L)),
-                new TeacherProfile("네이버 쇼핑 프론트 개발자", "후회하지 않으실겁니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
+                dummyTeacherProfile("네이버 쇼핑 프론트 개발자", "후회하지 않으실겁니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
                         .round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(7L)),
 
-                new TeacherProfile("카카오 엔터프라이즈 개발 팀장", "카카오 1타 강사. 열심히 가르쳐드리겠습니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
+                dummyTeacherProfile("카카오 엔터프라이즈 개발 팀장", "카카오 1타 강사. 열심히 가르쳐드리겠습니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
                         .round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(8L)),
-                new TeacherProfile("쿠팡 이츠 앱 개발자", "소통을 통해 성장시켜드립니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
+                dummyTeacherProfile("쿠팡 이츠 앱 개발자", "소통을 통해 성장시켜드립니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
                         .round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(9L)),
-                new TeacherProfile("ios 마스터", "ios의 모든 것을 가르쳐드립니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
+                dummyTeacherProfile("ios 마스터", "ios의 모든 것을 가르쳐드립니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
                         .round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(10L)),
-                new TeacherProfile("네이버 웹툰 개발 팀장", "더 좋은 리뷰로 찾아뵙겠습니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
+                dummyTeacherProfile("네이버 웹툰 개발 팀장", "더 좋은 리뷰로 찾아뵙겠습니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
                         .round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(11L)),
-                new TeacherProfile("Amazon 서버 개발자", "생각하는 힘을 길러드립니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
+                dummyTeacherProfile("Amazon 서버 개발자", "생각하는 힘을 길러드립니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
                         .round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(12L)),
-                new TeacherProfile("라이엇 챔피언 개발자", "코딩의 재미를 느끼게 해드릴게요.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
+                dummyTeacherProfile("라이엇 챔피언 개발자", "코딩의 재미를 느끼게 해드릴게요.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
                         .round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(13L)),
 
-                new TeacherProfile("당근마켓 프론트 개발자", "당근마켓 1타 강사. 열심히 가르쳐드리겠습니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
+                dummyTeacherProfile("당근마켓 프론트 개발자", "당근마켓 1타 강사. 열심히 가르쳐드리겠습니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
                         .round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(14L)),
-                new TeacherProfile("토스 인프라 관리자", "하나하나 빡세게 가르쳐드리겠습니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
+                dummyTeacherProfile("토스 인프라 관리자", "하나하나 빡세게 가르쳐드리겠습니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
                         .round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(15L)),
-                new TeacherProfile("라인 게임 플랫폼 개발자", "제대로 해드립니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math.round((random
+                dummyTeacherProfile("라인 게임 플랫폼 개발자", "제대로 해드립니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math.round((random
                         .nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(16L)),
-                new TeacherProfile("네이버 클라우드 개발자", "경험해보지 못한 코드리뷰.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
+                dummyTeacherProfile("네이버 클라우드 개발자", "경험해보지 못한 코드리뷰.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
                         .round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(17L)),
-                new TeacherProfile("구글 백엔드 개발자", "영어도 가능합니다ㅎㅎ", random.nextInt(20) + 1, random.nextInt(100) + 1, Math.round((random
+                dummyTeacherProfile("구글 백엔드 개발자", "영어도 가능합니다ㅎㅎ", random.nextInt(20) + 1, random.nextInt(100) + 1, Math.round((random
                         .nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(18L)),
-                new TeacherProfile("페이스북 프론트엔드 개발자", "최신 기술도 가르쳐 드려요", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
+                dummyTeacherProfile("페이스북 프론트엔드 개발자", "최신 기술도 가르쳐 드려요", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
                         .round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(19L)),
 
-                new TeacherProfile("카카오톡 개발자", "카카오톡 개발자입니다. 열심히 가르쳐드리겠습니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
+                dummyTeacherProfile("카카오톡 개발자", "카카오톡 개발자입니다. 열심히 가르쳐드리겠습니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
                         .round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(20L)),
-                new TeacherProfile("카카오 안드로이드 개발자", "안드로이드 코드리뷰 받아보셨나요? 제가 해드립니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
+                dummyTeacherProfile("카카오 안드로이드 개발자", "안드로이드 코드리뷰 받아보셨나요? 제가 해드립니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
                         .round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(21L)),
-                new TeacherProfile("쿠팡 웹 서비스 개발자", "함께 성장해가는 코드리뷰", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
+                dummyTeacherProfile("쿠팡 웹 서비스 개발자", "함께 성장해가는 코드리뷰", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
                         .round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(22L)),
-                new TeacherProfile("카카오 보이스톡 개발자", "후회없게 해드립니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math.round((random
+                dummyTeacherProfile("카카오 보이스톡 개발자", "후회없게 해드립니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math.round((random
                         .nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(23L)),
-                new TeacherProfile("실리콘 밸리 출신 백엔드 개발자", "실리콘밸리 출신 백엔드 개발자. 영어도 가능합니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
+                dummyTeacherProfile("실리콘 밸리 출신 백엔드 개발자", "실리콘밸리 출신 백엔드 개발자. 영어도 가능합니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
                         .round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(24L)),
-                new TeacherProfile("opgg 서버 개발자", "후회하신다면 환불해드립니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
+                dummyTeacherProfile("opgg 서버 개발자", "후회하신다면 환불해드립니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
                         .round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(25L)),
 
-                new TeacherProfile("업비트 서버 개발자", "최선을 다하겠습니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math.round((random
+                dummyTeacherProfile("업비트 서버 개발자", "최선을 다하겠습니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math.round((random
                         .nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(26L)),
-                new TeacherProfile("카카오 웹툰 ios 개발자", "지식을 나눌 때 기쁨을 느낍니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
+                dummyTeacherProfile("카카오 웹툰 ios 개발자", "지식을 나눌 때 기쁨을 느낍니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
                         .round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(27L)),
-                new TeacherProfile("안드로이드 마스터", "안드로이드의 모든 것 제가 가르쳐드립니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
+                dummyTeacherProfile("안드로이드 마스터", "안드로이드의 모든 것 제가 가르쳐드립니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
                         .round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(28L)),
-                new TeacherProfile("자바스크립트의 아버지", "자바스크립트 그렇게 쓰는 거 아닌데", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
+                dummyTeacherProfile("자바스크립트의 아버지", "자바스크립트 그렇게 쓰는 거 아닌데", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
                         .round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(29L)),
-                new TeacherProfile("인프런 서버 개발자", "효율적인 코드를 짤 수 있게 해드립니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
+                dummyTeacherProfile("인프런 서버 개발자", "효율적인 코드를 짤 수 있게 해드립니다.", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
                         .round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(30L)),
-                new TeacherProfile("뱅크샐러드 프론트엔드 개발자", "화이팅 넘치는 코드리뷰!", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
+                dummyTeacherProfile("뱅크샐러드 프론트엔드 개발자", "화이팅 넘치는 코드리뷰!", random.nextInt(20) + 1, random.nextInt(100) + 1, Math
                         .round((random.nextDouble() * 7 + 1) * 10) / 10.0, memberMap.get(31L))
         );
         return teacherProfileRepository.saveAll(teacherProfiles);
+    }
+
+    private TeacherProfile dummyTeacherProfile(String title, String content, Integer career, Integer sumReviewCount, Double averageReviewTime, Member member) {
+        return TeacherProfile.builder()
+                             .title(title)
+                             .content(content)
+                             .career(career)
+                             .sumReviewCount(sumReviewCount)
+                             .averageReviewTime(averageReviewTime)
+                             .member(member)
+                             .build();
     }
 
     private void insertTeacherLanguage(Map<Long, Language> languageMap, Map<Long, TeacherProfile> teacherMap) {

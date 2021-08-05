@@ -50,7 +50,12 @@ public class TeacherRegistrationRequest {
     }
 
     public TeacherProfile toTeacherProfileWithMember(Member member) {
-        return new TeacherProfile(title, content, career, member);
+        return TeacherProfile.builder()
+                             .title(title)
+                             .content(content)
+                             .career(career)
+                             .member(member)
+                             .build();
     }
 
     public void validateSkillsInLanguage(Map<String, Language> languageMap) {

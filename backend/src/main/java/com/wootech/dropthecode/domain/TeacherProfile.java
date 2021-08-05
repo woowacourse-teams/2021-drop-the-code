@@ -12,10 +12,16 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 public class TeacherProfile {
-
     @Id
     private Long id;
 
@@ -50,27 +56,20 @@ public class TeacherProfile {
     private Integer sumReviewCount = 0;
 
     private Double averageReviewTime = (double) 0;
-
-    protected TeacherProfile() {
-    }
-
-    public TeacherProfile(String title, String content, Integer career, Member member) {
+    
+    @Builder
+    public TeacherProfile(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, String title, String content, Integer career, Member member, Set<TeacherLanguage> languages, Set<TeacherSkill> skills, Integer sumReviewCount, Double averageReviewTime) {
+        this.id = id;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.title = title;
         this.content = content;
         this.career = career;
         this.member = member;
-    }
-
-    public TeacherProfile(String title, String content, Integer career, Integer sumReviewCount, Double averageReviewTime, Member member) {
-        this(title, content, career, member);
-        this.sumReviewCount = sumReviewCount;
-        this.averageReviewTime = averageReviewTime;
-    }
-
-    public TeacherProfile(String title, String content, Integer career, Member member, Set<TeacherLanguage> languages, Set<TeacherSkill> skills) {
-        this(title, content, career, member);
         this.languages = languages;
         this.skills = skills;
+        this.sumReviewCount = sumReviewCount;
+        this.averageReviewTime = averageReviewTime;
     }
 
     public void update(String title, String content, int career) {
@@ -89,41 +88,5 @@ public class TeacherProfile {
         this.title = "탈퇴한 사용자입니다.";
         this.content = "내용 없음";
         this.career = 0;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public int getCareer() {
-        return career;
-    }
-
-    public Member getMember() {
-        return member;
-    }
-
-    public Set<TeacherLanguage> getLanguages() {
-        return languages;
-    }
-
-    public Set<TeacherSkill> getSkills() {
-        return skills;
-    }
-
-    public Integer getSumReviewCount() {
-        return sumReviewCount;
-    }
-
-    public Double getAverageReviewTime() {
-        return averageReviewTime;
     }
 }

@@ -8,6 +8,7 @@ import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.dto.TechSpec;
 import com.wootech.dropthecode.dto.request.ReviewRequest;
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
+import com.wootech.dropthecode.dto.response.AccessTokenResponse;
 import com.wootech.dropthecode.dto.response.LoginResponse;
 import com.wootech.dropthecode.dto.response.MemberResponse;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
@@ -28,6 +29,7 @@ import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
@@ -132,6 +134,24 @@ class AuthenticationInterceptorTest {
             // when
             WebTestClient.ResponseSpec response = webTestClient.get()
                                                                .uri("/reviews/1")
+                                                               .exchange();
+
+            // then
+            response.expectStatus().isOk();
+        }
+
+        @Test
+        @DisplayName("POST /token - 토큰 검증을 하지 않음")
+        void refreshingToken() {
+            // given
+            given(authService.refreshAccessToken(anyString(), any())).willReturn(new AccessTokenResponse("access token"));
+
+            // when
+            WebTestClient.ResponseSpec response = webTestClient.post()
+                                                               .uri("/token")
+                                                               .header("Authorization", BEARER + INVALID_ACCESS_TOKEN)
+                                                               .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                                               .body(fromFormData("refreshToken", REFRESH_TOKEN))
                                                                .exchange();
 
             // then
@@ -429,43 +449,6 @@ class AuthenticationInterceptorTest {
 
             // then
             response.expectStatus().isNoContent();
-        }
-
-        @Test
-        @DisplayName("POST /token - 적절하지 않은 토큰인 경우")
-        void refreshingToken() {
-            // given
-            doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
-                    .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
-
-            // when
-            WebTestClient.ResponseSpec response = webTestClient.post()
-                                                               .uri("/token")
-                                                               .header("Authorization", BEARER + INVALID_ACCESS_TOKEN)
-                                                               .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                                                               .body(fromFormData("refreshToken", REFRESH_TOKEN))
-                                                               .exchange();
-
-            // then
-            response.expectStatus().isUnauthorized();
-        }
-
-        @Test
-        @DisplayName("POST /token - 적절한 토큰인 경우")
-        void refreshingTokenWithToken() {
-            // given
-            doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
-
-            // when
-            WebTestClient.ResponseSpec response = webTestClient.post()
-                                                               .uri("/token")
-                                                               .header("Authorization", BEARER + VALID_ACCESS_TOKEN)
-                                                               .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                                                               .body(fromFormData("refreshToken", REFRESH_TOKEN))
-                                                               .exchange();
-
-            // then
-            response.expectStatus().isOk();
         }
 
         @Test

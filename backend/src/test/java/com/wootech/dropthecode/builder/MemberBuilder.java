@@ -22,7 +22,8 @@ public class MemberBuilder {
                      .build();
     }
 
-    public static Member dummyMember(String oauthId, String email, String name, String imageUrl, String githubUrl, Role role, LocalDateTime createdAt) {
+    public static Member dummyMember(String oauthId, String email, String name, String imageUrl, String githubUrl,
+                                     Role role, LocalDateTime createdAt) {
         return Member.builder()
                      .oauthId(oauthId)
                      .email(email)
@@ -34,7 +35,8 @@ public class MemberBuilder {
                      .build();
     }
 
-    public static Member dummyMember(Long id, String oauthId, String email, String name, String imageUrl, String githubUrl, Role role, TeacherProfile teacherProfile) {
+    public static Member dummyMember(Long id, String oauthId, String email, String name, String imageUrl,
+                                     String githubUrl, Role role, TeacherProfile teacherProfile) {
         return Member.builder()
                      .id(id)
                      .oauthId(oauthId)

@@ -68,8 +68,9 @@ public class OauthService {
 
     private Member saveOrUpdate(UserProfile userProfile) {
         Member member = memberRepository.findByOauthId(userProfile.getOauthId())
-                                   .map(entity -> entity.update(userProfile.getEmail(), userProfile.getName(), userProfile.getImageUrl()))
-                                   .orElseGet(userProfile::toMember);
+                                        .map(entity -> entity.update(
+                                                userProfile.getEmail(), userProfile.getName(), userProfile.getImageUrl()))
+                                        .orElseGet(userProfile::toMember);
         return memberRepository.save(member);
     }
 

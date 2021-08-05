@@ -12,7 +12,8 @@ public class ReviewBuilder {
     private ReviewBuilder() {
     }
 
-    public static Review dummyReview(Member teacher, Member student, String title, String content, String prUrl, Long elapsedTime) {
+    public static Review dummyReview(Member teacher, Member student, String title, String content, String prUrl,
+                                     Long elapsedTime) {
         return Review.builder()
                      .teacher(teacher)
                      .student(student)
@@ -23,7 +24,8 @@ public class ReviewBuilder {
                      .build();
     }
 
-    public static Review dummyReview(Member teacher, Member student, String title, String content, String prUrl, Long elapsedTime, Progress progress) {
+    public static Review dummyReview(Member teacher, Member student, String title, String content, String prUrl,
+                                     Long elapsedTime, Progress progress) {
         return Review.builder()
                      .teacher(teacher)
                      .student(student)
@@ -35,7 +37,8 @@ public class ReviewBuilder {
                      .build();
     }
 
-    public static Review dummyReview(Member teacher, Member student, String title, String content, String prUrl, Long elapsedTime, Progress progress, LocalDateTime createdAt) {
+    public static Review dummyReview(Member teacher, Member student, String title, String content, String prUrl,
+                                     Long elapsedTime, Progress progress, LocalDateTime createdAt) {
         return Review.builder()
                      .teacher(teacher)
                      .student(student)
@@ -48,9 +51,10 @@ public class ReviewBuilder {
                      .build();
     }
 
-    public static ReviewSummary dummyReviewSummary(Long id, String title, String content, Progress progress, Long teacherId, String teacherName,
-                                                   String teacherImageUrl, Long studentId, String studentName, String studentImageUrl, String prUrl,
-                                                   LocalDateTime createdAt) {
+    public static ReviewSummary dummyReviewSummary(Long id, String title, String content, Progress progress,
+                                                   Long teacherId, String teacherName, String teacherImageUrl,
+                                                   Long studentId, String studentName, String studentImageUrl,
+                                                   String prUrl, LocalDateTime createdAt) {
         return ReviewSummary.builder()
                             .id(id)
                             .title(title)

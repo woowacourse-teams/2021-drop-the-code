@@ -8,7 +8,6 @@ import com.wootech.dropthecode.util.LocalDateTimeToArray;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 public class ReviewResponse {

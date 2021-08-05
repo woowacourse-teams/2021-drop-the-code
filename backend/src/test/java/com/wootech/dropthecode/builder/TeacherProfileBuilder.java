@@ -10,7 +10,8 @@ public class TeacherProfileBuilder {
     private TeacherProfileBuilder() {
     }
 
-    public static TeacherProfile dummyTeacherProfile(String title, String content, Integer career, Member member, LocalDateTime createdAt) {
+    public static TeacherProfile dummyTeacherProfile(String title, String content, Integer career, Member member,
+                                                     LocalDateTime createdAt) {
         return TeacherProfile.builder()
                              .title(title)
                              .content(content)

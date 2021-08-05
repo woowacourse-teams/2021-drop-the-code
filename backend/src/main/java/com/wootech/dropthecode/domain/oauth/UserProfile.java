@@ -3,6 +3,10 @@ package com.wootech.dropthecode.domain.oauth;
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.domain.Role;
 
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
 public class UserProfile {
     private final String oauthId;
     private final String email;
@@ -10,6 +14,7 @@ public class UserProfile {
     private final String imageUrl;
     private final String githubUrl;
 
+    @Builder
     public UserProfile(String oauthId, String email, String name, String imageUrl, String githubUrl) {
         this.oauthId = oauthId;
         this.email = email;
@@ -27,25 +32,5 @@ public class UserProfile {
                      .githubUrl(githubUrl)
                      .role(Role.STUDENT)
                      .build();
-    }
-
-    public String getOauthId() {
-        return oauthId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public String getGithubUrl() {
-        return githubUrl;
     }
 }

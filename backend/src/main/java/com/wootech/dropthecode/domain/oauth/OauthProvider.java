@@ -1,5 +1,8 @@
 package com.wootech.dropthecode.domain.oauth;
 
+import lombok.Getter;
+
+@Getter
 public class OauthProvider {
     private final String clientId;
     private final String clientSecret;
@@ -17,25 +20,5 @@ public class OauthProvider {
         this.redirectUrl = redirectUrl;
         this.tokenUrl = tokenUrl;
         this.userInfoUrl = userInfoUrl;
-    }
-
-    public String getClientId() {
-        return clientId;
-    }
-
-    public String getClientSecret() {
-        return clientSecret;
-    }
-
-    public String getRedirectUrl() {
-        return redirectUrl;
-    }
-
-    public String getTokenUrl() {
-        return tokenUrl;
-    }
-
-    public String getUserInfoUrl() {
-        return userInfoUrl;
     }
 }

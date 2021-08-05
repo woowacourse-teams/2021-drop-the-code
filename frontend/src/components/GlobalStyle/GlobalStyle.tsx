@@ -3,7 +3,6 @@ import normalize from "styled-normalize";
 import reset from "styled-reset";
 
 import { COLOR } from "utils/constants/color";
-import { LAYOUT } from "utils/constants/size";
 
 const GlobalStyle = createGlobalStyle`
   ${normalize}
@@ -18,11 +17,12 @@ const GlobalStyle = createGlobalStyle`
 
   html {
     font-family: 'IBMPlexSansKR-Regular', 'sans-serif'; 
+    overflow-y: scroll;
   }
 
   * {
     box-sizing: border-box;
-    word-break: break-word;
+    word-break: break-all;
   }
 
   button {
@@ -37,7 +37,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   h2 {
-    font-size: 1.25rem;
+    font-size: 1.625rem;
     font-weight: 600;
     margin: 2.5rem 0;
   }
@@ -49,7 +49,7 @@ const GlobalStyle = createGlobalStyle`
   main {
     padding-top: 6rem; 
     width: 100%; 
-    max-width: ${LAYOUT.LG}; 
+    max-width: ${({ theme }) => theme.common.layout.lg}; 
     margin: 0 auto; 
   }
 `;

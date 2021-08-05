@@ -49,7 +49,7 @@ class AuthControllerTest extends RestApiDocumentTest {
     @DisplayName("github 아이디로 로그인")
     void loginWithGithub() throws Exception {
         // given
-        LoginResponse loginResponse = new LoginResponse(1L, NAME, EMAIL, IMAGE_URL, Role.STUDENT, BEARER, ACCESS_TOKEN, REFRESH_TOKEN);
+        LoginResponse loginResponse = new LoginResponse(1L, NAME, EMAIL, IMAGE_URL, GITHUB_URL, Role.STUDENT, BEARER, ACCESS_TOKEN, REFRESH_TOKEN);
 
         given(oauthService.login(any())).willReturn(loginResponse);
 

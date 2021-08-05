@@ -9,7 +9,7 @@ import { Flex } from "../Flexbox/Flexbox";
 const Label = styled.label`
   display: block;
   font-weight: 600;
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem;
 `;
 
 interface InnerProps {
@@ -26,7 +26,7 @@ const Inner = styled(Flex)<InnerProps>`
     width: 100%;
     padding: 0.625rem 1.25rem;
     border: 1px solid;
-    border-radius: 4px;
+    border-radius: ${({ theme }) => theme.common.shape.rounded};
     line-height: 2rem;
     white-space: break-spaces;
 

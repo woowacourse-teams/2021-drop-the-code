@@ -1,26 +1,26 @@
 import { Dispatch, SetStateAction } from "react";
 
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import CloseSvg from "assets/close.svg";
 import Button from "components/shared/Button/Button";
 import { Flex, FlexAlignCenter } from "components/shared/Flexbox/Flexbox";
 import useLanguageList from "hooks/useLanguageList";
 import { COLOR } from "utils/constants/color";
-import { LAYOUT } from "utils/constants/size";
 
 const SpecButton = styled(Button)`
-  color: ${({ theme }) => theme.common.color.primary};
+  border: 0.125rem solid;
   font-weight: 900;
-  border: 2px solid ${({ theme }) => theme.common.color.primary};
-  margin-right: 0.625rem;
+  margin: 0.5rem 0.5rem 0 0;
 `;
 
-const Close = styled(CloseSvg)`
-  width: 10px;
-  height: 10px;
-  stroke: ${({ theme }) => theme.common.color.primary};
-  stroke-width: 2px;
+const Close = styled(CloseSvg)<{ $isLanguage: boolean }>`
+  width: 0.625rem;
+  height: 0.625rem;
+  stroke: ${({ $isLanguage, theme }) => css`
+    ${$isLanguage ? theme.common.color.primary : COLOR.GREEN_400}
+  `};
+  stroke-width: 0.125rem;
 `;
 
 interface Specs {
@@ -66,7 +66,7 @@ const SpecPicker = ({ filterLanguage, specs, onSetFilterLanguage, onSetSpecs }: 
         </ul>
       </Flex>
       {isSpecsExist && (
-        <Flex css={{ marginBottom: "5px" }}>
+        <Flex css={{ marginBottom: "0.3125rem" }}>
           <FlexAlignCenter css={{ width: "5.625rem", fontWeight: 900 }}>기술 스택</FlexAlignCenter>
           <ul css={{ display: "flex" }}>
             {languages
@@ -99,48 +99,55 @@ const SpecPicker = ({ filterLanguage, specs, onSetFilterLanguage, onSetSpecs }: 
         </Flex>
       )}
       {isSpecsExist && (
-        <Flex css={{ width: LAYOUT.LG, flexWrap: "wrap" }}>
+        <Flex css={{ flexWrap: "wrap" }}>
           <FlexAlignCenter
             css={{
               width: "100%",
-              minHeight: "50px",
-              border: `1px solid ${COLOR.GRAY_500}`,
-              borderRadius: "4px",
+              marginLeft: "5rem",
+              minHeight: "3.125rem",
+              borderRadius: "0.25rem",
               flexWrap: "wrap",
-              padding: "0 10px",
+              padding: "0 0.625rem",
             }}
           >
             {Object.entries(specs).map(([key, value]) =>
-              [key, ...value].map((spec) => (
-                <SpecButton
-                  key={spec}
-                  themeColor="secondary"
-                  shape="pill"
-                  onClick={() => {
-                    if (!filterLanguage) return;
+              [key, ...value].map((spec) => {
+                const isLanguage = Object.keys(specs).includes(spec);
+                return (
+                  <SpecButton
+                    key={spec}
+                    themeColor="secondary"
+                    shape="pill"
+                    css={{
+                      borderColor: isLanguage ? COLOR.INDIGO_500 : COLOR.GREEN_400,
+                      color: isLanguage ? COLOR.INDIGO_500 : COLOR.GREEN_400,
+                    }}
+                    onClick={() => {
+                      if (!filterLanguage) return;
 
-                    if (Object.keys(specs).includes(spec)) {
-                      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                      const { [spec]: deletedSpec, ...newSpecs } = specs;
+                      if (Object.keys(specs).includes(spec)) {
+                        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                        const { [spec]: deletedSpec, ...newSpecs } = specs;
 
-                      onSetSpecs(newSpecs);
+                        onSetSpecs(newSpecs);
 
-                      return;
-                    }
+                        return;
+                      }
 
-                    const [parent] = Object.entries(specs)
-                      .filter(([_, value]) => value.includes(spec))
-                      .map(([key, _]) => key);
+                      const [parent] = Object.entries(specs)
+                        .filter(([_, value]) => value.includes(spec))
+                        .map(([key, _]) => key);
 
-                    const newSkills = specs[parent].filter((skill) => skill !== spec);
+                      const newSkills = specs[parent].filter((skill) => skill !== spec);
 
-                    onSetSpecs({ ...specs, [parent]: newSkills });
-                  }}
-                >
-                  {`${spec} `}
-                  <Close />
-                </SpecButton>
-              ))
+                      onSetSpecs({ ...specs, [parent]: newSkills });
+                    }}
+                  >
+                    {`${spec} `}
+                    <Close $isLanguage={isLanguage} />
+                  </SpecButton>
+                );
+              })
             )}
           </FlexAlignCenter>
         </Flex>

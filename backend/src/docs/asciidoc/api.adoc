@@ -121,6 +121,8 @@ include::{snippets}/language-controller-test/find-all-languages/auto-section.ado
 
 include::{snippets}/member-controller-test/members-me/auto-section.adoc[]
 
+include::{snippets}/member-controller-test/delete-member-myself-test/auto-section.adoc[]
+
 include::{snippets}/member-controller-test/delete-member-test/auto-section.adoc[]
 
 include::{snippets}/member-controller-test/register-teacher-test/auto-section.adoc[]
@@ -129,11 +131,25 @@ include::{snippets}/member-controller-test/register-teacher-test/auto-section.ad
 
 include::{snippets}/member-controller-test/register-teacher-fail-test/http-response.adoc[]
 
+include::{snippets}/member-controller-test/update-teacher-test/auto-section.adoc[]
+
+*필드 값이 하나라도 들어있지 않을 때의 응답*
+
+include::{snippets}/member-controller-test/update-teacher-fail-test/http-response.adoc[]
+
 include::{snippets}/member-controller-test/find-all-teacher-test/auto-section.adoc[]
 
 *필수 필드 값이 없을 때의 응답*
 
 include::{snippets}/member-controller-test/find-all-teacher-fail-test/http-response.adoc[]
+
+include::{snippets}/member-controller-test/find-teacher-test/auto-section.adoc[]
+
+*등록되지 않은 리뷰어의 ID일 때의 응답*
+
+include::{snippets}/member-controller-test/find-teacher-fail-if-id-is-invalid-test/http-response.adoc[]
+
+include::{snippets}/member-controller-test/delete-teacher-test/auto-section.adoc[]
 
 == Review API
 
@@ -165,3 +181,15 @@ include::{snippets}/review-controller-test/update-review-to-finish/auto-section.
 
 include::{snippets}/review-controller-test/update-review-to-finish-fail-if-authorization-header-not-exists/http-response.adoc[]
 
+include::{snippets}/review-controller-test/update-review/auto-section.adoc[]
+
+*본인이 아닌 멤버가 수정 요청했을 때의 응답*
+include::{snippets}/review-controller-test/update-review-no-authorization/http-response.adoc[]
+
+include::{snippets}/review-controller-test/cancel-review/auto-section.adoc[]
+
+*Pending 상태가 아닌 경우 응답*
+include::{snippets}/review-controller-test/cancel-review-no-pending/http-response.adoc[]
+
+*본인이 아닌 멤버가 취소 요청했을 때의 응답*
+include::{snippets}/review-controller-test/cancel-review-no-owner/http-response.adoc[]

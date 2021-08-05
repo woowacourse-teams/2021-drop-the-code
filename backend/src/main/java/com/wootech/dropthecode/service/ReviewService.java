@@ -7,11 +7,12 @@ import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.domain.Review;
 import com.wootech.dropthecode.dto.ReviewSummary;
-import com.wootech.dropthecode.dto.request.ReviewCreateRequest;
+import com.wootech.dropthecode.dto.request.ReviewRequest;
 import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
 import com.wootech.dropthecode.dto.response.ReviewsResponse;
 import com.wootech.dropthecode.exception.NotFoundException;
+import com.wootech.dropthecode.exception.ReviewException;
 import com.wootech.dropthecode.repository.ReviewRepository;
 
 import org.springframework.data.domain.Page;
@@ -32,16 +33,16 @@ public class ReviewService {
     }
 
     @Transactional
-    public Long create(ReviewCreateRequest reviewCreateRequest) {
-        Member teacher = memberService.findById(reviewCreateRequest.getTeacherId());
-        Member student = memberService.findById(reviewCreateRequest.getStudentId());
-        Review review = new Review
-                (
-                        teacher, student,
-                        reviewCreateRequest.getTitle(),
-                        reviewCreateRequest.getContent(),
-                        reviewCreateRequest.getPrUrl()
-                );
+    public Long create(ReviewRequest reviewRequest) {
+        Member teacher = memberService.findById(reviewRequest.getTeacherId());
+        Member student = memberService.findById(reviewRequest.getStudentId());
+        Review review = Review.builder()
+                              .teacher(teacher)
+                              .student(student)
+                              .title(reviewRequest.getTitle())
+                              .content(reviewRequest.getContent())
+                              .prUrl(reviewRequest.getPrUrl())
+                              .build();
         Review savedReview = reviewRepository.save(review);
         return savedReview.getId();
     }
@@ -93,5 +94,21 @@ public class ReviewService {
         Review review = findById(id);
         review.finishProgress(loginMember.getId());
         reviewRepository.save(review);
+    }
+
+    @Transactional
+    public void updateReview(LoginMember loginMember, Long id, ReviewRequest request) {
+        Review review = findById(id);
+        review.update(loginMember.getId(), request.getTitle(), request.getContent(), request.getPrUrl());
+    }
+
+    @Transactional
+    public void cancelRequest(LoginMember loginMember, Long id) {
+        Review review = findById(id);
+        review.validatesOwnerByLoginId(loginMember.getId());
+        if (!review.isPending()) {
+            throw new ReviewException("취소할 수 없는 리뷰입니다!");
+        }
+        reviewRepository.delete(review);
     }
 }

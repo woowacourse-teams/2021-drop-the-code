@@ -7,35 +7,36 @@ public enum OauthAttributes {
     GITHUB("github") {
         @Override
         public UserProfile of(Map<String, Object> attributes) {
-            return new UserProfile(
-                    String.valueOf(attributes.get("id")),
-                    (String) attributes.get("name"),
-                    (String) attributes.get("email"),
-                    (String) attributes.get("avatar_url")
-            );
+            return UserProfile.builder()
+                              .oauthId(String.valueOf(attributes.get("id")))
+                              .email((String) attributes.get("email"))
+                              .name((String) attributes.get("name"))
+                              .imageUrl((String) attributes.get("avatar_url"))
+                              .githubUrl((String) attributes.get("html_url"))
+                              .build();
         }
     },
     NAVER("naver") {
         @Override
         public UserProfile of(Map<String, Object> attributes) {
             Map<String, Object> response = (Map<String, Object>) attributes.get("response");
-            return new UserProfile(
-                    (String) response.get("id"),
-                    (String) response.get("name"),
-                    (String) response.get("email"),
-                    (String) response.get("profile_image")
-            );
+            return UserProfile.builder()
+                              .oauthId((String) response.get("id"))
+                              .email((String) response.get("email"))
+                              .name((String) response.get("name"))
+                              .imageUrl((String) response.get("profile_image"))
+                              .build();
         }
     },
     GOOGLE("google") {
         @Override
         public UserProfile of(Map<String, Object> attributes) {
-            return new UserProfile(
-                    String.valueOf(attributes.get("sub")),
-                    (String) attributes.get("name"),
-                    (String) attributes.get("email"),
-                    (String) attributes.get("picture")
-            );
+            return UserProfile.builder()
+                              .oauthId(String.valueOf(attributes.get("sub")))
+                              .email((String) attributes.get("email"))
+                              .name((String) attributes.get("name"))
+                              .imageUrl((String) attributes.get("picture"))
+                              .build();
         }
     };
 

@@ -5,7 +5,7 @@ interface FormContextProps {
   errorMessages: { [name: string]: string | null };
   isValid: boolean;
   isEmpty: boolean;
-  register: (name: string) => void;
+  register: (name: string, initialValue?: string | number) => void;
   onChange: React.ChangeEventHandler;
 }
 

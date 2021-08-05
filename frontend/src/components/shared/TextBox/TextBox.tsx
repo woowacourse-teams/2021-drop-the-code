@@ -9,7 +9,7 @@ const Inner = styled(Flex)`
   flex-direction: column;
   width: 100%;
   padding: 1.25rem;
-  box-shadow: 0.8125rem 0.8125rem 2.1875rem 0.3125rem rgb(0 0 0 / 20%);
+  box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
 `;
 
 const Title = styled.div`

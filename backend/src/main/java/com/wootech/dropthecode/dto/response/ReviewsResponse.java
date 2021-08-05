@@ -2,30 +2,24 @@ package com.wootech.dropthecode.dto.response;
 
 import java.util.List;
 
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
 public class ReviewsResponse {
     /**
      * 리뷰 리스트
      */
-    private List<ReviewResponse> reviews;
+    private final List<ReviewResponse> reviews;
 
     /**
      * 전체 페이지 수
      */
-    private int pageCount;
+    private final int pageCount;
 
-    public ReviewsResponse() {
-    }
-
+    @Builder
     public ReviewsResponse(List<ReviewResponse> reviews, int pageCount) {
         this.reviews = reviews;
         this.pageCount = pageCount;
-    }
-
-    public List<ReviewResponse> getReviews() {
-        return reviews;
-    }
-
-    public int getPageCount() {
-        return pageCount;
     }
 }

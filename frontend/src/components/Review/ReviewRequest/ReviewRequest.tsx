@@ -1,4 +1,4 @@
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 import { ReviewRequestFormData } from "types/review";
 
@@ -10,10 +10,11 @@ import TextareaField from "components/FormProvider/TextareaField";
 import Loading from "components/Loading/Loading";
 import { Flex } from "components/shared/Flexbox/Flexbox";
 import useAuthContext from "hooks/useAuthContext";
+import useModalContext from "hooks/useModalContext";
 import useRevalidate from "hooks/useRevalidate";
-import { COLOR } from "utils/constants/color";
-import { PLACE_HOLDER } from "utils/constants/message";
-import { LAYOUT } from "utils/constants/size";
+import useToastContext from "hooks/useToastContext";
+import { QUERY_KEY } from "utils/constants/key";
+import { PLACE_HOLDER, SUCCESS_MESSAGE } from "utils/constants/message";
 import { STANDARD } from "utils/constants/standard";
 import reviewRequestValidators from "utils/validators/reviewRequestValidators";
 
@@ -23,37 +24,46 @@ interface Props {
 
 const ReviewRequest = ({ reviewerId }: Props) => {
   const { user } = useAuthContext();
-
   const { revalidate } = useRevalidate();
-  const mutation = useMutation(
-    (reviewRequestFormData: ReviewRequestFormData) =>
-      revalidate(() => {
-        return requestReview(reviewRequestFormData);
-      }),
-    {
-      onSuccess: () => {
-        alert("성공");
-      },
-      onError: () => {
-        alert("에러");
-      },
-    }
+
+  const { close } = useModalContext();
+  const toast = useToastContext();
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation((reviewRequestFormData: ReviewRequestFormData) =>
+    revalidate(async () => {
+      const response = await requestReview(reviewRequestFormData);
+
+      if (!response.isSuccess) {
+        toast(response.error.message);
+      } else {
+        close();
+        toast(SUCCESS_MESSAGE.API.REVIEW.REQUEST);
+
+        queryClient.invalidateQueries(QUERY_KEY.GET_REVIEW);
+      }
+
+      return response;
+    })
   );
 
   if (mutation.isLoading) return <Loading />;
 
   return (
-    <div css={{ width: "40.625rem", margin: "0 auto" }}>
-      <h2 css={{ fontSize: "1.25rem", fontWeight: 600, margin: "20px 0 40px", textAlign: "center" }}>리뷰 신청</h2>
+    <div css={{ width: "40.625rem", margin: "0 auto", padding: "1.25rem" }}>
+      <h2 css={{ fontSize: "1.25rem", fontWeight: 600, margin: "1.25rem 0 2.5rem", textAlign: "center" }}>리뷰 신청</h2>
       <FormProvider
-        submit={async ({ studentId, reviewerId, title, prUrl, content }) => {
-          // mutation.mutate({
-          //   studentId: user.id
-          //   teacherId: reviewerId,
-          //   title,
-          //   prUrl,
-          //   content,
-          // });
+        submit={async ({ title, prUrl, content }) => {
+          if (!user) return;
+
+          mutation.mutate({
+            studentId: user.id,
+            teacherId: reviewerId,
+            title,
+            prUrl,
+            content,
+          });
         }}
         validators={reviewRequestValidators}
         css={{ marginTop: "1.25rem", width: "100%" }}
@@ -85,9 +95,7 @@ const ReviewRequest = ({ reviewerId }: Props) => {
           css={{ minHeight: "12.5rem" }}
         />
         <Flex css={{ margin: "1.25rem 0 2.5rem" }}>
-          <SubmitButton themeColor="primary" shape="rounded" css={{ marginLeft: "auto" }}>
-            요청
-          </SubmitButton>
+          {user && <SubmitButton css={{ marginLeft: "auto" }}>요청</SubmitButton>}
         </Flex>
       </FormProvider>
     </div>

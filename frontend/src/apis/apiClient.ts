@@ -62,6 +62,38 @@ const apiClient = {
       };
     }
   },
+  put: async <T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<Response<T>> => {
+    try {
+      const response = await axios.put<T>(url, data, config);
+
+      return {
+        isSuccess: true,
+        data: response.data,
+      };
+    } catch (error) {
+      return {
+        isSuccess: false,
+        error: error.response.data,
+        code: error.response.status,
+      };
+    }
+  },
+  delete: async <T>(url: string, config?: AxiosRequestConfig): Promise<Response<T>> => {
+    try {
+      const response = await axios.delete<T>(url, config);
+
+      return {
+        isSuccess: true,
+        data: response.data,
+      };
+    } catch (error) {
+      return {
+        isSuccess: false,
+        error: error.response.data,
+        code: error.response.status,
+      };
+    }
+  },
 } as const;
 
 export default apiClient;

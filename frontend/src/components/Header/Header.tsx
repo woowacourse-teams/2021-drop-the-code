@@ -8,7 +8,7 @@ import Navigation from "components/shared/Navigation/Navigation";
 import useAuthContext from "hooks/useAuthContext";
 import useModalContext from "hooks/useModalContext";
 import { PATH } from "utils/constants/path";
-import { NAV_MENU } from "utils/constants/route";
+import { NAV_MENU, ROLE_MENU } from "utils/constants/route";
 
 const Header = () => {
   const { user, logout } = useAuthContext();
@@ -26,23 +26,27 @@ const Header = () => {
         </h1>
       }
     >
-      <>
-        {NAV_MENU.filter(({ isPrivate }) => isPrivate === !!user).map(({ to, children }) => (
+      {!!user &&
+        ROLE_MENU.filter(({ isTeacher }) => isTeacher === (user.role === "TEACHER")).map(({ to, children }) => (
           <NavLink key={to} to={to}>
             {children}
           </NavLink>
         ))}
-        {!user && (
-          <Button themeColor="secondary" hover={false} css={{ fontWeight: 900 }} onClick={() => open(<GithubOAuth />)}>
-            로그인
-          </Button>
-        )}
-        {!!user && (
-          <Button themeColor="secondary" hover={false} css={{ fontWeight: 900 }} onClick={() => logout()}>
-            로그아웃
-          </Button>
-        )}
-      </>
+      {NAV_MENU.filter(({ isPrivate }) => isPrivate === !!user).map(({ to, children }) => (
+        <NavLink key={to} to={to}>
+          {children}
+        </NavLink>
+      ))}
+      {!user && (
+        <Button themeColor="primary" hover={false} css={{ fontWeight: 900 }} onClick={() => open(<GithubOAuth />)}>
+          로그인
+        </Button>
+      )}
+      {!!user && (
+        <Button themeColor="primary" hover={false} css={{ fontWeight: 900 }} onClick={() => logout()}>
+          로그아웃
+        </Button>
+      )}
     </Navigation>
   );
 };

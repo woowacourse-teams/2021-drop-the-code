@@ -13,9 +13,7 @@ const HomeLink = styled(NavLink)`
   padding: 0.9375rem 1.5625rem;
 
   :hover {
-    box-shadow: ${css`
-      0.125rem 0.125rem 0.25rem rgb(0 0 0 / 30%);
-    `};
+    box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
   }
 
   :active {

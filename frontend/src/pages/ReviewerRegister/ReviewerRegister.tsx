@@ -1,5 +1,5 @@
 import { Suspense, useState } from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
 
 import { ReviewerRegisterFormData } from "types/reviewer";
@@ -13,12 +13,12 @@ import SpecPicker from "components/Language/SpecPicker";
 import Loading from "components/Loading/Loading";
 import { Flex } from "components/shared/Flexbox/Flexbox";
 import useRevalidate from "hooks/useRevalidate";
-import { PLACE_HOLDER } from "utils/constants/message";
+import useToastContext from "hooks/useToastContext";
+import { QUERY_KEY } from "utils/constants/key";
+import { ERROR_MESSAGE, PLACE_HOLDER, SUCCESS_MESSAGE } from "utils/constants/message";
 import { PATH } from "utils/constants/path";
-import { LAYOUT } from "utils/constants/size";
 import { STANDARD } from "utils/constants/standard";
 import reviewerRegisterValidators from "utils/validators/reviewerRegisterValidators";
-// import useAuthContext from "hooks/useAuthContext";
 
 interface Specs {
   [language: string]: string[];
@@ -28,37 +28,40 @@ const ReviewerRegister = () => {
   const [filterLanguage, setFilterLanguage] = useState<string | null>(null);
   const [specs, setSpecs] = useState<Specs>({});
 
-  const { revalidate } = useRevalidate();
-
-  // const { user } = useAuthContext();
   const history = useHistory();
+  const queryClient = useQueryClient();
 
-  const mutation = useMutation(
-    (reviewerRegisterFormData: ReviewerRegisterFormData) =>
-      revalidate(() => registerReviewer(reviewerRegisterFormData)),
-    {
-      onSuccess: () => {
-        history.push(PATH.MAIN);
-      },
-      onError: () => {
-        history.push(PATH.MAIN);
-        alert("에러");
-      },
-    }
+  const { revalidate } = useRevalidate();
+  const toast = useToastContext();
+
+  const mutation = useMutation((reviewerRegisterFormData: ReviewerRegisterFormData) =>
+    revalidate(async () => {
+      const response = await registerReviewer(reviewerRegisterFormData);
+
+      if (!response.isSuccess) {
+        toast(response.error.message, { type: "error" });
+      } else {
+        queryClient.invalidateQueries(QUERY_KEY.GET_REVIEWER_LIST);
+        queryClient.invalidateQueries(QUERY_KEY.CHECK_MEMBER);
+
+        toast(SUCCESS_MESSAGE.API.REVIEWER.REGISTER);
+      }
+
+      return response;
+    })
   );
 
   if (mutation.isLoading) return <Loading />;
 
-  // TODO 반복되는 메인 컴포넌트 + 테마로 관리하기
   return (
-    <>
-      <h2 css={{ fontSize: "1.25rem", fontWeight: 600 }}>리뷰어 등록</h2>
+    <Flex css={{ flexDirection: "column" }}>
+      <h2>리뷰어 등록</h2>
       <FormProvider
         submit={async ({ career, title, content }) => {
           const techSpecs = Object.entries(specs).map(([language, skills]) => ({ language, skills }));
 
           if (techSpecs.length === 0) {
-            alert("기술을 선택해주세요");
+            toast(ERROR_MESSAGE.VALIDATION.REVIEWER_REGISTER.TECH_SPEC, { type: "error" });
 
             return;
           }
@@ -69,6 +72,8 @@ const ReviewerRegister = () => {
             title,
             content,
           });
+
+          history.push(PATH.MAIN);
         }}
         validators={reviewerRegisterValidators}
         css={{ marginTop: "1.25rem", width: "100%" }}
@@ -112,12 +117,10 @@ const ReviewerRegister = () => {
           css={{ minHeight: "31.25rem" }}
         />
         <Flex css={{ margin: "1.25rem 0 2.5rem" }}>
-          <SubmitButton themeColor="primary" shape="rounded" css={{ marginLeft: "auto" }}>
-            등록
-          </SubmitButton>
+          <SubmitButton css={{ marginLeft: "auto" }}>등록</SubmitButton>
         </Flex>
       </FormProvider>
-    </>
+    </Flex>
   );
 };
 

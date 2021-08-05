@@ -2,8 +2,10 @@ package com.wootech.dropthecode.dto.response;
 
 import com.wootech.dropthecode.domain.Skill;
 
-public class SkillResponse {
+import lombok.Getter;
 
+@Getter
+public class SkillResponse {
     /**
      * 프로그래밍 기술 Id
      */
@@ -21,13 +23,5 @@ public class SkillResponse {
 
     public static SkillResponse from(Skill skill) {
         return new SkillResponse(skill.getId(), skill.getName());
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
     }
 }

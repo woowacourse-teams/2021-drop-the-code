@@ -16,8 +16,6 @@ const LanguageList = ({ filterLanguage, filterSkills, onSetFilterLanguage, onSet
   // TODO: 텅빈화면
   if (languages?.length === 0) return <></>;
 
-  // 초기 메인페이지에서 필터 언어를 첫번째로 선택
-
   useEffect(() => {
     if (languages && !filterLanguage) onSetFilterLanguage(languages[0].language.name);
   }, []);
@@ -43,7 +41,7 @@ const LanguageList = ({ filterLanguage, filterSkills, onSetFilterLanguage, onSet
           ))}
         </ul>
       </Flex>
-      <Flex css={{ marginBottom: "15px" }}>
+      <Flex css={{ marginBottom: "0.9375rem" }}>
         <FlexAlignCenter css={{ width: "5.625rem", fontWeight: 900 }}>기술 스택</FlexAlignCenter>
         <ul css={{ display: "flex" }}>
           {languages

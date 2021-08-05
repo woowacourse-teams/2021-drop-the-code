@@ -1,8 +1,16 @@
 package com.wootech.dropthecode.domain;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.*;
 
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Member extends BaseEntity {
     private String oauthId;
@@ -15,6 +23,8 @@ public class Member extends BaseEntity {
 
     @Column(nullable = false)
     private String imageUrl;
+
+    private String githubUrl;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -29,65 +39,18 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Review> reviewsAsStudent;
 
-    protected Member() {
-    }
-
-    public Member(Long id, String oauthId, String name, String email, String imageUrl, Role role, TeacherProfile teacherProfile) {
-        this.id = id;
+    @Builder
+    public Member(Long id, String oauthId, String email, String name, String imageUrl, String githubUrl, Role role, TeacherProfile teacherProfile, List<Review> reviewsAsTeacher, List<Review> reviewsAsStudent, LocalDateTime createdAt) {
+        super(id, createdAt);
         this.oauthId = oauthId;
-        this.name = name;
         this.email = email;
+        this.name = name;
         this.imageUrl = imageUrl;
+        this.githubUrl = githubUrl;
         this.role = role;
         this.teacherProfile = teacherProfile;
-    }
-
-    public Member(String oauthId, String name, String email, String imageUrl, Role role, TeacherProfile teacherProfile) {
-        this(null, oauthId, name, email, imageUrl, role, teacherProfile);
-    }
-
-    public Member(String oauthId, String email, String name, String imageUrl, Role role) {
-        this(null, oauthId, email, name, imageUrl, role, null);
-    }
-
-    public Member(String email, String name, String imageUrl, Role role) {
-        this(null, null, email, name, imageUrl, role, null);
-    }
-
-    public String getOauthId() {
-        return oauthId;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public TeacherProfile getTeacherProfile() {
-        return teacherProfile;
-    }
-
-    public List<Review> getReviewsAsTeacher() {
-        return reviewsAsTeacher;
-    }
-
-    public List<Review> getReviewsAsStudent() {
-        return reviewsAsStudent;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
+        this.reviewsAsTeacher = reviewsAsTeacher;
+        this.reviewsAsStudent = reviewsAsStudent;
     }
 
     public boolean hasRole(Role role) {
@@ -96,5 +59,27 @@ public class Member extends BaseEntity {
 
     public boolean hasSameId(Long id) {
         return this.id.equals(id);
+    }
+
+    public Member update(String email, String name, String imageUrl) {
+        this.email = email;
+        this.name = name;
+        this.imageUrl = imageUrl;
+        return this;
+    }
+
+    public void delete(String email, String name, String imageUrl) {
+        if (this.role == Role.TEACHER) {
+            this.teacherProfile.deleteWithMember();
+        }
+
+        this.email = email;
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.role = Role.DELETED;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

@@ -3,7 +3,6 @@ package com.wootech.dropthecode.service;
 import com.wootech.dropthecode.controller.auth.util.JwtTokenProvider;
 import com.wootech.dropthecode.controller.auth.util.RedisUtil;
 import com.wootech.dropthecode.domain.LoginMember;
-import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.dto.request.RefreshTokenRequest;
 import com.wootech.dropthecode.dto.response.AccessTokenResponse;
@@ -17,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static com.wootech.dropthecode.builder.MemberBuilder.dummyMember;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -60,7 +60,7 @@ class AuthServiceTest {
         given(jwtTokenProvider.validateToken(validAccessToken)).willReturn(true);
         given(jwtTokenProvider.getPayload(validAccessToken)).willReturn("1");
         given(memberService.findById(1L))
-                .willReturn(new Member(1L, "oauthId", "air", "air.junseo@gmail.com", "s3://image", Role.STUDENT, null));
+                .willReturn(dummyMember(1L, "oauthId", "air", "air.junseo@gmail.com", "s3://image", "github url", Role.STUDENT, null));
 
         // when
         LoginMember loginMember = authService.findMemberByToken(validAccessToken);

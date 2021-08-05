@@ -38,11 +38,7 @@ const Inner = styled.button<InnerProps>`
     `};
 
   :hover {
-    box-shadow: ${({ hover = true }) =>
-      hover &&
-      css`
-        0.125rem 0.125rem 0.25rem rgb(0 0 0 / 30%);
-      `};
+    box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
   }
 
   :active {
@@ -52,13 +48,15 @@ const Inner = styled.button<InnerProps>`
   }
 
   :disabled {
-    background-color: ${COLOR.GRAY_300};
+    background-color: ${COLOR.GRAY_200};
 
     :hover {
       box-shadow: none;
     }
 
     cursor: auto;
+
+    color: ${COLOR.GRAY_400};
   }
 `;
 

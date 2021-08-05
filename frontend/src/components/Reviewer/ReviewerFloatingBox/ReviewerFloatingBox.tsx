@@ -11,6 +11,7 @@ import Chip from "components/shared/Chip/Chip";
 import { Flex, FlexAlignCenter, FlexCenter } from "components/shared/Flexbox/Flexbox";
 import useAuthContext from "hooks/useAuthContext";
 import useModalContext from "hooks/useModalContext";
+import { COLOR } from "utils/constants/color";
 import { ALT } from "utils/constants/message";
 
 const Inner = styled(Flex)`
@@ -18,12 +19,11 @@ const Inner = styled(Flex)`
   justify-content: space-between;
   position: -webkit-sticky;
   position: sticky;
-  top: 18.75rem;
-  width: 17.5rem;
+  top: 12.5rem;
   height: 14.375rem;
   padding: 1.25rem;
   border-radius: ${({ theme }) => theme.common.shape.rounded};
-  box-shadow: 0.4375rem 0.375rem 0.375rem rgb(0 0 0 / 10%);
+  box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
 `;
 
 const ProfileWrapper = styled(Flex)`
@@ -51,7 +51,7 @@ export interface Props {
 const ReviewerFloatingBox = ({ reviewer }: Props) => {
   const { open } = useModalContext();
 
-  const { id, imageUrl, career, sumReviewCount, averageReviewTime } = reviewer;
+  const { id, imageUrl, name, career, sumReviewCount, averageReviewTime } = reviewer;
 
   const { user } = useAuthContext();
 
@@ -64,12 +64,12 @@ const ReviewerFloatingBox = ({ reviewer }: Props) => {
             height="6.25rem"
             imageUrl={imageUrl}
             width="6.25rem"
-            css={{ marginBottom: "0.3125rem" }}
+            css={{ marginBottom: "0.8rem" }}
           />
           <Link to={"/"}>
             <FlexAlignCenter>
               <LoginButtonImage src={SmBlackLogo} alt={ALT.GITHUB_LOGIN_BUTTON} />
-              <p>seojihwan</p>
+              <p>{name}</p>
             </FlexAlignCenter>
           </Link>
         </AvatarWrapper>
@@ -85,20 +85,19 @@ const ReviewerFloatingBox = ({ reviewer }: Props) => {
           </Chip>
         </ChipWrapper>
       </ProfileWrapper>
-      {user !== null && user.id !== id && (
-        <FlexCenter>
-          <Button
-            themeColor="secondary"
-            hover={false}
-            css={{ fontWeight: 900 }}
-            onClick={() => {
-              open(<ReviewRequest reviewerId={id} />);
-            }}
-          >
-            리뷰 요청하기
-          </Button>
-        </FlexCenter>
-      )}
+      <FlexCenter>
+        <Button
+          themeColor="secondary"
+          hover={false}
+          css={{ color: COLOR.INDIGO_500, fontWeight: 900 }}
+          disabled={!user || user.id === id}
+          onClick={() => {
+            open(<ReviewRequest reviewerId={id} />);
+          }}
+        >
+          리뷰 요청하기
+        </Button>
+      </FlexCenter>
     </Inner>
   );
 };

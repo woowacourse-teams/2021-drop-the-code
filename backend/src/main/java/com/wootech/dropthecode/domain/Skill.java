@@ -10,33 +10,28 @@ import javax.persistence.OneToMany;
 import com.wootech.dropthecode.domain.bridge.LanguageSkill;
 import com.wootech.dropthecode.domain.bridge.TeacherSkill;
 
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Skill extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "skill", fetch = FetchType.LAZY)
-    private final List<TeacherSkill> teachers = new ArrayList<>();
+    private List<TeacherSkill> teachers = new ArrayList<>();
 
     @OneToMany(mappedBy = "skill", fetch = FetchType.LAZY)
-    private final List<LanguageSkill> languages = new ArrayList<>();
+    private List<LanguageSkill> languages = new ArrayList<>();
 
-    protected Skill() {
-    }
-
-    public Skill(String name) {
+    @Builder
+    public Skill(String name, List<TeacherSkill> teachers, List<LanguageSkill> languages) {
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<TeacherSkill> getTeachers() {
-        return teachers;
-    }
-
-    public List<LanguageSkill> getLanguages() {
-        return languages;
+        this.teachers = teachers;
+        this.languages = languages;
     }
 }

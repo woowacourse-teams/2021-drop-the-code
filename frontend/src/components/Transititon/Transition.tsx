@@ -59,16 +59,14 @@ const Transition = ({ initial, animate, exit, duration, children }: Props) => {
   }
 
   function performMount() {
-    if (initial) {
-      setCss(initial);
-    }
-
     setStatus("initial");
   }
 
   function performInitial() {
     if (initial) {
-      setCss(initial);
+      setTimeout(() => {
+        setCss(initial);
+      }, 0);
     }
 
     animationId.current = window.setTimeout(() => {

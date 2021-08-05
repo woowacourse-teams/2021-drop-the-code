@@ -3,7 +3,7 @@ import { Review, Role, ReviewRequestFormData } from "types/review";
 import apiClient from "apis/apiClient";
 
 export const requestReview = (reviewRequestFormData: ReviewRequestFormData) => {
-  return apiClient.post(`/teachers`, reviewRequestFormData);
+  return apiClient.post(`/reviews`, reviewRequestFormData);
 };
 
 export const getReview = (id: number) => {
@@ -11,9 +11,9 @@ export const getReview = (id: number) => {
 };
 
 export const getReviewList = (id: number, mode: Role) => {
-  return apiClient.get<{ reviews: Review[] }>(`/reviews/${mode}/${id}`);
+  return apiClient.get<{ reviews: Review[] }>(`/reviews/${mode.toLowerCase()}/${id}`);
 };
 
-export const patchReviewProgress = (id: number) => {
-  return apiClient.patch<{ reviews: Review[] }>(`/reviews/${id}`);
+export const patchReviewProgress = (id: number, progress: string) => {
+  return apiClient.patch<{ reviews: Review[] }>(`/reviews/${id}/${progress}`);
 };

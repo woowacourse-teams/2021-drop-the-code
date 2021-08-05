@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.oauth.Login;
+import com.wootech.dropthecode.dto.request.FeedbackRequest;
 import com.wootech.dropthecode.dto.request.ReviewRequest;
 import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
@@ -85,8 +86,8 @@ public class ReviewController {
      * @title 리뷰 상태 업데이트(TEACHER_COMPLETE -> FINISHED)
      */
     @PatchMapping("/{id}/finish")
-    public ResponseEntity<Void> updateToFinishReview(@Login LoginMember loginMember, @PathVariable Long id) {
-        reviewService.updateToFinishReview(loginMember, id);
+    public ResponseEntity<Void> updateToFinishReview(@Login LoginMember loginMember, @PathVariable Long id, @RequestBody @Valid FeedbackRequest feedbackRequest) {
+        reviewService.updateToFinishReview(loginMember, id, feedbackRequest);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

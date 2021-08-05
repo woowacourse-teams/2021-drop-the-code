@@ -19,7 +19,14 @@ public class UserProfile {
     }
 
     public Member toMember() {
-        return new Member(oauthId, email, name, imageUrl, githubUrl, Role.STUDENT);
+        return Member.builder()
+                     .oauthId(oauthId)
+                     .email(email)
+                     .name(name)
+                     .imageUrl(imageUrl)
+                     .githubUrl(githubUrl)
+                     .role(Role.STUDENT)
+                     .build();
     }
 
     public String getOauthId() {

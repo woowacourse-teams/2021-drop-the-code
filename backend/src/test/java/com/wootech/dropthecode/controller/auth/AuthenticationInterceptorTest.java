@@ -140,7 +140,7 @@ class AuthenticationInterceptorTest {
     }
 
     @Nested
-    @DisplayName("인터셉터 거치는 요청 확인" )
+    @DisplayName("인터셉터 거치는 요청 확인")
     class ApplyInterceptor {
 
         @Test
@@ -573,7 +573,7 @@ class AuthenticationInterceptorTest {
             // then
             response.expectStatus().isNoContent();
         }
-      
+
         @Test
         @DisplayName("DELETE /reviews/{id} - 적절하지 않은 토큰인 경우")
         void cancelReview() {

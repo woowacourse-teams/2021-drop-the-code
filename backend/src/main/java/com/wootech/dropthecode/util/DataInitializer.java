@@ -77,11 +77,11 @@ public class DataInitializer implements ApplicationRunner {
 
     private List<Language> insertLanguage() {
         List<Language> languages = Arrays.asList(
-                new Language("java"),
-                new Language("javascript"),
-                new Language("python"),
-                new Language("kotlin"),
-                new Language("c")
+                Language.builder().name("java").build(),
+                Language.builder().name("javascript").build(),
+                Language.builder().name("python").build(),
+                Language.builder().name("kotlin").build(),
+                Language.builder().name("c").build()
         );
         return languageRepository.saveAll(languages);
     }
@@ -111,45 +111,66 @@ public class DataInitializer implements ApplicationRunner {
 
     private List<Member> insertMember() {
         List<Member> members = Arrays.asList(
-                new Member("67591151", "shinse@gmail.com", "Shinsehantan", "https://avatars.githubusercontent.com/u/50273712?v=44", "https://github.com/shinsehantan", Role.STUDENT),
+                realMember("67591151", "shinse@gmail.com", "Shinsehantan", "https://avatars.githubusercontent.com/u/50273712?v=44", "https://github.com/shinsehantan", Role.STUDENT),
 
-                new Member("45876793", "air@gmail.com", "Air", "https://avatars.githubusercontent.com/u/45876793?v=4", "https://github.com/KJunseo", Role.TEACHER),
-                new Member("56301069", "seed@gmail.com", "Seed", "https://avatars.githubusercontent.com/u/56301069?v=4", "https://github.com/hsik0225", Role.TEACHER),
-                new Member("32974201", "allie@gmail.com", "Allie", "https://avatars.githubusercontent.com/u/32974201?v=4", "https://github.com/jh8579", Role.TEACHER),
-                new Member("52202474", "bran@gmail.com", "Bran", "https://avatars.githubusercontent.com/u/52202474?v=4", "https://github.com/seojihwan", Role.TEACHER),
-                new Member("50273712", "fafi@gmail.com", "Fafi", "https://avatars.githubusercontent.com/u/50273712?v=44", "https://github.com/TaewanKimmmm", Role.TEACHER),
-                new Member("0", "calvin0627@naver.com", "Calvin", "https://avatars.githubusercontent.com/u/29232608?v=4", "https://github.com/calvin0627", Role.TEACHER),
+                realMember("45876793", "air@gmail.com", "Air", "https://avatars.githubusercontent.com/u/45876793?v=4", "https://github.com/KJunseo", Role.TEACHER),
+                realMember("56301069", "seed@gmail.com", "Seed", "https://avatars.githubusercontent.com/u/56301069?v=4", "https://github.com/hsik0225", Role.TEACHER),
+                realMember("32974201", "allie@gmail.com", "Allie", "https://avatars.githubusercontent.com/u/32974201?v=4", "https://github.com/jh8579", Role.TEACHER),
+                realMember("52202474", "bran@gmail.com", "Bran", "https://avatars.githubusercontent.com/u/52202474?v=4", "https://github.com/seojihwan", Role.TEACHER),
+                realMember("50273712", "fafi@gmail.com", "Fafi", "https://avatars.githubusercontent.com/u/50273712?v=44", "https://github.com/TaewanKimmmm", Role.TEACHER),
+                dummyMember("calvin0627@naver.com", "Calvin", "https://avatars.githubusercontent.com/u/29232608?v=4", "https://github.com/calvin0627", Role.TEACHER),
 
-                new Member("1", "syndra9106@naver.com", "Syndra", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Syndra_0.jpg", "https://github.com", Role.TEACHER),
-                new Member("2", "anivia0627@naver.com", "Anivia", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Anivia_0.jpg", "https://github.com", Role.TEACHER),
-                new Member("3", "faker96@gmail.com", "Faker", "https://file.newswire.co.kr/data/datafile2/thumb_640/2021/06/1981906469_20210610110159_5423614022.jpg", "https://github.com", Role.TEACHER),
-                new Member("4", "hotcurry@gmail.com", "Curry", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxO9huSTvjzYvTKMdAhbm53dnrlNyLFzBnyw&usqp=CAU", "https://github.com", Role.TEACHER),
-                new Member("5", "fiora119@gmail.com", "Fiora", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Fiora_0.jpg", "https://github.com", Role.TEACHER),
-                new Member("6", "mushroom@gmail.com", "Teemo", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Teemo_0.jpg", "https://github.com", Role.TEACHER),
+                dummyMember("syndra9106@naver.com", "Syndra", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Syndra_0.jpg", "https://github.com", Role.TEACHER),
+                dummyMember("anivia0627@naver.com", "Anivia", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Anivia_0.jpg", "https://github.com", Role.TEACHER),
+                dummyMember("faker96@gmail.com", "Faker", "https://file.newswire.co.kr/data/datafile2/thumb_640/2021/06/1981906469_20210610110159_5423614022.jpg", "https://github.com", Role.TEACHER),
+                dummyMember("hotcurry@gmail.com", "Curry", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxO9huSTvjzYvTKMdAhbm53dnrlNyLFzBnyw&usqp=CAU", "https://github.com", Role.TEACHER),
+                dummyMember("fiora119@gmail.com", "Fiora", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Fiora_0.jpg", "https://github.com", Role.TEACHER),
+                dummyMember("mushroom@gmail.com", "Teemo", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Teemo_0.jpg", "https://github.com", Role.TEACHER),
 
-                new Member("7", "talonkillyou@naver.com", "Talon", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Talon_0.jpg", "https://github.com", Role.TEACHER),
-                new Member("8", "lasthit@naver.com", "Karthus", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Karthus_0.jpg", "https://github.com", Role.TEACHER),
-                new Member("9", "airplane33@gmail.com", "Corki", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Corki_0.jpg", "https://github.com", Role.TEACHER),
-                new Member("10", "icearrow@gmail.com", "Ashe", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ashe_0.jpg", "https://github.com", Role.TEACHER),
-                new Member("11", "gonggipang@gmail.com", "Orianna", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Orianna_0.jpg", "https://github.com", Role.TEACHER),
-                new Member("12", "prison@gmail.com", "Thresh", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Thresh_0.jpg", "https://github.com", Role.TEACHER),
+                dummyMember("talonkillyou@naver.com", "Talon", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Talon_0.jpg", "https://github.com", Role.TEACHER),
+                dummyMember("lasthit@naver.com", "Karthus", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Karthus_0.jpg", "https://github.com", Role.TEACHER),
+                dummyMember("airplane33@gmail.com", "Corki", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Corki_0.jpg", "https://github.com", Role.TEACHER),
+                dummyMember("icearrow@gmail.com", "Ashe", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ashe_0.jpg", "https://github.com", Role.TEACHER),
+                dummyMember("gonggipang@gmail.com", "Orianna", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Orianna_0.jpg", "https://github.com", Role.TEACHER),
+                dummyMember("prison@gmail.com", "Thresh", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Thresh_0.jpg", "https://github.com", Role.TEACHER),
 
-                new Member("13", "harp33@naver.com", "Sona", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Sona_0.jpg", "https://github.com", Role.TEACHER),
-                new Member("14", "mosquito@naver.com", "Vladimir", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Vladimir_0.jpg", "https://github.com", Role.TEACHER),
-                new Member("15", "laser@gmail.com", "Viktor", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Viktor_0.jpg", "https://github.com", Role.TEACHER),
-                new Member("16", "beinchung@gmail.com", "Vayne", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Vayne_0.jpg", "https://github.com", Role.TEACHER),
-                new Member("17", "madlife@gmail.com", "Blitzcrank", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Blitzcrank_0.jpg", "https://github.com", Role.TEACHER),
-                new Member("18", "manhgomanheun@gmail.com", "Ezreal", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ezreal_0.jpg", "https://github.com", Role.TEACHER),
+                dummyMember("harp33@naver.com", "Sona", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Sona_0.jpg", "https://github.com", Role.TEACHER),
+                dummyMember("mosquito@naver.com", "Vladimir", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Vladimir_0.jpg", "https://github.com", Role.TEACHER),
+                dummyMember("laser@gmail.com", "Viktor", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Viktor_0.jpg", "https://github.com", Role.TEACHER),
+                dummyMember("beinchung@gmail.com", "Vayne", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Vayne_0.jpg", "https://github.com", Role.TEACHER),
+                dummyMember("madlife@gmail.com", "Blitzcrank", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Blitzcrank_0.jpg", "https://github.com", Role.TEACHER),
+                dummyMember("manhgomanheun@gmail.com", "Ezreal", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ezreal_0.jpg", "https://github.com", Role.TEACHER),
 
-                new Member("19", "gumiho99@naver.com", "Ahri", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ahri_0.jpg", "https://github.com", Role.TEACHER),
-                new Member("20", "ninja1@naver.com", "Akali", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Akali_0.jpg", "https://github.com", Role.TEACHER),
-                new Member("21", "turnofflight@gmail.com", "Nocturne", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Nocturne_0.jpg", "https://github.com", Role.TEACHER),
-                new Member("22", "harrypotter1111@gmail.com", "LeBlanc", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Leblanc_0.jpg", "https://github.com", Role.TEACHER),
-                new Member("23", "moon33@gmail.com", "Diana", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Diana_0.jpg", "https://github.com", Role.TEACHER),
-                new Member("24", "drmundo@gmail.com", "Mundo", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/DrMundo_0.jpg", "https://github.com", Role.TEACHER)
+                dummyMember("gumiho99@naver.com", "Ahri", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Ahri_0.jpg", "https://github.com", Role.TEACHER),
+                dummyMember("ninja1@naver.com", "Akali", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Akali_0.jpg", "https://github.com", Role.TEACHER),
+                dummyMember("turnofflight@gmail.com", "Nocturne", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Nocturne_0.jpg", "https://github.com", Role.TEACHER),
+                dummyMember("harrypotter1111@gmail.com", "LeBlanc", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Leblanc_0.jpg", "https://github.com", Role.TEACHER),
+                dummyMember("moon33@gmail.com", "Diana", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Diana_0.jpg", "https://github.com", Role.TEACHER),
+                dummyMember("drmundo@gmail.com", "Mundo", "https://ddragon.leagueoflegends.com/cdn/img/champion/splash/DrMundo_0.jpg", "https://github.com", Role.TEACHER)
         );
 
         return memberRepository.saveAll(members);
+    }
+
+    private Member realMember(String oauthId, String email, String name, String imageUrl, String githubUrl, Role role) {
+        return Member.builder()
+                     .oauthId(oauthId)
+                     .email(email)
+                     .name(name)
+                     .imageUrl(imageUrl)
+                     .githubUrl(githubUrl)
+                     .role(role)
+                     .build();
+    }
+
+    private Member dummyMember(String email, String name, String imageUrl, String githubUrl, Role role) {
+        return Member.builder()
+                     .email(email)
+                     .name(name)
+                     .imageUrl(imageUrl)
+                     .githubUrl(githubUrl)
+                     .role(role)
+                     .build();
     }
 
     private List<TeacherProfile> insertTeacherProfile(Map<Long, Member> memberMap) {

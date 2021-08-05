@@ -1,5 +1,9 @@
 package com.wootech.dropthecode.dto.response;
 
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
 public class ProfileResponse {
     /**
      * 프로필 id
@@ -14,9 +18,7 @@ public class ProfileResponse {
      */
     private String imageUrl;
 
-    public ProfileResponse() {
-    }
-
+    @Builder
     public ProfileResponse(Long id, String name, String imageUrl) {
         this.id = id;
         this.name = name;
@@ -25,17 +27,5 @@ public class ProfileResponse {
 
     public static ProfileResponse of(Long id, String name, String imageUrl) {
         return new ProfileResponse(id, name, imageUrl);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
     }
 }

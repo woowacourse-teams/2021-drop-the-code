@@ -1,21 +1,21 @@
 <included>
-    <property name="APPLICATION_LOG_PATTERN" value="[%d{yyyy-MM-dd HH:mm:ss}] [%-5p] [%-40.40logger{0}] - %m%n"/>
+    <property name="INFO_LOG_PATTERN" value="[Occurred Time] - [%d{yyyy-MM-dd HH:mm:ss}] [%-5p] [%-40.40logger{0}] - %m%n"/>
 
-    <appender name="APPLICATION_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>INFO</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
 
-        <file>${FILE_PATH}/application.txt</file>
+        <file>${FILE_PATH}/info.txt</file>
 
         <encoder>
-            <pattern>${APPLICATION_LOG_PATTERN}</pattern>
+            <pattern>${INFO_LOG_PATTERN}</pattern>
         </encoder>
 
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${FILE_PATH}/application.%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
+            <fileNamePattern>${FILE_PATH}/info.%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
             <maxFileSize>100MB</maxFileSize>
             <maxHistory>10</maxHistory>
             <totalSizeCap>1GB</totalSizeCap>

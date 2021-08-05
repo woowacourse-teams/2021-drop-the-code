@@ -20,6 +20,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
+import static com.wootech.dropthecode.builder.MemberBuilder.dummyMember;
+import static com.wootech.dropthecode.builder.ReviewBuilder.dummyReview;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -41,13 +43,13 @@ public class ReviewServiceIntegrationTest {
     @DisplayName("리뷰 수정 동작 확인 - 성공")
     void reviewUpdate() {
         // given
-        Member teacher = new Member("1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER);
-        Member student = new Member("2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT);
+        Member teacher = dummyMember("1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER);
+        Member student = dummyMember("2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT);
         Member savedTeacher = memberRepository.save(teacher);
         Member savedStudent = memberRepository.save(student);
         LoginMember loginMember = new LoginMember(savedStudent.getId());
 
-        Review review = new Review(teacher, student, "original title", "original content", "original pr link", 0L, Progress.ON_GOING);
+        Review review = dummyReview(teacher, student, "original title", "original content", "original pr link", 0L, Progress.ON_GOING);
         Review originalReview = reviewRepository.save(review);
 
         ReviewRequest request =
@@ -67,13 +69,13 @@ public class ReviewServiceIntegrationTest {
     @DisplayName("리뷰 수정 동작 확인 - 권한 없음")
     void reviewUpdateNoAuthorization() {
         // given
-        Member teacher = new Member("1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER);
-        Member student = new Member("2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT);
+        Member teacher = dummyMember("1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER);
+        Member student = dummyMember("2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT);
         Member savedTeacher = memberRepository.save(teacher);
         Member savedStudent = memberRepository.save(student);
         LoginMember loginMember = new LoginMember(savedTeacher.getId());
 
-        Review review = new Review(teacher, student, "original title", "original content", "original pr link", 0L, Progress.ON_GOING);
+        Review review = dummyReview(teacher, student, "original title", "original content", "original pr link", 0L, Progress.ON_GOING);
         Review originalReview = reviewRepository.save(review);
 
         ReviewRequest request =
@@ -91,19 +93,19 @@ public class ReviewServiceIntegrationTest {
         assertThat(updatedReview).extracting("content").isEqualTo("original content");
         assertThat(updatedReview).extracting("prUrl").isEqualTo("original pr link");
     }
-  
+
     @Test
     @DisplayName("리뷰 요청 취소 동작 확인 - Pending 상태")
     void cancelReview() {
         // given
-        Member teacher = new Member("1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER);
-        Member student = new Member("2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT);
+        Member teacher = dummyMember("1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER);
+        Member student = dummyMember("2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT);
         memberRepository.save(teacher);
         Member savedStudent = memberRepository.save(student);
 
         LoginMember loginMember = new LoginMember(savedStudent.getId());
 
-        Review review = new Review(teacher, student, "original title", "original content", "original pr link", 0L, Progress.PENDING);
+        Review review = dummyReview(teacher, student, "original title", "original content", "original pr link", 0L, Progress.PENDING);
         Review savedReview = reviewRepository.save(review);
 
         // when
@@ -119,14 +121,14 @@ public class ReviewServiceIntegrationTest {
     @EnumSource(value = Progress.class, names = {"DENIED", "ON_GOING", "TEACHER_COMPLETED", "FINISHED"})
     void cancelReview(Progress progress) {
         // given
-        Member teacher = new Member("1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER);
-        Member student = new Member("2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT);
+        Member teacher = dummyMember("1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER);
+        Member student = dummyMember("2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT);
         memberRepository.save(teacher);
         Member savedStudent = memberRepository.save(student);
 
         LoginMember loginMember = new LoginMember(savedStudent.getId());
 
-        Review review = new Review(teacher, student, "original title", "original content", "original pr link", 0L, progress);
+        Review review = dummyReview(teacher, student, "original title", "original content", "original pr link", 0L, progress);
         Review savedReview = reviewRepository.save(review);
 
         // when
@@ -142,14 +144,14 @@ public class ReviewServiceIntegrationTest {
     @DisplayName("리뷰 요청 취소 동작 확인 - 권한이 없는 경우")
     void cancelReviewNoAuthorization() {
         // given
-        Member teacher = new Member("1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER);
-        Member student = new Member("2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT);
+        Member teacher = dummyMember("1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER);
+        Member student = dummyMember("2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT);
         Member savedTeacher = memberRepository.save(teacher);
         memberRepository.save(student);
 
         LoginMember loginMember = new LoginMember(savedTeacher.getId());
 
-        Review review = new Review(teacher, student, "original title", "original content", "original pr link", 0L, Progress.PENDING);
+        Review review = dummyReview(teacher, student, "original title", "original content", "original pr link", 0L, Progress.PENDING);
         Review savedReview = reviewRepository.save(review);
 
         // when

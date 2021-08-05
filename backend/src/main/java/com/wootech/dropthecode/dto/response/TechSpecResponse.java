@@ -2,8 +2,10 @@ package com.wootech.dropthecode.dto.response;
 
 import java.util.List;
 
-public class TechSpecResponse {
+import lombok.Getter;
 
+@Getter
+public class TechSpecResponse {
     /**
      * 언어 목록
      */
@@ -17,13 +19,5 @@ public class TechSpecResponse {
     public TechSpecResponse(List<LanguageResponse> languages, List<SkillResponse> skills) {
         this.languages = languages;
         this.skills = skills;
-    }
-
-    public List<LanguageResponse> getLanguages() {
-        return languages;
-    }
-
-    public List<SkillResponse> getSkills() {
-        return skills;
     }
 }

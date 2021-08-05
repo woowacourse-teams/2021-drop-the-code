@@ -12,6 +12,12 @@ import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.domain.TeacherProfile;
 import com.wootech.dropthecode.dto.TechSpec;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor
 public class TeacherRegistrationRequest {
 
     /**
@@ -39,9 +45,7 @@ public class TeacherRegistrationRequest {
     @NotEmpty
     private List<TechSpec> techSpecs;
 
-    public TeacherRegistrationRequest() {
-    }
-
+    @Builder
     public TeacherRegistrationRequest(@NotBlank String title, @NotBlank String content, @NotNull @PositiveOrZero Integer career, @NotEmpty List<TechSpec> techSpecs) {
         this.title = title;
         this.content = content;
@@ -50,27 +54,16 @@ public class TeacherRegistrationRequest {
     }
 
     public TeacherProfile toTeacherProfileWithMember(Member member) {
-        return new TeacherProfile(title, content, career, member);
+        return TeacherProfile.builder()
+                             .title(title)
+                             .content(content)
+                             .career(career)
+                             .member(member)
+                             .build();
     }
 
     public void validateSkillsInLanguage(Map<String, Language> languageMap) {
         techSpecs.forEach(techSpec -> techSpec.validateSkillsInLanguage(languageMap.get(techSpec.getLanguage())));
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public Integer getCareer() {
-        return career;
-    }
-
-    public List<TechSpec> getTechSpecs() {
-        return techSpecs;
     }
 }
 

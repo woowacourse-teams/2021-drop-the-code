@@ -48,8 +48,8 @@ public class MemberController {
     }
 
     /**
-     * @title 유저 삭제
      * @param id 유저의 ID
+     * @title 유저 삭제
      */
     @DeleteMapping("/members/{id}")
     public ResponseEntity<Void> deleteMember(@PathVariable Long id) {
@@ -93,8 +93,8 @@ public class MemberController {
     }
 
     /**
-     * @title 리뷰어 단일 조회
      * @param id 리뷰어의 ID
+     * @title 리뷰어 단일 조회
      */
     @GetMapping("/teachers/{id}")
     public ResponseEntity<TeacherProfileResponse> findTeacher(@PathVariable Long id) {

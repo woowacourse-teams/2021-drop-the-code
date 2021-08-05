@@ -54,7 +54,7 @@ const ReviewerRegister = () => {
   if (mutation.isLoading) return <Loading />;
 
   return (
-    <>
+    <Flex css={{ flexDirection: "column" }}>
       <h2>리뷰어 등록</h2>
       <FormProvider
         submit={async ({ career, title, content }) => {
@@ -120,7 +120,7 @@ const ReviewerRegister = () => {
           <SubmitButton css={{ marginLeft: "auto" }}>등록</SubmitButton>
         </Flex>
       </FormProvider>
-    </>
+    </Flex>
   );
 };
 

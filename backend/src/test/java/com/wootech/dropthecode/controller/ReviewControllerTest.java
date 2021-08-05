@@ -374,7 +374,7 @@ public class ReviewControllerTest extends RestApiDocumentTest {
         // then
         result.andExpect(status().isUnauthorized());
     }
-  
+
     @Test
     @DisplayName("리뷰 요청 취소 - Pending")
     void cancelReview() throws Exception {

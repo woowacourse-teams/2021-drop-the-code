@@ -22,3 +22,7 @@ export const renewToken = (refreshToken: string) => {
     headers: { "content-type": "application/x-www-form-urlencoded" },
   });
 };
+
+export const deleteAuth = () => {
+  return apiClient.delete<Omit<User, "accessToken" | "refreshToken">>("/members/me");
+};

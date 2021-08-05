@@ -1,5 +1,12 @@
 package com.wootech.dropthecode.dto.request;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
 public class AuthorizationRequest {
     /**
      * oauth 서버 이름(ex. github, naver, google)
@@ -11,27 +18,8 @@ public class AuthorizationRequest {
      */
     private String code;
 
-    public AuthorizationRequest() {
-    }
-
     public AuthorizationRequest(String providerName, String code) {
         this.providerName = providerName;
-        this.code = code;
-    }
-
-    public String getProviderName() {
-        return providerName;
-    }
-
-    public void setProviderName(String providerName) {
-        this.providerName = providerName;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
         this.code = code;
     }
 }

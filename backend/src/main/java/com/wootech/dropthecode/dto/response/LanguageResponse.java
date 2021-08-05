@@ -2,6 +2,9 @@ package com.wootech.dropthecode.dto.response;
 
 import com.wootech.dropthecode.domain.Language;
 
+import lombok.Getter;
+
+@Getter
 public class LanguageResponse {
 
     /**
@@ -21,13 +24,5 @@ public class LanguageResponse {
 
     public static LanguageResponse from(Language language) {
         return new LanguageResponse(language.getId(), language.getName());
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
     }
 }

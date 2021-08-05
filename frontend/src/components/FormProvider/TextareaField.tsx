@@ -5,7 +5,7 @@ import useFormContext from "hooks/useFormContext";
 
 export interface Props extends TextareaProps {
   name: string;
-  initialValue?: string;
+  initialValue?: string | number;
 }
 
 const TextareaField = ({ name, initialValue, ...props }: Props) => {

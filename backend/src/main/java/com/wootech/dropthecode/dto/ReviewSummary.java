@@ -4,6 +4,12 @@ import java.time.LocalDateTime;
 
 import com.wootech.dropthecode.domain.Progress;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor
 public class ReviewSummary {
     private Long id;
     private String title;
@@ -18,9 +24,7 @@ public class ReviewSummary {
     private String prUrl;
     private LocalDateTime createdAt;
 
-    public ReviewSummary() {
-    }
-
+    @Builder
     public ReviewSummary(Long id, String title, String content, Progress progress, Long teacherId, String teacherName,
                          String teacherImageUrl, Long studentId, String studentName, String studentImageUrl, String prUrl,
                          LocalDateTime createdAt) {
@@ -36,53 +40,5 @@ public class ReviewSummary {
         this.studentImageUrl = studentImageUrl;
         this.prUrl = prUrl;
         this.createdAt = createdAt;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public Progress getProgress() {
-        return progress;
-    }
-
-    public Long getTeacherId() {
-        return teacherId;
-    }
-
-    public String getTeacherName() {
-        return teacherName;
-    }
-
-    public String getTeacherImageUrl() {
-        return teacherImageUrl;
-    }
-
-    public Long getStudentId() {
-        return studentId;
-    }
-
-    public String getStudentName() {
-        return studentName;
-    }
-
-    public String getStudentImageUrl() {
-        return studentImageUrl;
-    }
-
-    public String getPrUrl() {
-        return prUrl;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
     }
 }

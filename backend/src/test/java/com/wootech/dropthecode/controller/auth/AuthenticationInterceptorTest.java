@@ -9,6 +9,7 @@ import com.wootech.dropthecode.dto.TechSpec;
 import com.wootech.dropthecode.dto.request.FeedbackRequest;
 import com.wootech.dropthecode.dto.request.ReviewRequest;
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
+import com.wootech.dropthecode.dto.response.AccessTokenResponse;
 import com.wootech.dropthecode.dto.response.LoginResponse;
 import com.wootech.dropthecode.dto.response.MemberResponse;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
@@ -29,6 +30,7 @@ import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
@@ -128,7 +130,7 @@ class AuthenticationInterceptorTest {
         @DisplayName("GET /reviews/{id} - 토큰 검증을 하지 않음")
         void reviewDetail() {
             // given
-            given(reviewService.findReviewSummaryById(1L)).willReturn(new ReviewResponse());
+            given(reviewService.findReviewSummaryById(1L)).willReturn(ReviewResponse.builder().build());
 
             // when
             WebTestClient.ResponseSpec response = webTestClient.get()
@@ -138,10 +140,28 @@ class AuthenticationInterceptorTest {
             // then
             response.expectStatus().isOk();
         }
+
+        @Test
+        @DisplayName("POST /token - 토큰 검증을 하지 않음")
+        void refreshingToken() {
+            // given
+            given(authService.refreshAccessToken(anyString(), any())).willReturn(new AccessTokenResponse("access token"));
+
+            // when
+            WebTestClient.ResponseSpec response = webTestClient.post()
+                                                               .uri("/token")
+                                                               .header("Authorization", BEARER + INVALID_ACCESS_TOKEN)
+                                                               .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                                               .body(fromFormData("refreshToken", REFRESH_TOKEN))
+                                                               .exchange();
+
+            // then
+            response.expectStatus().isOk();
+        }
     }
 
     @Nested
-    @DisplayName("인터셉터 거치는 요청 확인" )
+    @DisplayName("인터셉터 거치는 요청 확인")
     class ApplyInterceptor {
 
         @Test
@@ -436,43 +456,6 @@ class AuthenticationInterceptorTest {
         }
 
         @Test
-        @DisplayName("POST /token - 적절하지 않은 토큰인 경우")
-        void refreshingToken() {
-            // given
-            doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
-                    .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
-
-            // when
-            WebTestClient.ResponseSpec response = webTestClient.post()
-                                                               .uri("/token")
-                                                               .header("Authorization", BEARER + INVALID_ACCESS_TOKEN)
-                                                               .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                                                               .body(fromFormData("refreshToken", REFRESH_TOKEN))
-                                                               .exchange();
-
-            // then
-            response.expectStatus().isUnauthorized();
-        }
-
-        @Test
-        @DisplayName("POST /token - 적절한 토큰인 경우")
-        void refreshingTokenWithToken() {
-            // given
-            doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
-
-            // when
-            WebTestClient.ResponseSpec response = webTestClient.post()
-                                                               .uri("/token")
-                                                               .header("Authorization", BEARER + VALID_ACCESS_TOKEN)
-                                                               .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                                                               .body(fromFormData("refreshToken", REFRESH_TOKEN))
-                                                               .exchange();
-
-            // then
-            response.expectStatus().isOk();
-        }
-
-        @Test
         @DisplayName("GET /members/me - 적절하지 않은 토큰인 경우")
         void membersMe() {
             // given
@@ -494,7 +477,7 @@ class AuthenticationInterceptorTest {
         void membersMeWithToken() {
             // given
             doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
-            given(memberService.findByLoginMember(any())).willReturn(new MemberResponse());
+            given(memberService.findByLoginMember(any())).willReturn(MemberResponse.builder().build());
 
             // when
             WebTestClient.ResponseSpec response = webTestClient.get()
@@ -577,7 +560,7 @@ class AuthenticationInterceptorTest {
             // then
             response.expectStatus().isNoContent();
         }
-      
+
         @Test
         @DisplayName("DELETE /reviews/{id} - 적절하지 않은 토큰인 경우")
         void cancelReview() {

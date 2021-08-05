@@ -40,13 +40,13 @@ public class ReviewService {
     public Long create(ReviewRequest reviewRequest) {
         Member teacher = memberService.findById(reviewRequest.getTeacherId());
         Member student = memberService.findById(reviewRequest.getStudentId());
-        Review review = new Review
-                (
-                        teacher, student,
-                        reviewRequest.getTitle(),
-                        reviewRequest.getContent(),
-                        reviewRequest.getPrUrl()
-                );
+        Review review = Review.builder()
+                              .teacher(teacher)
+                              .student(student)
+                              .title(reviewRequest.getTitle())
+                              .content(reviewRequest.getContent())
+                              .prUrl(reviewRequest.getPrUrl())
+                              .build();
         Review savedReview = reviewRepository.save(review);
         return savedReview.getId();
     }
@@ -100,13 +100,13 @@ public class ReviewService {
         review.finishProgress(loginMember.getId(), feedback);
         reviewRepository.save(review);
     }
-  
+
     @Transactional
     public void updateReview(LoginMember loginMember, Long id, ReviewRequest request) {
         Review review = findById(id);
         review.update(loginMember.getId(), request.getTitle(), request.getContent(), request.getPrUrl());
     }
-  
+
     @Transactional
     public void cancelRequest(LoginMember loginMember, Long id) {
         Review review = findById(id);

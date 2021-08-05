@@ -5,6 +5,14 @@ import javax.validation.constraints.PositiveOrZero;
 
 import com.wootech.dropthecode.dto.TechSpec;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
 public class TeacherFilterRequest {
 
     /**
@@ -19,27 +27,9 @@ public class TeacherFilterRequest {
     @PositiveOrZero
     private Integer career;
 
-    public TeacherFilterRequest() {
-    }
-
+    @Builder
     public TeacherFilterRequest(TechSpec techSpec, Integer career) {
         this.techSpec = techSpec;
-        this.career = career;
-    }
-
-    public TechSpec getTechSpec() {
-        return techSpec;
-    }
-
-    public Integer getCareer() {
-        return career;
-    }
-
-    public void setTechSpec(TechSpec techSpec) {
-        this.techSpec = techSpec;
-    }
-
-    public void setCareer(Integer career) {
         this.career = career;
     }
 }

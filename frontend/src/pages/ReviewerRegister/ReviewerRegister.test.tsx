@@ -12,7 +12,7 @@ beforeEach(() => {
 });
 
 describe("리뷰어 등록 페이지 테스트", () => {
-  it("언어 및 기술 목록을 조회가 끝나면 언어를 선택할 수 있다.", async () => {
+  it("언어 및 기술 목록 조회가 끝나면 언어를 선택할 수 있다.", async () => {
     const languageButton = await findByText(languages[0].language.name);
 
     expect(languageButton).toBeVisible();

@@ -8,8 +8,11 @@ import com.wootech.dropthecode.domain.TeacherProfile;
 import com.wootech.dropthecode.domain.bridge.TeacherLanguage;
 import com.wootech.dropthecode.domain.bridge.TeacherSkill;
 
-public class TeacherProfileResponse {
+import lombok.Builder;
+import lombok.Getter;
 
+@Getter
+public class TeacherProfileResponse {
     /**
      * ID
      */
@@ -65,6 +68,7 @@ public class TeacherProfileResponse {
      */
     private final TechSpecResponse techSpec;
 
+    @Builder
     public TeacherProfileResponse(Long id, String email, String name, String imageUrl, String githubUrl, String title, String content, Integer career, Integer sumReviewCount, Double averageReviewTime, TechSpecResponse techSpec) {
         this.id = id;
         this.email = email;
@@ -83,7 +87,8 @@ public class TeacherProfileResponse {
         final List<LanguageResponse> languageResponses = teacherProfile.getLanguages()
                                                                        .stream()
                                                                        .map(TeacherLanguage::getLanguage)
-                                                                       .map(lang -> new LanguageResponse(lang.getId(), lang.getName()))
+                                                                       .map(lang -> new LanguageResponse(lang.getId(), lang
+                                                                               .getName()))
                                                                        .sorted(Comparator.comparing(LanguageResponse::getId))
                                                                        .collect(Collectors.toList());
 
@@ -107,49 +112,5 @@ public class TeacherProfileResponse {
                 teacherProfile.getSumReviewCount(),
                 teacherProfile.getAverageReviewTime(),
                 techSpecResponse);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public String getGithubUrl() {
-        return githubUrl;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public Integer getCareer() {
-        return career;
-    }
-
-    public Integer getSumReviewCount() {
-        return sumReviewCount;
-    }
-
-    public Double getAverageReviewTime() {
-        return averageReviewTime;
-    }
-
-    public TechSpecResponse getTechSpec() {
-        return techSpec;
     }
 }

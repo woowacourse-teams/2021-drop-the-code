@@ -2,6 +2,9 @@ package com.wootech.dropthecode.dto.response;
 
 import java.util.List;
 
+import lombok.Getter;
+
+@Getter
 public class LanguageSkillsResponse {
 
     /**
@@ -17,13 +20,5 @@ public class LanguageSkillsResponse {
     public LanguageSkillsResponse(LanguageResponse language, List<SkillResponse> skills) {
         this.language = language;
         this.skills = skills;
-    }
-
-    public LanguageResponse getLanguage() {
-        return language;
-    }
-
-    public List<SkillResponse> getSkills() {
-        return skills;
     }
 }

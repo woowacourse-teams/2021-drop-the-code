@@ -9,6 +9,14 @@ import com.wootech.dropthecode.domain.Language;
 import com.wootech.dropthecode.domain.Skill;
 import com.wootech.dropthecode.domain.bridge.LanguageSkill;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
 public class TechSpec {
 
     /**
@@ -22,9 +30,7 @@ public class TechSpec {
      */
     private List<String> skills = new ArrayList<>();
 
-    public TechSpec() {
-    }
-
+    @Builder
     public TechSpec(String language, List<String> skills) {
         this.language = language;
         this.skills = skills;
@@ -40,21 +46,5 @@ public class TechSpec {
         if (!collect.containsAll(skills)) {
             throw new IllegalArgumentException("언어에 포함되지 않는 기술이 있습니다.");
         }
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public List<String> getSkills() {
-        return skills;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
-    public void setSkills(List<String> skills) {
-        this.skills = skills;
     }
 }

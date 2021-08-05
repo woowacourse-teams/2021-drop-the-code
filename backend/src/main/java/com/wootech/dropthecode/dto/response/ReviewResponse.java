@@ -6,43 +6,46 @@ import com.wootech.dropthecode.domain.Progress;
 import com.wootech.dropthecode.dto.ReviewSummary;
 import com.wootech.dropthecode.util.LocalDateTimeToArray;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
 public class ReviewResponse {
     /**
      * 리뷰 id
      */
-    private Long id;
+    private final Long id;
     /**
      * 리뷰 제목
      */
-    private String title;
+    private final String title;
     /**
      * 리뷰 내용
      */
-    private String content;
+    private final String content;
     /**
      * 리뷰 진행 상태
      */
-    private Progress progress;
+    private final Progress progress;
     /**
      * 선생님 프로필
      */
-    private ProfileResponse teacherProfile;
+    private final ProfileResponse teacherProfile;
     /**
      * 학생 프로필
      */
-    private ProfileResponse studentProfile;
+    private final ProfileResponse studentProfile;
     /**
      * PR 링크
      */
-    private String prUrl;
+    private final String prUrl;
     /**
      * 리뷰 생성일
      */
-    private Integer[] createdAt;
+    private final Integer[] createdAt;
 
-    public ReviewResponse() {
-    }
-
+    @Builder
     public ReviewResponse(Long id, String title, String content, Progress progress, ProfileResponse teacherProfile, ProfileResponse studentProfile, String prUrl, LocalDateTime createdAt) {
         this.id = id;
         this.title = title;
@@ -59,37 +62,5 @@ public class ReviewResponse {
                 ProfileResponse.of(review.getTeacherId(), review.getTeacherName(), review.getTeacherImageUrl()),
                 ProfileResponse.of(review.getStudentId(), review.getStudentName(), review.getStudentImageUrl()),
                 review.getPrUrl(), review.getCreatedAt());
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public Progress getProgress() {
-        return progress;
-    }
-
-    public ProfileResponse getTeacherProfile() {
-        return teacherProfile;
-    }
-
-    public ProfileResponse getStudentProfile() {
-        return studentProfile;
-    }
-
-    public String getPrUrl() {
-        return prUrl;
-    }
-
-    public Integer[] getCreatedAt() {
-        return createdAt;
     }
 }

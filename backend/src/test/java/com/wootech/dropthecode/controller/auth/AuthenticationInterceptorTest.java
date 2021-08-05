@@ -127,7 +127,7 @@ class AuthenticationInterceptorTest {
         @DisplayName("GET /reviews/{id} - 토큰 검증을 하지 않음")
         void reviewDetail() {
             // given
-            given(reviewService.findReviewSummaryById(1L)).willReturn(new ReviewResponse());
+            given(reviewService.findReviewSummaryById(1L)).willReturn(ReviewResponse.builder().build());
 
             // when
             WebTestClient.ResponseSpec response = webTestClient.get()
@@ -490,7 +490,7 @@ class AuthenticationInterceptorTest {
         void membersMeWithToken() {
             // given
             doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
-            given(memberService.findByLoginMember(any())).willReturn(new MemberResponse());
+            given(memberService.findByLoginMember(any())).willReturn(MemberResponse.builder().build());
 
             // when
             WebTestClient.ResponseSpec response = webTestClient.get()

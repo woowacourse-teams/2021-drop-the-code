@@ -2,13 +2,17 @@ import { STANDARD } from "utils/constants/standard";
 
 export const SUCCESS_MESSAGE = {
   API: {
-    AUTH: {},
+    AUTH: {
+      DELETE: "회원 탈퇴되었습니다.",
+    },
     REVIEW: {
       PATCH_PROGRESS: "리뷰 상태를 갱신했습니다.",
       REQUEST: "리뷰 요청에 성공했습니다.",
     },
     REVIEWER: {
       REGISTER: "리뷰어 등록에 성공했습니다.",
+      DELETE: "리뷰어 정보가 삭제되었습니다.",
+      EDIT: "리뷰어 정보 수정에 성공했습니다.",
     },
   },
 };
@@ -66,4 +70,14 @@ export const ALT = {
   GITHUB_LOGIN_BUTTON: "깃허브 로그인 버튼 이미지",
   REVIEWER_PROFILE_AVATAR: "리뷰어 프로필 이미지",
   GITHUB_LOGO: "깃허브 로고 이미지",
+  NO_REVIEW: "리뷰 없음 이미지",
+};
+
+export const CONFIRM = {
+  AUTH: {
+    DELETE: "정말 탈퇴하시겠습니까?",
+  },
+  REVIEWER: {
+    DELETE: "리뷰어 정보를 삭제하시겠습니까?",
+  },
 };

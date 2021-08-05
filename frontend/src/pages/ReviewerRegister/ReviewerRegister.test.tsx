@@ -37,8 +37,7 @@ describe("리뷰어 등록 페이지 테스트", () => {
     const titleInput = await findByRole("textbox", { name: "타이틀" });
     fireEvent.change(titleInput, {
       target: {
-        value:
-          "50자 넘는 타이틀입니다.50자 넘는 타이틀입니다.50자 넘는 타이틀입니다.50자 넘는 타이틀입니다.50자 넘는 타이틀입니다.50자 넘는 타이틀입니다.50자 넘는 타이틀입니다.50자 넘는 타이틀입니다.50자 넘는 타이틀입니다.50자 넘는 타이틀입니다.",
+        value: "가".repeat(51),
       },
     });
 

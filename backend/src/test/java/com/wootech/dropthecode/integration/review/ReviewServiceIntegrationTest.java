@@ -21,6 +21,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import static com.wootech.dropthecode.builder.MemberBuilder.dummyMember;
+import static com.wootech.dropthecode.builder.ReviewBuilder.dummyReview;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -48,7 +49,7 @@ public class ReviewServiceIntegrationTest {
         Member savedStudent = memberRepository.save(student);
         LoginMember loginMember = new LoginMember(savedStudent.getId());
 
-        Review review = new Review(teacher, student, "original title", "original content", "original pr link", 0L, Progress.ON_GOING);
+        Review review = dummyReview(teacher, student, "original title", "original content", "original pr link", 0L, Progress.ON_GOING);
         Review originalReview = reviewRepository.save(review);
 
         ReviewRequest request =
@@ -74,7 +75,7 @@ public class ReviewServiceIntegrationTest {
         Member savedStudent = memberRepository.save(student);
         LoginMember loginMember = new LoginMember(savedTeacher.getId());
 
-        Review review = new Review(teacher, student, "original title", "original content", "original pr link", 0L, Progress.ON_GOING);
+        Review review = dummyReview(teacher, student, "original title", "original content", "original pr link", 0L, Progress.ON_GOING);
         Review originalReview = reviewRepository.save(review);
 
         ReviewRequest request =
@@ -104,7 +105,7 @@ public class ReviewServiceIntegrationTest {
 
         LoginMember loginMember = new LoginMember(savedStudent.getId());
 
-        Review review = new Review(teacher, student, "original title", "original content", "original pr link", 0L, Progress.PENDING);
+        Review review = dummyReview(teacher, student, "original title", "original content", "original pr link", 0L, Progress.PENDING);
         Review savedReview = reviewRepository.save(review);
 
         // when
@@ -127,7 +128,7 @@ public class ReviewServiceIntegrationTest {
 
         LoginMember loginMember = new LoginMember(savedStudent.getId());
 
-        Review review = new Review(teacher, student, "original title", "original content", "original pr link", 0L, progress);
+        Review review = dummyReview(teacher, student, "original title", "original content", "original pr link", 0L, progress);
         Review savedReview = reviewRepository.save(review);
 
         // when
@@ -150,7 +151,7 @@ public class ReviewServiceIntegrationTest {
 
         LoginMember loginMember = new LoginMember(savedTeacher.getId());
 
-        Review review = new Review(teacher, student, "original title", "original content", "original pr link", 0L, Progress.PENDING);
+        Review review = dummyReview(teacher, student, "original title", "original content", "original pr link", 0L, Progress.PENDING);
         Review savedReview = reviewRepository.save(review);
 
         // when

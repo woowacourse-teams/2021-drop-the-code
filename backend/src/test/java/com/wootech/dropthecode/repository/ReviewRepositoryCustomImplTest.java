@@ -1,11 +1,11 @@
 package com.wootech.dropthecode.repository;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
-import com.wootech.dropthecode.config.JpaConfig;
 import com.wootech.dropthecode.domain.*;
 import com.wootech.dropthecode.dto.ReviewSummary;
 import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
@@ -13,7 +13,6 @@ import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -31,7 +30,6 @@ import static com.wootech.dropthecode.builder.TeacherProfileBuilder.dummyTeacher
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@Import(JpaConfig.class)
 @ActiveProfiles("test")
 class ReviewRepositoryCustomImplTest {
 
@@ -61,13 +59,20 @@ class ReviewRepositoryCustomImplTest {
     @BeforeEach
     void setUp() {
         // given
-        airTe = dummyMember("oauth1", "email1@gmail.com", "name1", "s3://imageUrl1", "github url1", Role.TEACHER);
-        allieTe = dummyMember("oauth2", "email2@gmail.com", "name2", "s3://imageUrl2", "github url2", Role.TEACHER);
-        TeacherProfile teacherProfile1 = dummyTeacherProfile("title1", "content1", 10, airTe);
-        TeacherProfile teacherProfile2 = dummyTeacherProfile("title2", "content2", 20, allieTe);
+        airTe = dummyMember("oauth1", "email1@gmail.com", "name1", "s3://imageUrl1",
+                "github url1", Role.TEACHER, LocalDateTime.now());
+        allieTe = dummyMember("oauth2", "email2@gmail.com", "name2", "s3://imageUrl2",
+                "github url2", Role.TEACHER, LocalDateTime.now());
 
-        seedStu = dummyMember("oauth3", "email3@gmail.com", "name3", "s3://imageUrl3", "github url3", Role.STUDENT);
-        fafiStu = dummyMember("oauth4", "email4@gmail.com", "name4", "s3://imageUrl4", "github url4", Role.STUDENT);
+        TeacherProfile teacherProfile1 = dummyTeacherProfile("title1", "content1", 10,
+                airTe, LocalDateTime.now());
+        TeacherProfile teacherProfile2 = dummyTeacherProfile("title2", "content2", 20,
+                allieTe, LocalDateTime.now());
+
+        seedStu = dummyMember("oauth3", "email3@gmail.com", "name3", "s3://imageUrl3",
+                "github url3", Role.STUDENT, LocalDateTime.now());
+        fafiStu = dummyMember("oauth4", "email4@gmail.com", "name4", "s3://imageUrl4",
+                "github url4", Role.STUDENT, LocalDateTime.now());
 
         em.persist(airTe);
         em.persist(allieTe);
@@ -76,17 +81,28 @@ class ReviewRepositoryCustomImplTest {
         em.persist(teacherProfile1);
         em.persist(teacherProfile2);
 
-        airSeed1 = dummyReview(airTe, seedStu, "review title1", "review content1", "prUrl1", 3L, Progress.ON_GOING);
-        allieSeed1 = dummyReview(allieTe, seedStu, "review title2", "review content2", "prUrl2", 4L, Progress.FINISHED);
-        airFafi1 = dummyReview(airTe, fafiStu, "review title3", "review content3", "prUrl3", 4L, Progress.ON_GOING);
-        allieFafi1 = dummyReview(allieTe, fafiStu, "review title4", "review content4", "prUrl4", 7L, Progress.ON_GOING);
-        airSeed2 = dummyReview(airTe, seedStu, "review title5", "review content5", "prUrl5", 8L, Progress.ON_GOING);
-        airFafi2 = dummyReview(airTe, fafiStu, "review title6", "review content6", "prUrl6", 7L, Progress.ON_GOING);
-        allieSeed2 = dummyReview(allieTe, seedStu, "review title7", "review content7", "prUrl7", 2L, Progress.ON_GOING);
-        airFafi3 = dummyReview(airTe, fafiStu, "review title8", "review content8", "prUrl8", 2L, Progress.ON_GOING);
-        airSeed3 = dummyReview(airTe, seedStu, "review title9", "review content9", "prUrl9", 1L, Progress.FINISHED);
-        allieFafi2 = dummyReview(allieTe, fafiStu, "review title10", "review content10", "prUrl10", 4L, Progress.ON_GOING);
-        allieSeed3 = dummyReview(allieTe, seedStu, "review title11", "review content11", "prUrl11", 3L, Progress.ON_GOING);
+        airSeed1 = dummyReview(airTe, seedStu, "review title1", "review content1", "prUrl1",
+                3L, Progress.ON_GOING, LocalDateTime.now());
+        allieSeed1 = dummyReview(allieTe, seedStu, "review title2", "review content2", "prUrl2",
+                4L, Progress.FINISHED, LocalDateTime.now().plusDays(1L));
+        airFafi1 = dummyReview(airTe, fafiStu, "review title3", "review content3", "prUrl3",
+                4L, Progress.ON_GOING, LocalDateTime.now().plusDays(2L));
+        allieFafi1 = dummyReview(allieTe, fafiStu, "review title4", "review content4", "prUrl4",
+                7L, Progress.ON_GOING, LocalDateTime.now().plusDays(3L));
+        airSeed2 = dummyReview(airTe, seedStu, "review title5", "review content5", "prUrl5",
+                8L, Progress.ON_GOING, LocalDateTime.now().plusDays(4L));
+        airFafi2 = dummyReview(airTe, fafiStu, "review title6", "review content6", "prUrl6",
+                7L, Progress.ON_GOING, LocalDateTime.now().plusDays(5L));
+        allieSeed2 = dummyReview(allieTe, seedStu, "review title7", "review content7", "prUrl7",
+                2L, Progress.ON_GOING, LocalDateTime.now().plusDays(6L));
+        airFafi3 = dummyReview(airTe, fafiStu, "review title8", "review content8", "prUrl8",
+                2L, Progress.ON_GOING, LocalDateTime.now().plusDays(7L));
+        airSeed3 = dummyReview(airTe, seedStu, "review title9", "review content9", "prUrl9",
+                1L, Progress.FINISHED, LocalDateTime.now().plusDays(8L));
+        allieFafi2 = dummyReview(allieTe, fafiStu, "review title10", "review content10", "prUrl10",
+                4L, Progress.ON_GOING, LocalDateTime.now().plusDays(9L));
+        allieSeed3 = dummyReview(allieTe, seedStu, "review title11", "review content11", "prUrl11",
+                3L, Progress.ON_GOING, LocalDateTime.now().plusDays(10L));
 
         em.persist(airSeed1);
         em.persist(allieSeed1);
@@ -189,8 +205,9 @@ class ReviewRepositoryCustomImplTest {
         void filterTeacherNameAndProgress() {
             // given
             Pageable pageable = PageRequest.of(0, 3, Sort.by(Sort.Direction.ASC, "createdAt"));
-            ReviewSearchCondition condition = new ReviewSearchCondition(Arrays.asList(Progress.ON_GOING, Progress.FINISHED), airTe
-                    .getName());
+            ReviewSearchCondition condition = new ReviewSearchCondition(
+                    Arrays.asList(Progress.ON_GOING, Progress.FINISHED),
+                    airTe.getName());
 
             // when
             Page<ReviewSummary> results = reviewRepository.searchPageByStudentId(seedStu.getId(), condition, pageable);
@@ -275,7 +292,9 @@ class ReviewRepositoryCustomImplTest {
         void filterProgress() {
             // given
             Pageable pageable = PageRequest.of(0, 3, Sort.by(Sort.Direction.ASC, "createdAt"));
-            ReviewSearchCondition condition = new ReviewSearchCondition(Arrays.asList(Progress.ON_GOING, Progress.FINISHED), null);
+            ReviewSearchCondition condition = new ReviewSearchCondition(
+                    Arrays.asList(Progress.ON_GOING, Progress.FINISHED),
+                    null);
 
             // when
             Page<ReviewSummary> results = reviewRepository.searchPageByTeacherId(airTe.getId(), condition, pageable);
@@ -291,8 +310,9 @@ class ReviewRepositoryCustomImplTest {
         void filterStudentNameAndProgress() {
             // given
             Pageable pageable = PageRequest.of(0, 3, Sort.by(Sort.Direction.ASC, "createdAt"));
-            ReviewSearchCondition condition = new ReviewSearchCondition(Arrays.asList(Progress.ON_GOING, Progress.FINISHED), seedStu
-                    .getName());
+            ReviewSearchCondition condition = new ReviewSearchCondition(
+                    Arrays.asList(Progress.ON_GOING, Progress.FINISHED),
+                    seedStu.getName());
 
             // when
             Page<ReviewSummary> results = reviewRepository.searchPageByTeacherId(airTe.getId(), condition, pageable);

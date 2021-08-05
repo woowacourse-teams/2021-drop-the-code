@@ -47,7 +47,8 @@ public class Review extends BaseEntity {
     private Progress progress;
 
     @Builder
-    public Review(Member teacher, Member student, String title, String content, String prUrl, Long elapsedTime, Progress progress) {
+    public Review(Member teacher, Member student, String title, String content, String prUrl, Long elapsedTime, Progress progress, LocalDateTime createdAt) {
+        super(createdAt);
         this.teacher = teacher;
         this.student = student;
         this.title = title;

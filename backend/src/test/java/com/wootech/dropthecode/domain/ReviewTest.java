@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static com.wootech.dropthecode.builder.MemberBuilder.dummyMember;
+import static com.wootech.dropthecode.builder.ReviewBuilder.dummyReview;
 import static org.assertj.core.api.Assertions.*;
 
 @ActiveProfiles("test")
@@ -20,7 +21,7 @@ public class ReviewTest {
         Member teacher = dummyMember(1L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.TEACHER, null);
         Member student = dummyMember(2L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.STUDENT, null);
 
-        Review onGoingReview = new Review(teacher, student, "test title", "test content", "github/3", 0L, Progress.ON_GOING);
+        Review onGoingReview = dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.ON_GOING);
 
         assertThatCode(() -> onGoingReview.completeProgress(1L))
                 .doesNotThrowAnyException();
@@ -32,7 +33,7 @@ public class ReviewTest {
         Member teacher = dummyMember(1L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.TEACHER, null);
         Member student = dummyMember(2L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.STUDENT, null);
 
-        Review completedReview = new Review(teacher, student, "test title", "test content", "github/3", 0L, Progress.TEACHER_COMPLETED);
+        Review completedReview = dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.TEACHER_COMPLETED);
 
         assertThatThrownBy(() -> completedReview.completeProgress(1L))
                 .isInstanceOf(ReviewException.class);
@@ -44,7 +45,7 @@ public class ReviewTest {
         Member teacher = dummyMember(1L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.TEACHER, null);
         Member student = dummyMember(2L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.STUDENT, null);
 
-        Review completedReview = new Review(teacher, student, "test title", "test content", "github/3", 0L, Progress.TEACHER_COMPLETED);
+        Review completedReview = dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.TEACHER_COMPLETED);
 
         assertThatCode(() -> completedReview.finishProgress(2L))
                 .doesNotThrowAnyException();
@@ -56,7 +57,7 @@ public class ReviewTest {
         Member teacher = dummyMember(1L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.TEACHER, null);
         Member student = dummyMember(2L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.STUDENT, null);
 
-        Review onGoingReview = new Review(teacher, student, "test title", "test content", "github/3", 0L, Progress.ON_GOING);
+        Review onGoingReview = dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.ON_GOING);
 
         assertThatThrownBy(() -> onGoingReview.finishProgress(2L))
                 .isInstanceOf(ReviewException.class);
@@ -68,7 +69,7 @@ public class ReviewTest {
         Member teacher = dummyMember(1L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.TEACHER, null);
         Member student = dummyMember(2L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.STUDENT, null);
 
-        Review completedReview = new Review(teacher, student, "test title", "test content", "github/3", 0L, Progress.TEACHER_COMPLETED);
+        Review completedReview = dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.TEACHER_COMPLETED);
 
         assertThatCode(() -> {
             completedReview.validateMemberIdAsStudent(student.getId());
@@ -82,7 +83,7 @@ public class ReviewTest {
         Member teacher = dummyMember(1L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.TEACHER, null);
         Member student = dummyMember(2L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.STUDENT, null);
 
-        Review onGoingReview = new Review(teacher, student, "test title", "test content", "github/3", 0L, Progress.ON_GOING);
+        Review onGoingReview = dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.ON_GOING);
 
         assertThatThrownBy(() -> onGoingReview.validateMemberIdAsStudent(teacher.getId()))
                 .isInstanceOf(AuthorizationException.class);
@@ -94,7 +95,7 @@ public class ReviewTest {
         Member teacher = dummyMember(1L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.TEACHER, null);
         Member student = dummyMember(2L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.STUDENT, null);
 
-        Review onGoingReview = new Review(teacher, student, "test title", "test content", "github/3", 0L, Progress.ON_GOING);
+        Review onGoingReview = dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.ON_GOING);
 
         assertThatThrownBy(() -> onGoingReview.validateMemberIdAsTeacher(student.getId()))
                 .isInstanceOf(AuthorizationException.class);
@@ -107,7 +108,7 @@ public class ReviewTest {
         Member teacher = dummyMember(1L, "1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER, null);
         Member student = dummyMember(2L, "2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT, null);
 
-        Review review = new Review(teacher, student, "original title", "original content", "original pr link", 0L, Progress.ON_GOING);
+        Review review = dummyReview(teacher, student, "original title", "original content", "original pr link", 0L, Progress.ON_GOING);
 
         // when
         review.update(2L, "new title", "new content", "new pr link");
@@ -125,7 +126,7 @@ public class ReviewTest {
         Member teacher = dummyMember(1L, "1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER, null);
         Member student = dummyMember(2L, "2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT, null);
 
-        Review review = new Review(teacher, student, "original title", "original content", "original pr link", 0L, Progress.ON_GOING);
+        Review review = dummyReview(teacher, student, "original title", "original content", "original pr link", 0L, Progress.ON_GOING);
 
         // when
         // then
@@ -137,11 +138,11 @@ public class ReviewTest {
     @DisplayName("Pending 상태인지 확인")
     void isPending() {
         // given
-        Review pendingReview = new Review(null, null, "title1", "content1", "pr1", 0L, Progress.PENDING);
-        Review deniedReview = new Review(null, null, "title1", "content1", "pr1", 0L, Progress.DENIED);
-        Review onGoingReview = new Review(null, null, "title1", "content1", "pr1", 0L, Progress.ON_GOING);
-        Review teacherCompletedReview = new Review(null, null, "title1", "content1", "pr1", 0L, Progress.TEACHER_COMPLETED);
-        Review finishedReview = new Review(null, null, "title1", "content1", "pr1", 0L, Progress.FINISHED);
+        Review pendingReview = dummyReview(null, null, "title1", "content1", "pr1", 0L, Progress.PENDING);
+        Review deniedReview = dummyReview(null, null, "title1", "content1", "pr1", 0L, Progress.DENIED);
+        Review onGoingReview = dummyReview(null, null, "title1", "content1", "pr1", 0L, Progress.ON_GOING);
+        Review teacherCompletedReview = dummyReview(null, null, "title1", "content1", "pr1", 0L, Progress.TEACHER_COMPLETED);
+        Review finishedReview = dummyReview(null, null, "title1", "content1", "pr1", 0L, Progress.FINISHED);
 
         // when
         boolean pending = pendingReview.isPending();
@@ -164,7 +165,7 @@ public class ReviewTest {
         // given
         Member teacher = dummyMember(1L, "1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER, null);
         Member student = dummyMember(2L, "2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT, null);
-        Review review = new Review(teacher, student, "title", "content", "pr link", 0L, Progress.PENDING);
+        Review review = dummyReview(teacher, student, "title", "content", "pr link", 0L, Progress.PENDING);
 
         // when
         // then

@@ -35,6 +35,19 @@ public class ReviewBuilder {
                      .build();
     }
 
+    public static Review dummyReview(Member teacher, Member student, String title, String content, String prUrl, Long elapsedTime, Progress progress, LocalDateTime createdAt) {
+        return Review.builder()
+                     .teacher(teacher)
+                     .student(student)
+                     .title(title)
+                     .content(content)
+                     .prUrl(prUrl)
+                     .elapsedTime(elapsedTime)
+                     .progress(progress)
+                     .createdAt(createdAt)
+                     .build();
+    }
+
     public static ReviewSummary dummyReviewSummary(Long id, String title, String content, Progress progress, Long teacherId, String teacherName,
                                                    String teacherImageUrl, Long studentId, String studentName, String studentImageUrl, String prUrl,
                                                    LocalDateTime createdAt) {

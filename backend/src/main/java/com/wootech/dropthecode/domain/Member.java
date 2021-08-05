@@ -1,5 +1,6 @@
 package com.wootech.dropthecode.domain;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.*;
 
@@ -39,8 +40,8 @@ public class Member extends BaseEntity {
     private List<Review> reviewsAsStudent;
 
     @Builder
-    public Member(Long id, String oauthId, String email, String name, String imageUrl, String githubUrl, Role role, TeacherProfile teacherProfile, List<Review> reviewsAsTeacher, List<Review> reviewsAsStudent) {
-        super(id);
+    public Member(Long id, String oauthId, String email, String name, String imageUrl, String githubUrl, Role role, TeacherProfile teacherProfile, List<Review> reviewsAsTeacher, List<Review> reviewsAsStudent, LocalDateTime createdAt) {
+        super(id, createdAt);
         this.oauthId = oauthId;
         this.email = email;
         this.name = name;

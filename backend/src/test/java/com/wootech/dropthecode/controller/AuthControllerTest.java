@@ -5,7 +5,7 @@ import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.dto.response.AccessTokenResponse;
 import com.wootech.dropthecode.dto.response.LoginResponse;
 import com.wootech.dropthecode.exception.AuthorizationException;
-import com.wootech.dropthecode.exception.OauthException;
+import com.wootech.dropthecode.exception.OauthTokenRequestException;
 import com.wootech.dropthecode.service.OauthService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +75,7 @@ class AuthControllerTest extends RestApiDocumentTest {
     @DisplayName("유효하지 않은 Oauth ProviderName이 들어온 경우")
     void invalidProviderName() throws Exception {
         // given
-        doThrow(new OauthException("유효하지 않은 Oauth Provider입니다."))
+        doThrow(new OauthTokenRequestException("유효하지 않은 Oauth Provider입니다."))
                 .when(oauthService).login(any());
 
         //when
@@ -95,7 +95,7 @@ class AuthControllerTest extends RestApiDocumentTest {
     @DisplayName("Oauth Access Token 요청 시 포함된 정보가 유효하지 않은 경우 - client_id, client_secret, redirect_url, authorization code")
     void invalidOauthTokenRequest() throws Exception {
         // given
-        doThrow(new OauthException("토큰 요청에 유효하지 않은 정보가 포함되어 있습니다."))
+        doThrow(new OauthTokenRequestException("토큰 요청에 유효하지 않은 정보가 포함되어 있습니다."))
                 .when(oauthService).login(any());
 
         //when
@@ -116,7 +116,7 @@ class AuthControllerTest extends RestApiDocumentTest {
     @Test
     @DisplayName("유효하지 않은 Oauth 토큰을 요청에 담았을 경우")
     void invalidOauthToken() throws Exception {
-        doThrow(new OauthException("유효하지 않은 Oauth 토큰입니다."))
+        doThrow(new OauthTokenRequestException("유효하지 않은 Oauth 토큰입니다."))
                 .when(oauthService).login(any());
 
         //when

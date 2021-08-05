@@ -3,7 +3,7 @@ package com.wootech.dropthecode.domain.oauth;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.wootech.dropthecode.exception.OauthException;
+import com.wootech.dropthecode.exception.OauthTokenRequestException;
 
 public class InMemoryProviderRepository {
     private final Map<String, OauthProvider> providers;
@@ -19,7 +19,7 @@ public class InMemoryProviderRepository {
 
     private void validateProviderNameExists(String name) {
         if (!providers.containsKey(name)) {
-            throw new OauthException("유효하지 않은 Oauth Provider입니다.");
+            throw new OauthTokenRequestException("유효하지 않은 Oauth Provider입니다.");
         }
     }
 }

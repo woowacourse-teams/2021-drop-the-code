@@ -14,7 +14,7 @@ import com.wootech.dropthecode.domain.oauth.UserProfile;
 import com.wootech.dropthecode.dto.request.AuthorizationRequest;
 import com.wootech.dropthecode.dto.response.LoginResponse;
 import com.wootech.dropthecode.dto.response.OauthTokenResponse;
-import com.wootech.dropthecode.exception.OauthException;
+import com.wootech.dropthecode.exception.OauthTokenRequestException;
 import com.wootech.dropthecode.repository.MemberRepository;
 
 import org.springframework.core.ParameterizedTypeReference;
@@ -97,7 +97,7 @@ public class OauthService {
                         .headers(header -> header.setBearerAuth(accessToken.getAccessToken()))
                         .retrieve()
                         .onStatus(HttpStatus::is4xxClientError, clientResponse -> {
-                            throw new OauthException("유효하지 않은 Oauth 토큰입니다.");
+                            throw new OauthTokenRequestException("유효하지 않은 Oauth 토큰입니다.");
                         })
                         .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
                         .block();
@@ -105,7 +105,7 @@ public class OauthService {
 
     private void validateOauthTokenResponse(OauthTokenResponse oauthTokenResponse) {
         if (oauthTokenResponse.isNotValid()) {
-            throw new OauthException("토큰 요청에 유효하지 않은 정보가 포함되어 있습니다. " + oauthTokenResponse.getErrorDescription());
+            throw new OauthTokenRequestException("토큰 요청에 유효하지 않은 정보가 포함되어 있습니다. " + oauthTokenResponse.getErrorDescription());
         }
     }
 }

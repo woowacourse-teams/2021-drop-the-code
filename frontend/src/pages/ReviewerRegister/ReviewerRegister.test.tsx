@@ -19,17 +19,18 @@ describe("리뷰어 등록 페이지 테스트", () => {
   });
 
   it("언어를 선택한 뒤 언어에 포함되는 기술을 선택할 수 있고, 선택된 버튼이 표시된다.", async () => {
-    const languageButton = await findByText(languages[0].language.name);
-    fireEvent.click(languageButton);
+    const languageButtons = await findAllByText(languages[0].language.name);
+    expect(languageButtons).toHaveLength(1);
+    fireEvent.click(languageButtons[0]);
 
     const skillButton = await findByText(languages[0].skills[0].name);
     expect(skillButton).toBeVisible();
 
-    const selectedLanguageButton = await findAllByText(languages[0].language.name);
-    expect(selectedLanguageButton).toHaveLength(2);
+    const LanguageButtonsAfterSelect = await findAllByText(languages[0].language.name);
+    expect(LanguageButtonsAfterSelect).toHaveLength(2);
 
-    fireEvent.click(selectedLanguageButton[1]);
-    expect(selectedLanguageButton[1]).not.toBeVisible();
+    fireEvent.click(LanguageButtonsAfterSelect[1]);
+    expect(LanguageButtonsAfterSelect[1]).not.toBeVisible();
   });
 
   it("타이틀 입력 입력란에 50자 이상 입력하면 유효성 에러 메시지가 출력된다.", async () => {

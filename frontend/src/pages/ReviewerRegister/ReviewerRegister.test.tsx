@@ -18,7 +18,7 @@ describe("리뷰어 등록 페이지 테스트", () => {
     expect(languageButton).toBeVisible();
   });
 
-  it("언어를 선택한 뒤 언어에 포함되는 기술을 선택할 수 있고, 선택된 버튼이 표시된다.", async () => {
+  it("언어를 선택한 뒤 언어에 포함되는 기술을 선택할 수 있고, 선택된 버튼이 표시된다. 선택된 목록에 있는 버튼을 다시 클릭하면 목록에서 제거된다.", async () => {
     const languageButtons = await findAllByText(languages[0].language.name);
     expect(languageButtons).toHaveLength(1);
     fireEvent.click(languageButtons[0]);

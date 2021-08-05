@@ -5,6 +5,7 @@ export const studentAuth: User = {
   name: "서지환",
   email: "seojihwan213@naver.com",
   imageUrl: "https://avatars.githubusercontent.com/u/52202474?v=4",
+  githubUrl: "https://github.com/jh8579",
   role: "STUDENT",
   accessToken:
     "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MSIsImlhdCI6MTYyNzU0ODI1MSwiZXhwIjoxNjI3NTUxODUxfQ.Rz3dh5uBdDLx5nPqjvCh0dnIK3sPUSJu7-fHMX_I9I8",
@@ -17,6 +18,7 @@ export const teacherAuth: User = {
   name: "서지환",
   email: "seojihwan213@naver.com",
   imageUrl: "https://avatars.githubusercontent.com/u/52202474?v=4",
+  githubUrl: "https://github.com/jh8579",
   role: "TEACHER",
   accessToken:
     "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MSIsImlhdCI6MTYyNzU0ODI1MSwiZXhwIjoxNjI3NTUxODUxfQ.Rz3dh5uBdDLx5nPqjvCh0dnIK3sPUSJu7-fHMX_I9I8",

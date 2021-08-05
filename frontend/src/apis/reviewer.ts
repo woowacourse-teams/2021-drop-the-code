@@ -1,3 +1,4 @@
+import { User } from "types/auth";
 import { Language, Reviewer, ReviewerRegisterFormData } from "types/reviewer";
 
 import apiClient from "apis/apiClient";
@@ -16,4 +17,12 @@ export const getReviewer = (reviewerId: number) => {
 
 export const registerReviewer = (reviewerRegisterFormData: ReviewerRegisterFormData) => {
   return apiClient.post(`/teachers`, reviewerRegisterFormData);
+};
+
+export const deleteReviewer = () => {
+  return apiClient.delete<Omit<User, "accessToken" | "refreshToken">>("/teachers/me");
+};
+
+export const editReviewer = (reviewerRegisterFormData: ReviewerRegisterFormData) => {
+  return apiClient.put(`/teachers/me`, reviewerRegisterFormData);
 };

@@ -98,6 +98,8 @@ const MyPage = () => {
 
   const deleteAuthInfo = () => {
     deleteAuthMutation.mutate();
+    logout();
+    history.push(PATH.MAIN);
   };
 
   return (
@@ -155,8 +157,6 @@ const MyPage = () => {
               title={CONFIRM.AUTH.DELETE}
               onConfirm={() => {
                 deleteAuthInfo();
-                logout();
-                history.push(PATH.MAIN);
               }}
             />
           );

@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
-import axios from "axios";
 import styled from "styled-components";
 
 import { deleteReviewer } from "apis/reviewer";
@@ -9,12 +8,11 @@ import Confirm from "components/Confirm/Confirm";
 import Loading from "components/Loading/Loading";
 import Button from "components/shared/Button/Button";
 import { Flex, FlexEnd } from "components/shared/Flexbox/Flexbox";
-import useLocalStorage from "hooks/useLocalStorage";
 import useModalContext from "hooks/useModalContext";
 import useRevalidate from "hooks/useRevalidate";
 import useToastContext from "hooks/useToastContext";
 import { COLOR } from "utils/constants/color";
-import { LOCAL_STORAGE_KEY, QUERY_KEY } from "utils/constants/key";
+import { QUERY_KEY } from "utils/constants/key";
 import { CONFIRM, SUCCESS_MESSAGE } from "utils/constants/message";
 
 import ReviewerEdit from "../ReviewerEdit/ReviewerEdit";
@@ -43,7 +41,6 @@ interface Props {
 const ReviewerInfoEditBox = ({ reviewerId }: Props) => {
   const { open } = useModalContext();
   const toast = useToastContext();
-  const [accessToken] = useLocalStorage<string | null>(LOCAL_STORAGE_KEY.ACCESS_TOKEN, null);
 
   const { data } = useQuery([QUERY_KEY.GET_REVIEWER, reviewerId], async () => {
     const response = await getReviewer(reviewerId);
@@ -60,8 +57,6 @@ const ReviewerInfoEditBox = ({ reviewerId }: Props) => {
   const { revalidate } = useRevalidate();
   const queryClient = useQueryClient();
 
-  axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-
   const deleteReviewerMutation = useMutation(() => {
     return revalidate(async () => {
       const response = await deleteReviewer();
@@ -76,10 +71,6 @@ const ReviewerInfoEditBox = ({ reviewerId }: Props) => {
   });
 
   if (deleteReviewerMutation.isLoading) return <Loading />;
-
-  const deleteReviewerInfo = () => {
-    deleteReviewerMutation.mutate();
-  };
 
   return (
     <>
@@ -120,7 +111,7 @@ const ReviewerInfoEditBox = ({ reviewerId }: Props) => {
                   <Confirm
                     title={CONFIRM.REVIEWER.DELETE}
                     onConfirm={() => {
-                      deleteReviewerInfo();
+                      deleteReviewerMutation.mutate();
                     }}
                   />
                 );

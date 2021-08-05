@@ -5,7 +5,7 @@ import useFormContext from "hooks/useFormContext";
 
 export interface Props extends InputProps {
   name: string;
-  initialValue?: string;
+  initialValue?: string | number;
 }
 
 const InputField = ({ name, initialValue, ...props }: Props) => {

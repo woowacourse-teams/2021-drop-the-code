@@ -78,9 +78,9 @@ const apiClient = {
       };
     }
   },
-  delete: async <T>(url: string, data?: any): Promise<Response<T>> => {
+  delete: async <T>(url: string, config?: AxiosRequestConfig): Promise<Response<T>> => {
     try {
-      const response = await axios.delete<T>(url, data);
+      const response = await axios.delete<T>(url, config);
 
       return {
         isSuccess: true,

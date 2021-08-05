@@ -83,7 +83,7 @@ public class TeacherProfile {
         sumReviewCount++;
         averageReviewTime = Math.round(newAverageReviewTime * 10) / 10.0;
     }
-    
+
     public void deleteWithMember() {
         this.title = "탈퇴한 사용자입니다.";
         this.content = "내용 없음";

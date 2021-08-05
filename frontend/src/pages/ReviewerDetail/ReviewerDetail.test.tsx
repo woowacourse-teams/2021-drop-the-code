@@ -39,7 +39,7 @@ describe("리뷰어 상세페이지 테스트", () => {
     expect(reviewContents[0]).toBeInTheDocument();
   });
 
-  it("리뷰어가 나인경우 리뷰 요청하기 버튼이 리뷰 요청 버튼을 클릭할 수 없다 ", async () => {
+  it("리뷰어가 내가 아닌경우 리뷰 요청하기 버튼을 클릭할 수 있다.", async () => {
     mockingToken();
     mockingStudentAuth();
     mockReviewerDetail();
@@ -49,7 +49,7 @@ describe("리뷰어 상세페이지 테스트", () => {
     expect(reviewRequestButton).toBeEnabled();
   });
 
-  it("리뷰어가 내가 아닌경우 리뷰 요청하기 버튼을 클릭할 수 있다 ", async () => {
+  it("리뷰어가 나인경우 리뷰 요청하기 버튼이 리뷰 요청 버튼을 클릭할 수 없다.", async () => {
     mockingToken();
     mockingTeacherAuth();
     mockReviewerDetail();

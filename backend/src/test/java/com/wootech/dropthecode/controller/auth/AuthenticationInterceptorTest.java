@@ -127,7 +127,7 @@ class AuthenticationInterceptorTest {
         @DisplayName("GET /reviews/{id} - 토큰 검증을 하지 않음")
         void reviewDetail() {
             // given
-            given(reviewService.findReviewSummaryById(1L)).willReturn(new ReviewResponse());
+            given(reviewService.findReviewSummaryById(1L)).willReturn(ReviewResponse.builder().build());
 
             // when
             WebTestClient.ResponseSpec response = webTestClient.get()
@@ -140,7 +140,7 @@ class AuthenticationInterceptorTest {
     }
 
     @Nested
-    @DisplayName("인터셉터 거치는 요청 확인" )
+    @DisplayName("인터셉터 거치는 요청 확인")
     class ApplyInterceptor {
 
         @Test
@@ -490,7 +490,7 @@ class AuthenticationInterceptorTest {
         void membersMeWithToken() {
             // given
             doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
-            given(memberService.findByLoginMember(any())).willReturn(new MemberResponse());
+            given(memberService.findByLoginMember(any())).willReturn(MemberResponse.builder().build());
 
             // when
             WebTestClient.ResponseSpec response = webTestClient.get()
@@ -573,7 +573,7 @@ class AuthenticationInterceptorTest {
             // then
             response.expectStatus().isNoContent();
         }
-      
+
         @Test
         @DisplayName("DELETE /reviews/{id} - 적절하지 않은 토큰인 경우")
         void cancelReview() {

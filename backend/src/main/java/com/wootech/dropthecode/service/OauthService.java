@@ -26,6 +26,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 public class OauthService {
+    private static final String BEARER_TYPE = "Bearer";
+
     private final MemberRepository memberRepository;
     private final InMemoryProviderRepository inMemoryProviderRepository;
     private final JwtTokenProvider jwtTokenProvider;
@@ -51,13 +53,24 @@ public class OauthService {
 
         redisUtil.setData(String.valueOf(member.getId()), refreshToken);
 
-        return new LoginResponse(member.getId(), member.getName(), member.getEmail(), member.getImageUrl(), member.getGithubUrl(), member.getRole(), "Bearer", accessToken, refreshToken);
+        return LoginResponse.builder()
+                            .id(member.getId())
+                            .name(member.getName())
+                            .email(member.getEmail())
+                            .imageUrl(member.getImageUrl())
+                            .githubUrl(member.getGithubUrl())
+                            .role(member.getRole())
+                            .tokenType(BEARER_TYPE)
+                            .accessToken(accessToken)
+                            .refreshToken(refreshToken)
+                            .build();
     }
 
     private Member saveOrUpdate(UserProfile userProfile) {
         Member member = memberRepository.findByOauthId(userProfile.getOauthId())
-                                   .map(entity -> entity.update(userProfile.getEmail(), userProfile.getName(), userProfile.getImageUrl()))
-                                   .orElseGet(userProfile::toMember);
+                                        .map(entity -> entity.update(
+                                                userProfile.getEmail(), userProfile.getName(), userProfile.getImageUrl()))
+                                        .orElseGet(userProfile::toMember);
         return memberRepository.save(member);
     }
 

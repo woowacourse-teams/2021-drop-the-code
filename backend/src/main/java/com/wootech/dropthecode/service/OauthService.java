@@ -105,7 +105,8 @@ public class OauthService {
 
     private void validateOauthTokenResponse(OauthTokenResponse oauthTokenResponse) {
         if (oauthTokenResponse.isNotValid()) {
-            throw new OauthException("토큰 요청에 유효하지 않은 정보가 포함되어 있습니다.");
+            System.out.println(oauthTokenResponse.getErrorDescription());
+            throw new OauthException("토큰 요청에 유효하지 않은 정보가 포함되어 있습니다. " + oauthTokenResponse.getErrorDescription());
         }
     }
 }

@@ -3,7 +3,7 @@ package com.wootech.dropthecode.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.wootech.dropthecode.Builder.dummyMember;
+import static com.wootech.dropthecode.builder.MemberBuilder.dummyMember;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("member 도메인 테스트")

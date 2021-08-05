@@ -89,7 +89,7 @@ public class ReviewController {
         reviewService.updateToFinishReview(loginMember, id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-  
+
     /**
      * @param id 리뷰 id
      * @title 리뷰 내용 수정
@@ -99,7 +99,7 @@ public class ReviewController {
         reviewService.updateReview(loginMember, id, request);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-  
+
     /**
      * @param id 리뷰 id
      * @title Pending 상태의 리뷰 요청을 취소

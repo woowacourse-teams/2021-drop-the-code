@@ -8,7 +8,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.wootech.dropthecode.Builder.dummyMember;
+import static com.wootech.dropthecode.builder.MemberBuilder.dummyMember;
 import static org.assertj.core.api.Assertions.*;
 
 @ActiveProfiles("test")

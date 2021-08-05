@@ -25,7 +25,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static com.wootech.dropthecode.Builder.dummyMember;
+import static com.wootech.dropthecode.builder.MemberBuilder.dummyMember;
+import static com.wootech.dropthecode.builder.ReviewBuilder.dummyReview;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -74,17 +75,17 @@ class ReviewRepositoryCustomImplTest {
         em.persist(teacherProfile1);
         em.persist(teacherProfile2);
 
-        airSeed1 = new Review(airTe, seedStu, "review title1", "review content1", "prUrl1", 3L);
-        allieSeed1 = new Review(allieTe, seedStu, "review title2", "review content2", "prUrl2", 4L, Progress.FINISHED);
-        airFafi1 = new Review(airTe, fafiStu, "review title3", "review content3", "prUrl3", 4L);
-        allieFafi1 = new Review(allieTe, fafiStu, "review title4", "review content4", "prUrl4", 7L);
-        airSeed2 = new Review(airTe, seedStu, "review title5", "review content5", "prUrl5", 8L);
-        airFafi2 = new Review(airTe, fafiStu, "review title6", "review content6", "prUrl6", 7L);
-        allieSeed2 = new Review(allieTe, seedStu, "review title7", "review content7", "prUrl7", 2L);
-        airFafi3 = new Review(airTe, fafiStu, "review title8", "review content8", "prUrl8", 2L);
-        airSeed3 = new Review(airTe, seedStu, "review title9", "review content9", "prUrl9", 1L, Progress.FINISHED);
-        allieFafi2 = new Review(allieTe, fafiStu, "review title10", "review content10", "prUrl10", 4L);
-        allieSeed3 = new Review(allieTe, seedStu, "review title11", "review content11", "prUrl11", 3L);
+        airSeed1 = dummyReview(airTe, seedStu, "review title1", "review content1", "prUrl1", 3L, Progress.ON_GOING);
+        allieSeed1 = dummyReview(allieTe, seedStu, "review title2", "review content2", "prUrl2", 4L, Progress.FINISHED);
+        airFafi1 = dummyReview(airTe, fafiStu, "review title3", "review content3", "prUrl3", 4L, Progress.ON_GOING);
+        allieFafi1 = dummyReview(allieTe, fafiStu, "review title4", "review content4", "prUrl4", 7L, Progress.ON_GOING);
+        airSeed2 = dummyReview(airTe, seedStu, "review title5", "review content5", "prUrl5", 8L, Progress.ON_GOING);
+        airFafi2 = dummyReview(airTe, fafiStu, "review title6", "review content6", "prUrl6", 7L, Progress.ON_GOING);
+        allieSeed2 = dummyReview(allieTe, seedStu, "review title7", "review content7", "prUrl7", 2L, Progress.ON_GOING);
+        airFafi3 = dummyReview(airTe, fafiStu, "review title8", "review content8", "prUrl8", 2L, Progress.ON_GOING);
+        airSeed3 = dummyReview(airTe, seedStu, "review title9", "review content9", "prUrl9", 1L, Progress.FINISHED);
+        allieFafi2 = dummyReview(allieTe, fafiStu, "review title10", "review content10", "prUrl10", 4L, Progress.ON_GOING);
+        allieSeed3 = dummyReview(allieTe, seedStu, "review title11", "review content11", "prUrl11", 3L, Progress.ON_GOING);
 
         em.persist(airSeed1);
         em.persist(allieSeed1);

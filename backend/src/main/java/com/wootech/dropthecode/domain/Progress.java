@@ -16,8 +16,4 @@ public enum Progress {
     public boolean isPending() {
         return PENDING == this;
     }
-
-    public String getDescription() {
-        return description;
-    }
 }

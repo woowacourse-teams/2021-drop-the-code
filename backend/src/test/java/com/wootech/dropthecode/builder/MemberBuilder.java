@@ -1,10 +1,14 @@
-package com.wootech.dropthecode;
+package com.wootech.dropthecode.builder;
 
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.domain.TeacherProfile;
 
-public class Builder {
+public class MemberBuilder {
+
+    private MemberBuilder() {
+    }
+
     public static Member dummyMember(String oauthId, String email, String name, String imageUrl, String githubUrl, Role role) {
         return Member.builder()
                      .oauthId(oauthId)

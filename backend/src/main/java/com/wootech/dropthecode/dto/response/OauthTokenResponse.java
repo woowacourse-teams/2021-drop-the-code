@@ -1,5 +1,7 @@
 package com.wootech.dropthecode.dto.response;
 
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
@@ -15,4 +17,17 @@ public class OauthTokenResponse {
 
     @JsonProperty("token_type")
     private String tokenType;
+
+    @JsonProperty("error")
+    String error;
+
+    @JsonProperty("error_description")
+    String errorDescription;
+
+    @JsonProperty("error_uri")
+    String errorUri;
+
+    public boolean isNotValid() {
+        return Objects.isNull(accessToken);
+    }
 }

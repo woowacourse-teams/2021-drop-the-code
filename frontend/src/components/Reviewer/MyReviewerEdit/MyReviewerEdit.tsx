@@ -27,7 +27,7 @@ interface Specs {
   [language: string]: string[];
 }
 
-const ReviewerEdit = ({ reviewer }: Props) => {
+const MyReviewerEdit = ({ reviewer }: Props) => {
   const [filterLanguage, setFilterLanguage] = useState<string | null>(null);
   const [specs, setSpecs] = useState<Specs>({});
 
@@ -138,4 +138,4 @@ const ReviewerEdit = ({ reviewer }: Props) => {
   );
 };
 
-export default ReviewerEdit;
+export default MyReviewerEdit;

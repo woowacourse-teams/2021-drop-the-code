@@ -6,6 +6,7 @@ import { deleteReviewer } from "apis/reviewer";
 import { getReviewer } from "apis/reviewer";
 import Confirm from "components/Confirm/Confirm";
 import Loading from "components/Loading/Loading";
+import MyReviewerEdit from "components/Reviewer/MyReviewerEdit/MyReviewerEdit";
 import Button from "components/shared/Button/Button";
 import { Flex, FlexEnd } from "components/shared/Flexbox/Flexbox";
 import useModalContext from "hooks/useModalContext";
@@ -14,8 +15,6 @@ import useToastContext from "hooks/useToastContext";
 import { COLOR } from "utils/constants/color";
 import { QUERY_KEY } from "utils/constants/key";
 import { CONFIRM, SUCCESS_MESSAGE } from "utils/constants/message";
-
-import ReviewerEdit from "../ReviewerEdit/ReviewerEdit";
 
 const Inner = styled(Flex)`
   flex-direction: column;
@@ -38,7 +37,7 @@ interface Props {
   reviewerId: number;
 }
 
-const ReviewerInfoEditBox = ({ reviewerId }: Props) => {
+const MyReviewerInfo = ({ reviewerId }: Props) => {
   const { open } = useModalContext();
   const toast = useToastContext();
 
@@ -101,7 +100,7 @@ const ReviewerInfoEditBox = ({ reviewerId }: Props) => {
             <div>{data.career}년</div>
           </Flex>
           <FlexEnd>
-            <Button themeColor="secondary" onClick={() => open(<ReviewerEdit reviewer={data} />)}>
+            <Button themeColor="secondary" onClick={() => open(<MyReviewerEdit reviewer={data} />)}>
               수정
             </Button>
             <Button
@@ -126,4 +125,4 @@ const ReviewerInfoEditBox = ({ reviewerId }: Props) => {
   );
 };
 
-export default ReviewerInfoEditBox;
+export default MyReviewerInfo;

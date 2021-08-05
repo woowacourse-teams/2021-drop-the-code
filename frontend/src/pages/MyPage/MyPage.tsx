@@ -11,7 +11,7 @@ import SmBlackLogo from "assets/sm-white-github-logo.png";
 import Confirm from "components/Confirm/Confirm";
 import Loading from "components/Loading/Loading";
 import ReviewList from "components/Review/ReviewList/ReviewList";
-import ReviewerInfoEditBox from "components/Reviewer/ReviewerInfoEditBox/ReviewerInfoEditBox";
+import MyReviewerInfo from "components/Reviewer/MyReviewerInfo/MyReviewerInfo";
 import Avatar from "components/shared/Avatar/Avatar";
 import Button from "components/shared/Button/Button";
 import { Flex, FlexAlignCenter, FlexSpaceBetween } from "components/shared/Flexbox/Flexbox";
@@ -124,7 +124,7 @@ const MyPage = () => {
             </a>
           </Flex>
         </Flex>
-        <Suspense fallback={<Loading />}>{isReviewer && <ReviewerInfoEditBox reviewerId={user.id} />}</Suspense>
+        <Suspense fallback={<Loading />}>{isReviewer && <MyReviewerInfo reviewerId={user.id} />}</Suspense>
       </FlexSpaceBetween>
       <ul
         css={{

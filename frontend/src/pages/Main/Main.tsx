@@ -26,7 +26,7 @@ const Main = () => {
 
   return (
     <>
-      <h2 css={{ fontSize: "1.25rem", fontWeight: 600 }}>리뷰어 찾기</h2>
+      <h2>리뷰어 찾기</h2>
       <Flex css={{ flexDirection: "column", width: "100%" }}>
         <Flex>
           <Suspense fallback={<Loading />}>

@@ -11,10 +11,6 @@ export const languages: Language[] = [
         id: 1,
         name: "spring",
       },
-      {
-        id: 2,
-        name: "jpa",
-      },
     ],
   },
   {
@@ -24,13 +20,48 @@ export const languages: Language[] = [
     },
     skills: [
       {
-        id: 3,
+        id: 2,
         name: "vue",
       },
       {
-        id: 4,
+        id: 3,
         name: "react",
       },
+      {
+        id: 4,
+        name: "angular",
+      },
     ],
+  },
+  {
+    language: {
+      id: 3,
+      name: "python",
+    },
+    skills: [
+      {
+        id: 5,
+        name: "django",
+      },
+    ],
+  },
+  {
+    language: {
+      id: 4,
+      name: "kotlin",
+    },
+    skills: [
+      {
+        id: 1,
+        name: "spring",
+      },
+    ],
+  },
+  {
+    language: {
+      id: 5,
+      name: "c",
+    },
+    skills: [],
   },
 ];

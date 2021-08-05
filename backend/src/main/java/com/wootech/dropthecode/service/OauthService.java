@@ -14,9 +14,11 @@ import com.wootech.dropthecode.domain.oauth.UserProfile;
 import com.wootech.dropthecode.dto.request.AuthorizationRequest;
 import com.wootech.dropthecode.dto.response.LoginResponse;
 import com.wootech.dropthecode.dto.response.OauthTokenResponse;
+import com.wootech.dropthecode.exception.OauthTokenRequestException;
 import com.wootech.dropthecode.repository.MemberRepository;
 
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +28,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 public class OauthService {
+    private static final String BEARER_TYPE = "Bearer";
+
     private final MemberRepository memberRepository;
     private final InMemoryProviderRepository inMemoryProviderRepository;
     private final JwtTokenProvider jwtTokenProvider;
@@ -51,13 +55,24 @@ public class OauthService {
 
         redisUtil.setData(String.valueOf(member.getId()), refreshToken);
 
-        return new LoginResponse(member.getId(), member.getName(), member.getEmail(), member.getImageUrl(), member.getGithubUrl(), member.getRole(), "Bearer", accessToken, refreshToken);
+        return LoginResponse.builder()
+                            .id(member.getId())
+                            .name(member.getName())
+                            .email(member.getEmail())
+                            .imageUrl(member.getImageUrl())
+                            .githubUrl(member.getGithubUrl())
+                            .role(member.getRole())
+                            .tokenType(BEARER_TYPE)
+                            .accessToken(accessToken)
+                            .refreshToken(refreshToken)
+                            .build();
     }
 
     private Member saveOrUpdate(UserProfile userProfile) {
         Member member = memberRepository.findByOauthId(userProfile.getOauthId())
-                                   .map(entity -> entity.update(userProfile.getEmail(), userProfile.getName(), userProfile.getImageUrl()))
-                                   .orElseGet(userProfile::toMember);
+                                        .map(entity -> entity.update(
+                                                userProfile.getEmail(), userProfile.getName(), userProfile.getImageUrl()))
+                                        .orElseGet(userProfile::toMember);
         return memberRepository.save(member);
     }
 
@@ -68,19 +83,22 @@ public class OauthService {
     }
 
     private OauthTokenResponse getToken(AuthorizationRequest authorizationRequest, OauthProvider oauthProvider) {
-        return WebClient.create()
-                        .post()
-                        .uri(oauthProvider.getTokenUrl())
-                        .headers(header -> {
-                            header.setBasicAuth(oauthProvider.getClientId(), oauthProvider.getClientSecret());
-                            header.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-                            header.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-                            header.setAcceptCharset(Collections.singletonList(StandardCharsets.UTF_8));
-                        })
-                        .bodyValue(tokenRequest(authorizationRequest, oauthProvider))
-                        .retrieve()
-                        .bodyToMono(OauthTokenResponse.class)
-                        .block();
+        OauthTokenResponse oauthTokenResponse = WebClient.create()
+                                            .post()
+                                            .uri(oauthProvider.getTokenUrl())
+                                            .headers(header -> {
+                                                header.setBasicAuth(oauthProvider.getClientId(), oauthProvider
+                                                        .getClientSecret());
+                                                header.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+                                                header.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+                                                header.setAcceptCharset(Collections.singletonList(StandardCharsets.UTF_8));
+                                            })
+                                            .bodyValue(tokenRequest(authorizationRequest, oauthProvider))
+                                            .retrieve()
+                                            .bodyToMono(OauthTokenResponse.class)
+                                            .block();
+        validateOauthTokenResponse(oauthTokenResponse);
+        return oauthTokenResponse;
     }
 
     private MultiValueMap<String, String> tokenRequest(AuthorizationRequest authorizationRequest, OauthProvider oauthProvider) {
@@ -97,7 +115,16 @@ public class OauthService {
                         .uri(oauthProvider.getUserInfoUrl())
                         .headers(header -> header.setBearerAuth(accessToken.getAccessToken()))
                         .retrieve()
+                        .onStatus(HttpStatus::is4xxClientError, clientResponse -> {
+                            throw new OauthTokenRequestException("유효하지 않은 Oauth 토큰입니다.");
+                        })
                         .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
                         .block();
+    }
+
+    private void validateOauthTokenResponse(OauthTokenResponse oauthTokenResponse) {
+        if (oauthTokenResponse.isNotValid()) {
+            throw new OauthTokenRequestException("토큰 요청에 유효하지 않은 정보가 포함되어 있습니다. " + oauthTokenResponse.getErrorDescription());
+        }
     }
 }

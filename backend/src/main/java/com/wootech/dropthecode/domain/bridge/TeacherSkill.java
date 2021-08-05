@@ -5,9 +5,14 @@ import javax.persistence.*;
 import com.wootech.dropthecode.domain.Skill;
 import com.wootech.dropthecode.domain.TeacherProfile;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class TeacherSkill {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,23 +25,8 @@ public class TeacherSkill {
     @JoinColumn(foreignKey = @ForeignKey(name = "fk_teacherSkill_to_skill"))
     private Skill skill;
 
-    protected TeacherSkill() {
-    }
-
     public TeacherSkill(TeacherProfile teacherProfile, Skill skill) {
         this.teacherProfile = teacherProfile;
         this.skill = skill;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public TeacherProfile getTeacherProfile() {
-        return teacherProfile;
-    }
-
-    public Skill getSkill() {
-        return skill;
     }
 }

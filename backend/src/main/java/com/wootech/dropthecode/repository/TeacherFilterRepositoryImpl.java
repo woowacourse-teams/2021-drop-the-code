@@ -44,15 +44,14 @@ public class TeacherFilterRepositoryImpl extends Querydsl4RepositorySupport impl
                                                                 .from(teacherProfile).distinct()
                                                                 .innerJoin(teacherProfile.languages, teacherLanguage).fetchJoin()
                                                                 .innerJoin(teacherLanguage.language, language).fetchJoin()
-                                                                .innerJoin(teacherProfile.skills, teacherSkill).fetchJoin()
-                                                                .innerJoin(teacherSkill.skill, skill).fetchJoin()
+                                                                .leftJoin(teacherProfile.skills, teacherSkill).fetchJoin()
+                                                                .leftJoin(teacherSkill.skill, skill).fetchJoin()
                                                                 .innerJoin(teacherProfile.member).fetchJoin()
                                                                 .where(teacherProfile.in(teacherProfiles.getContent()));
 
-        for (Sort.Order o : pageable.getSort()) {
-            PathBuilder<Object> orderByExpression = new PathBuilder<>(Object.class, "teacherProfile");
-
-            query.orderBy(new OrderSpecifier(o.isAscending() ? Order.ASC : Order.DESC, orderByExpression.get(o.getProperty())));
+        for (Sort.Order order : pageable.getSort()) {
+            PathBuilder<TeacherProfile> orderByExpression = new PathBuilder<>(TeacherProfile.class, "teacherProfile");
+            query.orderBy(new OrderSpecifier(order.isAscending() ? Order.ASC : Order.DESC, orderByExpression.get(order.getProperty())));
         }
 
         return query.fetch();
@@ -67,16 +66,16 @@ public class TeacherFilterRepositoryImpl extends Querydsl4RepositorySupport impl
         }
         builder.and(teacherProfile.career.goe(career));
 
-        return applyPagination(pageable, contentQuery -> query(builder));
+        return applyPagination(pageable, contentQuery -> findTeacherProfileIdsByPageable(builder));
     }
 
-    private JPAQuery<TeacherProfile> query(BooleanBuilder builder) {
+    private JPAQuery<TeacherProfile> findTeacherProfileIdsByPageable(BooleanBuilder builder) {
         return getQueryFactory().select(teacherProfile).distinct()
                                 .from(teacherProfile)
                                 .innerJoin(teacherProfile.languages, teacherLanguage)
                                 .innerJoin(teacherLanguage.language, language)
-                                .innerJoin(teacherProfile.skills, teacherSkill)
-                                .innerJoin(teacherSkill.skill, skill)
+                                .leftJoin(teacherProfile.skills, teacherSkill)
+                                .leftJoin(teacherSkill.skill, skill)
                                 .where(builder);
     }
 }

@@ -1,4 +1,4 @@
-import { Review, Role, ReviewRequestFormData, Progress } from "types/review";
+import { Review, Role, ReviewRequestFormData } from "types/review";
 
 import apiClient from "apis/apiClient";
 
@@ -14,6 +14,6 @@ export const getReviewList = (id: number, mode: Role) => {
   return apiClient.get<{ reviews: Review[] }>(`/reviews/${mode.toLowerCase()}/${id}`);
 };
 
-export const patchReviewProgress = (id: number, progress: Progress) => {
-  return apiClient.patch<{ reviews: Review[] }>(`/reviews/${id}${progress.toLowerCase()}`);
+export const patchReviewProgress = (id: number, progress: string) => {
+  return apiClient.patch<{ reviews: Review[] }>(`/reviews/${id}/${progress}`);
 };

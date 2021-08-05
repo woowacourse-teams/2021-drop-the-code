@@ -1,4 +1,5 @@
 import { mockingStudentAuth, mockingTeacherAuth, mockingAnonymousAuth } from "__mock__/utils/mockingAuth";
+import { mockingToken } from "__mock__/utils/mockingToken";
 import { render, screen } from "__mock__/utils/testUtils";
 
 import Header from "./Header";
@@ -16,8 +17,11 @@ describe("헤더 컴포넌트 테스트", () => {
     const logoutButton = queryByRole("button", { name: "로그아웃" });
     expect(logoutButton).not.toBeInTheDocument();
   });
+
   it("학생인 경우 리뷰어 등록하기 버튼이 렌더링 된다.", async () => {
     mockingStudentAuth();
+    mockingToken();
+
     render(<Header />);
 
     const reviewerRegisterButton = await findByRole("link", { name: "리뷰어 등록하기" });
@@ -26,10 +30,11 @@ describe("헤더 컴포넌트 테스트", () => {
 
   it("리뷰어인 경우 리뷰어 등록하기 버튼이 렌더링 되지 않는다.", async () => {
     mockingTeacherAuth();
+    mockingToken();
+
     render(<Header />);
 
     const reviewerRegisterButton = queryByRole("link", { name: "리뷰어 등록하기" });
-
     expect(reviewerRegisterButton).not.toBeInTheDocument();
   });
 });

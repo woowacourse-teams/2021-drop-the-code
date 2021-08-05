@@ -23,16 +23,16 @@ const components: Components = {
   },
   chip: {
     primary: {
-      bg: COLOR.PURPLE_600,
+      bg: COLOR.INDIGO_500,
       color: COLOR.BLACK,
     },
-    career: { bg: COLOR.RED_350, color: COLOR.BLACK },
+    career: { bg: "rgb(197, 202, 233)", color: COLOR.BLACK },
     count: {
-      bg: COLOR.GREEN_350,
+      bg: "rgb(225, 190, 231)",
       color: COLOR.BLACK,
     },
     averageReview: {
-      bg: COLOR.TEAL_350,
+      bg: "rgb(248, 187, 208)",
       color: COLOR.BLACK,
     },
   },
@@ -52,11 +52,19 @@ const common: Common = {
     pill: "6.25rem",
     circle: "100%",
   },
+  boxShadow: {
+    primary: `rgba(50, 50, 93, .25) 0px 2px 5px -1px, rgba(0, 0, 0, .3) 0px 1px 3px -1px`,
+  },
   zIndex: {
     toast: 111,
     modal: 99,
     header: 88,
     menuItem: 77,
+  },
+  layout: {
+    sm: "480px",
+    md: "768px",
+    lg: "1024px",
   },
 };
 

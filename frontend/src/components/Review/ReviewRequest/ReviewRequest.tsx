@@ -13,6 +13,7 @@ import useAuthContext from "hooks/useAuthContext";
 import useModalContext from "hooks/useModalContext";
 import useRevalidate from "hooks/useRevalidate";
 import useToastContext from "hooks/useToastContext";
+import { QUERY_KEY } from "utils/constants/key";
 import { PLACE_HOLDER, SUCCESS_MESSAGE } from "utils/constants/message";
 import { STANDARD } from "utils/constants/standard";
 import reviewRequestValidators from "utils/validators/reviewRequestValidators";
@@ -40,7 +41,7 @@ const ReviewRequest = ({ reviewerId }: Props) => {
         close();
         toast(SUCCESS_MESSAGE.API.REVIEW.REQUEST);
 
-        queryClient.invalidateQueries("getReview");
+        queryClient.invalidateQueries(QUERY_KEY.GET_REVIEW);
       }
 
       return response;
@@ -50,8 +51,8 @@ const ReviewRequest = ({ reviewerId }: Props) => {
   if (mutation.isLoading) return <Loading />;
 
   return (
-    <div css={{ width: "40.625rem", margin: "0 auto" }}>
-      <h2 css={{ fontSize: "1.25rem", fontWeight: 600, margin: "20px 0 40px", textAlign: "center" }}>리뷰 신청</h2>
+    <div css={{ width: "40.625rem", margin: "0 auto", padding: "1.25rem" }}>
+      <h2 css={{ fontSize: "1.25rem", fontWeight: 600, margin: "1.25rem 0 2.5rem", textAlign: "center" }}>리뷰 신청</h2>
       <FormProvider
         submit={async ({ title, prUrl, content }) => {
           if (!user) return;
@@ -94,11 +95,7 @@ const ReviewRequest = ({ reviewerId }: Props) => {
           css={{ minHeight: "12.5rem" }}
         />
         <Flex css={{ margin: "1.25rem 0 2.5rem" }}>
-          {user && (
-            <SubmitButton themeColor="primary" shape="rounded" css={{ marginLeft: "auto" }}>
-              요청
-            </SubmitButton>
-          )}
+          {user && <SubmitButton css={{ marginLeft: "auto" }}>요청</SubmitButton>}
         </Flex>
       </FormProvider>
     </div>

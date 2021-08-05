@@ -1,5 +1,6 @@
 import { Suspense, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { useHistory } from "react-router-dom";
 
 import { ReviewerRegisterFormData } from "types/reviewer";
 
@@ -13,7 +14,9 @@ import Loading from "components/Loading/Loading";
 import { Flex } from "components/shared/Flexbox/Flexbox";
 import useRevalidate from "hooks/useRevalidate";
 import useToastContext from "hooks/useToastContext";
+import { QUERY_KEY } from "utils/constants/key";
 import { ERROR_MESSAGE, PLACE_HOLDER, SUCCESS_MESSAGE } from "utils/constants/message";
+import { PATH } from "utils/constants/path";
 import { STANDARD } from "utils/constants/standard";
 import reviewerRegisterValidators from "utils/validators/reviewerRegisterValidators";
 
@@ -25,6 +28,7 @@ const ReviewerRegister = () => {
   const [filterLanguage, setFilterLanguage] = useState<string | null>(null);
   const [specs, setSpecs] = useState<Specs>({});
 
+  const history = useHistory();
   const queryClient = useQueryClient();
 
   const { revalidate } = useRevalidate();
@@ -35,10 +39,10 @@ const ReviewerRegister = () => {
       const response = await registerReviewer(reviewerRegisterFormData);
 
       if (!response.isSuccess) {
-        toast(response.error.message);
+        toast(response.error.message, { type: "error" });
       } else {
-        queryClient.invalidateQueries("getReviewList");
-        queryClient.invalidateQueries("checkMember");
+        queryClient.invalidateQueries(QUERY_KEY.GET_REVIEWER_LIST);
+        queryClient.invalidateQueries(QUERY_KEY.CHECK_MEMBER);
 
         toast(SUCCESS_MESSAGE.API.REVIEWER.REGISTER);
       }
@@ -50,14 +54,14 @@ const ReviewerRegister = () => {
   if (mutation.isLoading) return <Loading />;
 
   return (
-    <>
-      <h2 css={{ fontSize: "1.25rem", fontWeight: 600 }}>리뷰어 등록</h2>
+    <Flex css={{ flexDirection: "column" }}>
+      <h2>리뷰어 등록</h2>
       <FormProvider
         submit={async ({ career, title, content }) => {
           const techSpecs = Object.entries(specs).map(([language, skills]) => ({ language, skills }));
 
           if (techSpecs.length === 0) {
-            toast(ERROR_MESSAGE.VALIDATON.REVIEWER_REGISTER.TECH_SPEC);
+            toast(ERROR_MESSAGE.VALIDATION.REVIEWER_REGISTER.TECH_SPEC, { type: "error" });
 
             return;
           }
@@ -68,6 +72,8 @@ const ReviewerRegister = () => {
             title,
             content,
           });
+
+          history.push(PATH.MAIN);
         }}
         validators={reviewerRegisterValidators}
         css={{ marginTop: "1.25rem", width: "100%" }}
@@ -111,12 +117,10 @@ const ReviewerRegister = () => {
           css={{ minHeight: "31.25rem" }}
         />
         <Flex css={{ margin: "1.25rem 0 2.5rem" }}>
-          <SubmitButton themeColor="primary" shape="rounded" css={{ marginLeft: "auto" }}>
-            등록
-          </SubmitButton>
+          <SubmitButton css={{ marginLeft: "auto" }}>등록</SubmitButton>
         </Flex>
       </FormProvider>
-    </>
+    </Flex>
   );
 };
 

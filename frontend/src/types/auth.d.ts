@@ -5,6 +5,7 @@ export interface User {
   name: string;
   email: string;
   imageUrl: string;
+  githubUrl: string;
   role: Role;
   accessToken: string;
   refreshToken: string;

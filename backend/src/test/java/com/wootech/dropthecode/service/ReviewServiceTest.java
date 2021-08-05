@@ -23,6 +23,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static com.wootech.dropthecode.builder.ReviewBuilder.dummyReviewSummary;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
@@ -45,15 +46,15 @@ class ReviewServiceTest {
         ReviewSearchCondition condition = new ReviewSearchCondition(Arrays.asList(Progress.ON_GOING, Progress.FINISHED), null);
         Pageable pageable = PageRequest.of(0, 3, Sort.by(Sort.Direction.ASC, "createdAt"));
         List<ReviewSummary> reviews = Arrays.asList(
-                new ReviewSummary(1L, "title1", "content1", Progress.ON_GOING,
+                dummyReviewSummary(1L, "title1", "content1", Progress.ON_GOING,
                         1L, "teacher1", "s3://teacher1Img",
                         memberId, "student1", "s3://student1Img",
                         "prUrl1", LocalDateTime.now()),
-                new ReviewSummary(2L, "title2", "content2", Progress.ON_GOING,
+                dummyReviewSummary(2L, "title2", "content2", Progress.ON_GOING,
                         3L, "teacher2", "s3://teacher2Img",
                         memberId, "student1", "s3://student1Img",
                         "prUrl1", LocalDateTime.now()),
-                new ReviewSummary(3L, "title3", "content3", Progress.FINISHED,
+                dummyReviewSummary(3L, "title3", "content3", Progress.FINISHED,
                         4L, "teacher3", "s3://teacher3Img",
                         memberId, "student1", "s3://student1Img",
                         "prUrl1", LocalDateTime.now())

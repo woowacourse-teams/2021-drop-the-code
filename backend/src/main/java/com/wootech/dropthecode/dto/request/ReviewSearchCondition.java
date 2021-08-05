@@ -5,6 +5,14 @@ import java.util.List;
 
 import com.wootech.dropthecode.domain.Progress;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
 public class ReviewSearchCondition {
     /**
      * 리뷰 상태
@@ -16,27 +24,9 @@ public class ReviewSearchCondition {
      */
     private String name;
 
-    public ReviewSearchCondition() {
-    }
-
+    @Builder
     public ReviewSearchCondition(List<Progress> progress, String name) {
         this.progress = progress;
-        this.name = name;
-    }
-
-    public List<Progress> getProgress() {
-        return progress;
-    }
-
-    public void setProgress(List<Progress> progress) {
-        this.progress = progress;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
         this.name = name;
     }
 }

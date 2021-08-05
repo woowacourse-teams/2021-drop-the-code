@@ -17,7 +17,7 @@
     </springProfile>
 
     <springProfile name="prod">
-        <include resource="appender/application-file-appender.xml"/>
+        <include resource="appender/info-file-appender.xml"/>
         <include resource="appender/error-file-appender.xml"/>
         <include resource="appender/sql-file-appender.xml"/>
 
@@ -35,7 +35,7 @@
         </logger>
 
         <root level="DEBUG">
-            <appender-ref ref="APPLICATION_FILE"/>
+            <appender-ref ref="INFO_FILE"/>
             <appender-ref ref="ERROR_FILE"/>
         </root>
     </springProfile>

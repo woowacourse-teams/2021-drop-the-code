@@ -10,7 +10,7 @@ import ModalProvider from "components/ModalProvider/ModalProvider";
 import AuthProvider from "components/Auth/AuthProvider/AuthProvider";
 import ToastProvider from "components/ToastProvider/ToastProvider";
 import Loading from "components/Loading/Loading";
-import { THEME } from "utils/constants/theme";
+import { THEME } from "theme/theme";
 
 axios.defaults.baseURL = process.env.SERVER_BASE_URL;
 

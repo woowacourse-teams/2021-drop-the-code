@@ -8,6 +8,13 @@ import javax.persistence.*;
 import com.wootech.dropthecode.exception.AuthorizationException;
 import com.wootech.dropthecode.exception.ReviewException;
 
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Review extends BaseEntity {
 
@@ -39,18 +46,9 @@ public class Review extends BaseEntity {
     @Column(nullable = false)
     private Progress progress;
 
-    protected Review() {
-    }
-
-    public Review(Member teacher, Member student, String title, String content, String prUrl) {
-        this(teacher, student, title, content, prUrl, 0L, Progress.ON_GOING);
-    }
-
-    public Review(Member teacher, Member student, String title, String content, String prUrl, Long elapsedTime) {
-        this(teacher, student, title, content, prUrl, elapsedTime, Progress.ON_GOING);
-    }
-
-    public Review(Member teacher, Member student, String title, String content, String prUrl, Long elapsedTime, Progress progress) {
+    @Builder
+    public Review(Member teacher, Member student, String title, String content, String prUrl, Long elapsedTime, Progress progress, LocalDateTime createdAt) {
+        super(createdAt);
         this.teacher = teacher;
         this.student = student;
         this.title = title;
@@ -93,6 +91,7 @@ public class Review extends BaseEntity {
             throw new ReviewException("현재 리뷰는 리뷰 진행중 상태가 아닙니다. 리뷰 완료로 진행시킬 수 없습니다.");
         }
     }
+
     private void validateReviewProgressIsTeacherCompeted() {
         if (this.progress != Progress.TEACHER_COMPLETED) {
             throw new ReviewException("현재 리뷰는 리뷰 완료 상태가 아닙니다. 리뷰 종료로 진행시킬 수 없습니다.");
@@ -101,7 +100,7 @@ public class Review extends BaseEntity {
 
     private void updateElapsedTime() {
         LocalDateTime createdAt = getCreatedAt();
-        if(Objects.isNull(createdAt)) {
+        if (Objects.isNull(createdAt)) {
             elapsedTime = 0L;
             return;
         }
@@ -115,31 +114,20 @@ public class Review extends BaseEntity {
         return elapsedTime / (ONE_SECOND_TO_MILLISECONDS * ONE_MINUTE_TO_SECONDS * ONE_HOUR_TO_MINUTES);
     }
 
-    public Member getTeacher() {
-        return teacher;
+    public void update(Long id, String title, String content, String prUrl) {
+        validatesOwnerByLoginId(id);
+        this.title = title;
+        this.content = content;
+        this.prUrl = prUrl;
     }
 
-    public Member getStudent() {
-        return student;
+    public void validatesOwnerByLoginId(Long id) {
+        if (!this.student.hasSameId(id)) {
+            throw new AuthorizationException("리뷰를 수정할 권한이 없습니다!");
+        }
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public String getPrUrl() {
-        return prUrl;
-    }
-
-    public Long getElapsedTime() {
-        return elapsedTime;
-    }
-
-    public Progress getProgress() {
-        return progress;
+    public boolean isPending() {
+        return progress.isPending();
     }
 }

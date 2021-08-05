@@ -5,13 +5,14 @@ import useFormContext from "hooks/useFormContext";
 
 export interface Props extends InputProps {
   name: string;
+  initialValue?: string | number;
 }
 
-const InputField = ({ name, ...props }: Props) => {
+const InputField = ({ name, initialValue, ...props }: Props) => {
   const { values, errorMessages, register, onChange } = useFormContext();
 
   useEffect(() => {
-    register(name);
+    register(name, initialValue);
   }, []);
 
   return (

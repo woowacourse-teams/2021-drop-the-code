@@ -3,9 +3,13 @@ package com.wootech.dropthecode.dto.request;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.wootech.dropthecode.domain.Review;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-public class ReviewCreateRequest {
+@Getter
+@NoArgsConstructor
+public class ReviewRequest {
     /**
      * 학생 id
      */
@@ -32,34 +36,12 @@ public class ReviewCreateRequest {
     @NotBlank
     private String prUrl;
 
-    public ReviewCreateRequest() {
-    }
-
-    public ReviewCreateRequest(Long studentId, Long teacherId, String title, String content, String prUrl) {
+    @Builder
+    public ReviewRequest(Long studentId, Long teacherId, String title, String content, String prUrl) {
         this.studentId = studentId;
         this.teacherId = teacherId;
         this.title = title;
         this.content = content;
         this.prUrl = prUrl;
-    }
-
-    public Long getStudentId() {
-        return studentId;
-    }
-
-    public Long getTeacherId() {
-        return teacherId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public String getPrUrl() {
-        return prUrl;
     }
 }

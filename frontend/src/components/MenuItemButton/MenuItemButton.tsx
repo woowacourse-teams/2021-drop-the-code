@@ -23,8 +23,8 @@ const Menu = styled.div`
   position: absolute;
   top: 50px;
   background: ${COLOR.WHITE};
-  border-radius: 0.75rem;
-  box-shadow: rgb(0 0 0 / 15%) 0 0.625rem 1.875rem;
+  border-radius: ${({ theme }) => theme.common.shape.rounded};
+  box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
   overflow: auto;
   right: 0;
   padding: 1.875rem;

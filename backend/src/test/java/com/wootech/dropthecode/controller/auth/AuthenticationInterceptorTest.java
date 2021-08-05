@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.dto.TechSpec;
+import com.wootech.dropthecode.dto.request.FeedbackRequest;
 import com.wootech.dropthecode.dto.request.ReviewRequest;
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
 import com.wootech.dropthecode.dto.response.LoginResponse;
@@ -388,9 +389,12 @@ class AuthenticationInterceptorTest {
             // given
             doNothing().when(authService).validatesAccessToken(VALID_ACCESS_TOKEN);
 
+            FeedbackRequest feedbackRequest = new FeedbackRequest(5, "Good!");
+
             // when
             WebTestClient.ResponseSpec response = webTestClient.patch()
                                                                .uri("/reviews/1/finish")
+                                                               .bodyValue(feedbackRequest)
                                                                .header("Authorization", BEARER + VALID_ACCESS_TOKEN)
                                                                .exchange();
 

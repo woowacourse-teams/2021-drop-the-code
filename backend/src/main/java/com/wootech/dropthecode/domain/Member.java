@@ -62,6 +62,9 @@ public class Member extends BaseEntity {
     }
 
     public Member update(String email, String name, String imageUrl) {
+        if (this.role == Role.DELETED) {
+            this.role =  Role.STUDENT;
+        }
         this.email = email;
         this.name = name;
         this.imageUrl = imageUrl;

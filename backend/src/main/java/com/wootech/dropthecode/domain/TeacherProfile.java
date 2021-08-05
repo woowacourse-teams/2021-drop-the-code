@@ -56,7 +56,7 @@ public class TeacherProfile {
     private Integer sumReviewCount = 0;
 
     private Double averageReviewTime = (double) 0;
-    
+
     @Builder
     public TeacherProfile(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, String title, String content, Integer career, Member member, Set<TeacherLanguage> languages, Set<TeacherSkill> skills, Integer sumReviewCount, Double averageReviewTime) {
         this.id = id;

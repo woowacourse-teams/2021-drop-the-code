@@ -1,5 +1,4 @@
 import { languages } from "__mock__/data/languages";
-import { mockingToken } from "__mock__/utils/mockingToken";
 import { fireEvent, render, screen } from "__mock__/utils/testUtils";
 
 import ReviewerRegister from "./ReviewerRegister";
@@ -7,7 +6,6 @@ import ReviewerRegister from "./ReviewerRegister";
 const { findByRole, getByRole, findByText, findAllByText } = screen;
 
 beforeEach(() => {
-  mockingToken();
   render(<ReviewerRegister />);
 });
 
@@ -33,7 +31,7 @@ describe("리뷰어 등록 페이지 테스트", () => {
     expect(LanguageButtonsAfterSelect[1]).not.toBeVisible();
   });
 
-  it("타이틀 입력 입력란에 50자 이상 입력하면 유효성 에러 메시지가 출력된다.", async () => {
+  it("타이틀 입력란에 50자 이상 입력하면 유효성 에러 메시지가 출력된다.", async () => {
     const titleInput = await findByRole("textbox", { name: "타이틀" });
     fireEvent.change(titleInput, {
       target: {
@@ -43,6 +41,18 @@ describe("리뷰어 등록 페이지 테스트", () => {
 
     const InvalidationTitleMessage = screen.getByText(/50자 이내로 작성해주세요\./i);
     expect(InvalidationTitleMessage).toBeVisible();
+  });
+
+  it("소개 입력란에 5000자 이상 입력하면 유효성 에러 메시지가 출력된다.", async () => {
+    const contentTextbox = await findByRole("textbox", { name: "소개" });
+    fireEvent.change(contentTextbox, {
+      target: {
+        value: "가".repeat(5001),
+      },
+    });
+
+    const InvalidationContentMessage = screen.getByText(/5000자 이내로 작성해주세요\./i);
+    expect(InvalidationContentMessage).toBeVisible();
   });
 
   it("경력 입력란에 0에서 50이 아닌 숫자를 입력하면 유효성 에러 메시지가 출력된다.", async () => {

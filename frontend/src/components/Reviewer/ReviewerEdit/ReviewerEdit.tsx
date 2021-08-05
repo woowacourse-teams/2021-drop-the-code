@@ -1,7 +1,7 @@
 import { Suspense, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 
-import { ReviewerRegisterFormData } from "types/reviewer";
+import { Reviewer, ReviewerRegisterFormData } from "types/reviewer";
 
 import { editReviewer } from "apis/reviewer";
 import FormProvider from "components/FormProvider/FormProvider";
@@ -20,7 +20,7 @@ import { STANDARD } from "utils/constants/standard";
 import reviewerRegisterValidators from "utils/validators/reviewerRegisterValidators";
 
 interface Props {
-  reviewer: any;
+  reviewer: Reviewer;
 }
 
 interface Specs {
@@ -48,6 +48,7 @@ const ReviewerEdit = ({ reviewer }: Props) => {
         toast(SUCCESS_MESSAGE.API.REVIEWER.EDIT);
 
         queryClient.invalidateQueries(QUERY_KEY.GET_REVIEWER);
+        queryClient.invalidateQueries(QUERY_KEY.CHECK_MEMBER);
       }
 
       return response;

@@ -8,7 +8,7 @@ import { PATH } from "utils/constants/path";
 import { ROUTE } from "utils/constants/route";
 
 const App = () => {
-  const { user } = useAuthContext();
+  const { isAuthenticated } = useAuthContext();
 
   return (
     <>
@@ -16,7 +16,7 @@ const App = () => {
         {ROUTE.map(({ path, Component, isPrivate, exact }) => (
           <AuthRoute
             isPrivate={isPrivate}
-            isAuthenticated={!!user}
+            isAuthenticated={isAuthenticated}
             key={path}
             path={path}
             redirectTo={PATH.MAIN}

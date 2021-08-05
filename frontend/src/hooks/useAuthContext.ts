@@ -3,9 +3,10 @@ import { createContext, useContext } from "react";
 import { User } from "types/auth";
 
 interface AuthContextProps {
+  isAuthenticated: boolean;
+  user: User | null;
   login: (user: User) => void;
   logout: () => void;
-  user: User | null;
 }
 
 export const AuthContext = createContext<AuthContextProps | null>(null);

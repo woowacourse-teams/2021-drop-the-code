@@ -35,6 +35,9 @@ const AuthProvider = ({ children }: Props) => {
       const response = await revalidate(() => checkMember());
 
       if (!response.isSuccess) {
+        removeAccessToken();
+        removeRefreshToken();
+
         return;
       }
 
@@ -90,7 +93,9 @@ const AuthProvider = ({ children }: Props) => {
     login({ ...data, accessToken, refreshToken });
   }, [data]);
 
-  return <AuthContext.Provider value={{ user: user, login, logout }}>{children}</AuthContext.Provider>;
+  const isAuthenticated = user !== null || accessToken !== null;
+
+  return <AuthContext.Provider value={{ isAuthenticated, user: user, login, logout }}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;

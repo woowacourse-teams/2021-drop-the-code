@@ -1,8 +1,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { useMutation } from "react-query";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-import axios from "axios";
 import styled, { css } from "styled-components";
 import { Role } from "types/review";
 
@@ -16,12 +15,10 @@ import Avatar from "components/shared/Avatar/Avatar";
 import Button from "components/shared/Button/Button";
 import { Flex, FlexAlignCenter, FlexSpaceBetween } from "components/shared/Flexbox/Flexbox";
 import useAuthContext from "hooks/useAuthContext";
-import useLocalStorage from "hooks/useLocalStorage";
 import useModalContext from "hooks/useModalContext";
 import useRevalidate from "hooks/useRevalidate";
 import useToastContext from "hooks/useToastContext";
 import { COLOR } from "utils/constants/color";
-import { LOCAL_STORAGE_KEY } from "utils/constants/key";
 import { ALT, CONFIRM, SUCCESS_MESSAGE } from "utils/constants/message";
 import { PATH } from "utils/constants/path";
 
@@ -59,13 +56,11 @@ const MyPage = () => {
   const { open } = useModalContext();
   const toast = useToastContext();
   const history = useHistory();
-  const [accessToken] = useLocalStorage<string | null>(LOCAL_STORAGE_KEY.ACCESS_TOKEN, null);
+  const { revalidate } = useRevalidate();
 
   const [activeTab, setActiveTab] = useState<Role | null>(null);
 
-  if (!user) return <Redirect to={PATH.MAIN} />;
-
-  const isReviewer = user.role === "TEACHER";
+  const isReviewer = user?.role === "TEACHER";
 
   const myTabs: { name: string; mode: Role }[] = isReviewer
     ? [
@@ -74,33 +69,30 @@ const MyPage = () => {
       ]
     : [{ name: "요청한 리뷰", mode: "STUDENT" }];
 
-  useEffect(() => {
-    setActiveTab(myTabs[0].mode);
-  }, []);
-
-  const { revalidate } = useRevalidate();
-
-  axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-
   const deleteAuthMutation = useMutation(() => {
     return revalidate(async () => {
       const response = await deleteAuth();
 
-      if (response.isSuccess) {
+      if (!response.isSuccess) {
+        toast(response.error.message, { type: "error" });
+      } else {
         toast(SUCCESS_MESSAGE.API.AUTH.DELETE);
+
+        logout();
+        history.push(PATH.MAIN);
       }
 
       return response;
     });
   });
 
-  if (deleteAuthMutation.isLoading) return <Loading />;
+  useEffect(() => {
+    setActiveTab(myTabs[0].mode);
+  }, []);
 
-  const deleteAuthInfo = () => {
-    deleteAuthMutation.mutate();
-    logout();
-    history.push(PATH.MAIN);
-  };
+  if (!user) return <Loading />;
+
+  if (deleteAuthMutation.isLoading) return <Loading />;
 
   return (
     <>
@@ -156,7 +148,7 @@ const MyPage = () => {
             <Confirm
               title={CONFIRM.AUTH.DELETE}
               onConfirm={() => {
-                deleteAuthInfo();
+                deleteAuthMutation.mutate();
               }}
             />
           );

@@ -64,6 +64,9 @@ dependencies {
     // Spring Auto REST Docs
     testImplementation 'capital.scalable:spring-auto-restdocs-core:2.0.11'
     jsondoclet "capital.scalable:spring-auto-restdocs-json-doclet:2.0.11"
+
+    // flyway
+    implementation 'org.flywaydb:flyway-core:'
 }
 
 task jsonDoclet(type: Javadoc, dependsOn: compileJava) {

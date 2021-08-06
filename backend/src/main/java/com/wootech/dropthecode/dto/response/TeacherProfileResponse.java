@@ -89,14 +89,12 @@ public class TeacherProfileResponse {
                                                                        .map(TeacherLanguage::getLanguage)
                                                                        .map(lang -> new LanguageResponse(lang.getId(), lang
                                                                                .getName()))
-                                                                       .sorted(Comparator.comparing(LanguageResponse::getId))
                                                                        .collect(Collectors.toList());
 
         final List<SkillResponse> skillsResponse = teacherProfile.getSkills()
                                                                  .stream()
                                                                  .map(TeacherSkill::getSkill)
                                                                  .map(skill -> new SkillResponse(skill.getId(), skill.getName()))
-                                                                 .sorted(Comparator.comparing(SkillResponse::getId))
                                                                  .collect(Collectors.toList());
 
         final TechSpecResponse techSpecResponse = new TechSpecResponse(languageResponses, skillsResponse);

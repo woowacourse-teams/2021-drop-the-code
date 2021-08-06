@@ -135,8 +135,6 @@ clean.doLast {
 
 sonarqube {
     properties {
-        property "sonar.java.jdkHome", "/Library/Java/JavaVirtualMachines/amazon-corretto-8.jdk"
-        property "sonar.java.source", "1.8"
         property "sonar.projectKey", "dropthecode"
         property "sonar.host.url", "http://52.78.132.146:9000" // 소나 큐브 서버 url
         property "sonar.language", "java" // 분석할 언어

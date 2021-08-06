@@ -9,9 +9,9 @@ import SubmitButton from "components/FormProvider/SubmitButton";
 import TextareaField from "components/FormProvider/TextareaField";
 import Avatar from "components/shared/Avatar/Avatar";
 import { Flex, FlexCenter, FlexSpaceBetween } from "components/shared/Flexbox/Flexbox";
-import { COLOR } from "utils/constants/color";
 import { PLACE_HOLDER } from "utils/constants/message";
 import { STANDARD } from "utils/constants/standard";
+import reviewFeedBackValidators from "utils/validators/reviewFeedBackValidators";
 
 export interface Props {
   reviewId: number;
@@ -80,6 +80,7 @@ const ReviewFeedback = ({ reviewId, teacherProfile }: Props) => {
           request
         */
         }}
+        validators={reviewFeedBackValidators}
       >
         <Grade>
           <Range

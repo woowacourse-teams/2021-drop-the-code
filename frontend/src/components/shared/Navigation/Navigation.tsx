@@ -6,7 +6,7 @@ import { Flex, FlexSpaceBetween } from "components/shared/Flexbox/Flexbox";
 
 const Inner = styled.header`
   background-color: ${({ theme }) => theme.components.navigation.bg};
-  height: 6rem;
+  height: 4rem;
   box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
   position: fixed;
   top: 0;

@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 
 import { Reviewer, ReviewerRegisterFormData } from "types/reviewer";
@@ -11,7 +11,6 @@ import TextareaField from "components/FormProvider/TextareaField";
 import SpecPicker from "components/Language/SpecPicker";
 import Loading from "components/Loading/Loading";
 import { Flex } from "components/shared/Flexbox/Flexbox";
-import useLanguageList from "hooks/useLanguageList";
 import useModalContext from "hooks/useModalContext";
 import useRevalidate from "hooks/useRevalidate";
 import useToastContext from "hooks/useToastContext";
@@ -31,8 +30,6 @@ interface Specs {
 const MyReviewerEdit = ({ reviewer }: Props) => {
   const [filterLanguage, setFilterLanguage] = useState<string | null>(null);
   const [specs, setSpecs] = useState<Specs>({});
-
-  const { languages } = useLanguageList();
 
   const { revalidate } = useRevalidate();
   const { close } = useModalContext();
@@ -58,38 +55,14 @@ const MyReviewerEdit = ({ reviewer }: Props) => {
     })
   );
 
-  useEffect(() => {
-    if (!languages) return;
-
-    const techSpec = reviewer.techSpec;
-
-    const initialSpec: Specs = {};
-    techSpec.languages.forEach(({ name }) => {
-      initialSpec[name] = [];
-    });
-
-    techSpec.skills.forEach((skill) => {
-      languages.forEach(({ language, skills }) => {
-        skills.forEach(({ name }) => {
-          if (skill.name === name) {
-            initialSpec[language.name].push(name);
-          }
-        });
-      });
-    });
-
-    setSpecs(initialSpec);
-  }, []);
-
   if (mutation.isLoading) return <Loading />;
 
   return (
     <Flex
       css={{
+        padding: "1.25rem",
         flexDirection: "column",
         width: "40.625rem",
-        height: "40rem",
-        padding: "1.25rem",
       }}
     >
       <h2 css={{ fontSize: "1.25rem", fontWeight: 600, margin: "1.25rem 0 2.5rem", textAlign: "center" }}>
@@ -104,7 +77,6 @@ const MyReviewerEdit = ({ reviewer }: Props) => {
 
             return;
           }
-
           mutation.mutate({
             techSpecs: Object.entries(specs).map(([language, skills]) => ({ language, skills })),
             career,
@@ -156,7 +128,7 @@ const MyReviewerEdit = ({ reviewer }: Props) => {
           required
           css={{ minHeight: "12.5rem" }}
         />
-        <Flex css={{ margin: "1.25rem 0 2.5rem" }}>
+        <Flex css={{ marginTop: "1.25rem" }}>
           <SubmitButton css={{ marginLeft: "auto" }}>확인</SubmitButton>
         </Flex>
       </FormProvider>

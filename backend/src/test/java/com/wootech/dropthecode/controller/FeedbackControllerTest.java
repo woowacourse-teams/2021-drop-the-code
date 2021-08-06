@@ -52,8 +52,7 @@ class FeedbackControllerTest extends RestApiDocumentTest {
         given(feedbackService.findAll(isA(FeedbackSearchCondition.class), isA(Pageable.class))).willReturn(response);
 
         this.restDocsMockMvc
-                .perform(get("/feedbacks?teacherId=1&studentId=2")
-                        .accept(MediaType.APPLICATION_JSON))
+                .perform(get("/feedbacks?teacherId=1&studentId=2"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(OBJECT_MAPPER.writeValueAsString(response)))
                 .andDo(print());

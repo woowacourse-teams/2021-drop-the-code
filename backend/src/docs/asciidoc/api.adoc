@@ -193,3 +193,7 @@ include::{snippets}/review-controller-test/cancel-review-no-pending/http-respons
 
 *본인이 아닌 멤버가 취소 요청했을 때의 응답*
 include::{snippets}/review-controller-test/cancel-review-no-owner/http-response.adoc[]
+
+== Feedback API
+
+include::{snippets}/feedback-controller-test/find-all-feedback-test/auto-section.adoc[]

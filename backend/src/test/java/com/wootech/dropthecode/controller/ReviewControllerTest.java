@@ -244,6 +244,28 @@ public class ReviewControllerTest extends RestApiDocumentTest {
     }
 
     @Test
+    @DisplayName("리뷰 상태 변경 (PENDING -> DENIED)")
+    void denyReview() throws Exception {
+        // when
+        ResultActions result = restDocsMockMvc.perform(patch("/reviews/1/deny")
+                .with(userToken()));
+
+        // then
+        result.andExpect(status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("리뷰 상태 변경 (PENDING -> ON_GOING)")
+    void acceptReview() throws Exception {
+        // when
+        ResultActions result = restDocsMockMvc.perform(patch("/reviews/1/accept")
+                .with(userToken()));
+
+        // then
+        result.andExpect(status().isNoContent());
+    }
+
+    @Test
     @DisplayName("리뷰 상태 변경 (ON_GOING -> TEACHER_COMPLETE)")
     void updateReviewToComplete() throws Exception {
         // when

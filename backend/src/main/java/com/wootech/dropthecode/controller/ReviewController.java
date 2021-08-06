@@ -71,6 +71,28 @@ public class ReviewController {
                              .body(reviewResponse);
     }
 
+
+    /**
+     * @param id 리뷰 id
+     * @title 리뷰 상태 업데이트(PENDING -> DENIED)
+     */
+    @PatchMapping("/{id}/deny")
+    public ResponseEntity<Void> denyReview(@Login LoginMember loginMember, @PathVariable Long id) {
+        reviewService.denyReview(loginMember, id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+
+    /**
+     * @param id 리뷰 id
+     * @title 리뷰 상태 업데이트(PENDING -> ON_GOING)
+     */
+    @PatchMapping("/{id}/accept")
+    public ResponseEntity<Void> acceptReview(@Login LoginMember loginMember, @PathVariable Long id) {
+        reviewService.acceptReview(loginMember, id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
     /**
      * @param id 리뷰 id
      * @title 리뷰 상태 업데이트(ON_GOING -> TEACHER_COMPLETE)
@@ -88,6 +110,12 @@ public class ReviewController {
     @PatchMapping("/{id}/finish")
     public ResponseEntity<Void> updateToFinishReview(@Login LoginMember loginMember, @PathVariable Long id, @RequestBody @Valid FeedbackRequest feedbackRequest) {
         reviewService.updateToFinishReview(loginMember, id, feedbackRequest);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<Void> test() {
+        reviewService.denyReview(new LoginMember(3L), 1L);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

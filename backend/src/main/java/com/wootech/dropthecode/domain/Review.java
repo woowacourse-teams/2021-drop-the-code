@@ -8,12 +8,10 @@ import javax.persistence.*;
 import com.wootech.dropthecode.exception.AuthorizationException;
 import com.wootech.dropthecode.exception.ReviewException;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Review extends BaseEntity {
@@ -61,48 +59,49 @@ public class Review extends BaseEntity {
         this.progress = progress;
     }
 
-    public void completeProgress(Long memberId) {
-        validateMemberIdAsTeacher(memberId);
-        validateReviewProgressIsOnGoing();
+    /*
+    COMMENT
+    기존 메소드는 리뷰의 소유자가 학생인 것 같은 메소드 네이밍이다.
+    이 리뷰의 소유는 학생 및 선생이므로, 소유보다는 권한의 의미를 갖도록 메소드 네임을 바꿔보았다.
 
-        this.progress = Progress.TEACHER_COMPLETED;
-
-        updateElapsedTime();
-    }
-
-    public void finishProgress(Long memberId, Feedback feedback) {
-        validateMemberIdAsStudent(memberId);
-        validateReviewProgressIsTeacherCompleted();
-
-        this.feedback = feedback;
-        this.progress = Progress.FINISHED;
-    }
-
-    public void validateMemberIdAsTeacher(Long id) {
-        if (!teacher.hasSameId(id)) {
-            throw new AuthorizationException("현재 사용자는 해당 리뷰에 대한 리뷰 완료 권한이 없습니다.");
+    기존 Review#validateMemberIdAsStudent() 는 현재 validateAuthorityOfStudent 와 하는 일이 같으므로 삭제
+     */
+    public void validateAuthorityOfStudent(Long id) {
+        if (!this.student.hasSameId(id)) {
+            throw new AuthorizationException("리뷰를 수정할 권한이 없습니다!");
         }
     }
 
-    public void validateMemberIdAsStudent(Long id) {
-        if (!student.hasSameId(id)) {
-            throw new AuthorizationException("현재 사용자는 해당 리뷰에 대한 리뷰 종료 권한이 없습니다.");
+    public void validateAuthorityOfTeacher(Long id) {
+        if (!this.teacher.hasSameId(id)) {
+            throw new AuthorizationException("리뷰를 수정할 권한이 없습니다!");
         }
     }
 
-    private void validateReviewProgressIsOnGoing() {
+    public void validateReviewProgressIsPending() {
+        if (!progress.isPending()) {
+            throw new ReviewException("현재 리뷰는 리뷰 대기 상태가 아닙니다.");
+        }
+    }
+
+    /*
+    COMMENT
+    기존 에러 메시지는 리뷰 진행 중에서 리뷰 완료로 넘어갈 때만 쓰인다. 즉, 범용적이지 않다고 생각된다.
+    그래서 다른 곳에서도 재사용될 수 있도록 에러 메시지를 수정했다.
+     */
+    public void validateReviewProgressIsOnGoing() {
         if (this.progress != Progress.ON_GOING) {
-            throw new ReviewException("현재 리뷰는 리뷰 진행중 상태가 아닙니다. 리뷰 완료로 진행시킬 수 없습니다.");
+            throw new ReviewException("현재 리뷰는 리뷰 진행중 상태가 아닙니다.");
         }
     }
 
-    private void validateReviewProgressIsTeacherCompleted() {
+    public void validateReviewProgressIsTeacherCompleted() {
         if (this.progress != Progress.TEACHER_COMPLETED) {
-            throw new ReviewException("현재 리뷰는 리뷰 완료 상태가 아닙니다. 리뷰 종료로 진행시킬 수 없습니다.");
+            throw new ReviewException("현재 리뷰는 리뷰 완료 상태가 아닙니다");
         }
     }
 
-    private void updateElapsedTime() {
+    public void updateElapsedTime() {
         LocalDateTime createdAt = getCreatedAt();
         if (Objects.isNull(createdAt)) {
             elapsedTime = 0L;
@@ -119,16 +118,10 @@ public class Review extends BaseEntity {
     }
 
     public void update(Long id, String title, String content, String prUrl) {
-        validatesOwnerByLoginId(id);
+        validateAuthorityOfStudent(id);
         this.title = title;
         this.content = content;
         this.prUrl = prUrl;
-    }
-
-    public void validatesOwnerByLoginId(Long id) {
-        if (!this.student.hasSameId(id)) {
-            throw new AuthorizationException("리뷰를 수정할 권한이 없습니다!");
-        }
     }
 
     public boolean isPending() {

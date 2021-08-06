@@ -27,9 +27,10 @@ public class Feedback {
     private Review review;
 
     @Builder
-    public Feedback(Review review, Integer star, String comment) {
-        this.review = review;
+    public Feedback(Long id, Integer star, String comment, Review review) {
+        this.id = id;
         this.star = star;
         this.comment = comment;
+        this.review = review;
     }
 }

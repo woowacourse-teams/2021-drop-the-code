@@ -47,7 +47,7 @@ public class ReviewTest {
 
         Review completedReview = dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.TEACHER_COMPLETED);
 
-        Feedback feedback = new Feedback(completedReview, 5, "좋아요");
+        Feedback feedback = Feedback.builder().review(completedReview).star(5).comment("좋아요").build();
 
         assertThatCode(() -> completedReview.finishProgress(2L, feedback))
                 .doesNotThrowAnyException();
@@ -61,7 +61,7 @@ public class ReviewTest {
 
         Review onGoingReview = dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.ON_GOING);
 
-        Feedback feedback = new Feedback(onGoingReview, 5, "좋아요");
+        Feedback feedback = Feedback.builder().review(onGoingReview).star(5).comment("좋아요").build();
 
         assertThatThrownBy(() -> onGoingReview.finishProgress(2L, feedback))
                 .isInstanceOf(ReviewException.class);

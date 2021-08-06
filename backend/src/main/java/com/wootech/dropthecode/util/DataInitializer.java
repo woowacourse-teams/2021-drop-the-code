@@ -11,6 +11,7 @@ import com.wootech.dropthecode.domain.*;
 import com.wootech.dropthecode.domain.bridge.LanguageSkill;
 import com.wootech.dropthecode.domain.bridge.TeacherLanguage;
 import com.wootech.dropthecode.domain.bridge.TeacherSkill;
+import com.wootech.dropthecode.domain.review.Review;
 import com.wootech.dropthecode.repository.*;
 import com.wootech.dropthecode.repository.bridge.LanguageSkillRepository;
 import com.wootech.dropthecode.repository.bridge.TeacherLanguageRepository;

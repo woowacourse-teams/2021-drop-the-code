@@ -1,7 +1,6 @@
 package com.wootech.dropthecode.domain.review;
 
 import com.wootech.dropthecode.domain.Progress;
-import com.wootech.dropthecode.domain.Review;
 
 public class OnGoingReview extends ProgressReview {
 

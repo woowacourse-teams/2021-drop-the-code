@@ -113,12 +113,6 @@ public class ReviewController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<Void> test() {
-        reviewService.denyReview(new LoginMember(3L), 1L);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
-
     /**
      * @param id 리뷰 id
      * @title 리뷰 내용 수정

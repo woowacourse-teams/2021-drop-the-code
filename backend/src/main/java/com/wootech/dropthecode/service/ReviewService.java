@@ -5,10 +5,10 @@ import java.util.stream.Collectors;
 
 import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Member;
-import com.wootech.dropthecode.domain.Review;
 import com.wootech.dropthecode.domain.review.CompletedReview;
 import com.wootech.dropthecode.domain.review.OnGoingReview;
 import com.wootech.dropthecode.domain.review.PendingReview;
+import com.wootech.dropthecode.domain.review.Review;
 import com.wootech.dropthecode.dto.ReviewSummary;
 import com.wootech.dropthecode.dto.request.FeedbackRequest;
 import com.wootech.dropthecode.dto.request.ReviewRequest;

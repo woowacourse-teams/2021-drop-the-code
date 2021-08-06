@@ -1,7 +1,7 @@
 package com.wootech.dropthecode.service;
 
 import com.wootech.dropthecode.domain.Feedback;
-import com.wootech.dropthecode.domain.Review;
+import com.wootech.dropthecode.domain.review.Review;
 import com.wootech.dropthecode.dto.request.FeedbackRequest;
 import com.wootech.dropthecode.repository.FeedbackRepository;
 

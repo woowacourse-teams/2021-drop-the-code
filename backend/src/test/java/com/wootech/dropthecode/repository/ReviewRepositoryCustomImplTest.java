@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 import com.wootech.dropthecode.domain.*;
+import com.wootech.dropthecode.domain.review.Review;
 import com.wootech.dropthecode.dto.ReviewSummary;
 import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
 

@@ -1,10 +1,14 @@
-package com.wootech.dropthecode.domain;
+package com.wootech.dropthecode.domain.review;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.persistence.*;
 
+import com.wootech.dropthecode.domain.BaseEntity;
+import com.wootech.dropthecode.domain.Feedback;
+import com.wootech.dropthecode.domain.Member;
+import com.wootech.dropthecode.domain.Progress;
 import com.wootech.dropthecode.exception.AuthorizationException;
 import com.wootech.dropthecode.exception.ReviewException;
 

@@ -3,10 +3,9 @@ package com.wootech.dropthecode.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.wootech.dropthecode.domain.LoginMember;
-import com.wootech.dropthecode.domain.Member;
-import com.wootech.dropthecode.domain.Review;
+import com.wootech.dropthecode.domain.*;
 import com.wootech.dropthecode.dto.ReviewSummary;
+import com.wootech.dropthecode.dto.request.FeedbackRequest;
 import com.wootech.dropthecode.dto.request.ReviewRequest;
 import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
@@ -24,11 +23,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReviewService {
     private final MemberService memberService;
     private final TeacherService teacherService;
+    private final FeedbackService feedbackService;
     private final ReviewRepository reviewRepository;
 
-    public ReviewService(MemberService memberService, TeacherService teacherService, ReviewRepository reviewRepository) {
+    public ReviewService(MemberService memberService, TeacherService teacherService, FeedbackService feedbackService, ReviewRepository reviewRepository) {
         this.memberService = memberService;
         this.teacherService = teacherService;
+        this.feedbackService = feedbackService;
         this.reviewRepository = reviewRepository;
     }
 
@@ -42,6 +43,7 @@ public class ReviewService {
                               .title(reviewRequest.getTitle())
                               .content(reviewRequest.getContent())
                               .prUrl(reviewRequest.getPrUrl())
+                              .progress(Progress.PENDING)
                               .build();
         Review savedReview = reviewRepository.save(review);
         return savedReview.getId();
@@ -90,9 +92,10 @@ public class ReviewService {
     }
 
     @Transactional
-    public void updateToFinishReview(LoginMember loginMember, Long id) {
+    public void updateToFinishReview(LoginMember loginMember, Long id, FeedbackRequest feedbackRequest) {
         Review review = findById(id);
-        review.finishProgress(loginMember.getId());
+        Feedback feedback = feedbackService.create(review, feedbackRequest);
+        review.finishProgress(loginMember.getId(), feedback);
         reviewRepository.save(review);
     }
 

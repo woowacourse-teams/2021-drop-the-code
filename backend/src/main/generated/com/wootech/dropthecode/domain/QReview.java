@@ -31,6 +31,8 @@ public class QReview extends EntityPathBase<Review> {
 
     public final NumberPath<Long> elapsedTime = createNumber("elapsedTime", Long.class);
 
+    public final QFeedback feedback;
+
     //inherited
     public final NumberPath<Long> id = _super.id;
 
@@ -65,6 +67,7 @@ public class QReview extends EntityPathBase<Review> {
 
     public QReview(Class<? extends Review> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.feedback = inits.isInitialized("feedback") ? new QFeedback(forProperty("feedback"), inits.get("feedback")) : null;
         this.student = inits.isInitialized("student") ? new QMember(forProperty("student"), inits.get("student")) : null;
         this.teacher = inits.isInitialized("teacher") ? new QMember(forProperty("teacher"), inits.get("teacher")) : null;
     }

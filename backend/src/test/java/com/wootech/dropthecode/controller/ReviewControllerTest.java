@@ -8,6 +8,7 @@ import com.wootech.dropthecode.controller.auth.AuthenticationInterceptor;
 import com.wootech.dropthecode.controller.auth.GetAuthenticationInterceptor;
 import com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils;
 import com.wootech.dropthecode.domain.Progress;
+import com.wootech.dropthecode.dto.request.FeedbackRequest;
 import com.wootech.dropthecode.dto.request.ReviewRequest;
 import com.wootech.dropthecode.dto.response.ProfileResponse;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
@@ -290,9 +291,13 @@ public class ReviewControllerTest extends RestApiDocumentTest {
     @Test
     @DisplayName("리뷰 상태 변경 (TEACHER_COMPLETE -> FINISHED)")
     void updateReviewToFinish() throws Exception {
+        FeedbackRequest feedbackRequest = new FeedbackRequest(5, "good");
         // when
-        ResultActions result = restDocsMockMvc.perform(patch("/reviews/1/finish")
-                .with(userToken()));
+        ResultActions result = restDocsMockMvc.perform(
+                patch("/reviews/1/finish")
+                .with(userToken())
+                .content(OBJECT_MAPPER.writeValueAsString(feedbackRequest))
+                .contentType(MediaType.APPLICATION_JSON));
 
         // then
         result.andExpect(status().isNoContent());

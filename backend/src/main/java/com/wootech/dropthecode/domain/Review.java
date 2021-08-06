@@ -46,6 +46,9 @@ public class Review extends BaseEntity {
     @Column(nullable = false)
     private Progress progress;
 
+    @OneToOne(mappedBy = "review", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private Feedback feedback;
+
     @Builder
     public Review(Member teacher, Member student, String title, String content, String prUrl, Long elapsedTime, Progress progress, LocalDateTime createdAt) {
         super(createdAt);
@@ -67,10 +70,11 @@ public class Review extends BaseEntity {
         updateElapsedTime();
     }
 
-    public void finishProgress(Long memberId) {
+    public void finishProgress(Long memberId, Feedback feedback) {
         validateMemberIdAsStudent(memberId);
-        validateReviewProgressIsTeacherCompeted();
+        validateReviewProgressIsTeacherCompleted();
 
+        this.feedback = feedback;
         this.progress = Progress.FINISHED;
     }
 
@@ -92,7 +96,7 @@ public class Review extends BaseEntity {
         }
     }
 
-    private void validateReviewProgressIsTeacherCompeted() {
+    private void validateReviewProgressIsTeacherCompleted() {
         if (this.progress != Progress.TEACHER_COMPLETED) {
             throw new ReviewException("현재 리뷰는 리뷰 완료 상태가 아닙니다. 리뷰 종료로 진행시킬 수 없습니다.");
         }

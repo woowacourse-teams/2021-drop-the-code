@@ -6,7 +6,7 @@ import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.dto.response.MemberResponse;
-import com.wootech.dropthecode.exception.AuthorizationException;
+import com.wootech.dropthecode.exception.AuthenticationException;
 import com.wootech.dropthecode.repository.MemberRepository;
 
 import org.junit.jupiter.api.DisplayName;
@@ -41,7 +41,7 @@ class MemberServiceTest {
         // when
         // then
         assertThatThrownBy(() -> memberService.findByLoginMember(loginMember))
-                .isInstanceOf(AuthorizationException.class);
+                .isInstanceOf(AuthenticationException.class);
     }
 
     @Test
@@ -87,6 +87,6 @@ class MemberServiceTest {
         // when
         // then
         assertThatThrownBy(() -> memberService.findById(id))
-                .isInstanceOf(AuthorizationException.class);
+                .isInstanceOf(AuthenticationException.class);
     }
 }

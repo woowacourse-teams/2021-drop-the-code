@@ -373,7 +373,7 @@ public class ReviewControllerTest extends RestApiDocumentTest {
                 .contentType(MediaType.APPLICATION_JSON));
 
         // then
-        result.andExpect(status().isUnauthorized());
+        result.andExpect(status().isForbidden());
     }
 
     @Test
@@ -414,6 +414,6 @@ public class ReviewControllerTest extends RestApiDocumentTest {
                 .with(userToken()));
 
         // then
-        result.andExpect(status().isUnauthorized());
+        result.andExpect(status().isForbidden());
     }
 }

@@ -90,9 +90,6 @@ test {
     useJUnitPlatform()
     outputs.dir snippetsDir
 
-    jacoco {
-        destinationFile = file("$buildDir/jacoco/jacoco.exec")
-    }
     finalizedBy 'jacocoTestReport'
 }
 
@@ -136,13 +133,15 @@ clean.doLast {
 sonarqube {
     properties {
         property "sonar.projectKey", "dropthecode"
-        property "sonar.host.url", "http://52.78.132.146:9000" // 소나 큐브 서버 url
-        property "sonar.language", "java" // 분석할 언어
-        property "sonar.sourceEncoding", "UTF-8" // 소스 인코딩
+        property "sonar.host.url", "http://52.78.132.146:9000"
+        property "sonar.language", "java"
+        property "sonar.sourceEncoding", "UTF-8"
         property "sonar.sources", "src/main/java"
         property "sonar.tests", "src/test/java"
-        property "sonar.coverage.jacoco.xmlReportPaths", "build/jacoco/jacoco.xml"
-        property "sonar.test.inclusions", "**/*Test.java" // 테스트 코드
+        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+        property "sonar.java.binaries", "${buildDir}/classes"
+        property "sonar.test.inclusions", "**/*Test.java"
+        property "sonar.exclusions", "**/util/**, **/support/**, **/dto/**"
     }
 }
 
@@ -151,63 +150,94 @@ jacoco {
 }
 
 jacocoTestReport {
+    /**
+     * COMMENT
+     * 로컬에서 쉽게 보기 위해 html 생성(Test 실행 후, build/reports/jacoco/test/html/index.html 을 통해 쉽게 확인 가능
+     * sonarqube 연동을 위해 xml 생성
+     */
     reports {
-        html.enabled false
+        html.enabled true
         xml.enabled true
         csv.enabled false
-
-        html.destination file("$buildDir/jacoco/jacoco.html")
-        xml.destination file("$buildDir/jacoco/jacoco.xml")
     }
 
-//    이 설정을 열어주면 Code Coverage가 일정 이상이어야 Build됨
+    /**
+      * COMMENT
+      * QueryDsl 사용으로 인해 생기는 Q엔티티를 제외하기 위한 설정
+     */
+    def QEntities = []
+
+    for (qPattern in '**/QA'..'**/QZ') {
+        QEntities.add(qPattern + '*')
+    }
+
+    /**
+     * COMMENT
+     * QEntity, util class, dto 제외
+     */
+    afterEvaluate {
+        classDirectories.setFrom(
+                files(classDirectories.files.collect {
+                    fileTree(dir: it,
+                            excludes: [
+                                    'com/wootech/dropthecode/util/**',
+                                    'com/wootech/dropthecode/controller/auth/util/**',
+                                    'com/wootech/dropthecode/repository/support/**',
+                                    'com/wootech/dropthecode/dto/**'
+                            ] + QEntities
+                    )
+                })
+        )
+    }
+
+    /**
+     * COMMENT
+     * 커버리지 기준을 만족시키지 못하면 빌드 실패
+     * 현재 코드 커버리지 기준을 함께 논의한 적이 없어서 주석처리
+     */
 //    finalizedBy 'jacocoTestCoverageVerification'
 }
 
 jacocoTestCoverageVerification {
+    def QEntities = []
+
+    for (qPattern in '*.QA'..'*.QZ') {
+        QEntities.add(qPattern + '*')
+    }
+
     violationRules {
         rule {
-            // 'element'가 없으면 프로젝트의 전체 파일을 합친 값을 기준으로 한다.
-            limit {
-                // 'counter'를 지정하지 않으면 default는 'INSTRUCTION'
-                // 'value'를 지정하지 않으면 default는 'COVEREDRATIO'
-                minimum = 0.30
-            }
-        }
+            enabled = true // 이 rule을 적용할 것이다.
+            element = 'CLASS' // class 단위로
 
-        rule {
-            // 룰을 간단히 켜고 끌 수 있다.
-            enabled = true
-
-            // 룰을 체크할 단위는 클래스 단위
-            element = 'CLASS'
-
-            // 브랜치 커버리지를 최소한 50% 만족시켜야 한다.
+            // 브랜치 커버리지 최소 50%
             limit {
                 counter = 'BRANCH'
                 value = 'COVEREDRATIO'
                 minimum = 0.50
             }
 
-            // 라인 커버리지를 최소한 50% 만족시켜야 한다.
+            // 라인 커버리지 최소한 80%
             limit {
                 counter = 'LINE'
                 value = 'COVEREDRATIO'
-                minimum = 0.50
+                minimum = 0.80
             }
 
-            // 빈 줄을 제외한 코드의 라인수를 최대 300라인으로 제한한다.
+            // 빈 줄을 제외한 코드의 라인수 최대 300라인
             limit {
                 counter = 'LINE'
                 value = 'TOTALCOUNT'
                 maximum = 300
-//              maximum = 8
             }
 
             // 커버리지 체크를 제외할 클래스들
             excludes = [
-                    '*.test.*',
-            ]
+                    'com/wootech/dropthecode/util/**',
+                    'com/wootech/dropthecode/controller/auth/util/**',
+                    'com/wootech/dropthecode/repository/support/**',
+                    'com/wootech/dropthecode/dto/**'
+            ] + QEntities
         }
     }
 }

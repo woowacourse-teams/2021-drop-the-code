@@ -1,6 +1,6 @@
 package com.wootech.dropthecode.domain;
 
-import com.wootech.dropthecode.exception.AuthorizationException;
+import com.wootech.dropthecode.exception.AuthenticationException;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -23,7 +23,7 @@ public class LoginMember {
 
     public void validatesAnonymous() {
         if (ANONYMOUS.equals(this)) {
-            throw new AuthorizationException("유효하지 않은 유저입니다.");
+            throw new AuthenticationException("유효하지 않은 유저입니다.");
         }
     }
 }

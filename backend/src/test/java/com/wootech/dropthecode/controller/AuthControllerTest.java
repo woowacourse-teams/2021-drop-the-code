@@ -4,7 +4,7 @@ import com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils;
 import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.dto.response.AccessTokenResponse;
 import com.wootech.dropthecode.dto.response.LoginResponse;
-import com.wootech.dropthecode.exception.AuthorizationException;
+import com.wootech.dropthecode.exception.AuthenticationException;
 import com.wootech.dropthecode.exception.OauthTokenRequestException;
 import com.wootech.dropthecode.service.OauthService;
 
@@ -155,7 +155,7 @@ class AuthControllerTest extends RestApiDocumentTest {
     @DisplayName("access token 갱신 - refresh token이 유효하지 않은 경우")
     void refreshAccessTokenWithInvalidRefreshToken() throws Exception {
         // given
-        doThrow(new AuthorizationException("refresh token이 유효하지 않습니다."))
+        doThrow(new AuthenticationException("refresh token이 유효하지 않습니다."))
                 .when(authService).refreshAccessToken(anyString(), any());
 
         // when

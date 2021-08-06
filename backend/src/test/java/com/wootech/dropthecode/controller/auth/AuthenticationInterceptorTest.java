@@ -13,7 +13,7 @@ import com.wootech.dropthecode.dto.response.AccessTokenResponse;
 import com.wootech.dropthecode.dto.response.LoginResponse;
 import com.wootech.dropthecode.dto.response.MemberResponse;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
-import com.wootech.dropthecode.exception.AuthorizationException;
+import com.wootech.dropthecode.exception.AuthenticationException;
 import com.wootech.dropthecode.service.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -168,7 +168,7 @@ class AuthenticationInterceptorTest {
         @DisplayName("DELETE /members/me - 적절하지 않은 토큰인 경우")
         void deleteMember() {
             // given
-            doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+            doThrow(new AuthenticationException("access token이 유효하지 않습니다."))
                     .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
 
             // when
@@ -201,7 +201,7 @@ class AuthenticationInterceptorTest {
         @DisplayName("POST /teachers - 적절하지 않은 토큰인 경우")
         void teachers() {
             // given
-            doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+            doThrow(new AuthenticationException("access token이 유효하지 않습니다."))
                     .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
             List<TechSpec> techSpecs = Collections.singletonList(new TechSpec("java", Arrays.asList("Spring", "Servlet")));
             TeacherRegistrationRequest request
@@ -242,7 +242,7 @@ class AuthenticationInterceptorTest {
         @DisplayName("PUT /teachers/me - 적절하지 않은 토큰인 경우")
         void updateTeacher() {
             // given
-            doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+            doThrow(new AuthenticationException("access token이 유효하지 않습니다."))
                     .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
             List<TechSpec> techSpecs = Collections.singletonList(new TechSpec("java", Arrays.asList("Spring", "Servlet")));
             TeacherRegistrationRequest request
@@ -283,7 +283,7 @@ class AuthenticationInterceptorTest {
         @DisplayName("DELETE /teachers/me - 적절하지 않은 토큰인 경우")
         void deleteTeachers() {
             // given
-            doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+            doThrow(new AuthenticationException("access token이 유효하지 않습니다."))
                     .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
 
             // when
@@ -315,7 +315,7 @@ class AuthenticationInterceptorTest {
         @DisplayName("POST /reviews - 적절하지 않은 토큰인 경우")
         void createReview() {
             // given
-            doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+            doThrow(new AuthenticationException("access token이 유효하지 않습니다."))
                     .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
             ReviewRequest reviewRequest =
                     new ReviewRequest(1L, 2L, "review title", "review content", "pr link");
@@ -356,7 +356,7 @@ class AuthenticationInterceptorTest {
         @DisplayName("GET /reviews/student/{id} - 적절하지 않은 토큰인 경우")
         void studentReview() {
             // given
-            doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+            doThrow(new AuthenticationException("access token이 유효하지 않습니다."))
                     .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
 
             // when
@@ -390,7 +390,7 @@ class AuthenticationInterceptorTest {
         @DisplayName("PATCH /reviews/{id}/finish - 적절하지 않은 토큰인 경우")
         void updateReviewToFinish() {
             // given
-            doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+            doThrow(new AuthenticationException("access token이 유효하지 않습니다."))
                     .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
 
             // when
@@ -426,7 +426,7 @@ class AuthenticationInterceptorTest {
         @DisplayName("PATCH /reviews/{id}/complete - 적절하지 않은 토큰인 경우")
         void updateReviewToComplete() {
             // given
-            doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+            doThrow(new AuthenticationException("access token이 유효하지 않습니다."))
                     .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
 
             // when
@@ -459,7 +459,7 @@ class AuthenticationInterceptorTest {
         @DisplayName("GET /members/me - 적절하지 않은 토큰인 경우")
         void membersMe() {
             // given
-            doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+            doThrow(new AuthenticationException("access token이 유효하지 않습니다."))
                     .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
 
             // when
@@ -493,7 +493,7 @@ class AuthenticationInterceptorTest {
         @DisplayName("POST /logout - 적절하지 않은 토큰인 경우")
         void logout() {
             // given
-            doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+            doThrow(new AuthenticationException("access token이 유효하지 않습니다."))
                     .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
 
             // when
@@ -526,7 +526,7 @@ class AuthenticationInterceptorTest {
         @DisplayName("PATCH /reviews/{id} - 적절하지 않은 토큰인 경우")
         void reviewUpdate() {
             // given
-            doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+            doThrow(new AuthenticationException("access token이 유효하지 않습니다."))
                     .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
             ReviewRequest reviewRequest =
                     new ReviewRequest(1L, 2L, "review title", "review content", "pr link");
@@ -565,7 +565,7 @@ class AuthenticationInterceptorTest {
         @DisplayName("DELETE /reviews/{id} - 적절하지 않은 토큰인 경우")
         void cancelReview() {
             // given
-            doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+            doThrow(new AuthenticationException("access token이 유효하지 않습니다."))
                     .when(authService).validatesAccessToken(INVALID_ACCESS_TOKEN);
 
             // when

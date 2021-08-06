@@ -8,27 +8,28 @@ import { Flex, FlexCenter } from "components/shared/Flexbox/Flexbox";
 import { COLOR } from "utils/constants/color";
 
 export interface Props {
-  children: HTMLImageElement[];
+  children: JSX.Element[];
 }
 
 const Inner = styled(FlexCenter)`
-  width: 800px;
+  width: 1050px;
   position: relative;
 `;
 
 const ImageWrapper = styled(Flex)<{ page: number }>`
-  width: 700px;
+  width: 960px;
   overflow: hidden;
 
   img {
-    width: 700px;
+    width: 960px;
     border-radius: ${({ theme }) => theme.common.shape.rounded};
     object-fit: cover;
     transform: ${({ page }) =>
       css`
-        translateX(calc(${-700 * page}px))
+        translateX(calc(${-960 * page}px))
       `};
     transition: transform 0.5s;
+    user-select: none;
   }
 
   svg {
@@ -37,7 +38,6 @@ const ImageWrapper = styled(Flex)<{ page: number }>`
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-    border: 1px solid ${COLOR.GRAY_500};
     border-radius: ${({ theme }) => theme.common.shape.circle};
     box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
   }

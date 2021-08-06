@@ -1,9 +1,7 @@
-import { Link } from "react-router-dom";
-
 import styled from "styled-components";
 import { Reviewer } from "types/reviewer";
 
-import SmBlackLogo from "assets/sm-white-github-logo.png";
+import smBlackLogo from "assets/sm-white-github-logo.png";
 import ReviewRequest from "components/Review/ReviewRequest/ReviewRequest";
 import Avatar from "components/shared/Avatar/Avatar";
 import Button from "components/shared/Button/Button";
@@ -68,7 +66,7 @@ const ReviewerFloatingBox = ({ reviewer }: Props) => {
           />
           <a href={reviewer.githubUrl} target="_blank" rel="noopener noreferrer">
             <FlexAlignCenter>
-              <LoginButtonImage src={SmBlackLogo} alt={ALT.GITHUB_LOGIN_BUTTON} />
+              <LoginButtonImage src={smBlackLogo} alt={ALT.GITHUB_LOGIN_BUTTON} />
               <p>{name}</p>
             </FlexAlignCenter>
           </a>

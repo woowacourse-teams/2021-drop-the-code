@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { getReview, patchReviewProgress } from "apis/review";
-import Notification from "assets/notification.png";
+import notification from "assets/notification.png";
 import Confirm from "components/Confirm/Confirm";
 import Button from "components/shared/Button/Button";
 import ContentBox from "components/shared/ContentBox/ContentBox";
@@ -173,7 +173,7 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
         </Flex>
       </ContentBox>
       <img
-        src={Notification}
+        src={notification}
         alt={ALT.REVIEW_DETAIL_NOTIFICATION}
         css={{ width: "21.875rem", marginBottom: "3.125rem" }}
       />

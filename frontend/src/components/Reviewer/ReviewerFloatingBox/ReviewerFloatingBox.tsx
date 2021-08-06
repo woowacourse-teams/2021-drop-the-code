@@ -66,12 +66,12 @@ const ReviewerFloatingBox = ({ reviewer }: Props) => {
             width="6.25rem"
             css={{ marginBottom: "0.8rem" }}
           />
-          <Link to={"/"}>
+          <a href={reviewer.githubUrl} target="_blank" rel="noopener noreferrer">
             <FlexAlignCenter>
               <LoginButtonImage src={SmBlackLogo} alt={ALT.GITHUB_LOGIN_BUTTON} />
               <p>{name}</p>
             </FlexAlignCenter>
-          </Link>
+          </a>
         </AvatarWrapper>
         <ChipWrapper>
           <Chip themeColor="career" css={{ fontSize: "0.875rem", marginBottom: "0.3125rem" }}>

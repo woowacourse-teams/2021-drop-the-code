@@ -3,16 +3,21 @@ import { STANDARD } from "utils/constants/standard";
 export const SUCCESS_MESSAGE = {
   API: {
     AUTH: {
-      DELETE: "회원 탈퇴되었습니다.",
+      DELETE: "회원을 탈퇴했습니다.",
     },
     REVIEW: {
-      PATCH_PROGRESS: "리뷰 상태를 갱신했습니다.",
-      REQUEST: "리뷰 요청에 성공했습니다.",
+      REQUEST: "리뷰를 요청했습니다.",
+      DELETE: "리뷰를 삭제했습니다.",
+      DENY: "리뷰를 거절했습니다.",
+      ACCEPT: "리뷰를 승인했습니다.",
+      EDIT: "리뷰를 수정했습니다.",
+      COMPLETE: "리뷰를 완료했습니다.",
+      FINISH: "리뷰를 완료했습니다.",
     },
     REVIEWER: {
-      REGISTER: "리뷰어 등록에 성공했습니다.",
-      DELETE: "리뷰어 정보가 삭제되었습니다.",
-      EDIT: "리뷰어 정보 수정에 성공했습니다.",
+      REGISTER: "리뷰어로 등록했습니다.",
+      DELETE: "리뷰어 정보를 삭제했습니다.",
+      EDIT: "리뷰어 정보를 수정했습니다.",
     },
   },
 };

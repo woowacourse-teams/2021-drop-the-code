@@ -1,22 +1,15 @@
-import { useMutation, useQueryClient } from "react-query";
-
 import styled from "styled-components";
-import { Review, ReviewRequestFormData } from "types/review";
+import { Review } from "types/review";
 
-import { requestReview } from "apis/review";
 import FormProvider from "components/FormProvider/FormProvider";
 import InputField from "components/FormProvider/InputField";
 import SubmitButton from "components/FormProvider/SubmitButton";
 import TextareaField from "components/FormProvider/TextareaField";
-import Loading from "components/Loading/Loading";
 import { Flex } from "components/shared/Flexbox/Flexbox";
-import useAuthContext from "hooks/useAuthContext";
 import useModalContext from "hooks/useModalContext";
-import useRevalidate from "hooks/useRevalidate";
-import useToastContext from "hooks/useToastContext";
+import useReview from "hooks/useReview";
 import { COLOR } from "utils/constants/color";
-import { QUERY_KEY } from "utils/constants/key";
-import { PLACE_HOLDER, SUCCESS_MESSAGE } from "utils/constants/message";
+import { PLACE_HOLDER } from "utils/constants/message";
 import { STANDARD } from "utils/constants/standard";
 import reviewRequestValidators from "utils/validators/reviewRequestValidators";
 
@@ -33,41 +26,21 @@ interface Props {
 }
 
 const ReviewEdit = ({ review }: Props) => {
-  const { user } = useAuthContext();
-  const { revalidate } = useRevalidate();
-
+  const {
+    mutation: { edit },
+  } = useReview(review.id);
   const { close } = useModalContext();
-  const toast = useToastContext();
 
-  const queryClient = useQueryClient();
-
-  // const mutation = useMutation((reviewRequestFormData: ReviewRequestFormData) =>
-  //   revalidate(async () => {
-  //     const response = await requestReview(reviewRequestFormData);
-
-  //     if (!response.isSuccess) {
-  //       toast(response.error.message);
-  //     } else {
-  //       close();
-  //       toast(SUCCESS_MESSAGE.API.REVIEW.REQUEST);
-
-  //       queryClient.invalidateQueries(QUERY_KEY.GET_REVIEW);
-  //     }
-
-  //     return response;
-  //   })
-  // );
-
-  // if (mutation.isLoading) return <Loading />;
+  const { studentProfile, teacherProfile } = review;
 
   return (
     <Inner>
       <h2 css={{ fontSize: "1.25rem", fontWeight: 600, margin: "1.25rem 0 2.5rem", textAlign: "center" }}>리뷰 수정</h2>
       <FormProvider
         submit={async ({ title, prUrl, content }) => {
-          /*
-            request
-          */
+          await edit({ studentId: studentProfile.id, teacherId: teacherProfile.id, title, prUrl, content });
+
+          close();
         }}
         validators={reviewRequestValidators}
         css={{ marginTop: "1.25rem", width: "100%" }}

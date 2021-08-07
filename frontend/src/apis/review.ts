@@ -1,4 +1,4 @@
-import { Review, Role, ReviewRequestFormData } from "types/review";
+import { Review, Role, ReviewRequestFormData, ReviewFeedback } from "types/review";
 
 import apiClient from "apis/apiClient";
 
@@ -14,6 +14,26 @@ export const getReviewList = (id: number, mode: Role) => {
   return apiClient.get<{ reviews: Review[] }>(`/reviews/${mode.toLowerCase()}/${id}`);
 };
 
-export const patchReviewProgress = (id: number, progress: string) => {
-  return apiClient.patch<{ reviews: Review[] }>(`/reviews/${id}/${progress}`);
+export const cancelReview = (id: number) => {
+  return apiClient.delete(`/reviews/${id}`);
+};
+
+export const denyReview = (id: number) => {
+  return apiClient.patch(`/reviews/${id}/deny`);
+};
+
+export const acceptReview = (id: number) => {
+  return apiClient.patch(`/reviews/${id}/accept`);
+};
+
+export const editReview = (id: number, reviewRequestFormData: ReviewRequestFormData) => {
+  return apiClient.patch(`/reviews/${id}`, reviewRequestFormData);
+};
+
+export const completeReview = (id: number) => {
+  return apiClient.patch(`/reviews/${id}/complete`);
+};
+
+export const finishReview = (id: number, reviewFeedback: ReviewFeedback) => {
+  return apiClient.patch(`/reviews/${id}/finish`, reviewFeedback);
 };

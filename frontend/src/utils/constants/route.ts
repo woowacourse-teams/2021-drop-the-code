@@ -7,10 +7,12 @@ import RedirectOAuth from "pages/RedirectOAuth/RedirectOAuth";
 import ReviewDetail from "pages/ReviewDetail/ReviewDetail";
 import ReviewerDetail from "pages/ReviewerDetail/ReviewerDetail";
 import ReviewerRegister from "pages/ReviewerRegister/ReviewerRegister";
+import ReviewerSearch from "pages/ReviewerSearch/ReviewerSearch";
 import { PATH } from "utils/constants/path";
 
 export const ROUTE: RouteShape[] = [
   { path: PATH.MAIN, Component: Main, isPrivate: false, exact: true },
+  { path: PATH.REVIEWER_SEARCH, Component: ReviewerSearch, isPrivate: false, exact: true },
   { path: PATH.REVIEWER_REGISTER, Component: ReviewerRegister, isPrivate: true, exact: true },
   { path: PATH.REVIEWER_DETAIL, Component: ReviewerDetail, isPrivate: false, exact: true },
   { path: PATH.MY_PAGE, Component: MyPage, isPrivate: true, exact: true },

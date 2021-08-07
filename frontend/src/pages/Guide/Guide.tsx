@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 import * as reviewRequestGuide from "assets/guide/reviewRequest";
-import Logo from "assets/logo.svg";
 import studentImage from "assets/student.svg";
 import teacherImage from "assets/teacher.svg";
 import Carousel from "components/Carousel/Carousel";
@@ -14,7 +13,7 @@ const Inner = styled(FlexCenter)`
 `;
 
 const GuideCardWrapper = styled(FlexSpaceBetween)`
-  width: 64rem;
+  width: ${({ theme }) => theme.common.layout.lg};
   position: absolute;
   top: 50%;
   left: 50%;
@@ -26,10 +25,11 @@ const GuideCard = styled(FlexCenter)`
   padding: 6rem;
   flex-direction: column;
   border-radius: ${({ theme }) => theme.common.shape.rounded};
-  box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
-
+  box-shadow: ${({ theme }) => theme.common.boxShadow.bumped};
+  transition: box-shadow 0.3s;
   cursor: pointer;
   :hover {
+    box-shadow: ${({ theme }) => theme.common.boxShadow.pressed};
     background-color: ${COLOR.GRAY_100};
   }
 `;
@@ -45,6 +45,7 @@ const StudentImage = styled(studentImage)`
   height: 5rem;
   margin-bottom: 1.25rem;
   stroke: ${({ theme }) => theme.common.color.primary};
+  fill: ${({ theme }) => theme.common.color.primary};
 `;
 
 const TeacherImage = styled(teacherImage)`
@@ -52,6 +53,7 @@ const TeacherImage = styled(teacherImage)`
   height: 5rem;
   margin-bottom: 1.25rem;
   stroke: ${({ theme }) => theme.common.color.primary};
+  fill: ${({ theme }) => theme.common.color.primary};
 `;
 
 const Guide = () => {
@@ -71,7 +73,6 @@ const Guide = () => {
             );
           }}
         >
-          <Logo width={200} height={50} css={{ marginBottom: "1.25rem" }} />
           <GuideTitle>리뷰 요청 가이드</GuideTitle>
           <StudentImage />
           <div>어떻게 리뷰 받는지 궁금해요!</div>
@@ -87,7 +88,6 @@ const Guide = () => {
             );
           }}
         >
-          <Logo width={200} height={50} css={{ marginBottom: "1.25rem" }} />
           <GuideTitle>리뷰어 가이드</GuideTitle>
           <TeacherImage />
           <div>어떻게 리뷰 하는지 궁금해요!</div>

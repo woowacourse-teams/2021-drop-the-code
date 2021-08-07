@@ -8,7 +8,7 @@ export interface Common {
 
 export type ThemeColor = "primary" | "secondary" | "dark" | "light" | "success" | "error";
 
-export type BoxShadowTheme = "primary";
+export type BoxShadowTheme = "primary" | "bumped" | "pressed";
 
 export interface Shape {
   rounded: string;

@@ -12,11 +12,7 @@ import useModalContext from "hooks/useModalContext";
 import { PATH } from "utils/constants/path";
 import { NAV_MENU, ROLE_MENU } from "utils/constants/route";
 
-const NavigationButton = styled(Button)`
-  :hover {
-    color: ${({ theme }) => theme.common.color.primary};
-  }
-`;
+const NavigationButton = styled(Button)``;
 
 const NavigationLink = styled(NavLink)`
   :hover {

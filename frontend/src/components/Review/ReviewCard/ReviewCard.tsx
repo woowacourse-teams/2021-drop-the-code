@@ -16,7 +16,6 @@ const Inner = styled(FlexAlignCenter)`
   padding: 1.25rem;
   border-radius: ${({ theme }) => theme.common.shape.rounded};
   box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
-
   :hover {
     background-color: ${COLOR.GRAY_100};
   }

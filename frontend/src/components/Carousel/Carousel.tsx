@@ -39,7 +39,11 @@ const ImageWrapper = styled(Flex)<{ page: number }>`
     transform: translateY(-50%);
     cursor: pointer;
     border-radius: ${({ theme }) => theme.common.shape.circle};
-    box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
+    box-shadow: ${({ theme }) => theme.common.boxShadow.bumped};
+    transition: box-shadow 0.3s;
+    :hover {
+      box-shadow: ${({ theme }) => theme.common.boxShadow.pressed};
+    }
   }
 `;
 

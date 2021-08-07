@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.*;
 
+import com.wootech.dropthecode.domain.review.Review;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

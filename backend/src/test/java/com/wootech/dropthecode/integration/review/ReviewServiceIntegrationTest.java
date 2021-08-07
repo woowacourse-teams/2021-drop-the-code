@@ -3,6 +3,7 @@ package com.wootech.dropthecode.integration.review;
 import java.util.Optional;
 
 import com.wootech.dropthecode.domain.*;
+import com.wootech.dropthecode.domain.review.Review;
 import com.wootech.dropthecode.dto.request.ReviewRequest;
 import com.wootech.dropthecode.exception.AuthorizationException;
 import com.wootech.dropthecode.exception.ReviewException;

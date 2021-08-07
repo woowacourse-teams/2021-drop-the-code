@@ -38,7 +38,6 @@ public class FeedbackService {
     public FeedbackPaginationResponse findAll(FeedbackSearchCondition condition, Pageable pageable) {
         Page<FeedbackResponse> feedbackResponses = feedbackRepository.findAll(condition, pageable);
 
-
         return FeedbackPaginationResponse.builder()
                                   .feedbacks(feedbackResponses.getContent())
                                   .pageCount(feedbackResponses.getTotalPages())

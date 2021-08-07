@@ -2,6 +2,7 @@ package com.wootech.dropthecode.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.persistence.EntityNotFoundException;
 
 import com.wootech.dropthecode.domain.*;
 import com.wootech.dropthecode.domain.LoginMember;
@@ -16,7 +17,7 @@ import com.wootech.dropthecode.dto.request.ReviewRequest;
 import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
 import com.wootech.dropthecode.dto.response.ReviewsResponse;
-import com.wootech.dropthecode.exception.NotFoundException;
+import com.wootech.dropthecode.exception.ReviewException;
 import com.wootech.dropthecode.repository.ReviewRepository;
 
 import org.springframework.data.domain.Page;
@@ -57,7 +58,7 @@ public class ReviewService {
     @Transactional(readOnly = true)
     public Review findById(Long id) {
         return reviewRepository.findById(id)
-                               .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 리뷰입니다."));
+                               .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 리뷰입니다."));
     }
 
     @Transactional(readOnly = true)
@@ -83,7 +84,7 @@ public class ReviewService {
     @Transactional(readOnly = true)
     public ReviewResponse findReviewSummaryById(Long id) {
         ReviewSummary review = reviewRepository.findByReviewId(id)
-                                               .orElseThrow(() -> new NotFoundException("존재하지 않는 리뷰입니다."));
+                                               .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 리뷰입니다."));
         return ReviewResponse.from(review);
     }
 

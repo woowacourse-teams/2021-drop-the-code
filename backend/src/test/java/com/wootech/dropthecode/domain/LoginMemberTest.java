@@ -1,6 +1,6 @@
 package com.wootech.dropthecode.domain;
 
-import com.wootech.dropthecode.exception.AuthorizationException;
+import com.wootech.dropthecode.exception.AuthenticationException;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ class LoginMemberTest {
         // when
         // then
         assertThatThrownBy(loginMember::validatesAnonymous)
-                .isInstanceOf(AuthorizationException.class);
+                .isInstanceOf(AuthenticationException.class);
     }
 
 }

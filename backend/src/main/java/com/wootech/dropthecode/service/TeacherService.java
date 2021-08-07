@@ -2,6 +2,7 @@ package com.wootech.dropthecode.service;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import javax.persistence.EntityNotFoundException;
 
 import com.wootech.dropthecode.domain.*;
 import com.wootech.dropthecode.dto.TechSpec;
@@ -43,7 +44,7 @@ public class TeacherService {
     @Transactional(readOnly = true)
     public TeacherProfile findById(Long id) {
         return teacherProfileRepository.findById(id)
-                                       .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 리뷰어입니다."));
+                                       .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 리뷰어입니다."));
     }
 
     @Transactional
@@ -119,7 +120,8 @@ public class TeacherService {
     }
 
     public TeacherProfile findTeacherProfileById(Long id) {
-        return teacherProfileRepository.findById(id).orElseThrow(() -> new TeacherException("존재하지 않는 리뷰어의 ID 입니다."));
+        return teacherProfileRepository.findById(id)
+                                       .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 리뷰어의 ID 입니다."));
     }
 
     @Transactional

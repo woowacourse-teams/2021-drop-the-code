@@ -5,6 +5,6 @@ import org.springframework.http.HttpStatus;
 public class AuthorizationException extends DropTheCodeException {
 
     public AuthorizationException(String message) {
-        super(message, HttpStatus.UNAUTHORIZED);
+        super(message, HttpStatus.FORBIDDEN);
     }
 }

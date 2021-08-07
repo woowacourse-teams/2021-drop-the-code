@@ -1,6 +1,7 @@
 package com.wootech.dropthecode.exception;
 
 import java.util.Objects;
+import javax.persistence.EntityNotFoundException;
 
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +50,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handlePropertyReferenceException(PropertyReferenceException e) {
         infoLogging(e);
         return ResponseEntity.badRequest().body(new ErrorResponse("[" + e.getPropertyName() + "](은)는 없는 정렬 조건입니다."));
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException e) {
+        infoLogging(e);
+        return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
     }
 
     @ExceptionHandler(DropTheCodeException.class)

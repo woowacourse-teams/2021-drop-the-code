@@ -1,20 +1,29 @@
 package com.wootech.dropthecode.acceptance;
 
+import org.springframework.http.HttpStatus;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import io.restassured.RestAssured;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
+
+import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE;
+
 @DisplayName("Auth 관련 인수 테스트")
-public class AuthAcceptanceTest extends AcceptanceTest {
+public class AuthAcceptanceTest {
 
     @Nested
     @DisplayName("OAuth 로그인 테스트")
-    class OAuthLogin {
+    class OAuthLogin extends AcceptanceTest {
 
         @Test
         @DisplayName("성공")
         void oAuthLoginTestSuccess() {
             // given
+            로그인_요청();
 
             // when
 
@@ -140,5 +149,31 @@ public class AuthAcceptanceTest extends AcceptanceTest {
 
             // then
         }
+    }
+
+    public static ExtractableResponse<Response> 로그인_요청() {
+        return RestAssured.given()
+                          .log().all()
+                          .when()
+                          .get("/login/oauth?providerName=github&code=authorizationCode")
+                          .then()
+                          .log().all()
+                          .statusCode(HttpStatus.OK.value())
+                          .extract();
+    }
+
+    public static ExtractableResponse<Response> 토큰_갱신() {
+        return RestAssured.given()
+                          .log().all()
+                          .auth().oauth2("access.token")
+                          .contentType(APPLICATION_FORM_URLENCODED_VALUE)
+                          .urlEncodingEnabled(true)
+                          .param("refreshToken", "refresh.token")
+                          .when()
+                          .post("/token")
+                          .then()
+                          .log().all()
+                          .statusCode(HttpStatus.OK.value())
+                          .extract();
     }
 }

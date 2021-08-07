@@ -6,8 +6,8 @@ import { COLOR } from "utils/constants/color";
 const Inner = styled(Flex)`
   flex-direction: column;
   padding: 2.5rem;
-  box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
   border-radius: ${({ theme }) => theme.common.shape.rounded};
+  box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
 `;
 
 const Title = styled.div`

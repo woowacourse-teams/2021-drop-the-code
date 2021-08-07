@@ -53,7 +53,9 @@ const common: Common = {
     circle: "100%",
   },
   boxShadow: {
-    primary: `rgba(50, 50, 93, .25) 0px 2px 5px -1px, rgba(0, 0, 0, .3) 0px 1px 3px -1px`,
+    primary: "0 2px 5px -1px rgba(0, 0, 0, .25), rgba(0, 0, 0, .3) 0 1px 3px -1px",
+    bumped: "7px 7px 15px rgba(0, 0, 0, .15), 0 0 3px 0 rgba(0, 0, 0, .3)",
+    pressed: "0 1px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .25)",
   },
   zIndex: {
     toast: 111,

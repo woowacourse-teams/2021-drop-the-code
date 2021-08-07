@@ -6,6 +6,10 @@ public class OnGoingReview extends ProgressReview {
 
     public OnGoingReview(Review review) {
         super(review);
+    }
+
+    @Override
+    protected void validateSelfProgress(Review review) {
         review.validateReviewProgressIsOnGoing();
     }
 

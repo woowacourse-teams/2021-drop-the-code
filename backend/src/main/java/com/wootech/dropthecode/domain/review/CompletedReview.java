@@ -6,6 +6,10 @@ public class CompletedReview extends ProgressReview {
 
     public CompletedReview(Review review) {
         super(review);
+    }
+
+    @Override
+    protected void validateSelfProgress(Review review) {
         review.validateReviewProgressIsTeacherCompleted();
     }
 

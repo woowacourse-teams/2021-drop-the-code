@@ -12,6 +12,7 @@ import { Flex, FlexCenter, FlexSpaceBetween } from "components/shared/Flexbox/Fl
 import { COLOR } from "utils/constants/color";
 import { PLACE_HOLDER } from "utils/constants/message";
 import { STANDARD } from "utils/constants/standard";
+import reviewFeedBackValidators from "utils/validators/reviewFeedBackValidators";
 
 export interface Props {
   reviewId: number;
@@ -23,6 +24,7 @@ export interface Props {
 }
 
 const Inner = styled(FlexCenter)`
+  background-color: ${COLOR.WHITE};
   flex-direction: column;
   width: 500px;
   padding: 1.25rem;
@@ -80,6 +82,7 @@ const ReviewFeedback = ({ reviewId, teacherProfile }: Props) => {
           request
         */
         }}
+        validators={reviewFeedBackValidators}
       >
         <Grade>
           <Range

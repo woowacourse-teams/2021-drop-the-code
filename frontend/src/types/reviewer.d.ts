@@ -26,6 +26,7 @@ export interface Reviewer {
   name: string;
   content: string;
   imageUrl: string;
+  githubUrl: string;
   career: number;
   sumReviewCount: number;
   averageReviewTime: number | null;

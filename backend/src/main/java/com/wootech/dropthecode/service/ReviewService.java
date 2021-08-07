@@ -3,6 +3,7 @@ package com.wootech.dropthecode.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.wootech.dropthecode.domain.*;
 import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.domain.review.CompletedReview;
@@ -47,6 +48,7 @@ public class ReviewService {
                               .title(reviewRequest.getTitle())
                               .content(reviewRequest.getContent())
                               .prUrl(reviewRequest.getPrUrl())
+                              .progress(Progress.PENDING)
                               .build();
         Review savedReview = reviewRepository.save(review);
         return savedReview.getId();

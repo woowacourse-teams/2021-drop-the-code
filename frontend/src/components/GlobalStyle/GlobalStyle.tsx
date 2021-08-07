@@ -39,7 +39,7 @@ const GlobalStyle = createGlobalStyle`
   h2 {
     font-size: 1.625rem;
     font-weight: 600;
-    margin: 2.5rem 0;
+    margin: 1.5rem 0;
   }
 
   button {
@@ -47,7 +47,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   main {
-    padding-top: 6rem; 
+    padding-top: 4rem; 
     width: 100%; 
     max-width: ${({ theme }) => theme.common.layout.lg}; 
     margin: 0 auto; 

@@ -63,13 +63,6 @@ public class Review extends BaseEntity {
         this.progress = progress;
     }
 
-    /*
-    COMMENT
-    기존 메소드는 리뷰의 소유자가 학생인 것 같은 메소드 네이밍이다.
-    이 리뷰의 소유는 학생 및 선생이므로, 소유보다는 권한의 의미를 갖도록 메소드 네임을 바꿔보았다.
-
-    기존 Review#validateMemberIdAsStudent() 는 현재 validateAuthorityOfStudent 와 하는 일이 같으므로 삭제
-     */
     public void validateAuthorityOfStudent(Long id) {
         if (!this.student.hasSameId(id)) {
             throw new AuthorizationException("리뷰를 수정할 권한이 없습니다!");
@@ -88,11 +81,6 @@ public class Review extends BaseEntity {
         }
     }
 
-    /*
-    COMMENT
-    기존 에러 메시지는 리뷰 진행 중에서 리뷰 완료로 넘어갈 때만 쓰인다. 즉, 범용적이지 않다고 생각된다.
-    그래서 다른 곳에서도 재사용될 수 있도록 에러 메시지를 수정했다.
-     */
     public void validateReviewProgressIsOnGoing() {
         if (this.progress != Progress.ON_GOING) {
             throw new ReviewException("현재 리뷰는 리뷰 진행중 상태가 아닙니다.");

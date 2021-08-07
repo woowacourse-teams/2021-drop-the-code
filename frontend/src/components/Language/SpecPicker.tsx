@@ -68,7 +68,7 @@ const SpecPicker = ({ filterLanguage, specs, onSetFilterLanguage, onSetSpecs }: 
       {isSpecsExist && (
         <Flex css={{ marginBottom: "0.3125rem" }}>
           <FlexAlignCenter css={{ width: "5.625rem", fontWeight: 900 }}>기술 스택</FlexAlignCenter>
-          <ul css={{ display: "flex" }}>
+          <ul css={{ display: "flex", minHeight: "1.875rem" }}>
             {languages
               ?.find(({ language }) => {
                 return language.name === filterLanguage;

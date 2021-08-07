@@ -2,6 +2,7 @@ package com.wootech.dropthecode.domain;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -55,6 +56,7 @@ public class TeacherProfile {
     @OrderBy("skill.id")
     private Set<TeacherSkill> skills = new HashSet<>();
 
+    @Column(columnDefinition = "integer default 0")
     private Integer sumReviewCount = 0;
 
     private Double averageReviewTime = (double) 0;
@@ -81,6 +83,10 @@ public class TeacherProfile {
     }
 
     public void updateReviewCountAndTime(Long newReviewTime) {
+        if (Objects.isNull(averageReviewTime)) {
+            averageReviewTime = (double) 0;
+        }
+
         double newAverageReviewTime = (newReviewTime + averageReviewTime * sumReviewCount * 24) / 24 / (sumReviewCount + 1);
         sumReviewCount++;
         averageReviewTime = Math.round(newAverageReviewTime * 10) / 10.0;

@@ -9,6 +9,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.wootech.dropthecode.domain.Feedback;
 import com.wootech.dropthecode.dto.request.FeedbackSearchCondition;
 import com.wootech.dropthecode.dto.response.FeedbackResponse;
+import com.wootech.dropthecode.dto.response.ProfileResponse;
 import com.wootech.dropthecode.repository.support.Querydsl4RepositorySupport;
 
 import org.springframework.data.domain.Page;
@@ -34,7 +35,9 @@ public class FeedbackRepositoryCustomImpl extends Querydsl4RepositorySupport imp
                 .select(
                         Projections.constructor(FeedbackResponse.class,
                                 feedback.id, feedback.star, feedback.comment,
-                                member.id, member.name, member.imageUrl
+                                Projections.constructor(ProfileResponse.class,
+                                        member.id, member.name, member.imageUrl
+                                )
                         )
                 )
                 .from(feedback)

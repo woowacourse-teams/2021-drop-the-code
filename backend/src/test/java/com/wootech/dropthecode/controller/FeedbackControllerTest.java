@@ -6,6 +6,7 @@ import com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils;
 import com.wootech.dropthecode.dto.request.FeedbackSearchCondition;
 import com.wootech.dropthecode.dto.response.FeedbackPaginationResponse;
 import com.wootech.dropthecode.dto.response.FeedbackResponse;
+import com.wootech.dropthecode.dto.response.ProfileResponse;
 import com.wootech.dropthecode.service.FeedbackService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,23 +45,30 @@ class FeedbackControllerTest extends RestApiDocumentTest {
     @DisplayName("피드백 목록 조회 테스트 - 성공")
     @Test
     void findAllFeedbackTest() throws Exception {
+        ProfileResponse fafi = ProfileResponse.builder()
+                                            .id(1L)
+                                            .name("파피")
+                                            .imageUrl("https://dropthecode.co.kr/fafi.jpg")
+                                            .build();
+        ProfileResponse allie = ProfileResponse.builder()
+                                              .id(2L)
+                                              .name("알리")
+                                              .imageUrl("https://dropthecode.co.kr/allie.jpg")
+                                               .build();
+
         FeedbackPaginationResponse response = new FeedbackPaginationResponse(
                 Arrays.asList(
                         FeedbackResponse.builder()
                                         .id(1L)
                                         .star(5)
                                         .comment("리뷰가 구체적이어서 좋았습니다!")
-                                        .studentId(1L)
-                                        .studentName("파피")
-                                        .studentImageUrl("https://dropthecode.co.kr/fafi.jpg")
+                                        .studentProfile(fafi)
                                         .build(),
                         FeedbackResponse.builder()
                                         .id(2L)
                                         .star(1)
                                         .comment("리뷰가 좋았습니다!")
-                                        .studentId(2L)
-                                        .studentName("알리")
-                                        .studentImageUrl("https://dropthecode.co.kr/allie.jpg")
+                                        .studentProfile(allie)
                                         .build()
                 ),
                 1

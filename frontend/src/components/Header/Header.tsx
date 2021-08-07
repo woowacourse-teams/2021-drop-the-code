@@ -25,6 +25,7 @@ const NavigationLink = styled(NavLink)`
 
   &.active {
     color: ${({ theme }) => theme.common.color.primary};
+    font-weight: 900;
   }
 `;
 
@@ -50,7 +51,7 @@ const Header = () => {
             {children}
           </NavigationLink>
         ))}
-      {NAV_MENU.filter(({ isPrivate }) => isPrivate === !!user).map(({ to, children }) => (
+      {NAV_MENU.filter(({ isPrivate }) => !isPrivate || isPrivate === !!user).map(({ to, children }) => (
         <NavigationLink key={to} to={to} activeClassName="active">
           {children}
         </NavigationLink>

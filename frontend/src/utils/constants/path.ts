@@ -6,5 +6,6 @@ export const PATH = {
   MY_PAGE: "/mypage",
   REVIEW_REQUEST: "/review/request/:reviewerId",
   REDIRECT_OAUTH: "/redirect/oauth",
+  GUIDE: "/guide",
   NOT_FOUND: "*",
 };

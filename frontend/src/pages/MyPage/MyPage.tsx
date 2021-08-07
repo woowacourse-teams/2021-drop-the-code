@@ -6,7 +6,7 @@ import styled, { css } from "styled-components";
 import { Role } from "types/review";
 
 import { deleteAuth } from "apis/auth";
-import SmBlackLogo from "assets/sm-white-github-logo.png";
+import smBlackLogo from "assets/sm-white-github-logo.png";
 import Confirm from "components/Confirm/Confirm";
 import Loading from "components/Loading/Loading";
 import ReviewList from "components/Review/ReviewList/ReviewList";
@@ -122,7 +122,7 @@ const MyPage = () => {
                 rel="noopener noreferrer"
                 css={{ display: "flex", justifyContent: "center", alignItems: "center" }}
               >
-                <LoginButtonImage src={SmBlackLogo} alt={ALT.GITHUB_LOGIN_BUTTON} />
+                <LoginButtonImage src={smBlackLogo} alt={ALT.GITHUB_LOGIN_BUTTON} />
                 <p>{user.githubUrl}</p>
               </a>
             </Flex>

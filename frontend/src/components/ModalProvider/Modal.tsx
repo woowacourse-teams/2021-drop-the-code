@@ -33,7 +33,6 @@ const Dimmed = styled.div`
 
 const Contents = styled(FlexCenter)`
   border-radius: ${({ theme }) => theme.common.shape.rounded};
-  background-color: white;
   z-index: 1;
 `;
 

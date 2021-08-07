@@ -197,3 +197,25 @@ include::{snippets}/review-controller-test/cancel-review-no-pending/http-respons
 
 *본인이 아닌 멤버가 취소 요청했을 때의 응답*
 include::{snippets}/review-controller-test/cancel-review-no-owner/http-response.adoc[]
+
+== Feedback API
+
+include::{snippets}/feedback-controller-test/find-all-feedback-test/auto-section.adoc[]
+
+.Request parameters
+[cols="2,2,2,7"]
+|===
+| Path | Type | Optional | Description
+| filter
+| String
+| true
+| 검색 예시 +
+
+[Feedback 목록 조회] +
+
+- /feedbacks 전체 목록 조회 +
+- /feedbacks?studentId={studentId} 피드백 작성한 유저의 Id를 기준으로 조회 +
+- /feedbacks?teacherId={teacherId} 피드백 받은 유저의 Id를 기준으로 조회 +
+- /feedbacks?studentId={studentId}&sort=star,asc 피드백 작성한 유저의 Id를 기준으로 별점 오름차순으로 조회 +
+- /feedbacks?studentId={studentId}&sort=star,desc 피드백 작성한 유저의 Id를 기준으로 별점 내림차순으로 조회 +
+|===

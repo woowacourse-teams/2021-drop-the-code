@@ -1,5 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 
+import styled from "styled-components";
+
 import Logo from "assets/logo.svg";
 import GithubOAuth from "components/Auth/OAuth/GithubOAuth";
 import Button from "components/shared/Button/Button";
@@ -9,6 +11,23 @@ import useAuthContext from "hooks/useAuthContext";
 import useModalContext from "hooks/useModalContext";
 import { PATH } from "utils/constants/path";
 import { NAV_MENU, ROLE_MENU } from "utils/constants/route";
+
+const NavigationButton = styled(Button)`
+  :hover {
+    color: ${({ theme }) => theme.common.color.primary};
+  }
+`;
+
+const NavigationLink = styled(NavLink)`
+  :hover {
+    color: ${({ theme }) => theme.common.color.primary};
+  }
+
+  &.active {
+    color: ${({ theme }) => theme.common.color.primary};
+    font-weight: 900;
+  }
+`;
 
 const Header = () => {
   const { user, logout } = useAuthContext();
@@ -28,24 +47,29 @@ const Header = () => {
     >
       {!!user &&
         ROLE_MENU.filter(({ isTeacher }) => isTeacher === (user.role === "TEACHER")).map(({ to, children }) => (
-          <NavLink key={to} to={to}>
+          <NavigationLink key={to} to={to} activeClassName="active">
             {children}
-          </NavLink>
+          </NavigationLink>
         ))}
-      {NAV_MENU.filter(({ isPrivate }) => isPrivate === !!user).map(({ to, children }) => (
-        <NavLink key={to} to={to}>
+      {NAV_MENU.filter(({ isPrivate }) => !isPrivate || isPrivate === !!user).map(({ to, children }) => (
+        <NavigationLink key={to} to={to} activeClassName="active">
           {children}
-        </NavLink>
+        </NavigationLink>
       ))}
       {!user && (
-        <Button themeColor="primary" hover={false} css={{ fontWeight: 900 }} onClick={() => open(<GithubOAuth />)}>
+        <NavigationButton
+          themeColor="primary"
+          hover={false}
+          css={{ fontWeight: 900 }}
+          onClick={() => open(<GithubOAuth />)}
+        >
           로그인
-        </Button>
+        </NavigationButton>
       )}
       {!!user && (
-        <Button themeColor="primary" hover={false} css={{ fontWeight: 900 }} onClick={() => logout()}>
+        <NavigationButton themeColor="primary" hover={false} css={{ fontWeight: 900 }} onClick={() => logout()}>
           로그아웃
-        </Button>
+        </NavigationButton>
       )}
     </Navigation>
   );

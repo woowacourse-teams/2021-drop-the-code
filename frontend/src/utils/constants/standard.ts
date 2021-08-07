@@ -25,5 +25,8 @@ export const STANDARD = {
   REVIEW_FEEDBACK: {
     MIN_GRADE: 1,
     MAX_GRADE: 5,
+    CONTENT: {
+      MAX_LENGTH: 1000,
+    },
   },
 };

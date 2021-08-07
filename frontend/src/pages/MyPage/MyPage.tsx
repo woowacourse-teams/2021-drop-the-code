@@ -6,14 +6,14 @@ import styled, { css } from "styled-components";
 import { Role } from "types/review";
 
 import { deleteAuth } from "apis/auth";
-import SmBlackLogo from "assets/sm-white-github-logo.png";
+import smBlackLogo from "assets/sm-white-github-logo.png";
 import Confirm from "components/Confirm/Confirm";
 import Loading from "components/Loading/Loading";
 import ReviewList from "components/Review/ReviewList/ReviewList";
 import MyReviewerInfo from "components/Reviewer/MyReviewerInfo/MyReviewerInfo";
 import Avatar from "components/shared/Avatar/Avatar";
 import Button from "components/shared/Button/Button";
-import { Flex, FlexAlignCenter, FlexSpaceBetween } from "components/shared/Flexbox/Flexbox";
+import { Flex, FlexCenter, FlexSpaceBetween } from "components/shared/Flexbox/Flexbox";
 import useAuthContext from "hooks/useAuthContext";
 import useModalContext from "hooks/useModalContext";
 import useRevalidate from "hooks/useRevalidate";
@@ -21,6 +21,16 @@ import useToastContext from "hooks/useToastContext";
 import { COLOR } from "utils/constants/color";
 import { ALT, CONFIRM, SUCCESS_MESSAGE } from "utils/constants/message";
 import { PATH } from "utils/constants/path";
+
+const Profile = styled(FlexCenter)`
+  flex: 1;
+  width: 55%;
+  padding: 20px;
+  border-radius: ${({ theme }) => theme.common.shape.rounded};
+  box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
+  line-height: 1.5625rem;
+  max-height: 12.5rem;
+`;
 
 const LoginButtonImage = styled.img`
   width: 1.25rem;
@@ -96,25 +106,27 @@ const MyPage = () => {
 
   return (
     <>
-      <FlexAlignCenter>
+      <Flex>
         <h2 css={{ fontWeight: 900 }}>{user.name}님 안녕하세요!</h2>
-      </FlexAlignCenter>
-      <FlexSpaceBetween css={{ alignItems: "center" }}>
+      </Flex>
+      <FlexSpaceBetween>
         <Flex css={{ marginBottom: "2.5rem" }}>
-          <Avatar imageUrl={user.imageUrl} width="6.25rem" height="6.25rem" css={{ marginRight: "1.25rem" }} />
-          <Flex css={{ flexDirection: "column", justifyContent: "center" }}>
-            <p css={{ marginBottom: "0.625rem" }}>{user.name}</p>
-            <p css={{ marginBottom: "0.625rem" }}>{user.email}</p>
-            <a
-              href={user.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              css={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-            >
-              <LoginButtonImage src={SmBlackLogo} alt={ALT.GITHUB_LOGIN_BUTTON} />
-              <p>{user.githubUrl}</p>
-            </a>
-          </Flex>
+          <Profile>
+            <Avatar imageUrl={user.imageUrl} width="6.25rem" height="6.25rem" css={{ marginRight: "1.25rem" }} />
+            <Flex css={{ flexDirection: "column" }}>
+              <p>{user.name}</p>
+              <p>{user.email}</p>
+              <a
+                href={user.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                css={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+              >
+                <LoginButtonImage src={smBlackLogo} alt={ALT.GITHUB_LOGIN_BUTTON} />
+                <p>{user.githubUrl}</p>
+              </a>
+            </Flex>
+          </Profile>
         </Flex>
         <Suspense fallback={<Loading />}>{isReviewer && <MyReviewerInfo reviewerId={user.id} />}</Suspense>
       </FlexSpaceBetween>

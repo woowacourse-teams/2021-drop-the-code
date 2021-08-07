@@ -33,8 +33,8 @@ export const ERROR_MESSAGE = {
       },
       CONTENT: `${STANDARD.REVIEW_REQUEST.CONTENT.MAX_LENGTH}자 이내로 작성해주세요.`,
     },
-    REVIEW_LIST: {
-      GET_LIST: "리뷰목록을 불러오는데 실패했습니다.",
+    REVIEW_FEEDBACK: {
+      CONTENT: `${STANDARD.REVIEW_FEEDBACK.CONTENT.MAX_LENGTH}자 이내로 작성해주세요.`,
     },
   },
   API: {

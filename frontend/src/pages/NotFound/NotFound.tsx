@@ -12,8 +12,9 @@ const HomeLink = styled(NavLink)`
   border-radius: ${({ theme }) => theme.common.shape.pill};
   padding: 0.9375rem 1.5625rem;
 
+  transition: box-shadow 0.3s;
   :hover {
-    box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
+    box-shadow: ${({ theme }) => theme.common.boxShadow.pressed};
   }
 
   :active {

@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 import styled from "styled-components";
 
 import { getReviewer } from "apis/reviewer";
-import DownArrowSvg from "assets/down_arrow.svg";
+import DownArrowSvg from "assets/down-arrow.svg";
 import Loading from "components/Loading/Loading";
 import ReviewList from "components/Review/ReviewList/ReviewList";
 import ReviewerFloatingBox from "components/Reviewer/ReviewerFloatingBox/ReviewerFloatingBox";

@@ -1,6 +1,7 @@
 import { MemoryRouter, Route, Switch } from "react-router-dom";
 
 import { studentAuth } from "__mock__/data/auth";
+import { languages } from "__mock__/data/languages";
 import { reviewers } from "__mock__/data/reviewers";
 import { mockingAnonymousAuth, mockingStudentAuth, mockingTeacherAuth } from "__mock__/utils/mockingAuth";
 import { mockingToken } from "__mock__/utils/mockingToken";
@@ -103,6 +104,9 @@ describe("마이페이지 테스트", () => {
     it("리뷰어 정보를 수정 할 수 있다.", async () => {
       const editButton = await findByRole("button", { name: "수정" });
       fireEvent.click(editButton);
+
+      const language = await findByText(languages[0].language.name);
+      fireEvent.click(language);
 
       const confirmButton = await findByRole("button", { name: "확인" });
       fireEvent.click(confirmButton);

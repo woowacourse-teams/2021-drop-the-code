@@ -124,10 +124,10 @@ public class TeacherService {
                                        .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 리뷰어의 ID 입니다."));
     }
 
+    @Transactional
     public void updateAverageReviewTime(Long id, Long reviewTime) {
         TeacherProfile teacher = findById(id);
         teacher.updateReviewCountAndTime(reviewTime);
-        save(teacher);
     }
 
     @Transactional
@@ -147,8 +147,6 @@ public class TeacherService {
 
         teacher.update(teacherRegistrationRequest.getTitle(), teacherRegistrationRequest.getContent(), teacherRegistrationRequest
                 .getCareer());
-
-        save(teacher);
     }
 
     @Transactional

@@ -5,6 +5,12 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 
 import com.wootech.dropthecode.domain.*;
+import com.wootech.dropthecode.domain.LoginMember;
+import com.wootech.dropthecode.domain.Member;
+import com.wootech.dropthecode.domain.review.CompletedReview;
+import com.wootech.dropthecode.domain.review.OnGoingReview;
+import com.wootech.dropthecode.domain.review.PendingReview;
+import com.wootech.dropthecode.domain.review.Review;
 import com.wootech.dropthecode.dto.ReviewSummary;
 import com.wootech.dropthecode.dto.request.FeedbackRequest;
 import com.wootech.dropthecode.dto.request.ReviewRequest;
@@ -83,35 +89,41 @@ public class ReviewService {
     }
 
     @Transactional
+    public void cancelRequest(LoginMember loginMember, Long id) {
+        Review review = findById(id);
+        new PendingReview(review).cancel(loginMember.getId());
+        reviewRepository.delete(review);
+    }
+
+    @Transactional
+    public void denyReview(LoginMember loginMember, Long id) {
+        Review review = findById(id);
+        new PendingReview(review).deny(loginMember.getId());
+    }
+
+    @Transactional
+    public void acceptReview(LoginMember loginMember, Long id) {
+        Review review = findById(id);
+        new PendingReview(review).accept(loginMember.getId());
+    }
+
+    @Transactional
     public void updateToCompleteReview(LoginMember loginMember, Long id) {
         Review review = findById(id);
-        review.completeProgress(loginMember.getId());
-        reviewRepository.save(review);
-
+        new OnGoingReview(review).complete(loginMember.getId());
         teacherService.updateAverageReviewTime(loginMember.getId(), review.calculateElapsedTime());
     }
 
     @Transactional
     public void updateToFinishReview(LoginMember loginMember, Long id, FeedbackRequest feedbackRequest) {
         Review review = findById(id);
-        Feedback feedback = feedbackService.create(review, feedbackRequest);
-        review.finishProgress(loginMember.getId(), feedback);
-        reviewRepository.save(review);
+        feedbackService.create(review, feedbackRequest);
+        new CompletedReview(review).finish(loginMember.getId());
     }
 
     @Transactional
     public void updateReview(LoginMember loginMember, Long id, ReviewRequest request) {
         Review review = findById(id);
         review.update(loginMember.getId(), request.getTitle(), request.getContent(), request.getPrUrl());
-    }
-
-    @Transactional
-    public void cancelRequest(LoginMember loginMember, Long id) {
-        Review review = findById(id);
-        review.validatesOwnerByLoginId(loginMember.getId());
-        if (!review.isPending()) {
-            throw new ReviewException("취소할 수 없는 리뷰입니다!");
-        }
-        reviewRepository.delete(review);
     }
 }

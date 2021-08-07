@@ -29,6 +29,10 @@ const Menu = styled.div`
   right: 0;
   padding: 1.875rem;
   z-index: 1;
+  transition: box-shadow 0.3s;
+  :hover {
+    box-shadow: ${({ theme }) => theme.common.boxShadow.pressed};
+  }
 `;
 
 export interface Props extends Omit<ButtonProps, "active" | "onClick"> {

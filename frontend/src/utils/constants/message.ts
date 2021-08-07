@@ -46,6 +46,9 @@ export const ERROR_MESSAGE = {
       REGISTER: "리뷰어 등록에 실패했습니다.",
     },
   },
+  AUTH: {
+    REQUIRED: "로그인이 필요합니다.",
+  },
 };
 
 export const PLACE_HOLDER = {

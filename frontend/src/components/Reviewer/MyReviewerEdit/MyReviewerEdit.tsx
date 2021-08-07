@@ -1,6 +1,7 @@
 import { Suspense, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 
+import styled from "styled-components";
 import { Reviewer, ReviewerRegisterFormData } from "types/reviewer";
 
 import { editReviewer } from "apis/reviewer";
@@ -14,10 +15,18 @@ import { Flex } from "components/shared/Flexbox/Flexbox";
 import useModalContext from "hooks/useModalContext";
 import useRevalidate from "hooks/useRevalidate";
 import useToastContext from "hooks/useToastContext";
+import { COLOR } from "utils/constants/color";
 import { QUERY_KEY } from "utils/constants/key";
 import { ERROR_MESSAGE, PLACE_HOLDER, SUCCESS_MESSAGE } from "utils/constants/message";
 import { STANDARD } from "utils/constants/standard";
 import reviewerRegisterValidators from "utils/validators/reviewerRegisterValidators";
+
+const Inner = styled.div`
+  padding: 1.25rem;
+  flex-direction: column;
+  width: 40.625rem;
+  background-color: ${COLOR.WHITE};
+`;
 
 interface Props {
   reviewer: Reviewer;
@@ -58,13 +67,7 @@ const MyReviewerEdit = ({ reviewer }: Props) => {
   if (mutation.isLoading) return <Loading />;
 
   return (
-    <Flex
-      css={{
-        padding: "1.25rem",
-        flexDirection: "column",
-        width: "40.625rem",
-      }}
-    >
+    <Inner>
       <h2 css={{ fontSize: "1.25rem", fontWeight: 600, margin: "1.25rem 0 2.5rem", textAlign: "center" }}>
         리뷰어 정보 수정
       </h2>
@@ -132,7 +135,7 @@ const MyReviewerEdit = ({ reviewer }: Props) => {
           <SubmitButton css={{ marginLeft: "auto" }}>확인</SubmitButton>
         </Flex>
       </FormProvider>
-    </Flex>
+    </Inner>
   );
 };
 

@@ -16,7 +16,6 @@ interface Config extends webpack.Configuration {
 
 const config = merge<Config>(common, {
   target: "web",
-  mode: "development",
   devtool: "eval-source-map",
   devServer: {
     contentBase: path.join(__dirname, "dist"),

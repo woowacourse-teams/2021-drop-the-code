@@ -49,9 +49,11 @@ public class TeacherProfile {
     private Member member;
 
     @OneToMany(mappedBy = "teacherProfile", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OrderBy("language.id")
     private Set<TeacherLanguage> languages = new HashSet<>();
 
     @OneToMany(mappedBy = "teacherProfile", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OrderBy("skill.id")
     private Set<TeacherSkill> skills = new HashSet<>();
 
     @Column(columnDefinition = "integer default 0")

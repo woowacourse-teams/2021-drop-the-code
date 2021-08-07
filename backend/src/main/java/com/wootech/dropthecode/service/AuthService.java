@@ -6,7 +6,7 @@ import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.dto.request.RefreshTokenRequest;
 import com.wootech.dropthecode.dto.response.AccessTokenResponse;
-import com.wootech.dropthecode.exception.AuthorizationException;
+import com.wootech.dropthecode.exception.AuthenticationException;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +25,7 @@ public class AuthService {
 
     public void validatesAccessToken(String accessToken) {
         if (!jwtTokenProvider.validateToken(accessToken)) {
-            throw new AuthorizationException("access token이 유효하지 않습니다.");
+            throw new AuthenticationException("access token이 유효하지 않습니다.");
         }
     }
 
@@ -43,14 +43,14 @@ public class AuthService {
     public AccessTokenResponse refreshAccessToken(String accessToken, RefreshTokenRequest refreshTokenRequest) {
         String refreshToken = refreshTokenRequest.getRefreshToken();
         if (!jwtTokenProvider.validateToken(refreshToken)) {
-            throw new AuthorizationException("refresh token이 유효하지 않습니다.");
+            throw new AuthenticationException("refresh token이 유효하지 않습니다.");
         }
 
         String id = jwtTokenProvider.getPayload(accessToken);
         String existingRefreshToken = redisUtil.getData(id);
 
         if (!existingRefreshToken.equals(refreshToken)) {
-            throw new AuthorizationException("refresh token이 유효하지 않습니다.");
+            throw new AuthenticationException("refresh token이 유효하지 않습니다.");
         }
 
         String newAccessToken = jwtTokenProvider.createAccessToken(id);

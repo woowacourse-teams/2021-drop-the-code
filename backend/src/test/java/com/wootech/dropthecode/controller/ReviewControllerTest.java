@@ -13,6 +13,7 @@ import com.wootech.dropthecode.dto.request.ReviewRequest;
 import com.wootech.dropthecode.dto.response.ProfileResponse;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
 import com.wootech.dropthecode.dto.response.ReviewsResponse;
+import com.wootech.dropthecode.exception.AuthenticationException;
 import com.wootech.dropthecode.exception.AuthorizationException;
 import com.wootech.dropthecode.exception.GlobalExceptionHandler;
 import com.wootech.dropthecode.exception.ReviewException;
@@ -152,7 +153,7 @@ public class ReviewControllerTest extends RestApiDocumentTest {
     @Test
     void studentReviewsFailIfAuthorizationHeaderNotExists(RestDocumentationContextProvider provider) throws Exception {
         // given
-        doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+        doThrow(new AuthenticationException("access token이 유효하지 않습니다."))
                 .when(authService).validatesAccessToken(any());
         this.failRestDocsMockMvc = MockMvcBuilders.standaloneSetup(reviewController)
                                                   .addFilters(new CharacterEncodingFilter("UTF-8", true))
@@ -244,6 +245,28 @@ public class ReviewControllerTest extends RestApiDocumentTest {
     }
 
     @Test
+    @DisplayName("리뷰 상태 변경 (PENDING -> DENIED)")
+    void denyReview() throws Exception {
+        // when
+        ResultActions result = restDocsMockMvc.perform(patch("/reviews/1/deny")
+                .with(userToken()));
+
+        // then
+        result.andExpect(status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("리뷰 상태 변경 (PENDING -> ON_GOING)")
+    void acceptReview() throws Exception {
+        // when
+        ResultActions result = restDocsMockMvc.perform(patch("/reviews/1/accept")
+                .with(userToken()));
+
+        // then
+        result.andExpect(status().isNoContent());
+    }
+
+    @Test
     @DisplayName("리뷰 상태 변경 (ON_GOING -> TEACHER_COMPLETE)")
     void updateReviewToComplete() throws Exception {
         // when
@@ -258,7 +281,7 @@ public class ReviewControllerTest extends RestApiDocumentTest {
     @Test
     void updateReviewToCompleteFailIfAuthorizationHeaderNotExists(RestDocumentationContextProvider provider) throws Exception {
         // given
-        doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+        doThrow(new AuthenticationException("access token이 유효하지 않습니다."))
                 .when(authService).validatesAccessToken(any());
         this.failRestDocsMockMvc = MockMvcBuilders.standaloneSetup(reviewController)
                                                   .addFilters(new CharacterEncodingFilter("UTF-8", true))
@@ -295,9 +318,9 @@ public class ReviewControllerTest extends RestApiDocumentTest {
         // when
         ResultActions result = restDocsMockMvc.perform(
                 patch("/reviews/1/finish")
-                .with(userToken())
-                .content(OBJECT_MAPPER.writeValueAsString(feedbackRequest))
-                .contentType(MediaType.APPLICATION_JSON));
+                        .with(userToken())
+                        .content(OBJECT_MAPPER.writeValueAsString(feedbackRequest))
+                        .contentType(MediaType.APPLICATION_JSON));
 
         // then
         result.andExpect(status().isNoContent());
@@ -307,7 +330,7 @@ public class ReviewControllerTest extends RestApiDocumentTest {
     @Test
     void updateReviewToFinishFailIfAuthorizationHeaderNotExists(RestDocumentationContextProvider provider) throws Exception {
         // given
-        doThrow(new AuthorizationException("access token이 유효하지 않습니다."))
+        doThrow(new AuthenticationException("access token이 유효하지 않습니다."))
                 .when(authService).validatesAccessToken(any());
         this.failRestDocsMockMvc = MockMvcBuilders.standaloneSetup(reviewController)
                                                   .addFilters(new CharacterEncodingFilter("UTF-8", true))
@@ -372,7 +395,7 @@ public class ReviewControllerTest extends RestApiDocumentTest {
                 .contentType(MediaType.APPLICATION_JSON));
 
         // then
-        result.andExpect(status().isUnauthorized());
+        result.andExpect(status().isForbidden());
     }
 
     @Test
@@ -413,6 +436,6 @@ public class ReviewControllerTest extends RestApiDocumentTest {
                 .with(userToken()));
 
         // then
-        result.andExpect(status().isUnauthorized());
+        result.andExpect(status().isForbidden());
     }
 }

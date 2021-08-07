@@ -1,0 +1,9 @@
+export { default as reviewRequestGuide1 } from "assets/guide/reviewRequest/review-request-guide-1.png";
+export { default as reviewRequestGuide2 } from "assets/guide/reviewRequest/review-request-guide-2.png";
+export { default as reviewRequestGuide3 } from "assets/guide/reviewRequest/review-request-guide-3.png";
+export { default as reviewRequestGuide4 } from "assets/guide/reviewRequest/review-request-guide-4.png";
+export { default as reviewRequestGuide5 } from "assets/guide/reviewRequest/review-request-guide-5.png";
+export { default as reviewRequestGuide6 } from "assets/guide/reviewRequest/review-request-guide-6.png";
+export { default as reviewRequestGuide7 } from "assets/guide/reviewRequest/review-request-guide-7.png";
+export { default as reviewRequestGuide8 } from "assets/guide/reviewRequest/review-request-guide-8.png";
+export { default as reviewRequestGuide9 } from "assets/guide/reviewRequest/review-request-guide-9.png";

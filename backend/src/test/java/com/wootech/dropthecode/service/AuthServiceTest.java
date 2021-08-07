@@ -6,7 +6,7 @@ import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.dto.request.RefreshTokenRequest;
 import com.wootech.dropthecode.dto.response.AccessTokenResponse;
-import com.wootech.dropthecode.exception.AuthorizationException;
+import com.wootech.dropthecode.exception.AuthenticationException;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -49,7 +49,7 @@ class AuthServiceTest {
         // when
         // then
         assertThatThrownBy(() -> authService.validatesAccessToken(invalidAccessToken))
-                .isInstanceOf(AuthorizationException.class);
+                .isInstanceOf(AuthenticationException.class);
     }
 
     @Test
@@ -112,7 +112,7 @@ class AuthServiceTest {
         // when
         // then
         assertThatThrownBy(() -> authService.refreshAccessToken(accessToken, new RefreshTokenRequest(refreshToken)))
-                .isInstanceOf(AuthorizationException.class);
+                .isInstanceOf(AuthenticationException.class);
     }
 
     @Test
@@ -125,7 +125,7 @@ class AuthServiceTest {
         // when
         // then
         assertThatThrownBy(() -> authService.refreshAccessToken(accessToken, new RefreshTokenRequest(refreshToken)))
-                .isInstanceOf(AuthorizationException.class);
+                .isInstanceOf(AuthenticationException.class);
     }
 
     @Test

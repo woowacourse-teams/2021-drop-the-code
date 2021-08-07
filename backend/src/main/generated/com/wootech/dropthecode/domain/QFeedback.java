@@ -26,7 +26,7 @@ public class QFeedback extends EntityPathBase<Feedback> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final QReview review;
+    public final com.wootech.dropthecode.domain.review.QReview review;
 
     public final NumberPath<Integer> star = createNumber("star", Integer.class);
 
@@ -48,7 +48,7 @@ public class QFeedback extends EntityPathBase<Feedback> {
 
     public QFeedback(Class<? extends Feedback> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.review = inits.isInitialized("review") ? new QReview(forProperty("review"), inits.get("review")) : null;
+        this.review = inits.isInitialized("review") ? new com.wootech.dropthecode.domain.review.QReview(forProperty("review"), inits.get("review")) : null;
     }
 
 }

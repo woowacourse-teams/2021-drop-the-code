@@ -2,6 +2,8 @@ package com.wootech.dropthecode.domain;
 
 import javax.persistence.*;
 
+import com.wootech.dropthecode.domain.review.Review;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

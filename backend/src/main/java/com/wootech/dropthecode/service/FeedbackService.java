@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.wootech.dropthecode.domain.Feedback;
-import com.wootech.dropthecode.domain.Review;
+import com.wootech.dropthecode.domain.review.Review;
 import com.wootech.dropthecode.dto.request.FeedbackRequest;
 import com.wootech.dropthecode.dto.request.FeedbackSearchCondition;
 import com.wootech.dropthecode.dto.response.FeedbackPaginationResponse;

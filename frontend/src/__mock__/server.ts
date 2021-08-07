@@ -21,6 +21,9 @@ const requestHandlers = [
   rest.get("/teachers", (req, res, ctx) => {
     return res(ctx.json({ teacherProfiles: reviewers, pageCount: 10 }));
   }),
+  rest.post("/teachers", (req, res, ctx) => {
+    return res(ctx.status(200));
+  }),
   rest.put("/teachers/me", (req, res, ctx) => {
     return res(ctx.status(200));
   }),

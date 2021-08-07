@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { CSSObject } from "styled-components";
 
@@ -20,6 +20,8 @@ const Transition = ({ initial, animate, exit, duration, children }: Props) => {
   const [css, setCss] = useState<CSSObject>();
 
   const [initialDuration, animateDuration, exitDuration] = duration;
+
+  const initialId = useRef<number>();
   const animationId = useRef<number>();
 
   const mounted = useRef<boolean>(false);
@@ -36,6 +38,7 @@ const Transition = ({ initial, animate, exit, duration, children }: Props) => {
 
   useEffect(() => {
     return () => {
+      window.clearTimeout(initialId.current);
       window.clearTimeout(animationId.current);
     };
   }, []);
@@ -64,7 +67,7 @@ const Transition = ({ initial, animate, exit, duration, children }: Props) => {
 
   function performInitial() {
     if (initial) {
-      setTimeout(() => {
+      initialId.current = window.setTimeout(() => {
         setCss(initial);
       }, 0);
     }
@@ -96,7 +99,7 @@ const Transition = ({ initial, animate, exit, duration, children }: Props) => {
     }, exitDuration);
   }
 
-  if (status === "unmounted") return <></>;
+  if (status === "unmounted") return null;
 
   return children({
     css,

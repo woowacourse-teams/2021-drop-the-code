@@ -4,7 +4,7 @@ import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.dto.response.MemberResponse;
-import com.wootech.dropthecode.exception.AuthorizationException;
+import com.wootech.dropthecode.exception.AuthenticationException;
 import com.wootech.dropthecode.repository.MemberRepository;
 import com.wootech.dropthecode.repository.TeacherProfileRepository;
 
@@ -40,7 +40,7 @@ public class MemberService {
     @Transactional(readOnly = true)
     public Member findById(Long id) {
         return memberRepository.findById(id)
-                               .orElseThrow(() -> new AuthorizationException("유효하지 않은 유저입니다."));
+                               .orElseThrow(() -> new AuthenticationException("유효하지 않은 유저입니다."));
     }
 
     @Transactional

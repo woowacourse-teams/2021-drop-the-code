@@ -13,7 +13,7 @@ beforeEach(() => {
 
 describe("리뷰 요청 컴포넌트 테스트", () => {
   it("제목이 입력되지 않은 경우 리뷰를 요청할 수 없다.", async () => {
-    const prUrlInput = await findByRole("textbox", { name: "리뷰 요청 Pull Request주소" });
+    const prUrlInput = await findByRole("textbox", { name: "Pull Request주소" });
     const contentTextarea = getByRole("textbox", { name: "본문" });
     const submitButton = getByRole("button", { name: "요청" });
 
@@ -27,7 +27,7 @@ describe("리뷰 요청 컴포넌트 테스트", () => {
 
   it("pr주소가 유효하지 않은 경우 리뷰를 요청할 수 없다.", async () => {
     const titleInput = await findByRole("textbox", { name: "타이틀" });
-    const prUrlInput = getByRole("textbox", { name: "리뷰 요청 Pull Request주소" });
+    const prUrlInput = getByRole("textbox", { name: "Pull Request주소" });
     const contentTextarea = getByRole("textbox", { name: "본문" });
     const submitButton = getByRole("button", { name: "요청" });
 
@@ -42,7 +42,7 @@ describe("리뷰 요청 컴포넌트 테스트", () => {
 
   it("본문이 입력되지 않은 경우 리뷰를 요청할 수 없다.", async () => {
     const titleInput = await findByRole("textbox", { name: "타이틀" });
-    const prUrlInput = getByRole("textbox", { name: "리뷰 요청 Pull Request주소" });
+    const prUrlInput = getByRole("textbox", { name: "Pull Request주소" });
     const submitButton = getByRole("button", { name: "요청" });
 
     fireEvent.change(titleInput, { target: { value: "리뷰요청" } });
@@ -55,7 +55,7 @@ describe("리뷰 요청 컴포넌트 테스트", () => {
 
   it("제목, 본문, pr주소가 유효한 경우 리뷰를 요청할 수 있다.", async () => {
     const titleInput = await findByRole("textbox", { name: "타이틀" });
-    const prUrlInput = getByRole("textbox", { name: "리뷰 요청 Pull Request주소" });
+    const prUrlInput = getByRole("textbox", { name: "Pull Request주소" });
     const contentTextarea = getByRole("textbox", { name: "본문" });
     const submitButton = getByRole("button", { name: "요청" });
 

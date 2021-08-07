@@ -169,6 +169,10 @@ include::{snippets}/review-controller-test/teacher-reviews/auto-section.adoc[]
 
 include::{snippets}/review-controller-test/review-detail/auto-section.adoc[]
 
+include::{snippets}/review-controller-test/deny-review/auto-section.adoc[]
+
+include::{snippets}/review-controller-test/accept-review/auto-section.adoc[]
+
 include::{snippets}/review-controller-test/update-review-to-complete/auto-section.adoc[]
 
 *Authorization Header 가 없을 때의 응답*

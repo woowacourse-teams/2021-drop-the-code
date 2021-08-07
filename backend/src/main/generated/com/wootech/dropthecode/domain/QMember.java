@@ -40,9 +40,9 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath oauthId = createString("oauthId");
 
-    public final ListPath<Review, QReview> reviewsAsStudent = this.<Review, QReview>createList("reviewsAsStudent", Review.class, QReview.class, PathInits.DIRECT2);
+    public final ListPath<com.wootech.dropthecode.domain.review.Review, com.wootech.dropthecode.domain.review.QReview> reviewsAsStudent = this.<com.wootech.dropthecode.domain.review.Review, com.wootech.dropthecode.domain.review.QReview>createList("reviewsAsStudent", com.wootech.dropthecode.domain.review.Review.class, com.wootech.dropthecode.domain.review.QReview.class, PathInits.DIRECT2);
 
-    public final ListPath<Review, QReview> reviewsAsTeacher = this.<Review, QReview>createList("reviewsAsTeacher", Review.class, QReview.class, PathInits.DIRECT2);
+    public final ListPath<com.wootech.dropthecode.domain.review.Review, com.wootech.dropthecode.domain.review.QReview> reviewsAsTeacher = this.<com.wootech.dropthecode.domain.review.Review, com.wootech.dropthecode.domain.review.QReview>createList("reviewsAsTeacher", com.wootech.dropthecode.domain.review.Review.class, com.wootech.dropthecode.domain.review.QReview.class, PathInits.DIRECT2);
 
     public final EnumPath<Role> role = createEnum("role", Role.class);
 

@@ -9,7 +9,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.wootech.dropthecode.domain.Progress;
 import com.wootech.dropthecode.domain.QMember;
-import com.wootech.dropthecode.domain.Review;
+import com.wootech.dropthecode.domain.review.Review;
 import com.wootech.dropthecode.dto.ReviewSummary;
 import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
 import com.wootech.dropthecode.repository.support.Querydsl4RepositorySupport;
@@ -18,7 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import static com.wootech.dropthecode.domain.QMember.member;
-import static com.wootech.dropthecode.domain.QReview.review;
+import static com.wootech.dropthecode.domain.review.QReview.review;
 import static org.springframework.util.ObjectUtils.isEmpty;
 
 public class ReviewRepositoryCustomImpl extends Querydsl4RepositorySupport implements ReviewRepositoryCustom {

@@ -23,8 +23,8 @@ const Inner = styled(Flex)`
   margin-bottom: 2.5rem;
   padding: 1.25rem;
   border-radius: ${({ theme }) => theme.common.shape.rounded};
-  box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
   line-height: 1.5625rem;
+  box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
 `;
 
 interface OpenContent {

@@ -4,13 +4,13 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import javax.persistence.EntityNotFoundException;
 
 import com.wootech.dropthecode.domain.Progress;
 import com.wootech.dropthecode.dto.ReviewSummary;
 import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
 import com.wootech.dropthecode.dto.response.ReviewsResponse;
-import com.wootech.dropthecode.exception.NotFoundException;
 import com.wootech.dropthecode.repository.ReviewRepository;
 
 import org.springframework.data.domain.*;
@@ -139,6 +139,6 @@ class ReviewServiceTest {
         // when
         // then
         assertThatThrownBy(() -> reviewService.findReviewSummaryById(reviewId))
-                .isInstanceOf(NotFoundException.class);
+                .isInstanceOf(EntityNotFoundException.class);
     }
 }

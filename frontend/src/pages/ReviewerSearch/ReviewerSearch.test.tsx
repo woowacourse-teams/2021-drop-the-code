@@ -1,14 +1,14 @@
 import { render, screen, fireEvent } from "__mock__/utils/testUtils";
-import Main from "pages/Main/Main";
+import ReviewerSearch from "pages/ReviewerSearch/ReviewerSearch";
 
 const { queryByText, getByRole, findAllByRole, findByRole } = screen;
 
 beforeEach(() => {
-  render(<Main />);
+  render(<ReviewerSearch />);
 });
 
-describe("메인페이지 테스트", () => {
-  it("메인 페이지가 진입 시 언어 기술 목록을 조회 요청을 보내면 로딩 컴포넌트가 나타나고, 언어 기술 목록 조회가 끝나면 언어 필터링 버튼을 찾을 수 있다.", async () => {
+describe("리뷰어찾기페이지 테스트", () => {
+  it("리뷰어찾기 페이지 진입 후 언어 기술 목록을 조회 요청을 보내고 언어 기술 목록을 조회하면 언어 필터링 버튼을 찾을 수 있다.", async () => {
     const filteringbuttonBeforeLoaded = queryByText(/javascript/);
 
     expect(filteringbuttonBeforeLoaded).not.toBeInTheDocument();
@@ -17,7 +17,7 @@ describe("메인페이지 테스트", () => {
     expect(filteringbuttonAfterLoaded).toBeInTheDocument();
   });
 
-  it("언어를 선택하면 선택된 언어에 맞는 기술 버튼들이 화면에 나타난다.", async () => {
+  it("언어필터링 버튼을 선택하면 선택된 언어에 맞는 기술 버튼들이 화면에 나타난다.", async () => {
     const skillButtonBeforeLoaded = queryByText(/react/);
     expect(skillButtonBeforeLoaded).not.toBeInTheDocument();
 

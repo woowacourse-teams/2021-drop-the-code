@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.domain.Progress;
-import com.wootech.dropthecode.domain.Review;
+import com.wootech.dropthecode.domain.review.Review;
 import com.wootech.dropthecode.dto.ReviewSummary;
 
 public class ReviewBuilder {

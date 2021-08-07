@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "react-query";
 
+import styled from "styled-components";
 import { Review, ReviewRequestFormData } from "types/review";
 
 import { requestReview } from "apis/review";
@@ -13,10 +14,19 @@ import useAuthContext from "hooks/useAuthContext";
 import useModalContext from "hooks/useModalContext";
 import useRevalidate from "hooks/useRevalidate";
 import useToastContext from "hooks/useToastContext";
+import { COLOR } from "utils/constants/color";
 import { QUERY_KEY } from "utils/constants/key";
 import { PLACE_HOLDER, SUCCESS_MESSAGE } from "utils/constants/message";
 import { STANDARD } from "utils/constants/standard";
 import reviewRequestValidators from "utils/validators/reviewRequestValidators";
+
+const Inner = styled.div`
+  background-color: ${COLOR.WHITE};
+  width: 40.625rem;
+  margin: 0 auto;
+  padding: 1.25rem;
+  border-radius: ${({ theme }) => theme.common.shape.rounded};
+`;
 
 interface Props {
   review: Review;
@@ -51,7 +61,7 @@ const ReviewEdit = ({ review }: Props) => {
   // if (mutation.isLoading) return <Loading />;
 
   return (
-    <div css={{ width: "40.625rem", margin: "0 auto", padding: "1.25rem" }}>
+    <Inner>
       <h2 css={{ fontSize: "1.25rem", fontWeight: 600, margin: "1.25rem 0 2.5rem", textAlign: "center" }}>리뷰 수정</h2>
       <FormProvider
         submit={async ({ title, prUrl, content }) => {
@@ -75,7 +85,7 @@ const ReviewEdit = ({ review }: Props) => {
         <Flex css={{ margin: "1.25rem 0 ", width: "100%" }}>
           <InputField
             name="prUrl"
-            labelText="리뷰 요청 Pull Request주소"
+            labelText="Pull Request주소"
             maxLength={STANDARD.REVIEW_REQUEST.PR_URL.MAX_LENGTH}
             placeholder={PLACE_HOLDER.REVIEW_REQUEST.PR_URL}
             initialValue={review.prUrl}
@@ -97,7 +107,7 @@ const ReviewEdit = ({ review }: Props) => {
           </SubmitButton>
         </Flex>
       </FormProvider>
-    </div>
+    </Inner>
   );
 };
 

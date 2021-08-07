@@ -150,31 +150,18 @@ jacoco {
 }
 
 jacocoTestReport {
-    /**
-     * COMMENT
-     * 로컬에서 쉽게 보기 위해 html 생성(Test 실행 후, build/reports/jacoco/test/html/index.html 을 통해 쉽게 확인 가능
-     * sonarqube 연동을 위해 xml 생성
-     */
     reports {
         html.enabled true
         xml.enabled true
         csv.enabled false
     }
 
-    /**
-      * COMMENT
-      * QueryDsl 사용으로 인해 생기는 Q엔티티를 제외하기 위한 설정
-     */
     def QEntities = []
 
     for (qPattern in '**/QA'..'**/QZ') {
         QEntities.add(qPattern + '*')
     }
 
-    /**
-     * COMMENT
-     * QEntity, util class, dto 제외
-     */
     afterEvaluate {
         classDirectories.setFrom(
                 files(classDirectories.files.collect {
@@ -190,11 +177,6 @@ jacocoTestReport {
         )
     }
 
-    /**
-     * COMMENT
-     * 커버리지 기준을 만족시키지 못하면 빌드 실패
-     * 현재 코드 커버리지 기준을 함께 논의한 적이 없어서 주석처리
-     */
 //    finalizedBy 'jacocoTestCoverageVerification'
 }
 
@@ -210,28 +192,24 @@ jacocoTestCoverageVerification {
             enabled = true // 이 rule을 적용할 것이다.
             element = 'CLASS' // class 단위로
 
-            // 브랜치 커버리지 최소 50%
             limit {
                 counter = 'BRANCH'
                 value = 'COVEREDRATIO'
                 minimum = 0.50
             }
 
-            // 라인 커버리지 최소한 80%
             limit {
                 counter = 'LINE'
                 value = 'COVEREDRATIO'
                 minimum = 0.80
             }
 
-            // 빈 줄을 제외한 코드의 라인수 최대 300라인
             limit {
                 counter = 'LINE'
                 value = 'TOTALCOUNT'
                 maximum = 300
             }
 
-            // 커버리지 체크를 제외할 클래스들
             excludes = [
                     'com/wootech/dropthecode/util/**',
                     'com/wootech/dropthecode/controller/auth/util/**',

@@ -20,10 +20,20 @@ public class FeedbackResponse {
      */
     private final String comment;
 
+    /**
+     * 피드백 작성한 유저 정보
+     */
+    private final ProfileResponse studentProfile;
+
     @Builder
-    public FeedbackResponse(Long id, Integer star, String comment) {
+    public FeedbackResponse(Long id, Integer star, String comment, Long studentId, String studentName, String studentImageUrl) {
         this.id = id;
         this.star = star;
         this.comment = comment;
+        this.studentProfile = ProfileResponse.builder()
+                                             .id(studentId)
+                                             .name(studentName)
+                                             .imageUrl(studentImageUrl)
+                                             .build();
     }
 }

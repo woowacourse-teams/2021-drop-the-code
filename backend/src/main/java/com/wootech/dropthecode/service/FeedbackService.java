@@ -36,15 +36,12 @@ public class FeedbackService {
 
     @Transactional(readOnly = true)
     public FeedbackPaginationResponse findAll(FeedbackSearchCondition condition, Pageable pageable) {
-        Page<Feedback> feedbackPage = feedbackRepository.findAll(condition, pageable);
+        Page<FeedbackResponse> feedbackResponses = feedbackRepository.findAll(condition, pageable);
 
-        List<FeedbackResponse> feedbackResponses = feedbackPage.stream()
-                                                               .map(this::feedbackToResponse)
-                                                               .collect(Collectors.toList());
 
         return FeedbackPaginationResponse.builder()
-                                  .feedbacks(feedbackResponses)
-                                  .pageCount(feedbackPage.getTotalPages())
+                                  .feedbacks(feedbackResponses.getContent())
+                                  .pageCount(feedbackResponses.getTotalPages())
                                   .build();
     }
 

@@ -23,7 +23,7 @@ import static org.mockito.BDDMockito.given;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @ActiveProfiles("test")
-public class AcceptanceTest {
+class AcceptanceTest {
 
     @LocalServerPort
     private int port;

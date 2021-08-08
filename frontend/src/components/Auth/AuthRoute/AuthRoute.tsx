@@ -19,7 +19,7 @@ const AuthRoute = ({ isPrivate, children, redirectTo, isAuthenticated, ...props 
 
   useEffect(() => {
     if (isPrivate && !isAuthenticated) {
-      toast(ERROR_MESSAGE.AUTH.REQUIRED);
+      toast(ERROR_MESSAGE.AUTH.REQUIRED, { type: "error" });
     }
   }, []);
 

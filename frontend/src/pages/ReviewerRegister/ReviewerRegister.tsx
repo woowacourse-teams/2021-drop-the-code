@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { useHistory } from "react-router-dom";
 
@@ -12,6 +12,7 @@ import TextareaField from "components/FormProvider/TextareaField";
 import SpecPicker from "components/Language/SpecPicker";
 import Loading from "components/Loading/Loading";
 import { Flex } from "components/shared/Flexbox/Flexbox";
+import useAuthContext from "hooks/useAuthContext";
 import useRevalidate from "hooks/useRevalidate";
 import useToastContext from "hooks/useToastContext";
 import { QUERY_KEY } from "utils/constants/key";
@@ -25,6 +26,8 @@ interface Specs {
 }
 
 const ReviewerRegister = () => {
+  const { user } = useAuthContext();
+
   const [filterLanguage, setFilterLanguage] = useState<string | null>(null);
   const [specs, setSpecs] = useState<Specs>({});
 
@@ -52,6 +55,13 @@ const ReviewerRegister = () => {
   );
 
   if (mutation.isLoading) return <Loading />;
+
+  useEffect(() => {
+    if (user?.role === "STUDENT") {
+      toast(ERROR_MESSAGE.AUTH.ALEADY_REGISTERED_REVIEWER, { type: "error" });
+      history.push(PATH.MAIN);
+    }
+  }, []);
 
   return (
     <Flex css={{ flexDirection: "column" }}>

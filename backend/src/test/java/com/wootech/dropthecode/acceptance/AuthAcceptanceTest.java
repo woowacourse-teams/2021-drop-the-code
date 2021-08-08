@@ -11,7 +11,9 @@ import com.wootech.dropthecode.dto.response.LoginResponse;
 import com.wootech.dropthecode.exception.ErrorResponse;
 import com.wootech.dropthecode.exception.OauthTokenRequestException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 
 import org.junit.jupiter.api.DisplayName;
@@ -28,6 +30,8 @@ import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VAL
 
 @DisplayName("Auth 관련 인수 테스트")
 public class AuthAcceptanceTest extends AcceptanceTest {
+    @Autowired
+    private Environment environment;
 
     @MockBean
     private InMemoryProviderRepository inMemoryProviderRepository;
@@ -164,12 +168,13 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     }
 
     public ExtractableResponse<Response> 로그인_요청() throws UnknownHostException {
+        String serverAddress = "http://" + InetAddress.getLocalHost().getHostAddress() + ":" + port;
         given(inMemoryProviderRepository.findByProviderName("github"))
                 .willReturn(OauthProvider.builder()
                                          .clientId("fakeClientId")
                                          .clientSecret("fakeClientSecret")
-                                         .tokenUrl("http://" + InetAddress.getLocalHost().getHostAddress() + ":" + port + "/fake/login/oauth/access_token")
-                                         .userInfoUrl("http://localhost:" + port + "/fake/user")
+                                         .tokenUrl(serverAddress + "/fake/login/oauth/access_token")
+                                         .userInfoUrl(serverAddress + "/fake/user")
                                          .build());
 
         return RestAssured.given()

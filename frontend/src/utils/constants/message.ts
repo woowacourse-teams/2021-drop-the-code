@@ -53,6 +53,7 @@ export const ERROR_MESSAGE = {
   },
   AUTH: {
     REQUIRED: "로그인이 필요합니다.",
+    ALEADY_REGISTERED_REVIEWER: "이미 리뷰어로 등록되어 있습니다.",
   },
 };
 

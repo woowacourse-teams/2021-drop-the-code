@@ -1,5 +1,8 @@
 package com.wootech.dropthecode.acceptance;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.domain.oauth.InMemoryProviderRepository;
 import com.wootech.dropthecode.domain.oauth.OauthProvider;
@@ -31,7 +34,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("OAuth 로그인 - 로그인 성공")
-    void oAuthLoginTestSuccess() {
+    void oAuthLoginTestSuccess() throws UnknownHostException {
         // given
         // when
         LoginResponse loginResponse = 로그인되어_있음();
@@ -64,7 +67,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("access token 갱신 - 유효한 access token & 유효한 refresh token")
-    void notExpiredAccessTokenAndNotExpiredRefreshToken() {
+    void notExpiredAccessTokenAndNotExpiredRefreshToken() throws UnknownHostException {
         // given
         LoginResponse loginResponse = 로그인되어_있음();
 
@@ -79,7 +82,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("access token 갱신 - 유효하지않은 access token & 유효하지않은 refresh token")
-    void expiredAccessTokenAndExpiredRefreshToken() {
+    void expiredAccessTokenAndExpiredRefreshToken() throws UnknownHostException {
         // given
         LoginResponse loginResponse = 로그인되어_있음();
 
@@ -94,7 +97,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("access token 갱신 - 유효한 access token & 유효하지않은 refresh token")
-    void notExpiredAccessTokenAndExpiredRefreshToken() {
+    void notExpiredAccessTokenAndExpiredRefreshToken() throws UnknownHostException {
         // given
         LoginResponse loginResponse = 로그인되어_있음();
 
@@ -109,7 +112,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("access token 갱신 - 유효하지않은 access token & 유효한 refresh token")
-    void invalidAccessTokenAndNotExpiredRefreshToken() {
+    void invalidAccessTokenAndNotExpiredRefreshToken() throws UnknownHostException {
         // given
         LoginResponse loginResponse = 로그인되어_있음();
 
@@ -124,7 +127,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("로그 아웃 성공")
-    void logOutSuccess() {
+    void logOutSuccess() throws UnknownHostException {
         // given
         LoginResponse loginResponse = 로그인되어_있음();
 
@@ -137,7 +140,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("로그 아웃 실패 - 유효하지 않은 access token")
-    void invalidAccessToken() {
+    void invalidAccessToken() throws UnknownHostException {
         // given
         LoginResponse loginResponse = 로그인되어_있음();
 
@@ -151,7 +154,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     }
 
 
-    public LoginResponse 로그인되어_있음() {
+    public LoginResponse 로그인되어_있음() throws UnknownHostException {
         ExtractableResponse<Response> response = 로그인_요청();
         return response.as(LoginResponse.class);
     }
@@ -160,12 +163,12 @@ public class AuthAcceptanceTest extends AcceptanceTest {
         return response.as(ErrorResponse.class);
     }
 
-    public ExtractableResponse<Response> 로그인_요청() {
+    public ExtractableResponse<Response> 로그인_요청() throws UnknownHostException {
         given(inMemoryProviderRepository.findByProviderName("github"))
                 .willReturn(OauthProvider.builder()
                                          .clientId("fakeClientId")
                                          .clientSecret("fakeClientSecret")
-                                         .tokenUrl("http://localhost:" + port + "/fake/login/oauth/access_token")
+                                         .tokenUrl("http://" + InetAddress.getLocalHost().getHostAddress() + ":" + port + "/fake/login/oauth/access_token")
                                          .userInfoUrl("http://localhost:" + port + "/fake/user")
                                          .build());
 

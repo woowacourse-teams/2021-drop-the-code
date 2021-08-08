@@ -1,8 +1,5 @@
 package com.wootech.dropthecode.acceptance;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
 import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.domain.oauth.InMemoryProviderRepository;
 import com.wootech.dropthecode.domain.oauth.OauthProvider;
@@ -11,9 +8,7 @@ import com.wootech.dropthecode.dto.response.LoginResponse;
 import com.wootech.dropthecode.exception.ErrorResponse;
 import com.wootech.dropthecode.exception.OauthTokenRequestException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 
 import org.junit.jupiter.api.DisplayName;
@@ -36,7 +31,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("OAuth 로그인 - 로그인 성공")
-    void oAuthLoginTestSuccess() throws UnknownHostException {
+    void oAuthLoginTestSuccess() {
         // given
         // when
         LoginResponse loginResponse = 로그인되어_있음();
@@ -69,7 +64,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("access token 갱신 - 유효한 access token & 유효한 refresh token")
-    void notExpiredAccessTokenAndNotExpiredRefreshToken() throws UnknownHostException {
+    void notExpiredAccessTokenAndNotExpiredRefreshToken() {
         // given
         LoginResponse loginResponse = 로그인되어_있음();
 
@@ -84,7 +79,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("access token 갱신 - 유효하지않은 access token & 유효하지않은 refresh token")
-    void expiredAccessTokenAndExpiredRefreshToken() throws UnknownHostException {
+    void expiredAccessTokenAndExpiredRefreshToken() {
         // given
         LoginResponse loginResponse = 로그인되어_있음();
 
@@ -99,7 +94,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("access token 갱신 - 유효한 access token & 유효하지않은 refresh token")
-    void notExpiredAccessTokenAndExpiredRefreshToken() throws UnknownHostException {
+    void notExpiredAccessTokenAndExpiredRefreshToken() {
         // given
         LoginResponse loginResponse = 로그인되어_있음();
 
@@ -114,7 +109,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("access token 갱신 - 유효하지않은 access token & 유효한 refresh token")
-    void invalidAccessTokenAndNotExpiredRefreshToken() throws UnknownHostException {
+    void invalidAccessTokenAndNotExpiredRefreshToken() {
         // given
         LoginResponse loginResponse = 로그인되어_있음();
 
@@ -129,7 +124,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("로그 아웃 성공")
-    void logOutSuccess() throws UnknownHostException {
+    void logOutSuccess() {
         // given
         LoginResponse loginResponse = 로그인되어_있음();
 
@@ -142,7 +137,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("로그 아웃 실패 - 유효하지 않은 access token")
-    void invalidAccessToken() throws UnknownHostException {
+    void invalidAccessToken() {
         // given
         LoginResponse loginResponse = 로그인되어_있음();
 
@@ -156,7 +151,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     }
 
 
-    public LoginResponse 로그인되어_있음() throws UnknownHostException {
+    public LoginResponse 로그인되어_있음() {
         ExtractableResponse<Response> response = 로그인_요청();
         return response.as(LoginResponse.class);
     }
@@ -165,8 +160,8 @@ public class AuthAcceptanceTest extends AcceptanceTest {
         return response.as(ErrorResponse.class);
     }
 
-    public ExtractableResponse<Response> 로그인_요청() throws UnknownHostException {
-        String serverAddress = "http://" + InetAddress.getLocalHost().getHostAddress() + ":" + port;
+    public ExtractableResponse<Response> 로그인_요청() {
+        String serverAddress = "http://localhost:" + port;
         given(inMemoryProviderRepository.findByProviderName("github"))
                 .willReturn(OauthProvider.builder()
                                          .clientId("fakeClientId")

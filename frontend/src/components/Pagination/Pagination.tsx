@@ -37,15 +37,15 @@ const Pagination = ({ page, count, maxPage, setPage }: Props) => {
 
   return (
     <Ol>
-      {ButtonList.map((_, index) => (
+      {ButtonList.map((val) => (
         <Li key={nanoid()}>
           <Button
             onClick={() => {
-              setPage(index + 1);
+              setPage(val);
             }}
-            active={page === index + 1}
+            active={page === val}
           >
-            {index + 1}
+            {val}
           </Button>
         </Li>
       ))}

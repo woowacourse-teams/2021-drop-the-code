@@ -36,8 +36,8 @@ public class AcceptanceTest {
         RestAssured.port = port;
     }
 
-    protected LoginResponse 로그인되어_있음() {
-        ExtractableResponse<Response> response = 로그인_요청();
+    protected LoginResponse 로그인되어_있음(String name) {
+        ExtractableResponse<Response> response = 로그인_요청(name);
         return response.as(LoginResponse.class);
     }
 
@@ -45,8 +45,8 @@ public class AcceptanceTest {
         return response.as(ErrorResponse.class);
     }
 
-    protected ExtractableResponse<Response> 로그인_요청() {
-        fakeGithubProviderResponse();
+    protected ExtractableResponse<Response> 로그인_요청(String name) {
+        fakeGithubProviderResponse(name);
 
         return RestAssured.given()
                           .log().all()
@@ -58,14 +58,14 @@ public class AcceptanceTest {
                           .extract();
     }
 
-    private void fakeGithubProviderResponse() {
+    private void fakeGithubProviderResponse(String name) {
         String serverAddress = "http://localhost:" + port;
         given(inMemoryProviderRepository.findByProviderName("github"))
                 .willReturn(OauthProvider.builder()
                                          .clientId("fakeClientId")
                                          .clientSecret("fakeClientSecret")
                                          .tokenUrl(serverAddress + "/fake/login/oauth/access_token")
-                                         .userInfoUrl(serverAddress + "/fake/user")
+                                         .userInfoUrl(serverAddress + "/fake/user?name=" + name)
                                          .build());
     }
 }

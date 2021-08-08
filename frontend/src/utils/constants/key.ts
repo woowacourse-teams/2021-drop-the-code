@@ -11,4 +11,5 @@ export const QUERY_KEY = {
   GET_REVIEWER_LIST: "getReviewerList",
   GET_REVIEW: "getReview",
   GET_REVIEW_LIST: "getReviewList",
+  GET_FEEDBACK_LIST: "getFeedbackList",
 };

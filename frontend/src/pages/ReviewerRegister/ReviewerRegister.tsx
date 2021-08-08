@@ -57,8 +57,8 @@ const ReviewerRegister = () => {
   if (mutation.isLoading) return <Loading />;
 
   useEffect(() => {
-    if (user?.role === "STUDENT") {
-      toast(ERROR_MESSAGE.AUTH.ALEADY_REGISTERED_REVIEWER, { type: "error" });
+    if (user?.role === "TEACHER") {
+      toast(ERROR_MESSAGE.AUTH.ALREADY_REGISTERED_REVIEWER, { type: "error" });
       history.push(PATH.MAIN);
     }
   }, []);

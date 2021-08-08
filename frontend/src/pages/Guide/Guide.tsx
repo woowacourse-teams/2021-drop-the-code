@@ -7,6 +7,7 @@ import Carousel from "components/Carousel/Carousel";
 import { FlexCenter, FlexSpaceBetween } from "components/shared/Flexbox/Flexbox";
 import useModalContext from "hooks/useModalContext";
 import { COLOR } from "utils/constants/color";
+import { ALT } from "utils/constants/message";
 
 const Inner = styled(FlexCenter)`
   max-width: ${({ theme }) => theme.common.layout.lg};
@@ -67,7 +68,7 @@ const Guide = () => {
             open(
               <Carousel>
                 {Object.values(reviewRequestGuide).map((guide) => (
-                  <img key={guide} src={guide} alt="리뷰 요청 가이드 이미지" />
+                  <img key={guide} src={guide} alt={ALT.REVIEW_REQUEST_GUIDE} />
                 ))}
               </Carousel>
             );
@@ -82,7 +83,7 @@ const Guide = () => {
             open(
               <Carousel>
                 {Object.values(reviewRequestGuide).map((guide) => (
-                  <img key={guide} src={guide} alt="리뷰 요청 가이드 이미지" />
+                  <img key={guide} src={guide} alt={ALT.REVIEW_REQUEST_GUIDE} />
                 ))}
               </Carousel>
             );

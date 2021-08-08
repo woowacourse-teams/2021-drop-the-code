@@ -15,6 +15,8 @@ import useToastContext from "hooks/useToastContext";
 import { COLOR } from "utils/constants/color";
 import { QUERY_KEY } from "utils/constants/key";
 
+import FeedbackList from "../FeedbackList/FeedbackList";
+
 interface Props {
   reviewerId: number;
 }
@@ -26,7 +28,8 @@ const DownArrow = styled(DownArrowSvg)`
 `;
 
 const ReviewerInfoContainer = ({ reviewerId }: Props) => {
-  const [isOpen, setOpen] = useState(false);
+  const [isReviewListOpen, setReviewListOpen] = useState(false);
+  const [isFeedbackListOpen, setFeedbackListOpen] = useState(false);
   const toast = useToastContext();
 
   const { data } = useQuery([QUERY_KEY.GET_REVIEWER, reviewerId], async () => {
@@ -44,7 +47,7 @@ const ReviewerInfoContainer = ({ reviewerId }: Props) => {
   return (
     <>
       {data && (
-        <Flex>
+        <Flex css={{ marginBottom: "3.125rem" }}>
           <div css={{ width: "18.75rem", marginRight: "6.25rem" }}>
             <ReviewerFloatingBox reviewer={data} />
           </div>
@@ -56,10 +59,10 @@ const ReviewerInfoContainer = ({ reviewerId }: Props) => {
               <Button
                 themeColor="secondary"
                 hover={false}
-                onClick={() => setOpen(!isOpen)}
+                onClick={() => setReviewListOpen(!isReviewListOpen)}
                 css={{ color: COLOR.INDIGO_500, fontWeight: 900 }}
               >
-                {isOpen ? (
+                {isReviewListOpen ? (
                   <FlexCenter>
                     접기 <DownArrow css={{ transform: "rotate(180deg)" }} />
                   </FlexCenter>
@@ -70,9 +73,32 @@ const ReviewerInfoContainer = ({ reviewerId }: Props) => {
                 )}
               </Button>
             </FlexCenter>
-            {isOpen && (
+            {isReviewListOpen && (
               <Suspense fallback={<Loading />}>
                 <ReviewList id={reviewerId} mode="TEACHER" />
+              </Suspense>
+            )}
+            <FlexCenter css={{ width: "100%", margin: "2.5rem 0" }}>
+              <Button
+                themeColor="secondary"
+                hover={false}
+                onClick={() => setFeedbackListOpen(!isFeedbackListOpen)}
+                css={{ color: COLOR.INDIGO_500, fontWeight: 900 }}
+              >
+                {isFeedbackListOpen ? (
+                  <FlexCenter>
+                    접기 <DownArrow css={{ transform: "rotate(180deg)" }} />
+                  </FlexCenter>
+                ) : (
+                  <FlexCenter>
+                    피드백 목록 확인하기 <DownArrow />
+                  </FlexCenter>
+                )}
+              </Button>
+            </FlexCenter>
+            {isFeedbackListOpen && (
+              <Suspense fallback={<Loading />}>
+                <FeedbackList teacherId={reviewerId} />
               </Suspense>
             )}
           </div>

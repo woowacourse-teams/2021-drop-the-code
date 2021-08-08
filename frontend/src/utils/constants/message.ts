@@ -53,7 +53,7 @@ export const ERROR_MESSAGE = {
   },
   AUTH: {
     REQUIRED: "로그인이 필요합니다.",
-    ALEADY_REGISTERED_REVIEWER: "이미 리뷰어로 등록되어 있습니다.",
+    ALREADY_REGISTERED_REVIEWER: "이미 리뷰어로 등록되어 있습니다.",
   },
 };
 
@@ -68,8 +68,8 @@ export const PLACE_HOLDER = {
     PR_URL: "예시: https://github.com/woowacourse-teams/2021-drop-the-code/pull/113",
     CONTENT: `안녕하세요. 개발 공부 3개월차 코린이입니다.\n리액트를 처음 사용해보았는데, 잘 사용하고 있는 것인지 궁금해서 리뷰요청을 드립니다.\n리액트 훅을 사용한 부분을 중점적으로 봐주시면 좋겠습니다. 감사합니다.\n`,
   },
-  REVIEW_FEEDBACK: {
-    CONTENT: "리뷰에 대한 솔직한 피드백을 남겨주세요.",
+  REVIEWER_FEEDBACK: {
+    CONTENT: "리뷰어에 대한 솔직한 피드백을 남겨주세요.",
   },
 };
 

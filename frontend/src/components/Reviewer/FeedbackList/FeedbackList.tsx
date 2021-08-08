@@ -20,10 +20,10 @@ const FeedbackList = (options: Options) => {
 
   return (
     <>
-      <Inner css={{ padding: "20px" }}>
-        {feedbacks.map(({ id, ...props }) => {
-          <FeedbackCard key={id} id={id} {...props} />;
-        })}
+      <Inner css={{ padding: "1.25rem" }}>
+        {feedbacks.map(({ id, ...props }) => (
+          <FeedbackCard key={id} id={id} {...props} />
+        ))}
       </Inner>
       <FlexCenter css={{ padding: "3.125rem 0" }}>
         <Pagination page={page} setPage={setPage} count={5} maxPage={pageCount} />

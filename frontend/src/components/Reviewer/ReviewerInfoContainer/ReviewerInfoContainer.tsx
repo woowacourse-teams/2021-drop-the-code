@@ -28,7 +28,7 @@ const DownArrow = styled(DownArrowSvg)`
 `;
 
 const ReviewerInfoContainer = ({ reviewerId }: Props) => {
-  const [isOpen, setOpen] = useState(false);
+  const [isReviewListOpen, setReviewListOpen] = useState(false);
   const [isFeedbackListOpen, setFeedbackListOpen] = useState(false);
   const toast = useToastContext();
 
@@ -59,10 +59,10 @@ const ReviewerInfoContainer = ({ reviewerId }: Props) => {
               <Button
                 themeColor="secondary"
                 hover={false}
-                onClick={() => setOpen(!isOpen)}
+                onClick={() => setReviewListOpen(!isReviewListOpen)}
                 css={{ color: COLOR.INDIGO_500, fontWeight: 900 }}
               >
-                {isOpen ? (
+                {isReviewListOpen ? (
                   <FlexCenter>
                     접기 <DownArrow css={{ transform: "rotate(180deg)" }} />
                   </FlexCenter>
@@ -73,7 +73,7 @@ const ReviewerInfoContainer = ({ reviewerId }: Props) => {
                 )}
               </Button>
             </FlexCenter>
-            {isOpen && (
+            {isReviewListOpen && (
               <Suspense fallback={<Loading />}>
                 <ReviewList id={reviewerId} mode="TEACHER" />
               </Suspense>

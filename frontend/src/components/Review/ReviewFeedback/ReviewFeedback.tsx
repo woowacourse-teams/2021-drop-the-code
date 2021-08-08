@@ -10,6 +10,7 @@ import SubmitButton from "components/FormProvider/SubmitButton";
 import TextareaField from "components/FormProvider/TextareaField";
 import Avatar from "components/shared/Avatar/Avatar";
 import { Flex, FlexCenter, FlexSpaceBetween } from "components/shared/Flexbox/Flexbox";
+import useModalContext from "hooks/useModalContext";
 import useReview from "hooks/useReview";
 import { COLOR } from "utils/constants/color";
 import { PLACE_HOLDER } from "utils/constants/message";
@@ -19,8 +20,9 @@ import reviewFeedBackValidators from "utils/validators/reviewFeedBackValidators"
 const Inner = styled(FlexCenter)`
   background-color: ${COLOR.WHITE};
   flex-direction: column;
-  width: 500px;
+  width: 25rem;
   padding: 1.25rem;
+  border-radius: ${({ theme }) => theme.common.shape.rounded};
 `;
 
 const Grade = styled(FlexCenter)`
@@ -30,15 +32,15 @@ const Grade = styled(FlexCenter)`
 `;
 
 const Title = styled.p`
-  font-size: 24px;
-  margin-bottom: 2.5rem;
+  font-size: 20px;
+  margin-bottom: 1.25rem;
 `;
 
 const Range = styled.input`
-  width: 50%;
+  width: 40%;
   height: 100%;
   position: absolute;
-  padding: 0 7px;
+  padding: 0 0.4375rem;
   cursor: pointer;
   background: transparent;
   -webkit-appearance: none;
@@ -57,12 +59,12 @@ const Range = styled.input`
 `;
 
 const Star = styled(FlexSpaceBetween)`
-  width: 50%;
+  width: 40%;
 `;
 
 const ReviewFeedback = ({ id: reviewId, teacherProfile }: Pick<Review, "id" | "teacherProfile">) => {
   const { name, imageUrl } = teacherProfile;
-
+  const { close } = useModalContext();
   const {
     mutation: { finish },
   } = useReview(reviewId);
@@ -75,6 +77,7 @@ const ReviewFeedback = ({ id: reviewId, teacherProfile }: Pick<Review, "id" | "t
       <FormProvider
         submit={({ content }) => {
           finish({ star, comment: content });
+          close();
         }}
         validators={reviewFeedBackValidators}
       >
@@ -93,16 +96,16 @@ const ReviewFeedback = ({ id: reviewId, teacherProfile }: Pick<Review, "id" | "t
           />
           <Star>
             {[...Array(STANDARD.REVIEW_FEEDBACK.MAX_GRADE)].map((_, index) =>
-              index + 1 <= star ? <LightStar width={40} key={index} /> : <DarkStar width={40} key={index} />
+              index + 1 <= star ? <LightStar width={30} key={index} /> : <DarkStar width={30} key={index} />
             )}
           </Star>
         </Grade>
         <TextareaField
           name="content"
-          placeholder={PLACE_HOLDER.REVIEW_FEEDBACK.CONTENT}
-          css={{ minHeight: "15.625rem" }}
+          placeholder={PLACE_HOLDER.REVIEWER_FEEDBACK.CONTENT}
+          css={{ minHeight: "9.375rem" }}
         />
-        <Flex css={{ margin: "1.25rem 0 2.5rem" }}>
+        <Flex css={{ marginTop: "1.25rem" }}>
           <SubmitButton css={{ marginLeft: "auto" }}>제출</SubmitButton>
         </Flex>
       </FormProvider>

@@ -19,7 +19,7 @@ const useFeedbackList = (options: Options) => {
   const toast = useToastContext();
 
   const { data } = useQuery([QUERY_KEY.GET_FEEDBACK_LIST, ...Object.values(options), page], async () => {
-    if (!teacherId || !studentId) return;
+    if (!teacherId && !studentId) return;
 
     const response = await getFeedbackList(
       toURLSearchParams({

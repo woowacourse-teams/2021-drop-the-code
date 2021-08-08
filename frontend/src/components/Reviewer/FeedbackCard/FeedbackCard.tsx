@@ -12,7 +12,7 @@ import { STANDARD } from "utils/constants/standard";
 
 const Item = styled.li`
   display: flex;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 `;
 
 const Content = styled(FlexCenter)`
@@ -21,7 +21,7 @@ const Content = styled(FlexCenter)`
 `;
 
 const Wrapper = styled(Flex)`
-  margin-bottom: 5px;
+  margin-bottom: 0.3125rem;
 `;
 
 const Comment = styled.p`
@@ -44,8 +44,8 @@ const FeedbackCard = ({ id, star, comment, studentProfile }: Feedback) => {
         css={{ marginRight: "1.25rem", alignSelf: "center" }}
       />
       <Content>
-        <FlexAlignCenter css={{ marginBottom: "5px" }}>
-          <Flex css={{ marginRight: "10px" }}>
+        <FlexAlignCenter css={{ marginBottom: "0.3125rem" }}>
+          <Flex css={{ marginRight: "0.625rem" }}>
             {[...Array(STANDARD.REVIEW_FEEDBACK.MAX_GRADE)].map((_, index) =>
               index + 1 <= star ? <LightStar width={15} key={index} /> : <DarkStar width={15} key={index} />
             )}

@@ -594,7 +594,152 @@ class ReviewAcceptanceTest {
                                                        .build();
 
             // when
-            ExtractableResponse<Response> response = 새로운_리뷰_요청("invalid.access.token", reviewRequest);
+            ExtractableResponse<Response> response = 리뷰_수정_요청(reviewId, "invalid.access.token", reviewRequest);
+            ErrorResponse error = 예외_결과(response);
+
+            // then
+            assertThat(response.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+            assertThat(error.getErrorMessage()).isNotNull();
+        }
+    }
+
+    @Nested
+    @DisplayName("Pending 상태 리뷰 요청 취소")
+    class CancelPendingReview extends AcceptanceTest {
+        private LoginResponse student;
+        private LoginResponse teacher;
+        private String reviewId;
+
+        @Override
+        @BeforeEach
+        public void setUp() {
+            super.setUp();
+            // given
+            student = 로그인되어_있음("air");
+            teacher = 로그인되어_있음("curry");
+
+            ReviewRequest reviewRequest = ReviewRequest.builder()
+                                                       .studentId(student.getId())
+                                                       .teacherId(teacher.getId())
+                                                       .title("리뷰 요청합니다!")
+                                                       .content("초보라 맞게 한지 잘 모르겠네요.. 잘 부탁드려요!")
+                                                       .prUrl("https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
+                                                       .build();
+            reviewId = 새로운_리뷰_요청(student.getAccessToken(), reviewRequest).header("Location").substring(9);
+        }
+
+        @Test
+        @DisplayName("Pending 상태의 리뷰 취소")
+        void pendingReview() {
+            // when
+            ExtractableResponse<Response> response = 리뷰_취소_요청(reviewId, student.getAccessToken());
+
+            // then
+            assertThat(response.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
+        }
+
+        @Disabled
+        @Test
+        @DisplayName("DENIED인 경우")
+        void deniedStatus() {
+            // given
+            // 리뷰_거절_요청(reviewId, teacher.getAccessToken());
+
+            // when
+            ExtractableResponse<Response> response = 리뷰_취소_요청(reviewId, student.getAccessToken());
+            ErrorResponse error = 예외_결과(response);
+
+            // then
+            assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+            assertThat(error.getErrorMessage()).isNotNull();
+        }
+
+        @Disabled
+        @Test
+        @DisplayName("ON_GOING인 경우")
+        void onGoingStatus() {
+            // given
+            // 리뷰_수락_요청(reviewId, teacher.getAccessToken());
+
+            // when
+            ExtractableResponse<Response> response = 리뷰_취소_요청(reviewId, student.getAccessToken());
+            ErrorResponse error = 예외_결과(response);
+
+            // then
+            assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+            assertThat(error.getErrorMessage()).isNotNull();
+        }
+
+        @Disabled
+        @Test
+        @DisplayName("TEACHER_COMPLETED인 경우")
+        void teacherCompletedStatus() {
+            // given
+            // 리뷰_수락_요청(reviewId, teacher.getAccessToken());
+            // 선생님_리뷰_완료_요청(reviewId, teacher.getAccessToken());
+
+            // when
+            ExtractableResponse<Response> response = 리뷰_취소_요청(reviewId, student.getAccessToken());
+            ErrorResponse error = 예외_결과(response);
+
+            // then
+            assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+            assertThat(error.getErrorMessage()).isNotNull();
+        }
+
+        @Disabled
+        @Test
+        @DisplayName("FINISHED인 경우")
+        void finishedStatus() {
+            // given
+            // 리뷰_수락_요청(reviewId, teacher.getAccessToken());
+            // 선생님_리뷰_완료_요청(reviewId, teacher.getAccessToken());
+            // 학생_리뷰_완료_요청(reviewId, student.getAccessToken());
+
+            // when
+            ExtractableResponse<Response> response = 리뷰_취소_요청(reviewId, student.getAccessToken());
+            ErrorResponse error = 예외_결과(response);
+
+            // then
+            assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+            assertThat(error.getErrorMessage()).isNotNull();
+        }
+
+        @Test
+        @DisplayName("로그인 한 멤버와 리뷰의 student가 같지 않은 경우")
+        void noAuthorization() {
+            // given
+            LoginResponse otherStudent = 로그인되어_있음("allie");
+
+            // when
+            ExtractableResponse<Response> response = 리뷰_취소_요청(reviewId, otherStudent.getAccessToken());
+            ErrorResponse error = 예외_결과(response);
+
+            // then
+            assertThat(response.statusCode()).isEqualTo(HttpStatus.FORBIDDEN.value());
+            assertThat(error.getErrorMessage()).isNotNull();
+        }
+
+        @Test
+        @DisplayName("존재하지 않는 리뷰인 경우")
+        void notExistReview() {
+            // given
+            String notExistReviewId = "100";
+
+            // when
+            ExtractableResponse<Response> response = 리뷰_취소_요청(notExistReviewId, student.getAccessToken());
+            ErrorResponse error = 예외_결과(response);
+
+            // then
+            assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+            assertThat(error.getErrorMessage()).isNotNull();
+        }
+
+        @Test
+        @DisplayName("유효하지 않은 access token")
+        void invalidAccessToken() {
+            // when
+            ExtractableResponse<Response> response = 리뷰_취소_요청(reviewId, "invalid.access.token");
             ErrorResponse error = 예외_결과(response);
 
             // then
@@ -741,6 +886,18 @@ class ReviewAcceptanceTest {
                           .body(request)
                           .when()
                           .patch("/reviews/{id}", id)
+                          .then()
+                          .log().all()
+                          .extract();
+    }
+
+    public static ExtractableResponse<Response> 리뷰_취소_요청(String id, String accessToken) {
+        return RestAssured.given()
+                          .log().all()
+                          .header("Authorization", "Bearer " + accessToken)
+                          .contentType(APPLICATION_JSON_VALUE)
+                          .when()
+                          .delete("/reviews/{id}", id)
                           .then()
                           .log().all()
                           .extract();

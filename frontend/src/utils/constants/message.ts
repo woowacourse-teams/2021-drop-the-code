@@ -80,6 +80,8 @@ export const ALT = {
   REVIEWER_PROFILE_AVATAR: "리뷰어 프로필 이미지",
   GITHUB_LOGO: "깃허브 로고 이미지",
   NO_REVIEW: "리뷰 없음 이미지",
+  NO_FEEDBACK: "피드백 없음 이미지",
+  REVIEW_REQUEST_GUIDE: "리뷰 요청 가이드 이미지",
 };
 
 export const CONFIRM = {

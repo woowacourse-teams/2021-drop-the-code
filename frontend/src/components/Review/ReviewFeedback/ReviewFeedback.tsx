@@ -74,7 +74,7 @@ const ReviewFeedback = ({ id: reviewId, teacherProfile }: Pick<Review, "id" | "t
       <Avatar imageUrl={imageUrl} width="6rem" css={{ marginBottom: "1.25rem" }} />
       <FormProvider
         submit={({ content }) => {
-          finish({ star, content });
+          finish({ star, comment: content });
         }}
         validators={reviewFeedBackValidators}
       >

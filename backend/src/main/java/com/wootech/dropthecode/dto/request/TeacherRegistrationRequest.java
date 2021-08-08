@@ -58,6 +58,7 @@ public class TeacherRegistrationRequest {
                              .title(title)
                              .content(content)
                              .career(career)
+                             .sumReviewCount(0)
                              .member(member)
                              .build();
     }

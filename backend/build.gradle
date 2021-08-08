@@ -37,7 +37,7 @@ dependencies {
 
     // redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'it.ozimov:embedded-redis:0.7.2'
+    testImplementation 'it.ozimov:embedded-redis:0.7.2'
 
     // log
     implementation 'net.rakugakibox.spring.boot:logback-access-spring-boot-starter:2.7.1'

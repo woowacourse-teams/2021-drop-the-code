@@ -6,7 +6,12 @@ export interface ReviewRequestFormData {
   content: string;
 }
 
-export type Progress = "ON_GOING" | "TEACHER_COMPLETED" | "FINISHED";
+export interface ReviewFeedback {
+  star: number;
+  comment: string;
+}
+
+export type Progress = "PENDING" | "DENIED" | "ON_GOING" | "TEACHER_COMPLETED" | "FINISHED";
 
 export interface Review {
   id: number;

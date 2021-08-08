@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import styled from "styled-components";
+import { Review } from "types/review";
 
 import DarkStar from "assets/dark-star.svg";
 import LightStar from "assets/light-star.svg";
@@ -9,19 +10,11 @@ import SubmitButton from "components/FormProvider/SubmitButton";
 import TextareaField from "components/FormProvider/TextareaField";
 import Avatar from "components/shared/Avatar/Avatar";
 import { Flex, FlexCenter, FlexSpaceBetween } from "components/shared/Flexbox/Flexbox";
+import useReview from "hooks/useReview";
 import { COLOR } from "utils/constants/color";
 import { PLACE_HOLDER } from "utils/constants/message";
 import { STANDARD } from "utils/constants/standard";
 import reviewFeedBackValidators from "utils/validators/reviewFeedBackValidators";
-
-export interface Props {
-  reviewId: number;
-  teacherProfile: {
-    id: number;
-    name: string;
-    imageUrl: string;
-  };
-}
 
 const Inner = styled(FlexCenter)`
   background-color: ${COLOR.WHITE};
@@ -67,9 +60,12 @@ const Star = styled(FlexSpaceBetween)`
   width: 50%;
 `;
 
-const ReviewFeedback = ({ reviewId, teacherProfile }: Props) => {
-  const { id, name, imageUrl } = teacherProfile;
+const ReviewFeedback = ({ id: reviewId, teacherProfile }: Pick<Review, "id" | "teacherProfile">) => {
+  const { name, imageUrl } = teacherProfile;
 
+  const {
+    mutation: { finish },
+  } = useReview(reviewId);
   const [star, setStar] = useState(STANDARD.REVIEW_FEEDBACK.MIN_GRADE);
 
   return (
@@ -77,10 +73,8 @@ const ReviewFeedback = ({ reviewId, teacherProfile }: Props) => {
       <Title>{name}님의 리뷰 평가하기</Title>
       <Avatar imageUrl={imageUrl} width="6rem" css={{ marginBottom: "1.25rem" }} />
       <FormProvider
-        submit={({ star, content }) => {
-          /*
-          request
-        */
+        submit={({ content }) => {
+          finish({ star, content });
         }}
         validators={reviewFeedBackValidators}
       >

@@ -30,8 +30,6 @@ import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VAL
 
 @DisplayName("Auth 관련 인수 테스트")
 public class AuthAcceptanceTest extends AcceptanceTest {
-    @Autowired
-    private Environment environment;
 
     @MockBean
     private InMemoryProviderRepository inMemoryProviderRepository;
@@ -168,8 +166,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     }
 
     public ExtractableResponse<Response> 로그인_요청() throws UnknownHostException {
-        String serverAddress = "http://3.37.245.216:" + port;
-//        String serverAddress = "http://" + InetAddress.getLocalHost().getHostAddress() + ":" + port;
+        String serverAddress = "http://" + InetAddress.getLocalHost().getHostAddress() + ":" + port;
         given(inMemoryProviderRepository.findByProviderName("github"))
                 .willReturn(OauthProvider.builder()
                                          .clientId("fakeClientId")

@@ -4,7 +4,12 @@ const isDevelopment = process.env.NODE_ENV === "development";
 const isProduction = process.env.NODE_ENV === "production";
 
 const presets = [
-  isProduction && "minify",
+  isProduction && [
+    "minify",
+    {
+      builtIns: false,
+    },
+  ],
   [
     "@babel/preset-env",
     {

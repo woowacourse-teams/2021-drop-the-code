@@ -1,7 +1,9 @@
 package com.wootech.dropthecode.acceptance;
 
+import com.wootech.dropthecode.domain.Progress;
 import com.wootech.dropthecode.dto.request.ReviewRequest;
 import com.wootech.dropthecode.dto.response.LoginResponse;
+import com.wootech.dropthecode.dto.response.ReviewResponse;
 import com.wootech.dropthecode.dto.response.ReviewsResponse;
 import com.wootech.dropthecode.exception.ErrorResponse;
 
@@ -431,26 +433,71 @@ class ReviewAcceptanceTest {
 
     @Nested
     @DisplayName("리뷰 목록 조회")
-    class FindReview {
+    class FindReview extends AcceptanceTest {
+        private String reviewId1;
+        private String reviewId2;
+
+        @Override
+        @BeforeEach
+        public void setUp() {
+            super.setUp();
+            // given
+            LoginResponse student = 로그인되어_있음("air");
+            LoginResponse teacher = 로그인되어_있음("curry");
+
+            ReviewRequest reviewRequest1 = ReviewRequest.builder()
+                                                        .studentId(student.getId())
+                                                        .teacherId(teacher.getId())
+                                                        .title("리뷰 요청합니다!")
+                                                        .content("초보라 맞게 한지 잘 모르겠네요.. 잘 부탁드려요!")
+                                                        .prUrl("https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
+                                                        .build();
+            ReviewRequest reviewRequest2 = ReviewRequest.builder()
+                                                        .studentId(student.getId())
+                                                        .teacherId(teacher.getId())
+                                                        .title("코리부!")
+                                                        .content("기대중입니다!")
+                                                        .prUrl("https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
+                                                        .build();
+            reviewId1 = 새로운_리뷰_요청(student.getAccessToken(), reviewRequest1).header("Location").substring(9);
+            reviewId2 = 새로운_리뷰_요청(student.getAccessToken(), reviewRequest2).header("Location").substring(9);
+        }
 
         @Test
         @DisplayName("리뷰 상세 목록 조회 성공")
         void findReviewByIdSuccess() {
-            // given
-
             // when
+            ExtractableResponse<Response> response = 리뷰_상세_조회_요청(reviewId1);
+            ReviewResponse result = response.as(ReviewResponse.class);
 
             // then
+            assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+            assertThat(result).usingRecursiveComparison()
+                              .ignoringFields("id", "createdAt", "teacherProfile", "studentProfile")
+                              .isEqualTo(ReviewResponse.builder()
+                                                       .title("리뷰 요청합니다!")
+                                                       .content("초보라 맞게 한지 잘 모르겠네요.. 잘 부탁드려요!")
+                                                       .prUrl("https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
+                                                       .progress(Progress.PENDING)
+                                                       .build());
+            assertThat(result.getTeacherProfile()).isNotNull();
+            assertThat(result.getStudentProfile()).isNotNull();
+            assertThat(result.getCreatedAt()).isNotNull();
         }
 
         @Test
         @DisplayName("존재하지 않는 리뷰 상세 목록 조회")
         void findReviewByNotExistId() {
             // given
+            String notExistReviewId = "100";
 
             // when
+            ExtractableResponse<Response> response = 리뷰_상세_조회_요청(notExistReviewId);
+            ErrorResponse error = 예외_결과(response);
 
             // then
+            assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+            assertThat(error.getErrorMessage()).isNotNull();
         }
     }
 
@@ -569,6 +616,16 @@ class ReviewAcceptanceTest {
                           .log().all()
                           .when()
                           .get("/reviews/teacher/{id}", id)
+                          .then()
+                          .log().all()
+                          .extract();
+    }
+
+    public static ExtractableResponse<Response> 리뷰_상세_조회_요청(String id) {
+        return RestAssured.given()
+                          .log().all()
+                          .when()
+                          .get("/reviews/{id}", id)
                           .then()
                           .log().all()
                           .extract();

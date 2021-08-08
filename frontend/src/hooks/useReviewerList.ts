@@ -39,7 +39,7 @@ const useReviewerList = (options: Options) => {
     if (!response.isSuccess) {
       toast(response.error.message, { type: "error" });
 
-      return { teacherProfiles: [], pageCount: 0 };
+      return;
     }
 
     return response.data;

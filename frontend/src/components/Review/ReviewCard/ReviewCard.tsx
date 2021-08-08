@@ -13,6 +13,7 @@ const ReviewLink = styled(Link)`
 
 const Inner = styled(FlexAlignCenter)`
   width: 100%;
+  min-height: 9.375rem;
   padding: 1.25rem;
   border-radius: ${({ theme }) => theme.common.shape.rounded};
   box-shadow: ${({ theme }) => theme.common.boxShadow.primary};

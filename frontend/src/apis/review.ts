@@ -10,8 +10,8 @@ export const getReview = (id: number) => {
   return apiClient.get<Review>(`/reviews/${id}`);
 };
 
-export const getReviewList = (id: number, mode: Role) => {
-  return apiClient.get<{ reviews: Review[] }>(`/reviews/${mode.toLowerCase()}/${id}`);
+export const getReviewList = (id: number, mode: Role, queryString: string) => {
+  return apiClient.get<{ reviews: Review[]; pageCount: number }>(`/reviews/${mode.toLowerCase()}/${id}${queryString}`);
 };
 
 export const cancelReview = (id: number) => {

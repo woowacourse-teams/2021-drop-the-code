@@ -11,7 +11,7 @@ const useLanguageList = () => {
     if (!response.isSuccess) {
       toast(response.error.message, { type: "error" });
 
-      return [];
+      return;
     }
 
     return response.data;

@@ -4,53 +4,55 @@ import com.wootech.dropthecode.domain.Role;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class LoginResponse {
     /**
      * 사용자 id
      */
-    private final Long id;
+    private Long id;
 
     /**
      * 사용자 이름
      */
-    private final String name;
+    private String name;
 
     /**
      * 사용자 이메일
      */
-    private final String email;
+    private String email;
 
     /**
      * 사용자 프로필 이미지 주소
      */
-    private final String imageUrl;
+    private String imageUrl;
 
     /**
      * 사용자 github 주소
      */
-    private final String githubUrl;
+    private String githubUrl;
 
     /**
      * 선생님 등록 여부(STUDENT, TEACHER)
      */
-    private final Role role;
+    private Role role;
 
     /**
      * 토큰 타입
      */
-    private final String tokenType;
+    private String tokenType;
 
     /**
      * access token
      */
-    private final String accessToken;
+    private String accessToken;
 
     /**
      * refresh token
      */
-    private final String refreshToken;
+    private String refreshToken;
 
     @Builder
     public LoginResponse(Long id, String name, String email, String imageUrl, String githubUrl, Role role, String tokenType, String accessToken, String refreshToken) {

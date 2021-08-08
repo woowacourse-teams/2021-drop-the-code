@@ -1,5 +1,6 @@
 package com.wootech.dropthecode.domain.oauth;
 
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
@@ -14,6 +15,7 @@ public class OauthProvider {
         this(user.getClientId(), user.getClientSecret(), user.getRedirectUri(), provider.getTokenUri(), provider.getUserInfoUri());
     }
 
+    @Builder
     public OauthProvider(String clientId, String clientSecret, String redirectUrl, String tokenUrl, String userInfoUrl) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;

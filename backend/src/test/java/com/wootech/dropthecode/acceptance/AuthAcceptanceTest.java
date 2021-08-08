@@ -1,157 +1,174 @@
 package com.wootech.dropthecode.acceptance;
 
+import com.wootech.dropthecode.domain.Role;
+import com.wootech.dropthecode.domain.oauth.InMemoryProviderRepository;
+import com.wootech.dropthecode.domain.oauth.OauthProvider;
+import com.wootech.dropthecode.dto.response.AccessTokenResponse;
+import com.wootech.dropthecode.dto.response.LoginResponse;
+import com.wootech.dropthecode.exception.ErrorResponse;
+import com.wootech.dropthecode.exception.OauthTokenRequestException;
+
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE;
 
 @DisplayName("Auth 관련 인수 테스트")
-public class AuthAcceptanceTest {
+public class AuthAcceptanceTest extends AcceptanceTest {
 
-    @Nested
-    @DisplayName("OAuth 로그인 테스트")
-    class OAuthLogin extends AcceptanceTest {
+    @MockBean
+    private InMemoryProviderRepository inMemoryProviderRepository;
 
-        @Test
-        @DisplayName("성공")
-        void oAuthLoginTestSuccess() {
-            // given
-            로그인_요청();
+    @Test
+    @DisplayName("OAuth 로그인 - 로그인 성공")
+    void oAuthLoginTestSuccess() {
+        // given
+        // when
+        LoginResponse loginResponse = 로그인되어_있음();
 
-            // when
-
-            // then
-        }
-
-        @Test
-        @DisplayName("유효하지 않은 provider 요청")
-        void invalidProvider() {
-            // given
-
-            // when
-
-            // then
-        }
-
-        @Test
-        @DisplayName("유효하지 않은 code")
-        void invalidCode() {
-            // given
-
-            // when
-
-            // then
-        }
-
-        @Test
-        @DisplayName("유효하지 않은 token")
-        void invalidToken() {
-            // given
-
-            // when
-
-            // then
-        }
+        // then
+        assertThat(loginResponse).usingRecursiveComparison().ignoringFields("accessToken", "refreshToken")
+                                 .isEqualTo(LoginResponse.builder()
+                                                         .id(1L)
+                                                         .name("air")
+                                                         .email("air@email.com")
+                                                         .imageUrl("s3://image")
+                                                         .githubUrl("https://github.com")
+                                                         .role(Role.STUDENT)
+                                                         .tokenType("Bearer")
+                                                         .build());
+        assertThat(loginResponse.getAccessToken()).isNotNull();
+        assertThat(loginResponse.getRefreshToken()).isNotNull();
     }
 
-    @Nested
-    @DisplayName("access token 갱신")
-    class RefreshAccessToken {
+    @Test
+    @DisplayName("OAuth 로그인 - 유효하지 않은 provider 요청")
+    void invalidProvider() {
+        // given
+        // when
+        ErrorResponse error = 예외_결과(유효하지않은_OAUTH_서버_로그인_요청());
 
-        @Test
-        @DisplayName("유효하지 않은 access token")
-        void invalidAccessToken() {
-            // given
-
-            // when
-
-            // then
-        }
-
-        @Test
-        @DisplayName("유효하지 않은 refresh token")
-        void invalidRefreshToken() {
-            // given
-
-            // when
-
-            // then
-        }
-
-        @Test
-        @DisplayName("만료된 access token & 만료된 refresh token")
-        void expiredAccessTokenAndExpiredRefreshToken() {
-            // given
-
-            // when
-
-            // then
-        }
-
-        @Test
-        @DisplayName("만료되지 않은 access token & 만료된 refresh token")
-        void notExpiredAccessTokenAndExpiredRefreshToken() {
-            // given
-
-            // when
-
-            // then
-        }
-
-        @Test
-        @DisplayName("만료된 access token & 만료되지 않은 refresh token")
-        void expiredAccessTokenAndNotExpiredRefreshToken() {
-            // given
-
-            // when
-
-            // then
-        }
-
-        @Test
-        @DisplayName("만료되지 않은 access token & 만료되지 않은 refresh token")
-        void notExpiredAccessTokenAndNotExpiredRefreshToken() {
-            // given
-
-            // when
-
-            // then
-        }
+        // then
+        assertThat(error.getErrorMessage()).isEqualTo("유효하지 않은 Oauth Provider입니다.");
     }
 
-    @Nested
-    @DisplayName("로그아웃")
-    class Logout {
+    @Test
+    @DisplayName("access token 갱신 - 유효한 access token & 유효한 refresh token")
+    void notExpiredAccessTokenAndNotExpiredRefreshToken() {
+        // given
+        LoginResponse loginResponse = 로그인되어_있음();
 
-        @Test
-        @DisplayName("로그 아웃 성공")
-        void logOutSuccess() {
-            // given
+        // when
+        ExtractableResponse<Response> response = 토큰_갱신_요청(loginResponse.getAccessToken(), loginResponse.getRefreshToken());
+        AccessTokenResponse result = response.as(AccessTokenResponse.class);
 
-            // when
-
-            // then
-        }
-
-        @Test
-        @DisplayName("유효하지 않은 access token")
-        void invalidAccessToken() {
-            // given
-
-            // when
-
-            // then
-        }
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        assertThat(result.getAccessToken()).isNotNull();
     }
 
-    public static ExtractableResponse<Response> 로그인_요청() {
+    @Test
+    @DisplayName("access token 갱신 - 유효하지않은 access token & 유효하지않은 refresh token")
+    void expiredAccessTokenAndExpiredRefreshToken() {
+        // given
+        LoginResponse loginResponse = 로그인되어_있음();
+
+        // when
+        ExtractableResponse<Response> response = 토큰_갱신_요청(loginResponse.getAccessToken() + "invalid", loginResponse.getRefreshToken() + "invalid");
+        ErrorResponse error = 예외_결과(response);
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+        assertThat(error.getErrorMessage()).isEqualTo("refresh token이 유효하지 않습니다.");
+    }
+
+    @Test
+    @DisplayName("access token 갱신 - 유효한 access token & 유효하지않은 refresh token")
+    void notExpiredAccessTokenAndExpiredRefreshToken() {
+        // given
+        LoginResponse loginResponse = 로그인되어_있음();
+
+        // when
+        ExtractableResponse<Response> response = 토큰_갱신_요청(loginResponse.getAccessToken(), loginResponse.getRefreshToken() + "invalid");
+        ErrorResponse error = 예외_결과(response);
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+        assertThat(error.getErrorMessage()).isEqualTo("refresh token이 유효하지 않습니다.");
+    }
+
+    @Test
+    @DisplayName("access token 갱신 - 유효하지않은 access token & 유효한 refresh token")
+    void invalidAccessTokenAndNotExpiredRefreshToken() {
+        // given
+        LoginResponse loginResponse = 로그인되어_있음();
+
+        // when
+        ExtractableResponse<Response> response = 토큰_갱신_요청(loginResponse.getAccessToken() + "invalid", loginResponse.getRefreshToken());
+        ErrorResponse error = 예외_결과(response);
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+        assertThat(error.getErrorMessage()).isEqualTo("유효하지 않은 토큰입니다.");
+    }
+
+    @Test
+    @DisplayName("로그 아웃 성공")
+    void logOutSuccess() {
+        // given
+        LoginResponse loginResponse = 로그인되어_있음();
+
+        // when
+        ExtractableResponse<Response> response = 로그아웃_요청(loginResponse.getAccessToken());
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
+    }
+
+    @Test
+    @DisplayName("로그 아웃 실패 - 유효하지 않은 access token")
+    void invalidAccessToken() {
+        // given
+        LoginResponse loginResponse = 로그인되어_있음();
+
+        // when
+        ExtractableResponse<Response> response = 로그아웃_요청(loginResponse.getAccessToken() + "invalid");
+        ErrorResponse error = 예외_결과(response);
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+        assertThat(error.getErrorMessage()).isEqualTo("access token이 유효하지 않습니다.");
+    }
+
+
+    public LoginResponse 로그인되어_있음() {
+        ExtractableResponse<Response> response = 로그인_요청();
+        return response.as(LoginResponse.class);
+    }
+
+    public ErrorResponse 예외_결과(ExtractableResponse<Response> response) {
+        return response.as(ErrorResponse.class);
+    }
+
+    public ExtractableResponse<Response> 로그인_요청() {
+        given(inMemoryProviderRepository.findByProviderName("github"))
+                .willReturn(OauthProvider.builder()
+                                         .clientId("fakeClientId")
+                                         .clientSecret("fakeClientSecret")
+                                         .tokenUrl("http://localhost:" + port + "/fake/login/oauth/access_token")
+                                         .userInfoUrl("http://localhost:" + port + "/fake/user")
+                                         .build());
+
         return RestAssured.given()
                           .log().all()
                           .when()
@@ -162,18 +179,41 @@ public class AuthAcceptanceTest {
                           .extract();
     }
 
-    public static ExtractableResponse<Response> 토큰_갱신() {
+    public ExtractableResponse<Response> 유효하지않은_OAUTH_서버_로그인_요청() {
+        doThrow(new OauthTokenRequestException("유효하지 않은 Oauth Provider입니다."))
+                .when(inMemoryProviderRepository).findByProviderName("kakao");
+
         return RestAssured.given()
                           .log().all()
-                          .auth().oauth2("access.token")
+                          .when()
+                          .get("/login/oauth?providerName=kakao&code=authorizationCode")
+                          .then()
+                          .log().all()
+                          .statusCode(HttpStatus.BAD_REQUEST.value())
+                          .extract();
+    }
+
+    public ExtractableResponse<Response> 토큰_갱신_요청(String accessToken, String refreshToken) {
+        return RestAssured.given()
+                          .log().all()
+                          .header("Authorization", "Bearer " + accessToken)
                           .contentType(APPLICATION_FORM_URLENCODED_VALUE)
                           .urlEncodingEnabled(true)
-                          .param("refreshToken", "refresh.token")
+                          .param("refreshToken", refreshToken)
                           .when()
                           .post("/token")
                           .then()
                           .log().all()
-                          .statusCode(HttpStatus.OK.value())
+                          .extract();
+    }
+
+    public ExtractableResponse<Response> 로그아웃_요청(String accessToken) {
+        return RestAssured.given()
+                          .log().all()
+                          .header("Authorization", "Bearer " + accessToken)
+                          .when()
+                          .post("/logout")
+                          .then()
                           .extract();
     }
 }

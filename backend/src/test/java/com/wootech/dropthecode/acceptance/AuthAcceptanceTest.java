@@ -26,9 +26,6 @@ import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VAL
 @DisplayName("Auth 관련 인수 테스트")
 public class AuthAcceptanceTest extends AcceptanceTest {
 
-    @MockBean
-    private InMemoryProviderRepository inMemoryProviderRepository;
-
     @Test
     @DisplayName("OAuth 로그인 - 로그인 성공")
     void oAuthLoginTestSuccess() {
@@ -148,36 +145,6 @@ public class AuthAcceptanceTest extends AcceptanceTest {
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
         assertThat(error.getErrorMessage()).isEqualTo("access token이 유효하지 않습니다.");
-    }
-
-
-    public LoginResponse 로그인되어_있음() {
-        ExtractableResponse<Response> response = 로그인_요청();
-        return response.as(LoginResponse.class);
-    }
-
-    public ErrorResponse 예외_결과(ExtractableResponse<Response> response) {
-        return response.as(ErrorResponse.class);
-    }
-
-    public ExtractableResponse<Response> 로그인_요청() {
-        String serverAddress = "http://localhost:" + port;
-        given(inMemoryProviderRepository.findByProviderName("github"))
-                .willReturn(OauthProvider.builder()
-                                         .clientId("fakeClientId")
-                                         .clientSecret("fakeClientSecret")
-                                         .tokenUrl(serverAddress + "/fake/login/oauth/access_token")
-                                         .userInfoUrl(serverAddress + "/fake/user")
-                                         .build());
-
-        return RestAssured.given()
-                          .log().all()
-                          .when()
-                          .get("/login/oauth?providerName=github&code=authorizationCode")
-                          .then()
-                          .log().all()
-                          .statusCode(HttpStatus.OK.value())
-                          .extract();
     }
 
     public ExtractableResponse<Response> 유효하지않은_OAUTH_서버_로그인_요청() {

@@ -9,6 +9,13 @@
     <property name="CONSOLE_LOG_PATTERN"
               value="%clr([%-5p]) %clr([%-40.40logger{0}]){cyan} %clr(:){faint} %m%n"/>
 
+    <springProfile name="test">
+        <include resource="appender/all-console-appender.xml"/>
+        <root level="INFO">
+            <appender-ref ref="CONSOLE_APPENDER"/>
+        </root>
+    </springProfile>
+
     <springProfile name="local">
         <include resource="appender/all-console-appender.xml"/>
         <root level="INFO">

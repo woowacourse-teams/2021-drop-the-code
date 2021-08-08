@@ -32,8 +32,8 @@ class ReviewAcceptanceTest {
         public void setUp() {
             super.setUp();
             // given
-            student = 로그인되어_있음("air");
-            teacher = 로그인되어_있음("curry");
+            student = 학생_로그인되어_있음("air");
+            teacher = 리뷰어_로그인되어_있음("curry");
         }
 
         @Test
@@ -231,7 +231,7 @@ class ReviewAcceptanceTest {
         @DisplayName("학생이 학생에게 리뷰 요청을 보내는 경우")
         void studentToStudent() {
             // given
-            LoginResponse student2 = 로그인되어_있음("allie");
+            LoginResponse student2 = 학생_로그인되어_있음("allie");
             ReviewRequest reviewRequest = ReviewRequest.builder()
                                                        .studentId(student.getId())
                                                        .teacherId(student2.getId())
@@ -276,7 +276,7 @@ class ReviewAcceptanceTest {
         @DisplayName("로그인을 한 멤버와 리뷰 요청인이 다른 경우")
         void studentNotSameLoginMember() {
             // given
-            LoginResponse anonymous = 로그인되어_있음("allie");
+            LoginResponse anonymous = 학생_로그인되어_있음("allie");
             ReviewRequest reviewRequest = ReviewRequest.builder()
                                                        .studentId(anonymous.getId())
                                                        .teacherId(teacher.getId())
@@ -306,8 +306,8 @@ class ReviewAcceptanceTest {
         public void setUp() {
             super.setUp();
             // given
-            student = 로그인되어_있음("air");
-            teacher = 로그인되어_있음("curry");
+            student = 학생_로그인되어_있음("air");
+            teacher = 리뷰어_로그인되어_있음("curry");
 
             ReviewRequest reviewRequest1 = ReviewRequest.builder()
                                                         .studentId(student.getId())
@@ -380,8 +380,8 @@ class ReviewAcceptanceTest {
         public void setUp() {
             super.setUp();
             // given
-            student = 로그인되어_있음("air");
-            teacher = 로그인되어_있음("curry");
+            student = 학생_로그인되어_있음("air");
+            teacher = 리뷰어_로그인되어_있음("curry");
 
             ReviewRequest reviewRequest1 = ReviewRequest.builder()
                                                         .studentId(student.getId())
@@ -441,8 +441,8 @@ class ReviewAcceptanceTest {
         public void setUp() {
             super.setUp();
             // given
-            LoginResponse student = 로그인되어_있음("air");
-            LoginResponse teacher = 로그인되어_있음("curry");
+            LoginResponse student = 학생_로그인되어_있음("air");
+            LoginResponse teacher = 학생_로그인되어_있음("curry");
 
             ReviewRequest reviewRequest1 = ReviewRequest.builder()
                                                         .studentId(student.getId())
@@ -504,8 +504,8 @@ class ReviewAcceptanceTest {
         public void setUp() {
             super.setUp();
             // given
-            student = 로그인되어_있음("air");
-            teacher = 로그인되어_있음("curry");
+            student = 학생_로그인되어_있음("air");
+            teacher = 리뷰어_로그인되어_있음("curry");
 
             ReviewRequest reviewRequest = ReviewRequest.builder()
                                                        .studentId(student.getId())
@@ -563,7 +563,7 @@ class ReviewAcceptanceTest {
         @DisplayName("로그인 한 멤버와 리뷰의 student가 같지 않은 경우")
         void noAuthorization() {
             // given
-            LoginResponse otherStudent = 로그인되어_있음("allie");
+            LoginResponse otherStudent = 학생_로그인되어_있음("allie");
             ReviewRequest reviewRequest = ReviewRequest.builder()
                                                        .studentId(student.getId())
                                                        .teacherId(teacher.getId())
@@ -615,8 +615,8 @@ class ReviewAcceptanceTest {
         public void setUp() {
             super.setUp();
             // given
-            student = 로그인되어_있음("air");
-            teacher = 로그인되어_있음("curry");
+            student = 학생_로그인되어_있음("air");
+            teacher = 리뷰어_로그인되어_있음("curry");
 
             ReviewRequest reviewRequest = ReviewRequest.builder()
                                                        .studentId(student.getId())
@@ -709,7 +709,7 @@ class ReviewAcceptanceTest {
         @DisplayName("로그인 한 멤버와 리뷰의 student가 같지 않은 경우")
         void noAuthorization() {
             // given
-            LoginResponse otherStudent = 로그인되어_있음("allie");
+            LoginResponse otherStudent = 학생_로그인되어_있음("allie");
 
             // when
             ExtractableResponse<Response> response = 리뷰_취소_요청(reviewId, otherStudent.getAccessToken());

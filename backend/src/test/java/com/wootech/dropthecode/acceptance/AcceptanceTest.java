@@ -36,8 +36,14 @@ class AcceptanceTest {
         RestAssured.port = port;
     }
 
-    protected LoginResponse 로그인되어_있음(String name) {
+    protected LoginResponse 학생_로그인되어_있음(String name) {
         ExtractableResponse<Response> response = 로그인_요청(name);
+        return response.as(LoginResponse.class);
+    }
+
+    protected LoginResponse 리뷰어_로그인되어_있음(String name) {
+        ExtractableResponse<Response> response = 로그인_요청(name);
+        // 선생님_등록_요청();
         return response.as(LoginResponse.class);
     }
 

@@ -27,7 +27,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     void oAuthLoginTestSuccess() {
         // given
         // when
-        LoginResponse loginResponse = 로그인되어_있음("air");
+        LoginResponse loginResponse = 학생_로그인되어_있음("air");
 
         // then
         assertThat(loginResponse).usingRecursiveComparison().ignoringFields("accessToken", "refreshToken")
@@ -59,7 +59,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     @DisplayName("access token 갱신 - 유효한 access token & 유효한 refresh token")
     void notExpiredAccessTokenAndNotExpiredRefreshToken() {
         // given
-        LoginResponse loginResponse = 로그인되어_있음("air");
+        LoginResponse loginResponse = 학생_로그인되어_있음("air");
 
         // when
         ExtractableResponse<Response> response = 토큰_갱신_요청(loginResponse.getAccessToken(), loginResponse.getRefreshToken());
@@ -74,7 +74,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     @DisplayName("access token 갱신 - 유효하지않은 access token & 유효하지않은 refresh token")
     void expiredAccessTokenAndExpiredRefreshToken() {
         // given
-        LoginResponse loginResponse = 로그인되어_있음("air");
+        LoginResponse loginResponse = 학생_로그인되어_있음("air");
 
         // when
         ExtractableResponse<Response> response = 토큰_갱신_요청(loginResponse.getAccessToken() + "invalid", loginResponse.getRefreshToken() + "invalid");
@@ -89,7 +89,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     @DisplayName("access token 갱신 - 유효한 access token & 유효하지않은 refresh token")
     void notExpiredAccessTokenAndExpiredRefreshToken() {
         // given
-        LoginResponse loginResponse = 로그인되어_있음("air");
+        LoginResponse loginResponse = 학생_로그인되어_있음("air");
 
         // when
         ExtractableResponse<Response> response = 토큰_갱신_요청(loginResponse.getAccessToken(), loginResponse.getRefreshToken() + "invalid");
@@ -104,7 +104,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     @DisplayName("access token 갱신 - 유효하지않은 access token & 유효한 refresh token")
     void invalidAccessTokenAndNotExpiredRefreshToken() {
         // given
-        LoginResponse loginResponse = 로그인되어_있음("air");
+        LoginResponse loginResponse = 학생_로그인되어_있음("air");
 
         // when
         ExtractableResponse<Response> response = 토큰_갱신_요청(loginResponse.getAccessToken() + "invalid", loginResponse.getRefreshToken());
@@ -119,7 +119,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     @DisplayName("로그 아웃 성공")
     void logOutSuccess() {
         // given
-        LoginResponse loginResponse = 로그인되어_있음("air");
+        LoginResponse loginResponse = 학생_로그인되어_있음("air");
 
         // when
         ExtractableResponse<Response> response = 로그아웃_요청(loginResponse.getAccessToken());
@@ -132,7 +132,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     @DisplayName("로그 아웃 실패 - 유효하지 않은 access token")
     void invalidAccessToken() {
         // given
-        LoginResponse loginResponse = 로그인되어_있음("air");
+        LoginResponse loginResponse = 학생_로그인되어_있음("air");
 
         // when
         ExtractableResponse<Response> response = 로그아웃_요청(loginResponse.getAccessToken() + "invalid");

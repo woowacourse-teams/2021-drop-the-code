@@ -50,7 +50,7 @@ describe("리뷰어찾기페이지 테스트", () => {
     expect(reviewerImages).toHaveLength(10);
   });
 
-  it("리뷰어 목록이 나타난 후 리뷰어를 추가로 조회할 수 있는 더보기 버튼이 나타난다.", async () => {
+  it("리뷰어 목록이 나타난 후 리뷰어를 추가로 조회할 수 있는 페이지네이션 버튼이 나타난다.", async () => {
     const languageButton = await findByRole("button", { name: /javascript/ });
     fireEvent.click(languageButton);
 
@@ -60,7 +60,7 @@ describe("리뷰어찾기페이지 테스트", () => {
     const reviewerImages = await findAllByRole("img");
     expect(reviewerImages).toHaveLength(10);
 
-    const loadMoreButton = getByRole("button", { name: "더보기" });
-    expect(loadMoreButton).toBeInTheDocument();
+    const paginationButton = getByRole("button", { name: "2" });
+    expect(paginationButton).toBeInTheDocument();
   });
 });

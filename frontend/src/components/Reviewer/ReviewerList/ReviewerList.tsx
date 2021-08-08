@@ -1,40 +1,35 @@
+import Pagination from "components/Pagination/Pagination";
 import ReviewerCard from "components/Reviewer/ReviewerCard/ReviewerCard";
-import Button from "components/shared/Button/Button";
 import { FlexCenter } from "components/shared/Flexbox/Flexbox";
 import useReviewerList, { Options } from "hooks/useReviewerList";
 
-type Props = Options;
-
-const ReviewerList = ({ ...options }: Props) => {
-  const { data, fetchNextPage } = useReviewerList({
+const ReviewerList = ({ ...options }: Options) => {
+  const { data, page, setPage } = useReviewerList({
     ...options,
   });
 
-  const pageLength = data?.pages.length || 0;
+  if (data === undefined) return null;
+
+  const { teacherProfiles, pageCount } = data;
+
+  if (teacherProfiles.length === 0) {
+    return (
+      <FlexCenter css={{ flexDirection: "column", margin: "5rem 0" }}>
+        리뷰어가 없습니다.. 리뷰어로 등록해주세요~
+      </FlexCenter>
+    );
+  }
 
   return (
     <>
-      <div css={{ margin: "1.25rem 0 2rem 0" }}>
-        {data?.pages.map((page) =>
-          page?.teacherProfiles.map(({ id, ...props }) => (
-            <ReviewerCard key={id} id={id} {...props} css={{ marginBottom: "0.625rem" }} />
-          ))
-        )}
-      </div>
-      {pageLength < (data?.pages[0]?.pageCount || 0) && (
-        <FlexCenter css={{ marginBottom: "3.75rem" }}>
-          <Button
-            themeColor="secondary"
-            hover={false}
-            css={{ fontWeight: 600 }}
-            onClick={() => {
-              fetchNextPage({ pageParam: pageLength + 1 });
-            }}
-          >
-            더보기
-          </Button>
-        </FlexCenter>
-      )}
+      <ul css={{ margin: "1.25rem 0 2rem 0" }}>
+        {teacherProfiles.map(({ id, ...props }) => (
+          <ReviewerCard key={id} id={id} {...props} css={{ marginBottom: "0.625rem" }} />
+        ))}
+      </ul>
+      <FlexCenter css={{ padding: "3.125rem 0" }}>
+        <Pagination page={page} setPage={setPage} count={5} maxPage={pageCount} />
+      </FlexCenter>
     </>
   );
 };

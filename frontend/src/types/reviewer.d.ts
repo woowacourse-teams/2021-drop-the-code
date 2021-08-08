@@ -44,4 +44,16 @@ export interface ReviewerRegisterFormData {
   content: string;
 }
 
+export interface StudentProfile {
+  id: number;
+  name: string;
+  imageUrl: string;
+}
+export interface Feedback {
+  id: number;
+  star: number;
+  comment: string;
+  studentProfile: StudentProfile;
+}
+
 export type ReviewerSortOption = "career,desc" | "averageReviewTime,asc" | "sumReviewCount,desc" | null;

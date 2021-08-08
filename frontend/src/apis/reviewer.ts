@@ -1,5 +1,5 @@
 import { User } from "types/auth";
-import { Language, Reviewer, ReviewerRegisterFormData } from "types/reviewer";
+import { Feedback, Language, Reviewer, ReviewerRegisterFormData } from "types/reviewer";
 
 import apiClient from "apis/apiClient";
 
@@ -9,6 +9,10 @@ export const getLanguageList = () => {
 
 export const getReviewerList = (queryString: string) => {
   return apiClient.get<{ teacherProfiles: Reviewer[]; pageCount: number }>(`/teachers${queryString}`);
+};
+
+export const getFeedbackList = (queryString: string) => {
+  return apiClient.get<{ feedbacks: Feedback[]; pageCount: number }>(`/feedbacks${queryString}`);
 };
 
 export const getReviewer = (reviewerId: number) => {

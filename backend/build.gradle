@@ -39,6 +39,7 @@ dependencies {
 
     // redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    testImplementation 'it.ozimov:embedded-redis:0.7.2'
 
     // log
     implementation 'net.rakugakibox.spring.boot:logback-access-spring-boot-starter:2.7.1'
@@ -62,6 +63,8 @@ dependencies {
     testImplementation 'com.h2database:h2:1.4.199'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation 'io.rest-assured:rest-assured:4.4.0'
+
 
     // Spring Auto REST Docs
     testImplementation 'capital.scalable:spring-auto-restdocs-core:2.0.11'
@@ -81,6 +84,14 @@ task jsonDoclet(type: Javadoc, dependsOn: compileJava) {
 }
 
 test {
+    testLogging {
+        showStandardStreams = true
+        showCauses = true
+        showExceptions = true
+        showStackTraces = true
+        exceptionFormat = 'full'
+    }
+
     systemProperty 'org.springframework.restdocs.outputDir', snippetsDir
     systemProperty 'org.springframework.restdocs.javadocJsonDir', javadocJsonDir
 

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.wootech.dropthecode.domain.Language;
 import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.domain.Skill;
@@ -20,7 +21,6 @@ import com.wootech.dropthecode.dto.response.MemberResponse;
 import com.wootech.dropthecode.repository.LanguageRepository;
 import com.wootech.dropthecode.repository.SkillRepository;
 import com.wootech.dropthecode.repository.bridge.LanguageSkillRepository;
-import com.wootech.dropthecode.util.DataInitializer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -40,7 +40,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
 @DisplayName("멤버 관련 인수 테스트")
-public class MemberAcceptanceTest extends AcceptanceTest {
+public class MemberAcceptanceTest extends AcceptanceTest{
 
     @Autowired
     LanguageRepository languageRepository;
@@ -109,14 +109,7 @@ public class MemberAcceptanceTest extends AcceptanceTest {
         LoginResponse loginResponse = 학생_로그인되어_있음();
 
         // when
-        ExtractableResponse<Response> response = RestAssured.given()
-                                                            .log().all()
-                                                            .header("Authorization", "Bearer " + loginResponse.getAccessToken())
-                                                            .when()
-                                                            .get("/members/me")
-                                                            .then()
-                                                            .log().all()
-                                                            .extract();
+        ExtractableResponse<Response> response = 로그인_한_유저_정보_조회_요청(loginResponse);
         MemberResponse memberResponse = response.as(MemberResponse.class);
 
         // then
@@ -133,17 +126,21 @@ public class MemberAcceptanceTest extends AcceptanceTest {
         LoginResponse loginResponse = 유효하지_않은_로그인();
 
         // when
-        ExtractableResponse<Response> response = RestAssured.given()
-                                                            .log().all()
-                                                            .header("Authorization", "Bearer " + loginResponse.getAccessToken())
-                                                            .when()
-                                                            .get("/members/me")
-                                                            .then()
-                                                            .log().all()
-                                                            .extract();
+        ExtractableResponse<Response> response = 로그인_한_유저_정보_조회_요청(loginResponse);
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+    }
+
+    private ExtractableResponse<Response> 로그인_한_유저_정보_조회_요청(LoginResponse loginResponse) {
+        return RestAssured.given()
+                          .log().all()
+                          .header("Authorization", "Bearer " + loginResponse.getAccessToken())
+                          .when()
+                          .get("/members/me")
+                          .then()
+                          .log().all()
+                          .extract();
     }
 
     @Test
@@ -153,14 +150,7 @@ public class MemberAcceptanceTest extends AcceptanceTest {
         LoginResponse loginResponse = 학생_로그인되어_있음();
 
         // when
-        ExtractableResponse<Response> response = RestAssured.given()
-                                                            .log().all()
-                                                            .header("Authorization", "Bearer " + loginResponse.getAccessToken())
-                                                            .when()
-                                                            .delete("/members/me")
-                                                            .then()
-                                                            .log().all()
-                                                            .extract();
+        ExtractableResponse<Response> response = 멤버_삭제_요청(loginResponse);
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
@@ -173,17 +163,21 @@ public class MemberAcceptanceTest extends AcceptanceTest {
         LoginResponse loginResponse = 유효하지_않은_로그인();
 
         // when
-        ExtractableResponse<Response> response = RestAssured.given()
-                                                            .log().all()
-                                                            .header("Authorization", "Bearer " + loginResponse.getAccessToken())
-                                                            .when()
-                                                            .delete("/members/me")
-                                                            .then()
-                                                            .log().all()
-                                                            .extract();
+        ExtractableResponse<Response> response = 멤버_삭제_요청(loginResponse);
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+    }
+
+    private ExtractableResponse<Response> 멤버_삭제_요청(LoginResponse loginResponse) {
+        return RestAssured.given()
+                          .log().all()
+                          .header("Authorization", "Bearer " + loginResponse.getAccessToken())
+                          .when()
+                          .delete("/members/me")
+                          .then()
+                          .log().all()
+                          .extract();
     }
 
     @Test
@@ -197,19 +191,23 @@ public class MemberAcceptanceTest extends AcceptanceTest {
         TeacherRegistrationRequest request = 정삭적인_리뷰어_정보(techSpecJava, techSpecJavascript);
 
         // when
-        ExtractableResponse<Response> response = RestAssured.given()
-                                                            .log().all()
-                                                            .header("Authorization", "Bearer " + loginResponse.getAccessToken())
-                                                            .contentType(ContentType.JSON)
-                                                            .body(OBJECT_MAPPER.writeValueAsString(request))
-                                                            .when()
-                                                            .post("/teachers")
-                                                            .then()
-                                                            .log().all()
-                                                            .extract();
+        ExtractableResponse<Response> response = 선생님_등록_요청(loginResponse, request);
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
+    }
+
+    private ExtractableResponse<Response> 선생님_등록_요청(LoginResponse loginResponse, TeacherRegistrationRequest request) throws JsonProcessingException {
+        return RestAssured.given()
+                          .log().all()
+                          .header("Authorization", "Bearer " + loginResponse.getAccessToken())
+                          .contentType(ContentType.JSON)
+                          .body(OBJECT_MAPPER.writeValueAsString(request))
+                          .when()
+                          .post("/teachers")
+                          .then()
+                          .log().all()
+                          .extract();
     }
 
     @Test
@@ -222,16 +220,7 @@ public class MemberAcceptanceTest extends AcceptanceTest {
         TeacherRegistrationRequest request = 정삭적인_리뷰어_정보(techSpecNotExistLanguage);
 
         // when
-        ExtractableResponse<Response> response = RestAssured.given()
-                                                            .log().all()
-                                                            .header("Authorization", "Bearer " + loginResponse.getAccessToken())
-                                                            .contentType(ContentType.JSON)
-                                                            .body(OBJECT_MAPPER.writeValueAsString(request))
-                                                            .when()
-                                                            .post("/teachers")
-                                                            .then()
-                                                            .log().all()
-                                                            .extract();
+        ExtractableResponse<Response> response = 선생님_등록_요청(loginResponse, request);
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
@@ -247,16 +236,7 @@ public class MemberAcceptanceTest extends AcceptanceTest {
         TeacherRegistrationRequest request = 정삭적인_리뷰어_정보(techSpecNotExistSkill);
 
         // when
-        ExtractableResponse<Response> response = RestAssured.given()
-                                                            .log().all()
-                                                            .header("Authorization", "Bearer " + loginResponse.getAccessToken())
-                                                            .contentType(ContentType.JSON)
-                                                            .body(OBJECT_MAPPER.writeValueAsString(request))
-                                                            .when()
-                                                            .post("/teachers")
-                                                            .then()
-                                                            .log().all()
-                                                            .extract();
+        ExtractableResponse<Response> response = 선생님_등록_요청(loginResponse, request);
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
@@ -272,16 +252,7 @@ public class MemberAcceptanceTest extends AcceptanceTest {
         TeacherRegistrationRequest request = 정삭적인_리뷰어_정보(techSpecSkillsNotInLanguage);
 
         // when
-        ExtractableResponse<Response> response = RestAssured.given()
-                                                            .log().all()
-                                                            .header("Authorization", "Bearer " + loginResponse.getAccessToken())
-                                                            .contentType(ContentType.JSON)
-                                                            .body(OBJECT_MAPPER.writeValueAsString(request))
-                                                            .when()
-                                                            .post("/teachers")
-                                                            .then()
-                                                            .log().all()
-                                                            .extract();
+        ExtractableResponse<Response> response = 선생님_등록_요청(loginResponse, request);
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
@@ -297,16 +268,7 @@ public class MemberAcceptanceTest extends AcceptanceTest {
         TeacherRegistrationRequest request = 유효하지_않은_리뷰어_정보_제목_없음(techSpecJava);
 
         // when
-        ExtractableResponse<Response> response = RestAssured.given()
-                                                            .log().all()
-                                                            .header("Authorization", "Bearer " + loginResponse.getAccessToken())
-                                                            .contentType(ContentType.JSON)
-                                                            .body(OBJECT_MAPPER.writeValueAsString(request))
-                                                            .when()
-                                                            .post("/teachers")
-                                                            .then()
-                                                            .log().all()
-                                                            .extract();
+        ExtractableResponse<Response> response = 선생님_등록_요청(loginResponse, request);
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
@@ -322,16 +284,7 @@ public class MemberAcceptanceTest extends AcceptanceTest {
         TeacherRegistrationRequest request = 유효하지_않은_리뷰어_정보_내용_없음(techSpecJava);
 
         // when
-        ExtractableResponse<Response> response = RestAssured.given()
-                                                            .log().all()
-                                                            .header("Authorization", "Bearer " + loginResponse.getAccessToken())
-                                                            .contentType(ContentType.JSON)
-                                                            .body(OBJECT_MAPPER.writeValueAsString(request))
-                                                            .when()
-                                                            .post("/teachers")
-                                                            .then()
-                                                            .log().all()
-                                                            .extract();
+        ExtractableResponse<Response> response = 선생님_등록_요청(loginResponse, request);
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
@@ -347,16 +300,7 @@ public class MemberAcceptanceTest extends AcceptanceTest {
         TeacherRegistrationRequest request = 유효하지_않은_리뷰어_정보_경력_없음(techSpecJava);
 
         // when
-        ExtractableResponse<Response> response = RestAssured.given()
-                                                            .log().all()
-                                                            .header("Authorization", "Bearer " + loginResponse.getAccessToken())
-                                                            .contentType(ContentType.JSON)
-                                                            .body(OBJECT_MAPPER.writeValueAsString(request))
-                                                            .when()
-                                                            .post("/teachers")
-                                                            .then()
-                                                            .log().all()
-                                                            .extract();
+        ExtractableResponse<Response> response = 선생님_등록_요청(loginResponse, request);
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
@@ -371,16 +315,7 @@ public class MemberAcceptanceTest extends AcceptanceTest {
         TeacherRegistrationRequest request = 유효하지_않은_리뷰어_정보_기술_스택_없음();
 
         // when
-        ExtractableResponse<Response> response = RestAssured.given()
-                                                            .log().all()
-                                                            .header("Authorization", "Bearer " + loginResponse.getAccessToken())
-                                                            .contentType(ContentType.JSON)
-                                                            .body(OBJECT_MAPPER.writeValueAsString(request))
-                                                            .when()
-                                                            .post("/teachers")
-                                                            .then()
-                                                            .log().all()
-                                                            .extract();
+        ExtractableResponse<Response> response = 선생님_등록_요청(loginResponse, request);
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
@@ -397,16 +332,7 @@ public class MemberAcceptanceTest extends AcceptanceTest {
         TeacherRegistrationRequest request = 정삭적인_리뷰어_정보(techSpecJava, techSpecJavascript);
 
         // when
-        ExtractableResponse<Response> response = RestAssured.given()
-                                                            .log().all()
-                                                            .header("Authorization", "Bearer " + loginResponse.getAccessToken())
-                                                            .contentType(ContentType.JSON)
-                                                            .body(OBJECT_MAPPER.writeValueAsString(request))
-                                                            .when()
-                                                            .post("/teachers")
-                                                            .then()
-                                                            .log().all()
-                                                            .extract();
+        ExtractableResponse<Response> response = 선생님_등록_요청(loginResponse, request);
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
@@ -423,16 +349,7 @@ public class MemberAcceptanceTest extends AcceptanceTest {
         TeacherRegistrationRequest request = 정삭적인_리뷰어_정보(techSpecJava, techSpecJavascript);
 
         // when
-        ExtractableResponse<Response> response = RestAssured.given()
-                                                            .log().all()
-                                                            .header("Authorization", "Bearer " + loginResponse.getAccessToken())
-                                                            .contentType(ContentType.JSON)
-                                                            .body(OBJECT_MAPPER.writeValueAsString(request))
-                                                            .when()
-                                                            .post("/teachers")
-                                                            .then()
-                                                            .log().all()
-                                                            .extract();
+        ExtractableResponse<Response> response = 선생님_등록_요청(loginResponse, request);
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
@@ -558,16 +475,7 @@ public class MemberAcceptanceTest extends AcceptanceTest {
         TeacherRegistrationRequest request = 정삭적인_리뷰어_정보(techSpecJava, techSpecJavascript);
 
         // when
-        ExtractableResponse<Response> response = RestAssured.given()
-                                                            .log().all()
-                                                            .header("Authorization", "Bearer " + loginResponse.getAccessToken())
-                                                            .contentType(ContentType.JSON)
-                                                            .body(OBJECT_MAPPER.writeValueAsString(request))
-                                                            .when()
-                                                            .post("/teachers")
-                                                            .then()
-                                                            .log().all()
-                                                            .extract();
+        ExtractableResponse<Response> response = 선생님_등록_요청(loginResponse, request);
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());

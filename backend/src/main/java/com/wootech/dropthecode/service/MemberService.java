@@ -15,11 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MemberService {
-
-    private static final String DELETED_USER_EMAIL = "unknown@dropthecode.co.kr";
-    public static final String DELETED_USER_NAME = "탈퇴한 사용자";
-    public static final String DELETED_USER_IMAGE_URL = "https://static.thenounproject.com/png/994628-200.png";
-
     private final TeacherLanguageService teacherLanguageService;
     private final TeacherSkillService teacherSkillService;
     private final MemberRepository memberRepository;
@@ -58,7 +53,7 @@ public class MemberService {
     @Transactional
     public void deleteMember(LoginMember loginMember) {
         Member member = findById(loginMember.getId());
-        member.delete(DELETED_USER_EMAIL, DELETED_USER_NAME, DELETED_USER_IMAGE_URL);
+        member.delete();
         save(member);
 
         if (member.hasRole(Role.TEACHER)) {

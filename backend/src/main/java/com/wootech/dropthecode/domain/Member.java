@@ -15,6 +15,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class Member extends BaseEntity {
+    private static final String DELETED_USER_EMAIL = "unknown@dropthecode.co.kr";
+    private static final String DELETED_USER_NAME = "탈퇴한 사용자";
+    private static final String DELETED_USER_IMAGE_URL = "https://static.thenounproject.com/png/994628-200.png";
+
     private String oauthId;
 
     @Column(nullable = false)
@@ -73,14 +77,14 @@ public class Member extends BaseEntity {
         return this;
     }
 
-    public void delete(String email, String name, String imageUrl) {
+    public void delete() {
         if (this.role == Role.TEACHER) {
             this.teacherProfile.deleteWithMember();
         }
 
-        this.email = email;
-        this.name = name;
-        this.imageUrl = imageUrl;
+        this.email = DELETED_USER_EMAIL;
+        this.name = DELETED_USER_NAME;
+        this.imageUrl = DELETED_USER_IMAGE_URL;
         this.role = Role.DELETED;
     }
 

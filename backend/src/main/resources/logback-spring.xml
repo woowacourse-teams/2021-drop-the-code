@@ -21,10 +21,10 @@
         <include resource="appender/error-file-appender.xml"/>
         <include resource="appender/sql-file-appender.xml"/>
 
-        <logger name="org.hibernate.SQL" level="DEBUG">
+        <logger name="com.wootech.dropthecode.repository.replication.ReplicationRoutingDataSource" level="DEBUG">
             <appender-ref ref="SQL_FILE"/>
         </logger>
-        <logger name="com.wootech.dropthecode.repository.replication.ReplicationRoutingDataSource" level="DEBUG">
+        <logger name="org.hibernate.SQL" level="DEBUG">
             <appender-ref ref="SQL_FILE"/>
         </logger>
         <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE">

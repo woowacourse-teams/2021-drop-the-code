@@ -54,18 +54,16 @@ public class CustomDataSourceConfig {
 
     @Bean
     public DataSource routingDataSource() {
-        ReplicationRoutingDataSource replicationRoutingDataSource = new ReplicationRoutingDataSource();
-
         DataSource master = createDataSource(databaseProperty.getUrl());
 
         Map<Object, Object> dataSourceMap = new LinkedHashMap<>();
         dataSourceMap.put("master", master);
-
         databaseProperty.getSlave()
                         .forEach((key, value) -> dataSourceMap.put(value.getName(), createDataSource(value.getUrl())));
 
-        replicationRoutingDataSource.setTargetDataSources(dataSourceMap);
+        ReplicationRoutingDataSource replicationRoutingDataSource = new ReplicationRoutingDataSource();
         replicationRoutingDataSource.setDefaultTargetDataSource(master);
+        replicationRoutingDataSource.setTargetDataSources(dataSourceMap);
         return replicationRoutingDataSource;
     }
 
@@ -76,21 +74,13 @@ public class CustomDataSourceConfig {
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        Map<String, String> properties = this.jpaProperties.getProperties();
-        EntityManagerFactoryBuilder entityManagerFactoryBuilder = createEntityManagerFactoryBuilder(this.jpaProperties);
+        EntityManagerFactoryBuilder entityManagerFactoryBuilder = createEntityManagerFactoryBuilder(jpaProperties);
         return entityManagerFactoryBuilder.dataSource(dataSource()).packages("com.wootech.dropthecode").build();
     }
 
     private EntityManagerFactoryBuilder createEntityManagerFactoryBuilder(JpaProperties jpaProperties) {
         AbstractJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        return new EntityManagerFactoryBuilder(vendorAdapter, jpaProperties(), null);
-    }
-
-    @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-        JpaTransactionManager tm = new JpaTransactionManager();
-        tm.setEntityManagerFactory(entityManagerFactory);
-        return tm;
+        return new EntityManagerFactoryBuilder(vendorAdapter, jpaProperties.getProperties(), null);
     }
 
     protected Map<String, Object> jpaProperties() {
@@ -98,5 +88,12 @@ public class CustomDataSourceConfig {
         props.put("hibernate.physical_naming_strategy", SpringPhysicalNamingStrategy.class.getName());
         props.put("hibernate.implicit_naming_strategy", SpringImplicitNamingStrategy.class.getName());
         return props;
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+        JpaTransactionManager tm = new JpaTransactionManager();
+        tm.setEntityManagerFactory(entityManagerFactory);
+        return tm;
     }
 }

@@ -29,7 +29,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 @EnableConfigurationProperties(CustomDataSourceProperties.class)
 public class CustomDataSourceConfig {
 
-    private CustomDataSourceProperties databaseProperty;
+    private final CustomDataSourceProperties databaseProperty;
 
     public CustomDataSourceConfig(CustomDataSourceProperties databaseProperty) {
         this.databaseProperty = databaseProperty;

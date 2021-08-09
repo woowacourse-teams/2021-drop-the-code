@@ -1,6 +1,7 @@
 package com.wootech.dropthecode.acceptance;
 
 import com.wootech.dropthecode.domain.Progress;
+import com.wootech.dropthecode.dto.request.FeedbackRequest;
 import com.wootech.dropthecode.dto.request.ReviewRequest;
 import com.wootech.dropthecode.dto.response.LoginResponse;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
@@ -9,7 +10,10 @@ import com.wootech.dropthecode.exception.ErrorResponse;
 
 import org.springframework.http.HttpStatus;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
@@ -77,7 +81,7 @@ class ReviewAcceptanceTest {
             ErrorResponse error = 예외_결과(response);
 
             // then
-            assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+            assertThat(response.statusCode()).isEqualTo(HttpStatus.FORBIDDEN.value());
             assertThat(error.getErrorMessage()).isNotNull();
         }
 
@@ -233,7 +237,7 @@ class ReviewAcceptanceTest {
             ErrorResponse error = 예외_결과(response);
 
             // then
-            assertThat(response.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+            assertThat(response.statusCode()).isEqualTo(HttpStatus.FORBIDDEN.value());
             assertThat(error.getErrorMessage()).isNotNull();
         }
     }
@@ -283,7 +287,7 @@ class ReviewAcceptanceTest {
             ErrorResponse result = 예외_결과(response);
 
             // then
-            assertThat(response.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+            assertThat(response.statusCode()).isEqualTo(HttpStatus.FORBIDDEN.value());
             assertThat(result.getErrorMessage()).isNotNull();
         }
 
@@ -568,9 +572,10 @@ class ReviewAcceptanceTest {
         @DisplayName("FINISHED인 경우")
         void finishedStatus() {
             // given
+            FeedbackRequest feedbackRequest = new FeedbackRequest(5, "너무 감사합니다!");
             리뷰_수락_요청(reviewId, teacher.getAccessToken());
             선생님_리뷰_완료_요청(reviewId, teacher.getAccessToken());
-            학생_리뷰_완료_요청(reviewId, student.getAccessToken());
+            학생_리뷰_완료_요청(reviewId, student.getAccessToken(), feedbackRequest);
 
             // when
             ExtractableResponse<Response> response = 리뷰_취소_요청(reviewId, student.getAccessToken());
@@ -680,11 +685,12 @@ class ReviewAcceptanceTest {
         @DisplayName("TEACHER_COMPLETE 상태의 리뷰를 FINISHED 상태로 변경 성공")
         void TeacherCompleteToFinished() {
             // given
+            FeedbackRequest feedbackRequest = new FeedbackRequest(5, "많이 배웠습니다!");
             리뷰_수락_요청(reviewId, teacher.getAccessToken());
             선생님_리뷰_완료_요청(reviewId, teacher.getAccessToken());
 
             // when
-            ExtractableResponse<Response> response = 학생_리뷰_완료_요청(reviewId, student.getAccessToken());
+            ExtractableResponse<Response> response = 학생_리뷰_완료_요청(reviewId, student.getAccessToken(), feedbackRequest);
 
             // then
             assertThat(response.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
@@ -775,11 +781,12 @@ class ReviewAcceptanceTest {
         @DisplayName("학생이 아닌데 TEACHER_COMPLETE -> FINISHED 변경 요청을 하는 경우")
         void noStudentWhenUpdateToFinishReview() {
             // given
+            FeedbackRequest feedbackRequest = new FeedbackRequest(5, "많이 배웠습니다!");
             리뷰_수락_요청(reviewId, teacher.getAccessToken());
             선생님_리뷰_완료_요청(reviewId, teacher.getAccessToken());
 
             // when
-            ExtractableResponse<Response> response = 학생_리뷰_완료_요청(reviewId, teacher.getAccessToken());
+            ExtractableResponse<Response> response = 학생_리뷰_완료_요청(reviewId, teacher.getAccessToken(), feedbackRequest);
             ErrorResponse error = 예외_결과(response);
 
             // then
@@ -790,8 +797,11 @@ class ReviewAcceptanceTest {
         @Test
         @DisplayName("TEACHER_COMPLETE 상태가 아닌데 TEACHER_COMPLETE -> FINISHED 변경 요청을 하는 경우")
         void noTeacherCompletedButUpdateToFinishReview() {
+            // given
+            FeedbackRequest feedbackRequest = new FeedbackRequest(5, "많이 배웠습니다!");
+
             // when
-            ExtractableResponse<Response> response = 학생_리뷰_완료_요청(reviewId, student.getAccessToken());
+            ExtractableResponse<Response> response = 학생_리뷰_완료_요청(reviewId, student.getAccessToken(), feedbackRequest);
             ErrorResponse error = 예외_결과(response);
 
             // then
@@ -902,10 +912,12 @@ class ReviewAcceptanceTest {
                           .extract();
     }
 
-    public static ExtractableResponse<Response> 학생_리뷰_완료_요청(String id, String accessToken) {
+    public static ExtractableResponse<Response> 학생_리뷰_완료_요청(String id, String accessToken, FeedbackRequest request) {
         return RestAssured.given()
                           .log().all()
                           .header("Authorization", "Bearer " + accessToken)
+                          .contentType(APPLICATION_JSON_VALUE)
+                          .body(request)
                           .when()
                           .patch("/reviews/{id}/finish", id)
                           .then()

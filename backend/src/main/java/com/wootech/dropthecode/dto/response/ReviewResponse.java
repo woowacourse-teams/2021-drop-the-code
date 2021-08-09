@@ -8,41 +8,43 @@ import com.wootech.dropthecode.util.LocalDateTimeToArray;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class ReviewResponse {
     /**
      * 리뷰 id
      */
-    private final Long id;
+    private Long id;
     /**
      * 리뷰 제목
      */
-    private final String title;
+    private String title;
     /**
      * 리뷰 내용
      */
-    private final String content;
+    private String content;
     /**
      * 리뷰 진행 상태
      */
-    private final Progress progress;
+    private Progress progress;
     /**
      * 선생님 프로필
      */
-    private final ProfileResponse teacherProfile;
+    private ProfileResponse teacherProfile;
     /**
      * 학생 프로필
      */
-    private final ProfileResponse studentProfile;
+    private ProfileResponse studentProfile;
     /**
      * PR 링크
      */
-    private final String prUrl;
+    private String prUrl;
     /**
      * 리뷰 생성일
      */
-    private final Integer[] createdAt;
+    private Integer[] createdAt;
 
     @Builder
     public ReviewResponse(Long id, String title, String content, Progress progress, ProfileResponse teacherProfile, ProfileResponse studentProfile, String prUrl, LocalDateTime createdAt) {

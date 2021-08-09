@@ -17,7 +17,6 @@ import com.wootech.dropthecode.dto.request.ReviewRequest;
 import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
 import com.wootech.dropthecode.dto.response.ReviewsResponse;
-import com.wootech.dropthecode.exception.ReviewException;
 import com.wootech.dropthecode.repository.ReviewRepository;
 
 import org.springframework.data.domain.Page;
@@ -62,7 +61,8 @@ public class ReviewService {
     }
 
     @Transactional(readOnly = true)
-    public ReviewsResponse findStudentReview(Long id, ReviewSearchCondition condition, Pageable pageable) {
+    public ReviewsResponse findStudentReview(LoginMember loginMember, Long id, ReviewSearchCondition condition, Pageable pageable) {
+        loginMember.validatesAuthorityToShowReview(id);
         Page<ReviewSummary> pageReviews = reviewRepository.searchPageByStudentId(id, condition, pageable);
 
         List<ReviewResponse> reviews = pageReviews.stream()

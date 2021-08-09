@@ -41,9 +41,9 @@ public class ReviewController {
      * @title 내가 받은 리뷰 목록 조회
      */
     @GetMapping("/student/{id}")
-    public ResponseEntity<ReviewsResponse> showStudentReviews(@PathVariable Long id,
+    public ResponseEntity<ReviewsResponse> showStudentReviews(@Login LoginMember loginMember, @PathVariable Long id,
                                                               @ModelAttribute ReviewSearchCondition condition, Pageable pageable) {
-        ReviewsResponse reviewsResponse = reviewService.findStudentReview(id, condition, pageable);
+        ReviewsResponse reviewsResponse = reviewService.findStudentReview(loginMember, id, condition, pageable);
         return ResponseEntity.status(HttpStatus.OK)
                              .body(reviewsResponse);
     }

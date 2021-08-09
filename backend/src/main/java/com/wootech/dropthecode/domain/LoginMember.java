@@ -1,6 +1,7 @@
 package com.wootech.dropthecode.domain;
 
 import com.wootech.dropthecode.exception.AuthenticationException;
+import com.wootech.dropthecode.exception.AuthorizationException;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -24,6 +25,12 @@ public class LoginMember {
     public void validatesAnonymous() {
         if (ANONYMOUS.equals(this)) {
             throw new AuthenticationException("유효하지 않은 유저입니다.");
+        }
+    }
+
+    public void validatesAuthorityToShowReview(Long studentId) {
+        if (!this.id.equals(studentId)) {
+            throw new AuthorizationException("리뷰를 조회할 권한이 없습니다.");
         }
     }
 }

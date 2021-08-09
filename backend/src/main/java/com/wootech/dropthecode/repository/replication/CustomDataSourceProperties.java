@@ -1,4 +1,4 @@
-package com.wootech.dropthecode.domain;
+package com.wootech.dropthecode.repository.replication;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -40,6 +40,7 @@ public class ReviewService {
 
     @Transactional
     public Long create(LoginMember loginMember, ReviewRequest reviewRequest) {
+        loginMember.validatesAuthorityToReview(reviewRequest.getStudentId());
         Member teacher = memberService.findById(reviewRequest.getTeacherId());
         Member student = memberService.findById(reviewRequest.getStudentId());
         Review review = Review.builder()
@@ -50,8 +51,6 @@ public class ReviewService {
                               .prUrl(reviewRequest.getPrUrl())
                               .progress(Progress.PENDING)
                               .build();
-        // 로그인한 사용자와 리뷰의 학생 id가 같은지 확인
-        review.validateAuthorityOfStudent(loginMember.getId());
         Review savedReview = reviewRepository.save(review);
         return savedReview.getId();
     }
@@ -64,7 +63,7 @@ public class ReviewService {
 
     @Transactional(readOnly = true)
     public ReviewsResponse findStudentReview(LoginMember loginMember, Long id, ReviewSearchCondition condition, Pageable pageable) {
-        loginMember.validatesAuthorityToShowReview(id);
+        loginMember.validatesAuthorityToReview(id);
         Page<ReviewSummary> pageReviews = reviewRepository.searchPageByStudentId(id, condition, pageable);
 
         List<ReviewResponse> reviews = pageReviews.stream()

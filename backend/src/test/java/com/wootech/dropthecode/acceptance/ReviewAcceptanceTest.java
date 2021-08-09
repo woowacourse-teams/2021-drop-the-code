@@ -190,7 +190,6 @@ class ReviewAcceptanceTest {
             assertThat(error.getErrorMessage()).isNotNull();
         }
 
-        @Disabled
         @Test
         @DisplayName("학생이 학생에게 리뷰 요청을 보내는 경우")
         void studentToStudent() {
@@ -207,7 +206,6 @@ class ReviewAcceptanceTest {
             assertThat(error.getErrorMessage()).isNotNull();
         }
 
-        @Disabled
         @Test
         @DisplayName("자기 자신에게 리뷰 요청을 보내는 경우")
         void selfRequest() {
@@ -223,7 +221,6 @@ class ReviewAcceptanceTest {
             assertThat(error.getErrorMessage()).isNotNull();
         }
 
-        @Disabled
         @Test
         @DisplayName("로그인을 한 멤버와 리뷰 요청인이 다른 경우")
         void studentNotSameLoginMember() {
@@ -275,7 +272,6 @@ class ReviewAcceptanceTest {
             assertThat(result.getReviews()).hasSize(2);
         }
 
-        @Disabled
         @Test
         @DisplayName("로그인 한 유저 id와 받은 리뷰 목록 조희 유저 id가 다른 경우")
         void showOtherStudentReview() {
@@ -667,7 +663,6 @@ class ReviewAcceptanceTest {
             assertThat(response.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
         }
 
-        @Disabled
         @Test
         @DisplayName("ON_GOING 상태의 리뷰를 TEACHER_COMPLETE 상태로 변경 성공")
         void onGoingToTeacherComplete() {
@@ -681,7 +676,6 @@ class ReviewAcceptanceTest {
             assertThat(response.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
         }
 
-        @Disabled
         @Test
         @DisplayName("TEACHER_COMPLETE 상태의 리뷰를 FINISHED 상태로 변경 성공")
         void TeacherCompleteToFinished() {
@@ -777,7 +771,6 @@ class ReviewAcceptanceTest {
             assertThat(error.getErrorMessage()).isNotNull();
         }
 
-        @Disabled
         @Test
         @DisplayName("학생이 아닌데 TEACHER_COMPLETE -> FINISHED 변경 요청을 하는 경우")
         void noStudentWhenUpdateToFinishReview() {
@@ -794,7 +787,6 @@ class ReviewAcceptanceTest {
             assertThat(error.getErrorMessage()).isNotNull();
         }
 
-        @Disabled
         @Test
         @DisplayName("TEACHER_COMPLETE 상태가 아닌데 TEACHER_COMPLETE -> FINISHED 변경 요청을 하는 경우")
         void noTeacherCompletedButUpdateToFinishReview() {

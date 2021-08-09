@@ -40,13 +40,7 @@ class ReviewAcceptanceTest {
         @DisplayName("리뷰 요청 성공")
         void createReviewSuccess() {
             // given
-            ReviewRequest reviewRequest = ReviewRequest.builder()
-                                                       .studentId(student.getId())
-                                                       .teacherId(teacher.getId())
-                                                       .title("리뷰 요청합니다!")
-                                                       .content("초보라 맞게 한지 잘 모르겠네요.. 잘 부탁드려요!")
-                                                       .prUrl("https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
-                                                       .build();
+            ReviewRequest reviewRequest = 리뷰_요청_데이터(student.getId(), teacher.getId());
 
             // when
             ExtractableResponse<Response> response = 새로운_리뷰_요청(student.getAccessToken(), reviewRequest);
@@ -60,13 +54,7 @@ class ReviewAcceptanceTest {
         @DisplayName("student id가 빈 경우")
         void emptyStudentId() {
             // given
-            ReviewRequest reviewRequest = ReviewRequest.builder()
-                                                       .studentId(null)
-                                                       .teacherId(teacher.getId())
-                                                       .title("리뷰 요청합니다!")
-                                                       .content("초보라 맞게 한지 잘 모르겠네요.. 잘 부탁드려요!")
-                                                       .prUrl("https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
-                                                       .build();
+            ReviewRequest reviewRequest = 리뷰_요청_데이터(null, teacher.getId());
 
             // when
             ExtractableResponse<Response> response = 새로운_리뷰_요청(student.getAccessToken(), reviewRequest);
@@ -82,13 +70,7 @@ class ReviewAcceptanceTest {
         void notExistStudentId() {
             // given
             Long notExistStudentId = 100L;
-            ReviewRequest reviewRequest = ReviewRequest.builder()
-                                                       .studentId(notExistStudentId)
-                                                       .teacherId(teacher.getId())
-                                                       .title("리뷰 요청합니다!")
-                                                       .content("초보라 맞게 한지 잘 모르겠네요.. 잘 부탁드려요!")
-                                                       .prUrl("https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
-                                                       .build();
+            ReviewRequest reviewRequest = 리뷰_요청_데이터(notExistStudentId, teacher.getId());
 
             // when
             ExtractableResponse<Response> response = 새로운_리뷰_요청(teacher.getAccessToken(), reviewRequest);
@@ -103,13 +85,7 @@ class ReviewAcceptanceTest {
         @DisplayName("teacher id가 빈 경우")
         void emptyTeacherId() {
             // given
-            ReviewRequest reviewRequest = ReviewRequest.builder()
-                                                       .studentId(student.getId())
-                                                       .teacherId(null)
-                                                       .title("리뷰 요청합니다!")
-                                                       .content("초보라 맞게 한지 잘 모르겠네요.. 잘 부탁드려요!")
-                                                       .prUrl("https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
-                                                       .build();
+            ReviewRequest reviewRequest = 리뷰_요청_데이터(student.getId(), null);
 
             // when
             ExtractableResponse<Response> response = 새로운_리뷰_요청(student.getAccessToken(), reviewRequest);
@@ -125,13 +101,7 @@ class ReviewAcceptanceTest {
         void notExistTeacherId() {
             // given
             Long notExistTeacherId = 100L;
-            ReviewRequest reviewRequest = ReviewRequest.builder()
-                                                       .studentId(student.getId())
-                                                       .teacherId(notExistTeacherId)
-                                                       .title("리뷰 요청합니다!")
-                                                       .content("초보라 맞게 한지 잘 모르겠네요.. 잘 부탁드려요!")
-                                                       .prUrl("https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
-                                                       .build();
+            ReviewRequest reviewRequest = 리뷰_요청_데이터(student.getId(), notExistTeacherId);
 
             // when
             ExtractableResponse<Response> response = 새로운_리뷰_요청(student.getAccessToken(), reviewRequest);
@@ -209,13 +179,7 @@ class ReviewAcceptanceTest {
         @DisplayName("유효하지 않은 access token")
         void invalidAccessToken() {
             // given
-            ReviewRequest reviewRequest = ReviewRequest.builder()
-                                                       .studentId(student.getId())
-                                                       .teacherId(teacher.getId())
-                                                       .title("리뷰 요청합니다!")
-                                                       .content("초보라 맞게 한지 잘 모르겠네요.. 잘 부탁드려요!")
-                                                       .prUrl("https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
-                                                       .build();
+            ReviewRequest reviewRequest = 리뷰_요청_데이터(student.getId(), teacher.getId());
 
             // when
             ExtractableResponse<Response> response = 새로운_리뷰_요청("invalid.access.token", reviewRequest);
@@ -232,13 +196,7 @@ class ReviewAcceptanceTest {
         void studentToStudent() {
             // given
             LoginResponse student2 = 학생_로그인되어_있음("allie");
-            ReviewRequest reviewRequest = ReviewRequest.builder()
-                                                       .studentId(student.getId())
-                                                       .teacherId(student2.getId())
-                                                       .title("리뷰 요청합니다!")
-                                                       .content("초보라 맞게 한지 잘 모르겠네요.. 잘 부탁드려요!")
-                                                       .prUrl("https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
-                                                       .build();
+            ReviewRequest reviewRequest = 리뷰_요청_데이터(student.getId(), student2.getId());
 
             // when
             ExtractableResponse<Response> response = 새로운_리뷰_요청(student.getAccessToken(), reviewRequest);
@@ -254,13 +212,7 @@ class ReviewAcceptanceTest {
         @DisplayName("자기 자신에게 리뷰 요청을 보내는 경우")
         void selfRequest() {
             // given
-            ReviewRequest reviewRequest = ReviewRequest.builder()
-                                                       .studentId(student.getId())
-                                                       .teacherId(student.getId())
-                                                       .title("리뷰 요청합니다!")
-                                                       .content("초보라 맞게 한지 잘 모르겠네요.. 잘 부탁드려요!")
-                                                       .prUrl("https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
-                                                       .build();
+            ReviewRequest reviewRequest = 리뷰_요청_데이터(student.getId(), student.getId());
 
             // when
             ExtractableResponse<Response> response = 새로운_리뷰_요청(student.getAccessToken(), reviewRequest);
@@ -277,13 +229,7 @@ class ReviewAcceptanceTest {
         void studentNotSameLoginMember() {
             // given
             LoginResponse anonymous = 학생_로그인되어_있음("allie");
-            ReviewRequest reviewRequest = ReviewRequest.builder()
-                                                       .studentId(anonymous.getId())
-                                                       .teacherId(teacher.getId())
-                                                       .title("리뷰 요청합니다!")
-                                                       .content("초보라 맞게 한지 잘 모르겠네요.. 잘 부탁드려요!")
-                                                       .prUrl("https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
-                                                       .build();
+            ReviewRequest reviewRequest = 리뷰_요청_데이터(anonymous.getId(), teacher.getId());
 
             // when
             ExtractableResponse<Response> response = 새로운_리뷰_요청(student.getAccessToken(), reviewRequest);
@@ -309,20 +255,9 @@ class ReviewAcceptanceTest {
             student = 학생_로그인되어_있음("air");
             teacher = 리뷰어_로그인되어_있음("curry");
 
-            ReviewRequest reviewRequest1 = ReviewRequest.builder()
-                                                        .studentId(student.getId())
-                                                        .teacherId(teacher.getId())
-                                                        .title("리뷰 요청합니다!")
-                                                        .content("초보라 맞게 한지 잘 모르겠네요.. 잘 부탁드려요!")
-                                                        .prUrl("https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
-                                                        .build();
-            ReviewRequest reviewRequest2 = ReviewRequest.builder()
-                                                        .studentId(student.getId())
-                                                        .teacherId(teacher.getId())
-                                                        .title("코리부!")
-                                                        .content("기대중입니다!")
-                                                        .prUrl("https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
-                                                        .build();
+            ReviewRequest reviewRequest1 = 리뷰_요청_데이터(student.getId(), teacher.getId());
+            ReviewRequest reviewRequest2 = 리뷰_요청_데이터2(student.getId(), teacher.getId());
+
             새로운_리뷰_요청(student.getAccessToken(), reviewRequest1);
             새로운_리뷰_요청(student.getAccessToken(), reviewRequest2);
         }
@@ -383,20 +318,9 @@ class ReviewAcceptanceTest {
             student = 학생_로그인되어_있음("air");
             teacher = 리뷰어_로그인되어_있음("curry");
 
-            ReviewRequest reviewRequest1 = ReviewRequest.builder()
-                                                        .studentId(student.getId())
-                                                        .teacherId(teacher.getId())
-                                                        .title("리뷰 요청합니다!")
-                                                        .content("초보라 맞게 한지 잘 모르겠네요.. 잘 부탁드려요!")
-                                                        .prUrl("https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
-                                                        .build();
-            ReviewRequest reviewRequest2 = ReviewRequest.builder()
-                                                        .studentId(student.getId())
-                                                        .teacherId(teacher.getId())
-                                                        .title("코리부!")
-                                                        .content("기대중입니다!")
-                                                        .prUrl("https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
-                                                        .build();
+            ReviewRequest reviewRequest1 = 리뷰_요청_데이터(student.getId(), teacher.getId());
+            ReviewRequest reviewRequest2 = 리뷰_요청_데이터2(student.getId(), teacher.getId());
+
             새로운_리뷰_요청(student.getAccessToken(), reviewRequest1);
             새로운_리뷰_요청(student.getAccessToken(), reviewRequest2);
         }
@@ -442,16 +366,11 @@ class ReviewAcceptanceTest {
             super.setUp();
             // given
             LoginResponse student = 학생_로그인되어_있음("air");
-            LoginResponse teacher = 학생_로그인되어_있음("curry");
+            LoginResponse teacher = 리뷰어_로그인되어_있음("curry");
 
-            ReviewRequest reviewRequest1 = ReviewRequest.builder()
-                                                        .studentId(student.getId())
-                                                        .teacherId(teacher.getId())
-                                                        .title("리뷰 요청합니다!")
-                                                        .content("초보라 맞게 한지 잘 모르겠네요.. 잘 부탁드려요!")
-                                                        .prUrl("https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
-                                                        .build();
-            reviewId = 새로운_리뷰_요청(student.getAccessToken(), reviewRequest1).header("Location").substring(9);
+            ReviewRequest reviewRequest = 리뷰_요청_데이터(student.getId(), teacher.getId());
+
+            reviewId = 새로운_리뷰_요청(student.getAccessToken(), reviewRequest).header("Location").substring(9);
         }
 
         @Test
@@ -507,13 +426,7 @@ class ReviewAcceptanceTest {
             student = 학생_로그인되어_있음("air");
             teacher = 리뷰어_로그인되어_있음("curry");
 
-            ReviewRequest reviewRequest = ReviewRequest.builder()
-                                                       .studentId(student.getId())
-                                                       .teacherId(teacher.getId())
-                                                       .title("리뷰 요청합니다!")
-                                                       .content("초보라 맞게 한지 잘 모르겠네요.. 잘 부탁드려요!")
-                                                       .prUrl("https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
-                                                       .build();
+            ReviewRequest reviewRequest = 리뷰_요청_데이터(student.getId(), teacher.getId());
             reviewId = 새로운_리뷰_요청(student.getAccessToken(), reviewRequest).header("Location").substring(9);
         }
 
@@ -521,13 +434,7 @@ class ReviewAcceptanceTest {
         @DisplayName("리뷰 수정 성공")
         void updateReviewSuccess() {
             // given
-            ReviewRequest reviewRequest = ReviewRequest.builder()
-                                                       .studentId(student.getId())
-                                                       .teacherId(teacher.getId())
-                                                       .title("[수정] 리뷰 요청합니다!")
-                                                       .content("[수정] 초보라 맞게 한지 잘 모르겠네요.. 잘 부탁드려요!")
-                                                       .prUrl("[수정] https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
-                                                       .build();
+            ReviewRequest reviewRequest = 리뷰_요청_데이터2(student.getId(), teacher.getId());
 
             // when
             ExtractableResponse<Response> response = 리뷰_수정_요청(reviewId, student.getAccessToken(), reviewRequest);
@@ -541,13 +448,7 @@ class ReviewAcceptanceTest {
         void notExistReview() {
             // given
             String notExistReviewId = "100";
-            ReviewRequest reviewRequest = ReviewRequest.builder()
-                                                       .studentId(student.getId())
-                                                       .teacherId(teacher.getId())
-                                                       .title("[수정] 리뷰 요청합니다!")
-                                                       .content("[수정] 초보라 맞게 한지 잘 모르겠네요.. 잘 부탁드려요!")
-                                                       .prUrl("[수정] https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
-                                                       .build();
+            ReviewRequest reviewRequest = 리뷰_요청_데이터2(student.getId(), teacher.getId());
 
             // when
             ExtractableResponse<Response> response = 리뷰_수정_요청(notExistReviewId, student.getAccessToken(), reviewRequest);
@@ -564,13 +465,7 @@ class ReviewAcceptanceTest {
         void noAuthorization() {
             // given
             LoginResponse otherStudent = 학생_로그인되어_있음("allie");
-            ReviewRequest reviewRequest = ReviewRequest.builder()
-                                                       .studentId(student.getId())
-                                                       .teacherId(teacher.getId())
-                                                       .title("[수정] 리뷰 요청합니다!")
-                                                       .content("[수정] 초보라 맞게 한지 잘 모르겠네요.. 잘 부탁드려요!")
-                                                       .prUrl("[수정] https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
-                                                       .build();
+            ReviewRequest reviewRequest = 리뷰_요청_데이터2(student.getId(), teacher.getId());
 
             // when
             ExtractableResponse<Response> response = 리뷰_수정_요청(reviewId, otherStudent.getAccessToken(), reviewRequest);
@@ -585,13 +480,7 @@ class ReviewAcceptanceTest {
         @DisplayName("유효하지 않은 access token")
         void invalidAccessToken() {
             // given
-            ReviewRequest reviewRequest = ReviewRequest.builder()
-                                                       .studentId(student.getId())
-                                                       .teacherId(teacher.getId())
-                                                       .title("[수정] 리뷰 요청합니다!")
-                                                       .content("[수정] 초보라 맞게 한지 잘 모르겠네요.. 잘 부탁드려요!")
-                                                       .prUrl("[수정] https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
-                                                       .build();
+            ReviewRequest reviewRequest = 리뷰_요청_데이터2(student.getId(), teacher.getId());
 
             // when
             ExtractableResponse<Response> response = 리뷰_수정_요청(reviewId, "invalid.access.token", reviewRequest);
@@ -618,13 +507,7 @@ class ReviewAcceptanceTest {
             student = 학생_로그인되어_있음("air");
             teacher = 리뷰어_로그인되어_있음("curry");
 
-            ReviewRequest reviewRequest = ReviewRequest.builder()
-                                                       .studentId(student.getId())
-                                                       .teacherId(teacher.getId())
-                                                       .title("리뷰 요청합니다!")
-                                                       .content("초보라 맞게 한지 잘 모르겠네요.. 잘 부탁드려요!")
-                                                       .prUrl("https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
-                                                       .build();
+            ReviewRequest reviewRequest = 리뷰_요청_데이터(student.getId(), teacher.getId());
             reviewId = 새로운_리뷰_요청(student.getAccessToken(), reviewRequest).header("Location").substring(9);
         }
 
@@ -760,13 +643,7 @@ class ReviewAcceptanceTest {
             student = 학생_로그인되어_있음("air");
             teacher = 리뷰어_로그인되어_있음("curry");
 
-            ReviewRequest reviewRequest = ReviewRequest.builder()
-                                                       .studentId(student.getId())
-                                                       .teacherId(teacher.getId())
-                                                       .title("리뷰 요청합니다!")
-                                                       .content("초보라 맞게 한지 잘 모르겠네요.. 잘 부탁드려요!")
-                                                       .prUrl("https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
-                                                       .build();
+            ReviewRequest reviewRequest = 리뷰_요청_데이터(student.getId(), teacher.getId());
             reviewId = 새로운_리뷰_요청(student.getAccessToken(), reviewRequest).header("Location").substring(9);
         }
 
@@ -1042,5 +919,25 @@ class ReviewAcceptanceTest {
                           .then()
                           .log().all()
                           .extract();
+    }
+
+    public static ReviewRequest 리뷰_요청_데이터(Long studentId, Long teacherId) {
+        return ReviewRequest.builder()
+                            .studentId(studentId)
+                            .teacherId(teacherId)
+                            .title("리뷰 요청합니다!")
+                            .content("초보라 맞게 한지 잘 모르겠네요.. 잘 부탁드려요!")
+                            .prUrl("https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
+                            .build();
+    }
+
+    public static ReviewRequest 리뷰_요청_데이터2(Long studentId, Long teacherId) {
+        return ReviewRequest.builder()
+                            .studentId(studentId)
+                            .teacherId(teacherId)
+                            .title("코리부!")
+                            .content("기대중입니다!")
+                            .prUrl("https://github.com/woowacourse-teams/2021-drop-the-code/pull/262")
+                            .build();
     }
 }

@@ -31,7 +31,7 @@ class LoginMemberTest {
 
         // when
         // then
-        assertThatThrownBy(() -> loginMember.validatesAuthorityToShowReview(studentId))
+        assertThatThrownBy(() -> loginMember.validatesAuthorityToReview(studentId))
                 .isInstanceOf(AuthorizationException.class);
     }
 

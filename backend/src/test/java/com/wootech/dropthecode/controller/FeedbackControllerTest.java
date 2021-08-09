@@ -46,14 +46,14 @@ class FeedbackControllerTest extends RestApiDocumentTest {
     @Test
     void findAllFeedbackTest() throws Exception {
         ProfileResponse fafi = ProfileResponse.builder()
-                                            .id(1L)
-                                            .name("파피")
-                                            .imageUrl("https://dropthecode.co.kr/fafi.jpg")
-                                            .build();
+                                              .id(1L)
+                                              .name("파피")
+                                              .imageUrl("https://dropthecode.co.kr/fafi.jpg")
+                                              .build();
         ProfileResponse allie = ProfileResponse.builder()
-                                              .id(2L)
-                                              .name("알리")
-                                              .imageUrl("https://dropthecode.co.kr/allie.jpg")
+                                               .id(2L)
+                                               .name("알리")
+                                               .imageUrl("https://dropthecode.co.kr/allie.jpg")
                                                .build();
 
         FeedbackPaginationResponse response = new FeedbackPaginationResponse(

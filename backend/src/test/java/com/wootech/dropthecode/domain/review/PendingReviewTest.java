@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.wootech.dropthecode.builder.MemberBuilder.dummyMember;
 import static com.wootech.dropthecode.builder.ReviewBuilder.dummyReview;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 public class PendingReviewTest {
 

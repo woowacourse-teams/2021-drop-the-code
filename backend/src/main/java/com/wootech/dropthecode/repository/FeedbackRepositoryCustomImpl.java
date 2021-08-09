@@ -16,8 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import static com.wootech.dropthecode.domain.QFeedback.feedback;
-import static com.wootech.dropthecode.domain.review.QReview.review;
 import static com.wootech.dropthecode.domain.QMember.member;
+import static com.wootech.dropthecode.domain.review.QReview.review;
 
 public class FeedbackRepositoryCustomImpl extends Querydsl4RepositorySupport implements FeedbackRepositoryCustom {
 

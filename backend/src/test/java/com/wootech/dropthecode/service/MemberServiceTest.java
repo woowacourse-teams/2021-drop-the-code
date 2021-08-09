@@ -1,7 +1,6 @@
 package com.wootech.dropthecode.service;
 
 import java.util.Optional;
-
 import javax.persistence.EntityNotFoundException;
 
 import com.wootech.dropthecode.domain.LoginMember;

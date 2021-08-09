@@ -6,7 +6,6 @@ import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.dto.response.MemberResponse;
-import com.wootech.dropthecode.exception.AuthenticationException;
 import com.wootech.dropthecode.repository.MemberRepository;
 import com.wootech.dropthecode.repository.TeacherProfileRepository;
 

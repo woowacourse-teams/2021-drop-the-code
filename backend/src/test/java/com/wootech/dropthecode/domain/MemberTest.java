@@ -4,7 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static com.wootech.dropthecode.builder.MemberBuilder.dummyMember;
-import static com.wootech.dropthecode.builder.TeacherProfileBuilder.dummyTeacherProfile;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("member 도메인 테스트")

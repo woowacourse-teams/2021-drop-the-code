@@ -13,7 +13,6 @@ import com.wootech.dropthecode.repository.LanguageRepository;
 import com.wootech.dropthecode.repository.SkillRepository;
 import com.wootech.dropthecode.repository.bridge.LanguageSkillRepository;
 
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.test.context.ActiveProfiles;

@@ -1,8 +1,5 @@
 package com.wootech.dropthecode.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.wootech.dropthecode.domain.Feedback;
 import com.wootech.dropthecode.domain.review.Review;
 import com.wootech.dropthecode.dto.request.FeedbackRequest;
@@ -39,9 +36,9 @@ public class FeedbackService {
         Page<FeedbackResponse> feedbackResponses = feedbackRepository.findAll(condition, pageable);
 
         return FeedbackPaginationResponse.builder()
-                                  .feedbacks(feedbackResponses.getContent())
-                                  .pageCount(feedbackResponses.getTotalPages())
-                                  .build();
+                                         .feedbacks(feedbackResponses.getContent())
+                                         .pageCount(feedbackResponses.getTotalPages())
+                                         .build();
     }
 
     private FeedbackResponse feedbackToResponse(Feedback feedback) {

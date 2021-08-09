@@ -1,14 +1,11 @@
 package com.wootech.dropthecode.acceptance;
 
 import com.wootech.dropthecode.domain.Role;
-import com.wootech.dropthecode.domain.oauth.InMemoryProviderRepository;
-import com.wootech.dropthecode.domain.oauth.OauthProvider;
 import com.wootech.dropthecode.dto.response.AccessTokenResponse;
 import com.wootech.dropthecode.dto.response.LoginResponse;
 import com.wootech.dropthecode.exception.ErrorResponse;
 import com.wootech.dropthecode.exception.OauthTokenRequestException;
 
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 
 import org.junit.jupiter.api.DisplayName;
@@ -19,22 +16,18 @@ import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE;
 
 @DisplayName("Auth 관련 인수 테스트")
 public class AuthAcceptanceTest extends AcceptanceTest {
 
-    @MockBean
-    private InMemoryProviderRepository inMemoryProviderRepository;
-
     @Test
     @DisplayName("OAuth 로그인 - 로그인 성공")
     void oAuthLoginTestSuccess() {
         // given
         // when
-        LoginResponse loginResponse = 로그인되어_있음();
+        LoginResponse loginResponse = 학생_로그인되어_있음("air");
 
         // then
         assertThat(loginResponse).usingRecursiveComparison().ignoringFields("accessToken", "refreshToken")
@@ -42,8 +35,8 @@ public class AuthAcceptanceTest extends AcceptanceTest {
                                                          .id(1L)
                                                          .name("air")
                                                          .email("air@email.com")
-                                                         .imageUrl("s3://image")
-                                                         .githubUrl("https://github.com")
+                                                         .imageUrl("s3://image/air")
+                                                         .githubUrl("https://github.com/air")
                                                          .role(Role.STUDENT)
                                                          .tokenType("Bearer")
                                                          .build());
@@ -66,7 +59,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     @DisplayName("access token 갱신 - 유효한 access token & 유효한 refresh token")
     void notExpiredAccessTokenAndNotExpiredRefreshToken() {
         // given
-        LoginResponse loginResponse = 로그인되어_있음();
+        LoginResponse loginResponse = 학생_로그인되어_있음("air");
 
         // when
         ExtractableResponse<Response> response = 토큰_갱신_요청(loginResponse.getAccessToken(), loginResponse.getRefreshToken());
@@ -81,7 +74,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     @DisplayName("access token 갱신 - 유효하지않은 access token & 유효하지않은 refresh token")
     void expiredAccessTokenAndExpiredRefreshToken() {
         // given
-        LoginResponse loginResponse = 로그인되어_있음();
+        LoginResponse loginResponse = 학생_로그인되어_있음("air");
 
         // when
         ExtractableResponse<Response> response = 토큰_갱신_요청(loginResponse.getAccessToken() + "invalid", loginResponse.getRefreshToken() + "invalid");
@@ -96,7 +89,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     @DisplayName("access token 갱신 - 유효한 access token & 유효하지않은 refresh token")
     void notExpiredAccessTokenAndExpiredRefreshToken() {
         // given
-        LoginResponse loginResponse = 로그인되어_있음();
+        LoginResponse loginResponse = 학생_로그인되어_있음("air");
 
         // when
         ExtractableResponse<Response> response = 토큰_갱신_요청(loginResponse.getAccessToken(), loginResponse.getRefreshToken() + "invalid");
@@ -111,7 +104,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     @DisplayName("access token 갱신 - 유효하지않은 access token & 유효한 refresh token")
     void invalidAccessTokenAndNotExpiredRefreshToken() {
         // given
-        LoginResponse loginResponse = 로그인되어_있음();
+        LoginResponse loginResponse = 학생_로그인되어_있음("air");
 
         // when
         ExtractableResponse<Response> response = 토큰_갱신_요청(loginResponse.getAccessToken() + "invalid", loginResponse.getRefreshToken());
@@ -126,7 +119,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     @DisplayName("로그 아웃 성공")
     void logOutSuccess() {
         // given
-        LoginResponse loginResponse = 로그인되어_있음();
+        LoginResponse loginResponse = 학생_로그인되어_있음("air");
 
         // when
         ExtractableResponse<Response> response = 로그아웃_요청(loginResponse.getAccessToken());
@@ -139,7 +132,7 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     @DisplayName("로그 아웃 실패 - 유효하지 않은 access token")
     void invalidAccessToken() {
         // given
-        LoginResponse loginResponse = 로그인되어_있음();
+        LoginResponse loginResponse = 학생_로그인되어_있음("air");
 
         // when
         ExtractableResponse<Response> response = 로그아웃_요청(loginResponse.getAccessToken() + "invalid");
@@ -148,36 +141,6 @@ public class AuthAcceptanceTest extends AcceptanceTest {
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
         assertThat(error.getErrorMessage()).isEqualTo("access token이 유효하지 않습니다.");
-    }
-
-
-    public LoginResponse 로그인되어_있음() {
-        ExtractableResponse<Response> response = 로그인_요청();
-        return response.as(LoginResponse.class);
-    }
-
-    public ErrorResponse 예외_결과(ExtractableResponse<Response> response) {
-        return response.as(ErrorResponse.class);
-    }
-
-    public ExtractableResponse<Response> 로그인_요청() {
-        String serverAddress = "http://localhost:" + port;
-        given(inMemoryProviderRepository.findByProviderName("github"))
-                .willReturn(OauthProvider.builder()
-                                         .clientId("fakeClientId")
-                                         .clientSecret("fakeClientSecret")
-                                         .tokenUrl(serverAddress + "/fake/login/oauth/access_token")
-                                         .userInfoUrl(serverAddress + "/fake/user")
-                                         .build());
-
-        return RestAssured.given()
-                          .log().all()
-                          .when()
-                          .get("/login/oauth?providerName=github&code=authorizationCode")
-                          .then()
-                          .log().all()
-                          .statusCode(HttpStatus.OK.value())
-                          .extract();
     }
 
     public ExtractableResponse<Response> 유효하지않은_OAUTH_서버_로그인_요청() {

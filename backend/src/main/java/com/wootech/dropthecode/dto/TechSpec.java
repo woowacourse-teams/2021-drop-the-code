@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import com.wootech.dropthecode.domain.Language;
 import com.wootech.dropthecode.domain.Skill;
 import com.wootech.dropthecode.domain.bridge.LanguageSkill;
+import com.wootech.dropthecode.exception.TeacherException;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -44,7 +45,7 @@ public class TechSpec {
                                        .collect(Collectors.toList());
 
         if (!collect.containsAll(skills)) {
-            throw new IllegalArgumentException("언어에 포함되지 않는 기술이 있습니다.");
+            throw new TeacherException("언어에 포함되지 않는 기술이 있습니다.");
         }
     }
 }

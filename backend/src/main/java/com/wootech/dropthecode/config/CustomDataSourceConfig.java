@@ -77,14 +77,12 @@ public class CustomDataSourceConfig {
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         Map<String, String> properties = this.jpaProperties.getProperties();
-        properties.keySet().forEach(System.out::println);
         EntityManagerFactoryBuilder entityManagerFactoryBuilder = createEntityManagerFactoryBuilder(this.jpaProperties);
         return entityManagerFactoryBuilder.dataSource(dataSource()).packages("com.wootech.dropthecode").build();
     }
 
     private EntityManagerFactoryBuilder createEntityManagerFactoryBuilder(JpaProperties jpaProperties) {
         AbstractJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        vendorAdapter.setGenerateDdl(true);
         return new EntityManagerFactoryBuilder(vendorAdapter, jpaProperties(), null);
     }
 

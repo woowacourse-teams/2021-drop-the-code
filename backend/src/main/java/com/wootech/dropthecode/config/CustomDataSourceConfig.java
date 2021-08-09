@@ -7,15 +7,16 @@ import javax.sql.DataSource;
 
 import com.wootech.dropthecode.repository.replication.CustomDataSourceProperties;
 import com.wootech.dropthecode.repository.replication.ReplicationRoutingDataSource;
+import com.zaxxer.hikari.HikariDataSource;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
-import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -35,12 +36,13 @@ public class CustomDataSourceConfig {
     }
 
     public DataSource createDataSource(String url) {
-        SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
-        dataSource.setUrl(url);
-        dataSource.setDriverClass(com.mysql.cj.jdbc.Driver.class);
-        dataSource.setUsername(databaseProperty.getUsername());
-        dataSource.setPassword(databaseProperty.getPassword());
-        return dataSource;
+        return DataSourceBuilder.create()
+                                .type(HikariDataSource.class)
+                                .url(url)
+                                .driverClassName("com.mysql.cj.jdbc.Driver")
+                                .username(databaseProperty.getUsername())
+                                .password(databaseProperty.getPassword())
+                                .build();
     }
 
     @Bean

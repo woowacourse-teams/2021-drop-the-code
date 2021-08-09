@@ -29,8 +29,8 @@ public class ReviewController {
      * @title 리뷰 생성
      */
     @PostMapping
-    public ResponseEntity<Void> create(@RequestBody @Valid ReviewRequest reviewRequest) {
-        Long id = reviewService.create(reviewRequest);
+    public ResponseEntity<Void> create(@Login LoginMember loginMember, @RequestBody @Valid ReviewRequest reviewRequest) {
+        Long id = reviewService.create(loginMember, reviewRequest);
         return ResponseEntity.status(HttpStatus.CREATED)
                              .header("Location", "/reviews/" + id)
                              .build();

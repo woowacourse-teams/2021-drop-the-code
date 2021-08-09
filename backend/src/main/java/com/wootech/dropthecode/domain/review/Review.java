@@ -5,10 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.persistence.*;
 
-import com.wootech.dropthecode.domain.BaseEntity;
-import com.wootech.dropthecode.domain.Feedback;
-import com.wootech.dropthecode.domain.Member;
-import com.wootech.dropthecode.domain.Progress;
+import com.wootech.dropthecode.domain.*;
 import com.wootech.dropthecode.exception.AuthorizationException;
 import com.wootech.dropthecode.exception.ReviewException;
 
@@ -54,6 +51,7 @@ public class Review extends BaseEntity {
     @Builder
     public Review(Member teacher, Member student, String title, String content, String prUrl, Long elapsedTime, Progress progress, LocalDateTime createdAt) {
         super(createdAt);
+        validateAuthorityOfReview(teacher, student);
         this.teacher = teacher;
         this.student = student;
         this.title = title;
@@ -63,9 +61,21 @@ public class Review extends BaseEntity {
         this.progress = progress;
     }
 
+    private void validateAuthorityOfReview(Member teacher, Member student) {
+        // 자기 자신에게 요청을 보내서 student와 teacher의 id가 같은 경우 예외 처리
+        if (student.hasSameId(teacher.getId())) {
+            throw new ReviewException("자신에게는 리뷰를 요청할 수 없습니다.");
+        }
+
+        // 학생이 학생한테 요청 보내서 teacher라고 들어왔지만 teacher 권한이 없는 경우 예외 처리
+        if (!teacher.hasRole(Role.TEACHER)) {
+            throw new ReviewException("리뷰어 권한이 없는 사용자에게는 리뷰를 요청할 수 없습니다.");
+        }
+    }
+
     public void validateAuthorityOfStudent(Long id) {
         if (!this.student.hasSameId(id)) {
-            throw new AuthorizationException("리뷰를 수정할 권한이 없습니다!");
+            throw new AuthorizationException("리뷰를 요청하거나 수정할 권한이 없습니다!");
         }
     }
 

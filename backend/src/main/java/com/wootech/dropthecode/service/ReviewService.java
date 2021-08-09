@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 
-import com.wootech.dropthecode.domain.*;
 import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Member;
+import com.wootech.dropthecode.domain.Progress;
 import com.wootech.dropthecode.domain.review.CompletedReview;
 import com.wootech.dropthecode.domain.review.OnGoingReview;
 import com.wootech.dropthecode.domain.review.PendingReview;
@@ -17,7 +17,6 @@ import com.wootech.dropthecode.dto.request.ReviewRequest;
 import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
 import com.wootech.dropthecode.dto.response.ReviewsResponse;
-import com.wootech.dropthecode.exception.ReviewException;
 import com.wootech.dropthecode.repository.ReviewRepository;
 
 import org.springframework.data.domain.Page;
@@ -40,7 +39,7 @@ public class ReviewService {
     }
 
     @Transactional
-    public Long create(ReviewRequest reviewRequest) {
+    public Long create(LoginMember loginMember, ReviewRequest reviewRequest) {
         Member teacher = memberService.findById(reviewRequest.getTeacherId());
         Member student = memberService.findById(reviewRequest.getStudentId());
         Review review = Review.builder()
@@ -51,6 +50,8 @@ public class ReviewService {
                               .prUrl(reviewRequest.getPrUrl())
                               .progress(Progress.PENDING)
                               .build();
+        // 로그인한 사용자와 리뷰의 학생 id가 같은지 확인
+        review.validateAuthorityOfStudent(loginMember.getId());
         Review savedReview = reviewRepository.save(review);
         return savedReview.getId();
     }

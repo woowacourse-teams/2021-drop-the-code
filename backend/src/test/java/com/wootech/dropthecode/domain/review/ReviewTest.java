@@ -4,6 +4,7 @@ import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.domain.Progress;
 import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.exception.AuthorizationException;
+import com.wootech.dropthecode.exception.ReviewException;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,43 @@ public class ReviewTest {
             completedReview.validateAuthorityOfTeacher(teacher.getId());
         }).doesNotThrowAnyException();
     }
+
+    @DisplayName("학생이 학생에게 요청 보냈을 때 - 실패")
+    @Test
+    void invalidReviewByRequestToStudent() {
+        Member fakeTeacher = dummyMember(1L, "1000", "Fafi", "fafi@gmail.com", "s3://fafi2143", "github url", Role.STUDENT, null);
+        Member student = dummyMember(2L, "1000", "Fafi", "fafi@gmail.com", "s3://fafi2143", "github url", Role.STUDENT, null);
+
+        assertThatThrownBy(() -> {
+            dummyReview(fakeTeacher, student, "test title", "test content", "github/3", 0L, Progress.PENDING);
+        }).isInstanceOf(ReviewException.class)
+          .hasMessage("리뷰어 권한이 없는 사용자에게는 리뷰를 요청할 수 없습니다.");
+    }
+
+    @DisplayName("자기 자신에게 요청 보냈을 때 - 실패")
+    @Test
+    void invalidReviewBySelfRequest() {
+        Member teacher = dummyMember(2L, "1000", "Fafi", "fafi@gmail.com", "s3://fafi2143", "github url", Role.TEACHER, null);
+        Member student = dummyMember(2L, "1000", "Fafi", "fafi@gmail.com", "s3://fafi2143", "github url", Role.STUDENT, null);
+
+        assertThatThrownBy(() -> {
+            dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.PENDING);
+        }).isInstanceOf(ReviewException.class)
+          .hasMessage("자신에게는 리뷰를 요청할 수 없습니다.");
+    }
+
+    @DisplayName("로그인한 사용자와 요청된 리뷰의 학생id가 다를 때 - 실패")
+    @Test
+    void invalidReviewByLoginMemberId() {
+        Member teacher = dummyMember(1L, "1000", "Fafi", "fafi@gmail.com", "s3://fafi2143", "github url", Role.TEACHER, null);
+        Member student = dummyMember(2L, "1000", "Fafi", "fafi@gmail.com", "s3://fafi2143", "github url", Role.STUDENT, null);
+
+        assertThatThrownBy(() -> {
+            dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.PENDING).validateAuthorityOfStudent(3L);
+        }).isInstanceOf(AuthorizationException.class)
+          .hasMessage("리뷰를 요청하거나 수정할 권한이 없습니다!");
+    }
+
 
     @Test
     @DisplayName("리뷰 내용 수정 - 권한이 있는 경우")
@@ -64,12 +102,16 @@ public class ReviewTest {
     @Test
     @DisplayName("Pending 상태인지 확인")
     void isPending() {
+
+        Member teacher = dummyMember(1L, "1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER, null);
+        Member student = dummyMember(2L, "2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT, null);
+
         // given
-        Review pendingReview = dummyReview(null, null, "title1", "content1", "pr1", 0L, Progress.PENDING);
-        Review deniedReview = dummyReview(null, null, "title1", "content1", "pr1", 0L, Progress.DENIED);
-        Review onGoingReview = dummyReview(null, null, "title1", "content1", "pr1", 0L, Progress.ON_GOING);
-        Review teacherCompletedReview = dummyReview(null, null, "title1", "content1", "pr1", 0L, Progress.TEACHER_COMPLETED);
-        Review finishedReview = dummyReview(null, null, "title1", "content1", "pr1", 0L, Progress.FINISHED);
+        Review pendingReview = dummyReview(teacher, student, "title1", "content1", "pr1", 0L, Progress.PENDING);
+        Review deniedReview = dummyReview(teacher, student, "title1", "content1", "pr1", 0L, Progress.DENIED);
+        Review onGoingReview = dummyReview(teacher, student, "title1", "content1", "pr1", 0L, Progress.ON_GOING);
+        Review teacherCompletedReview = dummyReview(teacher, student, "title1", "content1", "pr1", 0L, Progress.TEACHER_COMPLETED);
+        Review finishedReview = dummyReview(teacher, student, "title1", "content1", "pr1", 0L, Progress.FINISHED);
 
         // when
         boolean pending = pendingReview.isPending();

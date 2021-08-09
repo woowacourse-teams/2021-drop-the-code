@@ -62,7 +62,7 @@ public class ReviewTest {
         assertThatThrownBy(() -> {
             dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.PENDING).validateAuthorityOfStudent(3L);
         }).isInstanceOf(AuthorizationException.class)
-          .hasMessage("리뷰에 대한 권한이 없습니다!");
+          .hasMessage("리뷰 작업에 대한 권한이 없습니다!");
     }
 
 

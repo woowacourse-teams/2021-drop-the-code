@@ -72,7 +72,7 @@ public class ReviewControllerTest extends RestApiDocumentTest {
         // given
         ReviewRequest reviewRequest = new ReviewRequest(1L, 2L, "title1", "content1", "https://github.com/KJunseo");
         String body = objectMapper.writeValueAsString(reviewRequest);
-        given(reviewService.create(any())).willReturn(1L);
+        given(reviewService.create(any(), any())).willReturn(1L);
 
         // when
         ResultActions result = this.restDocsMockMvc.perform(

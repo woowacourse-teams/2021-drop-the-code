@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 
-import com.wootech.dropthecode.domain.*;
 import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Member;
+import com.wootech.dropthecode.domain.Progress;
 import com.wootech.dropthecode.domain.review.CompletedReview;
 import com.wootech.dropthecode.domain.review.OnGoingReview;
 import com.wootech.dropthecode.domain.review.PendingReview;
@@ -39,7 +39,8 @@ public class ReviewService {
     }
 
     @Transactional
-    public Long create(ReviewRequest reviewRequest) {
+    public Long create(LoginMember loginMember, ReviewRequest reviewRequest) {
+        loginMember.validatesAuthorityToReview(reviewRequest.getStudentId());
         Member teacher = memberService.findById(reviewRequest.getTeacherId());
         Member student = memberService.findById(reviewRequest.getStudentId());
         Review review = Review.builder()
@@ -62,7 +63,7 @@ public class ReviewService {
 
     @Transactional(readOnly = true)
     public ReviewsResponse findStudentReview(LoginMember loginMember, Long id, ReviewSearchCondition condition, Pageable pageable) {
-        loginMember.validatesAuthorityToShowReview(id);
+        loginMember.validatesAuthorityToReview(id);
         Page<ReviewSummary> pageReviews = reviewRepository.searchPageByStudentId(id, condition, pageable);
 
         List<ReviewResponse> reviews = pageReviews.stream()

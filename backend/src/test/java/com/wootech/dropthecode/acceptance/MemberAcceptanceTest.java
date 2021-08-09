@@ -2,31 +2,16 @@ package com.wootech.dropthecode.acceptance;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.wootech.dropthecode.domain.Language;
 import com.wootech.dropthecode.domain.Role;
-import com.wootech.dropthecode.domain.Skill;
-import com.wootech.dropthecode.domain.bridge.LanguageSkill;
-import com.wootech.dropthecode.domain.oauth.InMemoryProviderRepository;
-import com.wootech.dropthecode.domain.oauth.OauthProvider;
 import com.wootech.dropthecode.dto.TechSpec;
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
 import com.wootech.dropthecode.dto.response.LoginResponse;
 import com.wootech.dropthecode.dto.response.MemberResponse;
-import com.wootech.dropthecode.repository.LanguageRepository;
-import com.wootech.dropthecode.repository.SkillRepository;
-import com.wootech.dropthecode.repository.bridge.LanguageSkillRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -37,67 +22,9 @@ import io.restassured.response.Response;
 
 import static com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils.OBJECT_MAPPER;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
 
 @DisplayName("멤버 관련 인수 테스트")
-public class MemberAcceptanceTest extends AcceptanceTest{
-
-    @Autowired
-    LanguageRepository languageRepository;
-
-    @Autowired
-    SkillRepository skillRepository;
-
-    @Autowired
-    LanguageSkillRepository languageSkillRepository;
-
-    @BeforeEach
-    void initializeData() {
-        Map<Long, Language> languageMap = insertLanguage()
-                .stream()
-                .collect(Collectors.toMap(Language::getId, Function.identity()));
-
-        Map<Long, Skill> skillMap = insertSkill()
-                .stream()
-                .collect(Collectors.toMap(Skill::getId, Function.identity()));
-
-        insertLanguageSkill(languageMap, skillMap);
-
-    }
-
-    public List<Language> insertLanguage() {
-        List<Language> languages = Arrays.asList(
-                Language.builder().name("java").build(),
-                Language.builder().name("javascript").build(),
-                Language.builder().name("python").build(),
-                Language.builder().name("kotlin").build(),
-                Language.builder().name("c").build()
-        );
-        return languageRepository.saveAll(languages);
-    }
-
-    public List<Skill> insertSkill() {
-        List<Skill> skills = Arrays.asList(
-                Skill.builder().name("spring").build(),
-                Skill.builder().name("vue").build(),
-                Skill.builder().name("react").build(),
-                Skill.builder().name("angular").build(),
-                Skill.builder().name("django").build()
-        );
-        return skillRepository.saveAll(skills);
-    }
-
-    public void insertLanguageSkill(Map<Long, Language> languageMap, Map<Long, Skill> skillMap) {
-        List<LanguageSkill> languageSkills = Arrays.asList(
-                new LanguageSkill(languageMap.get(1L), skillMap.get(1L)),
-                new LanguageSkill(languageMap.get(2L), skillMap.get(2L)),
-                new LanguageSkill(languageMap.get(2L), skillMap.get(3L)),
-                new LanguageSkill(languageMap.get(2L), skillMap.get(4L)),
-                new LanguageSkill(languageMap.get(3L), skillMap.get(5L)),
-                new LanguageSkill(languageMap.get(4L), skillMap.get(1L))
-        );
-        languageSkillRepository.saveAll(languageSkills);
-    }
+public class MemberAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("로그인 한 유저 정보 조회 성공")

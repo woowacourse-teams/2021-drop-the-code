@@ -28,9 +28,9 @@ public class LoginMember {
         }
     }
 
-    public void validatesAuthorityToShowReview(Long studentId) {
+    public void validatesAuthorityToReview(Long studentId) {
         if (!this.id.equals(studentId)) {
-            throw new AuthorizationException("리뷰를 조회할 권한이 없습니다.");
+            throw new AuthorizationException("리뷰에 대한 권한이 없습니다.");
         }
     }
 }

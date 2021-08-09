@@ -339,7 +339,7 @@ class AuthenticationInterceptorTest {
             ReviewRequest reviewRequest =
                     new ReviewRequest(1L, 2L, "review title", "review content", "pr link");
 
-            given(reviewService.create(any())).willReturn(1L);
+            given(reviewService.create(any(), any())).willReturn(1L);
 
             // when
             WebTestClient.ResponseSpec response = webTestClient.post()

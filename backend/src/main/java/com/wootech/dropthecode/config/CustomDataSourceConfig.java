@@ -1,5 +1,6 @@
 package com.wootech.dropthecode.config;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.persistence.EntityManagerFactory;
@@ -16,6 +17,8 @@ import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
+import org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy;
+import org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -23,6 +26,7 @@ import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.AbstractJpaVendorAdapter;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
@@ -74,13 +78,15 @@ public class CustomDataSourceConfig {
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        EntityManagerFactoryBuilder entityManagerFactoryBuilder = createEntityManagerFactoryBuilder(jpaProperties);
+        Map<String, String> properties = this.jpaProperties.getProperties();
+        properties.keySet().forEach(System.out::println);
+        EntityManagerFactoryBuilder entityManagerFactoryBuilder = createEntityManagerFactoryBuilder(this.jpaProperties);
         return entityManagerFactoryBuilder.dataSource(dataSource()).packages("com.wootech.dropthecode").build();
     }
 
     private EntityManagerFactoryBuilder createEntityManagerFactoryBuilder(JpaProperties jpaProperties) {
-        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        return new EntityManagerFactoryBuilder(vendorAdapter, jpaProperties.getProperties(), null);
+        AbstractJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        return new EntityManagerFactoryBuilder(vendorAdapter, jpaProperties(), null);
     }
 
     @Bean
@@ -88,5 +94,12 @@ public class CustomDataSourceConfig {
         JpaTransactionManager tm = new JpaTransactionManager();
         tm.setEntityManagerFactory(entityManagerFactory);
         return tm;
+    }
+
+    protected Map<String, Object> jpaProperties() {
+        Map<String, Object> props = new HashMap<>();
+        props.put("hibernate.physical_naming_strategy", SpringPhysicalNamingStrategy.class.getName());
+        props.put("hibernate.implicit_naming_strategy", SpringImplicitNamingStrategy.class.getName());
+        return props;
     }
 }

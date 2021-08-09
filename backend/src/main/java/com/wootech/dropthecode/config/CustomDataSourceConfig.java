@@ -34,12 +34,10 @@ public class CustomDataSourceConfig {
 
     private final CustomDataSourceProperties databaseProperty;
     private final JpaProperties jpaProperties;
-    private final HibernateProperties hibernateProperties;
 
-    public CustomDataSourceConfig(CustomDataSourceProperties databaseProperty, JpaProperties jpaProperties, HibernateProperties hibernateProperties) {
+    public CustomDataSourceConfig(CustomDataSourceProperties databaseProperty, JpaProperties jpaProperties) {
         this.databaseProperty = databaseProperty;
         this.jpaProperties = jpaProperties;
-        this.hibernateProperties = hibernateProperties;
     }
 
     public DataSource createDataSource(String url) {

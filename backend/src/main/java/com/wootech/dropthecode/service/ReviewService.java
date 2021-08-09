@@ -63,7 +63,8 @@ public class ReviewService {
     }
 
     @Transactional(readOnly = true)
-    public ReviewsResponse findStudentReview(Long id, ReviewSearchCondition condition, Pageable pageable) {
+    public ReviewsResponse findStudentReview(LoginMember loginMember, Long id, ReviewSearchCondition condition, Pageable pageable) {
+        loginMember.validatesAuthorityToShowReview(id);
         Page<ReviewSummary> pageReviews = reviewRepository.searchPageByStudentId(id, condition, pageable);
 
         List<ReviewResponse> reviews = pageReviews.stream()

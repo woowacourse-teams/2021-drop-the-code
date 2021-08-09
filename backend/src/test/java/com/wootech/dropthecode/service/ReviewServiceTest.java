@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityNotFoundException;
 
+import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Progress;
 import com.wootech.dropthecode.dto.ReviewSummary;
 import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
@@ -43,6 +44,7 @@ class ReviewServiceTest {
     void studentReview() {
         // given
         Long memberId = 2L;
+        LoginMember loginMember = new LoginMember(memberId);
         ReviewSearchCondition condition = new ReviewSearchCondition(Arrays.asList(Progress.ON_GOING, Progress.FINISHED), null);
         Pageable pageable = PageRequest.of(0, 3, Sort.by(Sort.Direction.ASC, "createdAt"));
         List<ReviewSummary> reviews = Arrays.asList(
@@ -64,7 +66,7 @@ class ReviewServiceTest {
                 .willReturn(pageReviews);
 
         // when
-        ReviewsResponse response = reviewService.findStudentReview(memberId, condition, pageable);
+        ReviewsResponse response = reviewService.findStudentReview(loginMember, memberId, condition, pageable);
 
         // then
         assertThat(response.getPageCount()).isEqualTo(4);

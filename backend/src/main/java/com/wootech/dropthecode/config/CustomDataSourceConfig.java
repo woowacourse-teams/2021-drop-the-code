@@ -11,8 +11,11 @@ import com.zaxxer.hikari.HikariDataSource;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -30,9 +33,13 @@ import org.springframework.transaction.PlatformTransactionManager;
 public class CustomDataSourceConfig {
 
     private final CustomDataSourceProperties databaseProperty;
+    private final JpaProperties jpaProperties;
+    private final HibernateProperties hibernateProperties;
 
-    public CustomDataSourceConfig(CustomDataSourceProperties databaseProperty) {
+    public CustomDataSourceConfig(CustomDataSourceProperties databaseProperty, JpaProperties jpaProperties, HibernateProperties hibernateProperties) {
         this.databaseProperty = databaseProperty;
+        this.jpaProperties = jpaProperties;
+        this.hibernateProperties = hibernateProperties;
     }
 
     public DataSource createDataSource(String url) {
@@ -69,13 +76,13 @@ public class CustomDataSourceConfig {
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-        entityManagerFactoryBean.setDataSource(dataSource());
-        entityManagerFactoryBean.setPackagesToScan("com.wootech.dropthecode");
-        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-        entityManagerFactoryBean.setJpaVendorAdapter(vendorAdapter);
+        EntityManagerFactoryBuilder entityManagerFactoryBuilder = createEntityManagerFactoryBuilder(jpaProperties);
+        return entityManagerFactoryBuilder.dataSource(dataSource()).packages("com.wootech.dropthecode").build();
+    }
 
-        return entityManagerFactoryBean;
+    private EntityManagerFactoryBuilder createEntityManagerFactoryBuilder(JpaProperties jpaProperties) {
+        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        return new EntityManagerFactoryBuilder(vendorAdapter, jpaProperties.getProperties(), null);
     }
 
     @Bean

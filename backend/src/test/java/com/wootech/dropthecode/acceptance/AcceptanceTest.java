@@ -20,13 +20,13 @@ import com.wootech.dropthecode.exception.ErrorResponse;
 import com.wootech.dropthecode.repository.LanguageRepository;
 import com.wootech.dropthecode.repository.SkillRepository;
 import com.wootech.dropthecode.repository.bridge.LanguageSkillRepository;
+import com.wootech.dropthecode.util.DatabaseCleanup;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -40,12 +40,14 @@ import static com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils.OBJEC
 import static org.mockito.BDDMockito.given;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @ActiveProfiles("test")
 class AcceptanceTest {
 
     @LocalServerPort
     private int port;
+
+    @Autowired
+    private DatabaseCleanup databaseCleanup;
 
     @MockBean
     protected InMemoryProviderRepository inMemoryProviderRepository;
@@ -53,6 +55,7 @@ class AcceptanceTest {
     @BeforeEach
     public void setUp() {
         RestAssured.port = port;
+        databaseCleanup.execute();
         initializeData();
     }
 

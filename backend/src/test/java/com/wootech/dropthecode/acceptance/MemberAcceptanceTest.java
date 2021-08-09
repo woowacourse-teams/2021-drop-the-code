@@ -3,7 +3,6 @@ package com.wootech.dropthecode.acceptance;
 import java.util.Arrays;
 import java.util.Collections;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.dto.TechSpec;
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
@@ -20,8 +19,8 @@ import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 
-import static com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils.OBJECT_MAPPER;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @DisplayName("멤버 관련 인수 테스트")
 public class MemberAcceptanceTest extends AcceptanceTest {
@@ -56,17 +55,6 @@ public class MemberAcceptanceTest extends AcceptanceTest {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
     }
 
-    private ExtractableResponse<Response> 로그인_한_유저_정보_조회_요청(LoginResponse loginResponse) {
-        return RestAssured.given()
-                          .log().all()
-                          .header("Authorization", "Bearer " + loginResponse.getAccessToken())
-                          .when()
-                          .get("/members/me")
-                          .then()
-                          .log().all()
-                          .extract();
-    }
-
     @Test
     @DisplayName("멤버 삭제 성공")
     void deleteMemberSuccess() {
@@ -93,26 +81,12 @@ public class MemberAcceptanceTest extends AcceptanceTest {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
     }
 
-    private ExtractableResponse<Response> 멤버_삭제_요청(LoginResponse loginResponse) {
-        return RestAssured.given()
-                          .log().all()
-                          .header("Authorization", "Bearer " + loginResponse.getAccessToken())
-                          .when()
-                          .delete("/members/me")
-                          .then()
-                          .log().all()
-                          .extract();
-    }
-
     @Test
     @DisplayName("선생님 등록 성공")
-    void registerTeacherSuccess() throws Exception {
+    void registerTeacherSuccess() {
         // given
         LoginResponse loginResponse = 학생_로그인되어_있음("air");
-
-        TechSpec techSpecJava = 정삭적인_리뷰어_언어_기술_스택_Java();
-        TechSpec techSpecJavascript = 정삭적인_리뷰어_언어_기술_스택_Javascript();
-        TeacherRegistrationRequest request = 정삭적인_리뷰어_정보(techSpecJava, techSpecJavascript);
+        TeacherRegistrationRequest request = 선생님_기본_등록_정보();
 
         // when
         ExtractableResponse<Response> response = 선생님_등록_요청(loginResponse, request);
@@ -121,22 +95,9 @@ public class MemberAcceptanceTest extends AcceptanceTest {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
     }
 
-    private ExtractableResponse<Response> 선생님_등록_요청(LoginResponse loginResponse, TeacherRegistrationRequest request) throws JsonProcessingException {
-        return RestAssured.given()
-                          .log().all()
-                          .header("Authorization", "Bearer " + loginResponse.getAccessToken())
-                          .contentType(ContentType.JSON)
-                          .body(OBJECT_MAPPER.writeValueAsString(request))
-                          .when()
-                          .post("/teachers")
-                          .then()
-                          .log().all()
-                          .extract();
-    }
-
     @Test
     @DisplayName("선생님 등록 실패 - 선생님 기술 스펙에 존재하지 않는 언어가 들어있는 경우")
-    void notExistLanguageInTeacherTechSpec() throws Exception {
+    void notExistLanguageInTeacherTechSpec() {
         // given
         LoginResponse loginResponse = 학생_로그인되어_있음("air");
 
@@ -152,7 +113,7 @@ public class MemberAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("선생님 등록 실패 - 선생님 기술 스펙에 존재하지 않는 기술이 들어있는 경우")
-    void notExistSkillInTeacherTechSpec() throws Exception {
+    void notExistSkillInTeacherTechSpec() {
         // given
         LoginResponse loginResponse = 학생_로그인되어_있음("air");
 
@@ -168,7 +129,7 @@ public class MemberAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("선생님 등록 실패 - 선생님 기술이 언어에 포함되지 않는 경우")
-    void notContainSkill() throws Exception {
+    void notContainSkill() {
         // given
         LoginResponse loginResponse = 학생_로그인되어_있음("air");
 
@@ -184,7 +145,7 @@ public class MemberAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("선생님 등록 실패 - 자기소개 제목이 빈 경우")
-    void emptyTitle() throws Exception {
+    void emptyTitle() {
         // given
         LoginResponse loginResponse = 학생_로그인되어_있음("air");
 
@@ -200,7 +161,7 @@ public class MemberAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("선생님 등록 실패 - 자기소개 내용이 빈 경우")
-    void emptyContent() throws Exception {
+    void emptyContent() {
         // given
         LoginResponse loginResponse = 학생_로그인되어_있음("air");
 
@@ -216,7 +177,7 @@ public class MemberAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("선생님 등록 실패 - 경력이 빈 경우")
-    void emptyCareer() throws Exception {
+    void emptyCareer() {
         // given
         LoginResponse loginResponse = 학생_로그인되어_있음("air");
 
@@ -232,7 +193,7 @@ public class MemberAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("선생님 등록 실패 - 선생님 기술 스펙이 빈 경우")
-    void emptyTechSpec() throws Exception {
+    void emptyTechSpec() {
         // given
         LoginResponse loginResponse = 학생_로그인되어_있음("air");
 
@@ -247,13 +208,10 @@ public class MemberAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("선생님 등록 실패 - 이미 선생님으로 등록된 경우")
-    void alreadyRegisterTeacher() throws Exception {
+    void alreadyRegisterTeacher() {
         // given
         LoginResponse loginResponse = 리뷰어_로그인되어_있음("air");
-
-        TechSpec techSpecJava = 정삭적인_리뷰어_언어_기술_스택_Java();
-        TechSpec techSpecJavascript = 정삭적인_리뷰어_언어_기술_스택_Javascript();
-        TeacherRegistrationRequest request = 정삭적인_리뷰어_정보(techSpecJava, techSpecJavascript);
+        TeacherRegistrationRequest request = 선생님_기본_등록_정보();
 
         // when
         ExtractableResponse<Response> response = 선생님_등록_요청(loginResponse, request);
@@ -264,13 +222,10 @@ public class MemberAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("선생님 등록 실패 - 유효하지 않은 access token")
-    void invalidAccessToken() throws Exception {
+    void invalidAccessToken() {
         // given
         LoginResponse loginResponse = 유효하지_않은_로그인();
-
-        TechSpec techSpecJava = 정삭적인_리뷰어_언어_기술_스택_Java();
-        TechSpec techSpecJavascript = 정삭적인_리뷰어_언어_기술_스택_Javascript();
-        TeacherRegistrationRequest request = 정삭적인_리뷰어_정보(techSpecJava, techSpecJavascript);
+        TeacherRegistrationRequest request = 선생님_기본_등록_정보();
 
         // when
         ExtractableResponse<Response> response = 선생님_등록_요청(loginResponse, request);
@@ -284,15 +239,7 @@ public class MemberAcceptanceTest extends AcceptanceTest {
     void findAllTeacher() {
         // given
         // when
-        ExtractableResponse<Response> response = RestAssured.given()
-                                                            .log().all()
-                                                            .contentType(ContentType.JSON)
-                                                            .when()
-                                                            .param("language", "java")
-                                                            .get("/teachers")
-                                                            .then()
-                                                            .log().all()
-                                                            .extract();
+        ExtractableResponse<Response> response = 선생님_전체_목록_조회_요청("java");
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
@@ -303,14 +250,7 @@ public class MemberAcceptanceTest extends AcceptanceTest {
     void notExistLanguageFilter() {
         // given
         // when
-        ExtractableResponse<Response> response = RestAssured.given()
-                                                            .log().all()
-                                                            .contentType(ContentType.JSON)
-                                                            .when()
-                                                            .get("/teachers")
-                                                            .then()
-                                                            .log().all()
-                                                            .extract();
+        ExtractableResponse<Response> response = 선생님_전체_목록_조회_요청(null);
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
@@ -318,18 +258,11 @@ public class MemberAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("선생님 단일 조회 성공")
-    void findTeacherByIdSuccess() throws Exception {
+    void findTeacherByIdSuccess() {
         // given
         LoginResponse loginResponse = 리뷰어_로그인되어_있음("air");
         // when
-        ExtractableResponse<Response> response = RestAssured.given()
-                                                            .log().all()
-                                                            .contentType(ContentType.JSON)
-                                                            .when()
-                                                            .get("/teachers/" + loginResponse.getId())
-                                                            .then()
-                                                            .log().all()
-                                                            .extract();
+        ExtractableResponse<Response> response = 선생님_단일_조회_요청(loginResponse.getId());
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
@@ -340,17 +273,97 @@ public class MemberAcceptanceTest extends AcceptanceTest {
     void findTeacherByNotExistId() {
         // given
         // when
-        ExtractableResponse<Response> response = RestAssured.given()
-                                                            .log().all()
-                                                            .contentType(ContentType.JSON)
-                                                            .when()
-                                                            .get("/teachers/1")
-                                                            .then()
-                                                            .log().all()
-                                                            .extract();
+        ExtractableResponse<Response> response = 선생님_단일_조회_요청(1L);
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+    }
+
+    public static ExtractableResponse<Response> 선생님_등록_요청(LoginResponse loginResponse, TeacherRegistrationRequest request) {
+        return RestAssured.given()
+                          .log().all()
+                          .header("Authorization", "Bearer " + loginResponse.getAccessToken())
+                          .contentType(APPLICATION_JSON_VALUE)
+                          .body(request)
+                          .when()
+                          .post("/teachers")
+                          .then()
+                          .log().all()
+                          .extract();
+    }
+
+    private ExtractableResponse<Response> 로그인_한_유저_정보_조회_요청(LoginResponse loginResponse) {
+        return RestAssured.given()
+                          .log().all()
+                          .header("Authorization", "Bearer " + loginResponse.getAccessToken())
+                          .when()
+                          .get("/members/me")
+                          .then()
+                          .log().all()
+                          .extract();
+    }
+
+    private ExtractableResponse<Response> 멤버_삭제_요청(LoginResponse loginResponse) {
+        return RestAssured.given()
+                          .log().all()
+                          .header("Authorization", "Bearer " + loginResponse.getAccessToken())
+                          .when()
+                          .delete("/members/me")
+                          .then()
+                          .log().all()
+                          .extract();
+    }
+
+    private ExtractableResponse<Response> 선생님_전체_목록_조회_요청(String language) {
+        return RestAssured.given()
+                          .log().all()
+                          .contentType(ContentType.JSON)
+                          .when()
+                          .param("language", language)
+                          .get("/teachers")
+                          .then()
+                          .log().all()
+                          .extract();
+    }
+
+    private ExtractableResponse<Response> 선생님_단일_조회_요청(Long id) {
+        return RestAssured.given()
+                          .log().all()
+                          .contentType(ContentType.JSON)
+                          .when()
+                          .get("/teachers/" + id)
+                          .then()
+                          .log().all()
+                          .extract();
+    }
+
+    public static TeacherRegistrationRequest 선생님_기본_등록_정보() {
+        TechSpec techSpecJava = 정삭적인_리뷰어_언어_기술_스택_Java();
+        TechSpec techSpecJavascript = 정삭적인_리뷰어_언어_기술_스택_Javascript();
+        return 정삭적인_리뷰어_정보(techSpecJava, techSpecJavascript);
+    }
+
+    public static TechSpec 정삭적인_리뷰어_언어_기술_스택_Java() {
+        return TechSpec.builder()
+                       .language("java")
+                       .skills(Collections.singletonList("spring"))
+                       .build();
+    }
+
+    public static TechSpec 정삭적인_리뷰어_언어_기술_스택_Javascript() {
+        return TechSpec.builder()
+                       .language("javascript")
+                       .skills(Arrays.asList("react", "vue"))
+                       .build();
+    }
+
+    public static TeacherRegistrationRequest 정삭적인_리뷰어_정보(TechSpec... techSpec) {
+        return TeacherRegistrationRequest.builder()
+                                         .title("네이버 백엔드 개발자")
+                                         .content("열심히 리뷰하겠습니다!")
+                                         .career(3)
+                                         .techSpecs(Arrays.asList(techSpec))
+                                         .build();
     }
 
     private TeacherRegistrationRequest 유효하지_않은_리뷰어_정보_제목_없음(TechSpec... techSpec) {
@@ -386,14 +399,23 @@ public class MemberAcceptanceTest extends AcceptanceTest {
     }
 
     private TechSpec 유효하지_않은_스택_기술이_언어에_속해있지_않은_스택() {
-        return TechSpec.builder().language("java").skills(Collections.singletonList("react")).build();
+        return TechSpec.builder()
+                       .language("java")
+                       .skills(Collections.singletonList("react"))
+                       .build();
     }
 
     private TechSpec 유효하지_않은_스택_존재하지_않는_언어() {
-        return TechSpec.builder().language("go").skills(Collections.singletonList("spring")).build();
+        return TechSpec.builder()
+                       .language("go")
+                       .skills(Collections.singletonList("spring"))
+                       .build();
     }
 
     private TechSpec 유효하지_않은_스택_존재하지_않은_기술() {
-        return TechSpec.builder().language("java").skills(Collections.singletonList("jpa")).build();
+        return TechSpec.builder()
+                       .language("java")
+                       .skills(Collections.singletonList("jpa"))
+                       .build();
     }
 }

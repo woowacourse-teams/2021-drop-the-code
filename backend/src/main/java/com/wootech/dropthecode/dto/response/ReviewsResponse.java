@@ -4,18 +4,20 @@ import java.util.List;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class ReviewsResponse {
     /**
      * 리뷰 리스트
      */
-    private final List<ReviewResponse> reviews;
+    private List<ReviewResponse> reviews;
 
     /**
      * 전체 페이지 수
      */
-    private final int pageCount;
+    private int pageCount;
 
     @Builder
     public ReviewsResponse(List<ReviewResponse> reviews, int pageCount) {

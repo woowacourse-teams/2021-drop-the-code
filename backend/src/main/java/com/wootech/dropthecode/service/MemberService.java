@@ -1,5 +1,7 @@
 package com.wootech.dropthecode.service;
 
+import javax.persistence.EntityNotFoundException;
+
 import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.domain.Role;
@@ -40,7 +42,7 @@ public class MemberService {
     @Transactional(readOnly = true)
     public Member findById(Long id) {
         return memberRepository.findById(id)
-                               .orElseThrow(() -> new AuthenticationException("유효하지 않은 유저입니다."));
+                               .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 멤버입니다."));
     }
 
     @Transactional

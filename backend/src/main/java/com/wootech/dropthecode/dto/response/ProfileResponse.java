@@ -2,8 +2,10 @@ package com.wootech.dropthecode.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class ProfileResponse {
     /**
      * 프로필 id

@@ -24,6 +24,9 @@
         <logger name="org.hibernate.SQL" level="DEBUG">
             <appender-ref ref="SQL_FILE"/>
         </logger>
+        <logger name="com.wootech.dropthecode.repository.replication.ReplicationRoutingDataSource" level="DEBUG">
+            <appender-ref ref="SQL_FILE"/>
+        </logger>
         <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE">
             <appender-ref ref="SQL_FILE"/>
         </logger>

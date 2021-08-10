@@ -12,6 +12,7 @@ import com.wootech.dropthecode.dto.response.SkillResponse;
 import com.wootech.dropthecode.repository.LanguageRepository;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class LanguageService {
@@ -22,6 +23,7 @@ public class LanguageService {
         this.languageRepository = languageRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<LanguageSkillsResponse> findAll() {
         List<Language> languages = languageRepository.findAll();
         return languages.stream()
@@ -33,6 +35,7 @@ public class LanguageService {
                         }).collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public Map<String, Language> findAllToMap() {
         return languageRepository.findAll()
                                  .stream()

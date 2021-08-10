@@ -20,6 +20,7 @@ public class TeacherLanguageService {
         this.teacherLanguageRepository = teacherLanguageRepository;
     }
 
+    @Transactional
     public void saveAllWithTeacher(List<Language> languages, TeacherProfile teacher) {
         List<TeacherLanguage> teacherLanguages = languages.stream()
                                                           .map(language -> new TeacherLanguage(teacher, language))

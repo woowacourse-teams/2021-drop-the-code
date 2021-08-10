@@ -43,12 +43,4 @@ public class FeedbackService {
                                   .pageCount(feedbackResponses.getTotalPages())
                                   .build();
     }
-
-    private FeedbackResponse feedbackToResponse(Feedback feedback) {
-        return FeedbackResponse.builder()
-                               .id(feedback.getId())
-                               .star(feedback.getStar())
-                               .comment(feedback.getComment())
-                               .build();
-    }
 }

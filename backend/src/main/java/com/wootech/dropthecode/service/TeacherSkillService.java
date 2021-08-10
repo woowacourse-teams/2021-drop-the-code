@@ -20,6 +20,7 @@ public class TeacherSkillService {
         this.teacherSkillRepository = teacherSkillRepository;
     }
 
+    @Transactional
     public void saveAllWithTeacher(List<Skill> skills, TeacherProfile teacher) {
         List<TeacherSkill> teacherSkills = skills.stream()
                                                  .map(skill -> new TeacherSkill(teacher, skill))

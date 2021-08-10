@@ -28,6 +28,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
     // QueryDSL
     implementation 'com.querydsl:querydsl-core'
@@ -72,9 +73,6 @@ dependencies {
 
     // flyway
     implementation 'org.flywaydb:flyway-core:'
-
-    // Web Socket
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
 }
 
 task jsonDoclet(type: Javadoc, dependsOn: compileJava) {

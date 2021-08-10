@@ -72,6 +72,9 @@ dependencies {
 
     // flyway
     implementation 'org.flywaydb:flyway-core:'
+
+    // Web Socket
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
 }
 
 task jsonDoclet(type: Javadoc, dependsOn: compileJava) {

@@ -1,6 +1,8 @@
 package com.wootech.dropthecode.domain.review;
 
-import com.wootech.dropthecode.domain.*;
+import com.wootech.dropthecode.domain.Member;
+import com.wootech.dropthecode.domain.Progress;
+import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.exception.AuthorizationException;
 import com.wootech.dropthecode.exception.ReviewException;
 

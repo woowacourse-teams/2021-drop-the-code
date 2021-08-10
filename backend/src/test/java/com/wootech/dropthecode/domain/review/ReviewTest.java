@@ -1,5 +1,7 @@
 package com.wootech.dropthecode.domain.review;
 
+import java.time.LocalDateTime;
+
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.domain.Progress;
 import com.wootech.dropthecode.domain.Role;
@@ -8,6 +10,8 @@ import com.wootech.dropthecode.exception.ReviewException;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import static com.wootech.dropthecode.builder.MemberBuilder.dummyMember;
 import static com.wootech.dropthecode.builder.ReviewBuilder.dummyReview;
@@ -100,32 +104,93 @@ public class ReviewTest {
     }
 
     @Test
-    @DisplayName("Pending 상태인지 확인")
+    @DisplayName("PENDING인 경우")
     void isPending() {
-
+        // given
         Member teacher = dummyMember(1L, "1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER, null);
         Member student = dummyMember(2L, "2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT, null);
 
-        // given
-        Review pendingReview = dummyReview(teacher, student, "title1", "content1", "pr1", 0L, Progress.PENDING);
-        Review deniedReview = dummyReview(teacher, student, "title1", "content1", "pr1", 0L, Progress.DENIED);
-        Review onGoingReview = dummyReview(teacher, student, "title1", "content1", "pr1", 0L, Progress.ON_GOING);
-        Review teacherCompletedReview = dummyReview(teacher, student, "title1", "content1", "pr1", 0L, Progress.TEACHER_COMPLETED);
-        Review finishedReview = dummyReview(teacher, student, "title1", "content1", "pr1", 0L, Progress.FINISHED);
+        Review review = dummyReview(teacher, student, "title1", "content1", "pr1", 0L, Progress.PENDING);
 
         // when
-        boolean pending = pendingReview.isPending();
-        boolean denied = deniedReview.isPending();
-        boolean onGoing = onGoingReview.isPending();
-        boolean teacherCompleted = teacherCompletedReview.isPending();
-        boolean finished = finishedReview.isPending();
-
         // then
-        assertThat(pending).isTrue();
-        assertThat(denied).isFalse();
-        assertThat(onGoing).isFalse();
-        assertThat(teacherCompleted).isFalse();
-        assertThat(finished).isFalse();
+        assertThatNoException().isThrownBy(review::validateReviewProgressIsPending);
+    }
+
+    @ParameterizedTest
+    @DisplayName("PENDING이 아닌 경우 - 400 에러")
+    @EnumSource(value = Progress.class, names = {"DENIED", "ON_GOING", "TEACHER_COMPLETED", "FINISHED"})
+    void isNotPending(Progress progress) {
+        // given
+        Member teacher = dummyMember(1L, "1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER, null);
+        Member student = dummyMember(2L, "2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT, null);
+
+        Review review = dummyReview(teacher, student, "title1", "content1", "pr1", 0L, progress);
+
+        // when
+        // then
+        assertThatThrownBy(review::validateReviewProgressIsPending)
+                .isInstanceOf(ReviewException.class);
+    }
+
+    @Test
+    @DisplayName("ON_GOING인 경우")
+    void isOnGoing() {
+        // given
+        Member teacher = dummyMember(1L, "1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER, null);
+        Member student = dummyMember(2L, "2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT, null);
+
+        Review review = dummyReview(teacher, student, "title1", "content1", "pr1", 0L, Progress.ON_GOING);
+
+        // when
+        // then
+        assertThatNoException().isThrownBy(review::validateReviewProgressIsOnGoing);
+    }
+
+    @ParameterizedTest
+    @DisplayName("ON_GOING이 아닌 경우 - 400 에러")
+    @EnumSource(value = Progress.class, names = {"PENDING", "DENIED", "TEACHER_COMPLETED", "FINISHED"})
+    void isNotOnGoing(Progress progress) {
+        // given
+        Member teacher = dummyMember(1L, "1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER, null);
+        Member student = dummyMember(2L, "2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT, null);
+
+        Review review = dummyReview(teacher, student, "title1", "content1", "pr1", 0L, progress);
+
+        // when
+        // then
+        assertThatThrownBy(review::validateReviewProgressIsOnGoing)
+                .isInstanceOf(ReviewException.class);
+    }
+
+    @Test
+    @DisplayName("TEACHER_COMPLETED인 경우")
+    void isTeacherCompleted() {
+        // given
+        Member teacher = dummyMember(1L, "1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER, null);
+        Member student = dummyMember(2L, "2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT, null);
+
+        Review review = dummyReview(teacher, student, "title1", "content1", "pr1", 0L, Progress.TEACHER_COMPLETED);
+
+        // when
+        // then
+        assertThatNoException().isThrownBy(review::validateReviewProgressIsTeacherCompleted);
+    }
+
+    @ParameterizedTest
+    @DisplayName("TEACHER_COMPLETED가 아닌 경우 - 400 에러")
+    @EnumSource(value = Progress.class, names = {"PENDING", "DENIED", "ON_GOING", "FINISHED"})
+    void isNotTeacherCompleted(Progress progress) {
+        // given
+        Member teacher = dummyMember(1L, "1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER, null);
+        Member student = dummyMember(2L, "2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT, null);
+
+        Review review = dummyReview(teacher, student, "title1", "content1", "pr1", 0L, progress);
+
+        // when
+        // then
+        assertThatThrownBy(review::validateReviewProgressIsTeacherCompleted)
+                .isInstanceOf(ReviewException.class);
     }
 
     @Test
@@ -139,6 +204,73 @@ public class ReviewTest {
         // when
         // then
         assertThatThrownBy(() -> review.validateAuthorityOfStudent(teacher.getId()))
+                .isInstanceOf(AuthorizationException.class);
+    }
+
+    @Test
+    @DisplayName("경과 시간 업데이트")
+    void calculateElapsedTime() {
+        // given
+        Member teacher = dummyMember(1L, "1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER, null);
+        Member student = dummyMember(2L, "2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT, null);
+
+        Review review = dummyReview(teacher, student, "title1", "content1", "pr1", 0L,
+                Progress.TEACHER_COMPLETED, LocalDateTime.now().minusDays(3));
+        Long original = review.getElapsedTime();
+
+        // when
+        review.updateElapsedTime();
+
+        // then
+        assertThat(original).isNotSameAs(review.getElapsedTime());
+    }
+
+    @Test
+    @DisplayName("경과 시간 업데이트 - 경과시간이 비어있는 경우")
+    void emptyElapsedTime() {
+        // given
+        Member teacher = dummyMember(1L, "1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER, null);
+        Member student = dummyMember(2L, "2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT, null);
+
+        Review review = dummyReview(teacher, student, "title1", "content1", "pr1", 0L, Progress.TEACHER_COMPLETED);
+        Long original = review.getElapsedTime();
+
+        // when
+        review.updateElapsedTime();
+
+        // then
+        assertThat(original).isEqualTo(0L);
+    }
+
+    @Test
+    @DisplayName("경과 시간 계산")
+    void updateElapsedTime() {
+        // given
+        Member teacher = dummyMember(1L, "1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER, null);
+        Member student = dummyMember(2L, "2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT, null);
+
+        Review review = dummyReview(teacher, student, "title1", "content1", "pr1", 10800000L,
+                Progress.TEACHER_COMPLETED, LocalDateTime.now().minusDays(3));
+
+        // when
+        Long elapsedTime = review.calculateElapsedTime();
+
+        // then
+        assertThat(elapsedTime).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("리뷰의 담당 선생님이 아닌 경우 - 403에러")
+    void invalidateAuthorityOfTeacher() {
+        // given
+        Member teacher = dummyMember(1L, "1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER, null);
+        Member student = dummyMember(2L, "2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT, null);
+
+        Review review = dummyReview(teacher, student, "original title", "original content", "original pr link", 0L, Progress.ON_GOING);
+
+        // when
+        // then
+        assertThatThrownBy(() -> review.validateAuthorityOfTeacher(student.getId()))
                 .isInstanceOf(AuthorizationException.class);
     }
 }

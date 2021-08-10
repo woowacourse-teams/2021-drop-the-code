@@ -2,7 +2,10 @@ package com.wootech.dropthecode.integration.review;
 
 import java.util.Optional;
 
-import com.wootech.dropthecode.domain.*;
+import com.wootech.dropthecode.domain.LoginMember;
+import com.wootech.dropthecode.domain.Member;
+import com.wootech.dropthecode.domain.Progress;
+import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.domain.review.Review;
 import com.wootech.dropthecode.dto.request.ReviewRequest;
 import com.wootech.dropthecode.exception.AuthorizationException;
@@ -10,12 +13,13 @@ import com.wootech.dropthecode.exception.ReviewException;
 import com.wootech.dropthecode.repository.MemberRepository;
 import com.wootech.dropthecode.repository.ReviewRepository;
 import com.wootech.dropthecode.service.ReviewService;
+import com.wootech.dropthecode.util.DatabaseCleanup;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,7 +31,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @ActiveProfiles("test")
 public class ReviewServiceIntegrationTest {
 
@@ -39,6 +42,14 @@ public class ReviewServiceIntegrationTest {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    @Autowired
+    private DatabaseCleanup databaseCleanup;
+
+    @BeforeEach
+    void setUp() {
+        databaseCleanup.execute();
+    }
 
     @Test
     @DisplayName("리뷰 수정 동작 확인 - 성공")

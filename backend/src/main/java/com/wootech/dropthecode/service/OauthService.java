@@ -84,19 +84,19 @@ public class OauthService {
 
     private OauthTokenResponse getToken(AuthorizationRequest authorizationRequest, OauthProvider oauthProvider) {
         OauthTokenResponse oauthTokenResponse = WebClient.create()
-                                            .post()
-                                            .uri(oauthProvider.getTokenUrl())
-                                            .headers(header -> {
-                                                header.setBasicAuth(oauthProvider.getClientId(), oauthProvider
-                                                        .getClientSecret());
-                                                header.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-                                                header.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-                                                header.setAcceptCharset(Collections.singletonList(StandardCharsets.UTF_8));
-                                            })
-                                            .bodyValue(tokenRequest(authorizationRequest, oauthProvider))
-                                            .retrieve()
-                                            .bodyToMono(OauthTokenResponse.class)
-                                            .block();
+                                                         .post()
+                                                         .uri(oauthProvider.getTokenUrl())
+                                                         .headers(header -> {
+                                                             header.setBasicAuth(oauthProvider.getClientId(), oauthProvider
+                                                                     .getClientSecret());
+                                                             header.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+                                                             header.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+                                                             header.setAcceptCharset(Collections.singletonList(StandardCharsets.UTF_8));
+                                                         })
+                                                         .bodyValue(tokenRequest(authorizationRequest, oauthProvider))
+                                                         .retrieve()
+                                                         .bodyToMono(OauthTokenResponse.class)
+                                                         .block();
         validateOauthTokenResponse(oauthTokenResponse);
         return oauthTokenResponse;
     }

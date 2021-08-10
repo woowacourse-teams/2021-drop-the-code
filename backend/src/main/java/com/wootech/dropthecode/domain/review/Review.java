@@ -123,8 +123,4 @@ public class Review extends BaseEntity {
         this.content = content;
         this.prUrl = prUrl;
     }
-
-    public boolean isPending() {
-        return progress.isPending();
-    }
 }

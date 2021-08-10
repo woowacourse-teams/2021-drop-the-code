@@ -26,9 +26,8 @@ public class Room extends BaseEntity {
     private List<Chat> chats;
 
     @Builder
-    public Room(Member teacher, Member student, List<Chat> chats) {
+    public Room(Member teacher, Member student) {
         this.teacher = teacher;
         this.student = student;
-        this.chats = chats;
     }
 }

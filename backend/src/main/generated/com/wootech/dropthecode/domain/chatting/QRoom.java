@@ -24,13 +24,13 @@ public class QRoom extends EntityPathBase<Room> {
 
     public final com.wootech.dropthecode.domain.QBaseEntity _super = new com.wootech.dropthecode.domain.QBaseEntity(this);
 
+    public final ListPath<Chat, QChat> chats = this.<Chat, QChat>createList("chats", Chat.class, QChat.class, PathInits.DIRECT2);
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
     //inherited
     public final NumberPath<Long> id = _super.id;
-
-    public final ListPath<Chat, QMessage> messages = this.<Chat, QMessage>createList("messages", Chat.class, QMessage.class, PathInits.DIRECT2);
 
     public final com.wootech.dropthecode.domain.QMember student;
 

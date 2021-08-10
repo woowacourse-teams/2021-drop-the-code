@@ -40,6 +40,7 @@ public class AuthService {
         return new LoginMember(member.getId());
     }
 
+    @Transactional
     public AccessTokenResponse refreshAccessToken(String accessToken, RefreshTokenRequest refreshTokenRequest) {
         String refreshToken = refreshTokenRequest.getRefreshToken();
         if (!jwtTokenProvider.validateToken(refreshToken)) {
@@ -58,6 +59,7 @@ public class AuthService {
         return new AccessTokenResponse(newAccessToken);
     }
 
+    @Transactional
     public void logout(String accessToken) {
         String id = jwtTokenProvider.getPayload(accessToken);
         redisUtil.deleteData(id);

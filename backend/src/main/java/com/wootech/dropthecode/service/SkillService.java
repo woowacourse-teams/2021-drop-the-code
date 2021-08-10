@@ -8,6 +8,7 @@ import com.wootech.dropthecode.domain.Skill;
 import com.wootech.dropthecode.repository.SkillRepository;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SkillService {
@@ -18,6 +19,7 @@ public class SkillService {
         this.skillRepository = skillRepository;
     }
 
+    @Transactional(readOnly = true)
     public Map<String, Skill> findAllToMap() {
         return skillRepository.findAll()
                               .stream()

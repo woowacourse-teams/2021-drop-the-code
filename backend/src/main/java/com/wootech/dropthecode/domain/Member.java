@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.*;
 
+import com.wootech.dropthecode.domain.chatting.Room;
 import com.wootech.dropthecode.domain.review.Review;
 
 import lombok.AccessLevel;
@@ -45,8 +46,14 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Review> reviewsAsStudent;
 
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Room> roomAsTeacher;
+
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Room> roomAsStudent;
+
     @Builder
-    public Member(Long id, String oauthId, String email, String name, String imageUrl, String githubUrl, Role role, TeacherProfile teacherProfile, List<Review> reviewsAsTeacher, List<Review> reviewsAsStudent, LocalDateTime createdAt) {
+    public Member(Long id, String oauthId, String email, String name, String imageUrl, String githubUrl, Role role, TeacherProfile teacherProfile, List<Review> reviewsAsTeacher, List<Review> reviewsAsStudent, LocalDateTime createdAt, List<Room> roomAsStudent, List<Room> roomAsTeacher) {
         super(id, createdAt);
         this.oauthId = oauthId;
         this.email = email;
@@ -57,6 +64,8 @@ public class Member extends BaseEntity {
         this.teacherProfile = teacherProfile;
         this.reviewsAsTeacher = reviewsAsTeacher;
         this.reviewsAsStudent = reviewsAsStudent;
+        this.roomAsStudent = roomAsStudent;
+        this.roomAsTeacher = roomAsTeacher;
     }
 
     public boolean hasRole(Role role) {

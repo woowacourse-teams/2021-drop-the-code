@@ -14,7 +14,7 @@ import com.querydsl.core.types.dsl.PathInits;
  * QMessage is a Querydsl query type for Message
  */
 @Generated("com.querydsl.codegen.EntitySerializer")
-public class QMessage extends EntityPathBase<Message> {
+public class QMessage extends EntityPathBase<Chat> {
 
     private static final long serialVersionUID = 316247196L;
 
@@ -38,10 +38,10 @@ public class QMessage extends EntityPathBase<Message> {
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
     public QMessage(String variable) {
-        this(Message.class, forVariable(variable), INITS);
+        this(Chat.class, forVariable(variable), INITS);
     }
 
-    public QMessage(Path<? extends Message> path) {
+    public QMessage(Path<? extends Chat> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
@@ -50,10 +50,10 @@ public class QMessage extends EntityPathBase<Message> {
     }
 
     public QMessage(PathMetadata metadata, PathInits inits) {
-        this(Message.class, metadata, inits);
+        this(Chat.class, metadata, inits);
     }
 
-    public QMessage(Class<? extends Message> type, PathMetadata metadata, PathInits inits) {
+    public QMessage(Class<? extends Chat> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.room = inits.isInitialized("room") ? new QRoom(forProperty("room"), inits.get("room")) : null;
     }

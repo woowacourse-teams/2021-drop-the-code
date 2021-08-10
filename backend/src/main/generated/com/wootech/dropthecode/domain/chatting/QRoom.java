@@ -30,7 +30,7 @@ public class QRoom extends EntityPathBase<Room> {
     //inherited
     public final NumberPath<Long> id = _super.id;
 
-    public final ListPath<Message, QMessage> messages = this.<Message, QMessage>createList("messages", Message.class, QMessage.class, PathInits.DIRECT2);
+    public final ListPath<Chat, QMessage> messages = this.<Chat, QMessage>createList("messages", Chat.class, QMessage.class, PathInits.DIRECT2);
 
     public final com.wootech.dropthecode.domain.QMember student;
 

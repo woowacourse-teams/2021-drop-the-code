@@ -23,12 +23,12 @@ public class Room extends BaseEntity {
     private Member student;
 
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<Message> messages;
+    private List<Chat> chats;
 
     @Builder
-    public Room(Member teacher, Member student, List<Message> messages) {
+    public Room(Member teacher, Member student, List<Chat> chats) {
         this.teacher = teacher;
         this.student = student;
-        this.messages = messages;
+        this.chats = chats;
     }
 }

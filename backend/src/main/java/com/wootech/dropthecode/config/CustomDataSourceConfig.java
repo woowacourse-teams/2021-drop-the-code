@@ -1,6 +1,5 @@
 package com.wootech.dropthecode.config;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import javax.persistence.EntityManagerFactory;
@@ -16,8 +15,6 @@ import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
-import org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy;
-import org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -53,6 +50,11 @@ public class CustomDataSourceConfig {
     }
 
     @Bean
+    public DataSource dataSource() {
+        return new LazyConnectionDataSourceProxy(routingDataSource());
+    }
+
+    @Bean
     public DataSource routingDataSource() {
         DataSource master = createDataSource(databaseProperty.getUrl());
 
@@ -68,11 +70,6 @@ public class CustomDataSourceConfig {
     }
 
     @Bean
-    public DataSource dataSource() {
-        return new LazyConnectionDataSourceProxy(routingDataSource());
-    }
-
-    @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         EntityManagerFactoryBuilder entityManagerFactoryBuilder = createEntityManagerFactoryBuilder(jpaProperties);
         return entityManagerFactoryBuilder.dataSource(dataSource()).packages("com.wootech.dropthecode").build();
@@ -81,13 +78,6 @@ public class CustomDataSourceConfig {
     private EntityManagerFactoryBuilder createEntityManagerFactoryBuilder(JpaProperties jpaProperties) {
         AbstractJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         return new EntityManagerFactoryBuilder(vendorAdapter, jpaProperties.getProperties(), null);
-    }
-
-    protected Map<String, Object> jpaProperties() {
-        Map<String, Object> props = new HashMap<>();
-        props.put("hibernate.physical_naming_strategy", SpringPhysicalNamingStrategy.class.getName());
-        props.put("hibernate.implicit_naming_strategy", SpringImplicitNamingStrategy.class.getName());
-        return props;
     }
 
     @Bean

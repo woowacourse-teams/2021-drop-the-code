@@ -1,0 +1,4 @@
+
+.idea/
+
+backend/src/main/resources/application-oauth.properties

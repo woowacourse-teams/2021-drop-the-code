@@ -1,0 +1,18 @@
+<included>
+    <property name="SQL_LOG_PATTERN" value="[%d{yyyy-MM-dd HH:mm:ss}] [%-28.28logger{0}] - %m%n"/>
+
+    <appender name="SQL_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${FILE_PATH}/sql.txt</file>
+
+        <encoder>
+            <pattern>${SQL_LOG_PATTERN}</pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${FILE_PATH}/sql.%d{yyyy-MM-dd}.%i.txt</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+</included>

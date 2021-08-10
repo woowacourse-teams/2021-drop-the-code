@@ -1,0 +1,3 @@
+{
+  "!(node_modules|dist)/**/*.{js,jsx,ts,tsx,json.html}": ["prettier --write", "eslint --fix"]
+}

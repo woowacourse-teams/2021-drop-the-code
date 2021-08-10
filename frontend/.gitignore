@@ -1,0 +1,13 @@
+# modules
+node_modules
+
+# build
+dist
+storybook-static
+
+# env
+.env.development
+.env.production
+
+# test
+coverage

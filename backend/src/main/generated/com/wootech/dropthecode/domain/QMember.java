@@ -46,6 +46,10 @@ public class QMember extends EntityPathBase<Member> {
 
     public final EnumPath<Role> role = createEnum("role", Role.class);
 
+    public final ListPath<com.wootech.dropthecode.domain.chatting.Room, com.wootech.dropthecode.domain.chatting.QRoom> roomAsStudent = this.<com.wootech.dropthecode.domain.chatting.Room, com.wootech.dropthecode.domain.chatting.QRoom>createList("roomAsStudent", com.wootech.dropthecode.domain.chatting.Room.class, com.wootech.dropthecode.domain.chatting.QRoom.class, PathInits.DIRECT2);
+
+    public final ListPath<com.wootech.dropthecode.domain.chatting.Room, com.wootech.dropthecode.domain.chatting.QRoom> roomAsTeacher = this.<com.wootech.dropthecode.domain.chatting.Room, com.wootech.dropthecode.domain.chatting.QRoom>createList("roomAsTeacher", com.wootech.dropthecode.domain.chatting.Room.class, com.wootech.dropthecode.domain.chatting.QRoom.class, PathInits.DIRECT2);
+
     public final QTeacherProfile teacherProfile;
 
     //inherited

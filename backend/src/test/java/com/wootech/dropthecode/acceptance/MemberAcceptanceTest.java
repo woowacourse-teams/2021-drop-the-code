@@ -82,6 +82,19 @@ public class MemberAcceptanceTest extends AcceptanceTest {
     }
 
     @Test
+    @DisplayName("[쉬운 테스트를 위한 메서드]- 멤버 id로 삭제 성공")
+    void deleteMemberWithId() {
+        // given
+        LoginResponse loginResponse = 리뷰어_로그인되어_있음("air");
+
+        // when
+        ExtractableResponse<Response> response = 멤버ID로_삭제_요청(loginResponse.getId());
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
+    }
+
+    @Test
     @DisplayName("유효하지 않은 access token")
     void deleteMemberInvalidAccessToken() {
         // given
@@ -362,6 +375,16 @@ public class MemberAcceptanceTest extends AcceptanceTest {
                           .header("Authorization", "Bearer " + loginResponse.getAccessToken())
                           .when()
                           .delete("/members/me")
+                          .then()
+                          .log().all()
+                          .extract();
+    }
+
+    private ExtractableResponse<Response> 멤버ID로_삭제_요청(Long id) {
+        return RestAssured.given()
+                          .log().all()
+                          .when()
+                          .delete("/members/{id}", id)
                           .then()
                           .log().all()
                           .extract();

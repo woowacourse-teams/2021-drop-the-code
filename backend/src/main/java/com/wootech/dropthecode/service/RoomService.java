@@ -1,10 +1,13 @@
 package com.wootech.dropthecode.service;
 
+import javax.persistence.EntityNotFoundException;
+
 import com.wootech.dropthecode.domain.chatting.Room;
 import com.wootech.dropthecode.dto.request.RoomRequest;
 import com.wootech.dropthecode.repository.RoomRepository;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RoomService {
@@ -16,6 +19,7 @@ public class RoomService {
         this.roomRepository = roomRepository;
     }
 
+    @Transactional
     public Long getOrCreate(RoomRequest roomRequest) {
         Room room = roomRepository.findByTeacherIdAndStudentId(roomRequest.getTeacherId(), roomRequest.getStudentId())
                                   .orElse(
@@ -26,5 +30,11 @@ public class RoomService {
                                   );
         Room savedRoom = roomRepository.save(room);
         return savedRoom.getId();
+    }
+
+    @Transactional
+    public Room findById(Long roomId) {
+        return roomRepository.findById(roomId)
+                             .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 방입니다."));
     }
 }

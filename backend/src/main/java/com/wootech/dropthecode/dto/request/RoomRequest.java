@@ -18,4 +18,9 @@ public class RoomRequest {
      */
     @NotNull
     private Long teacherId;
+
+    public RoomRequest(Long studentId, Long teacherId) {
+        this.studentId = studentId;
+        this.teacherId = teacherId;
+    }
 }

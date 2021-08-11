@@ -62,11 +62,11 @@ class ReviewTest {
     void invalidReviewByLoginMemberId() {
         Member teacher = dummyMember(1L, "1000", "Fafi", "fafi@gmail.com", "s3://fafi2143", "github url", Role.TEACHER, null);
         Member student = dummyMember(2L, "1000", "Fafi", "fafi@gmail.com", "s3://fafi2143", "github url", Role.STUDENT, null);
+        Review review = dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.PENDING);
 
-        assertThatThrownBy(() -> {
-            dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.PENDING).validateAuthorityOfStudent(3L);
-        }).isInstanceOf(AuthorizationException.class)
-          .hasMessage("리뷰 작업에 대한 권한이 없습니다!");
+        assertThatThrownBy(() -> review.validateAuthorityOfStudent(3L))
+                .isInstanceOf(AuthorizationException.class)
+                .hasMessage("리뷰 작업에 대한 권한이 없습니다!");
     }
 
 
@@ -198,12 +198,14 @@ class ReviewTest {
     void validatesOwnerByLoginId() {
         // given
         Member teacher = dummyMember(1L, "1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER, null);
+        Long teacherId = teacher.getId();
         Member student = dummyMember(2L, "2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT, null);
+
         Review review = dummyReview(teacher, student, "title", "content", "pr link", 0L, Progress.PENDING);
 
         // when
         // then
-        assertThatThrownBy(() -> review.validateAuthorityOfStudent(teacher.getId()))
+        assertThatThrownBy(() -> review.validateAuthorityOfStudent(teacherId))
                 .isInstanceOf(AuthorizationException.class);
     }
 
@@ -265,12 +267,13 @@ class ReviewTest {
         // given
         Member teacher = dummyMember(1L, "1", "air.junseo@gmail.com", "air", "s3://image1", "github url1", Role.TEACHER, null);
         Member student = dummyMember(2L, "2", "max9106@naver.com", "max", "s3://image2", "github url2", Role.STUDENT, null);
+        Long studentId = student.getId();
 
         Review review = dummyReview(teacher, student, "original title", "original content", "original pr link", 0L, Progress.ON_GOING);
 
         // when
         // then
-        assertThatThrownBy(() -> review.validateAuthorityOfTeacher(student.getId()))
+        assertThatThrownBy(() -> review.validateAuthorityOfTeacher(studentId))
                 .isInstanceOf(AuthorizationException.class);
     }
 }

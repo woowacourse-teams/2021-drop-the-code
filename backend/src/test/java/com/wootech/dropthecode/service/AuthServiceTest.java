@@ -108,10 +108,11 @@ class AuthServiceTest {
         // given
         String refreshToken = "invalid.refresh.token";
         String accessToken = "invalid.access.token";
+        RefreshTokenRequest refreshTokenRequest = new RefreshTokenRequest(refreshToken);
 
         // when
         // then
-        assertThatThrownBy(() -> authService.refreshAccessToken(accessToken, new RefreshTokenRequest(refreshToken)))
+        assertThatThrownBy(() -> authService.refreshAccessToken(accessToken, refreshTokenRequest))
                 .isInstanceOf(AuthenticationException.class);
     }
 
@@ -121,10 +122,11 @@ class AuthServiceTest {
         // given
         String refreshToken = "invalid.refresh.token";
         String accessToken = "valid.access.token";
+        RefreshTokenRequest refreshTokenRequest = new RefreshTokenRequest(refreshToken);
 
         // when
         // then
-        assertThatThrownBy(() -> authService.refreshAccessToken(accessToken, new RefreshTokenRequest(refreshToken)))
+        assertThatThrownBy(() -> authService.refreshAccessToken(accessToken, refreshTokenRequest))
                 .isInstanceOf(AuthenticationException.class);
     }
 

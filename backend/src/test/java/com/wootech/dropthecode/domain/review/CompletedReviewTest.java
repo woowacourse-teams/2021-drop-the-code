@@ -22,9 +22,9 @@ class CompletedReviewTest {
         Member teacher = dummyMember(1L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.TEACHER, null);
         Member student = dummyMember(2L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.STUDENT, null);
 
-        Review review = dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.TEACHER_COMPLETED);
+        CompletedReview review = new CompletedReview(dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.TEACHER_COMPLETED));
 
-        assertThatCode(() -> new CompletedReview(review).finish(2L)).doesNotThrowAnyException();
+        assertThatCode(() -> review.finish(2L)).doesNotThrowAnyException();
     }
 
     @DisplayName("Finished 상태 변경이 가능한 경우 - 실패")
@@ -35,18 +35,19 @@ class CompletedReviewTest {
 
         Review review = dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.ON_GOING);
 
-        assertThatCode(() -> new CompletedReview(review).finish(2L)).isInstanceOf(ReviewException.class);
+        assertThatCode(() -> new CompletedReview(review)).isInstanceOf(ReviewException.class);
     }
 
     @DisplayName("Finished 상태 변경이 가능한 경우 - 학생 ID 실패")
     @Test
     void validateStudentIdFail() {
         Member teacher = dummyMember(1L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.TEACHER, null);
+        Long teacherId = teacher.getId();
         Member student = dummyMember(2L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.STUDENT, null);
 
         Review review = dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.TEACHER_COMPLETED);
 
-        assertThatThrownBy(() -> review.validateAuthorityOfStudent(teacher.getId()))
+        assertThatThrownBy(() -> review.validateAuthorityOfStudent(teacherId))
                 .isInstanceOf(AuthorizationException.class);
     }
 
@@ -55,10 +56,11 @@ class CompletedReviewTest {
     void validateTeacherIdFail() {
         Member teacher = dummyMember(1L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.TEACHER, null);
         Member student = dummyMember(2L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.STUDENT, null);
+        Long studentId = student.getId();
 
         Review review = dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.TEACHER_COMPLETED);
 
-        assertThatThrownBy(() -> review.validateAuthorityOfTeacher(student.getId()))
+        assertThatThrownBy(() -> review.validateAuthorityOfTeacher(studentId))
                 .isInstanceOf(AuthorizationException.class);
     }
 }

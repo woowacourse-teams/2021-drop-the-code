@@ -52,7 +52,7 @@
     - Figma
     - StoryBook
 - 인프라
-    - aws ec2, s3, cloudfront, cloudwatch, load balancer, autoscaling
+    - aws ec2, s3, cloudfront, cloudwatch, load balancer
     - nginx
     - Let's Encrypt
     - docker

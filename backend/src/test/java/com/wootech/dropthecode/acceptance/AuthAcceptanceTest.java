@@ -116,6 +116,22 @@ public class AuthAcceptanceTest extends AcceptanceTest {
     }
 
     @Test
+    @DisplayName("access token 갱신 - 유효한 access token & 유효한 refresh token(but 내 refresh token이 아닌 경우)")
+    void validAccessTokenAndValidRefreshTokenNotMine() {
+        // given
+        LoginResponse loginResponse = 학생_로그인되어_있음("air");
+        LoginResponse anonymous = 학생_로그인되어_있음("max");
+
+        // when
+        ExtractableResponse<Response> response = 토큰_갱신_요청(loginResponse.getAccessToken(), anonymous.getRefreshToken());
+        ErrorResponse error = 예외_결과(response);
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.UNAUTHORIZED.value());
+        assertThat(error.getErrorMessage()).isEqualTo("refresh token이 유효하지 않습니다.");
+    }
+
+    @Test
     @DisplayName("로그 아웃 성공")
     void logOutSuccess() {
         // given

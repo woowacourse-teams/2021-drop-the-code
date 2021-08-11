@@ -200,8 +200,8 @@ jacocoTestCoverageVerification {
 
     violationRules {
         rule {
-            enabled = true // 이 rule을 적용할 것이다.
-            element = 'CLASS' // class 단위로
+            enabled = true
+            element = 'CLASS'
 
             limit {
                 counter = 'BRANCH'
@@ -212,7 +212,7 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'LINE'
                 value = 'COVEREDRATIO'
-                minimum = 0.80
+                minimum = 0.70
             }
 
             limit {

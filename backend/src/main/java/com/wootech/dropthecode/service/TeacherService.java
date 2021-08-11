@@ -115,6 +115,7 @@ public class TeacherService {
         return new TeacherPaginationResponse(teacherProfileResponses, teacherProfilePage.getTotalPages());
     }
 
+    @Transactional(readOnly = true)
     public TeacherProfileResponse findTeacherResponseById(Long id) {
         return TeacherProfileResponse.from(findById(id));
     }

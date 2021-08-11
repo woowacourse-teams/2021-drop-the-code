@@ -16,7 +16,7 @@ import io.restassured.response.Response;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("언어 관련 인수 테스트")
-public class LanguageAcceptanceTest extends AcceptanceTest {
+class LanguageAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("언어 및 기술 전체 목록 조회")

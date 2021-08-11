@@ -12,7 +12,7 @@ import static com.wootech.dropthecode.builder.MemberBuilder.dummyMember;
 import static com.wootech.dropthecode.builder.ReviewBuilder.dummyReview;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-public class OnGoingReviewTest {
+class OnGoingReviewTest {
 
     @DisplayName("Teacher Completed 상태 변경이 가능한 경우 - 성공")
     @Test

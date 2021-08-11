@@ -18,7 +18,7 @@ import static com.wootech.dropthecode.acceptance.ReviewAcceptanceTest.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Feedback 관련 인수 테스트")
-public class FeedbackAcceptanceTest extends AcceptanceTest {
+class FeedbackAcceptanceTest extends AcceptanceTest {
     private LoginResponse student1;
     private LoginResponse teacher1;
     private LoginResponse student2;

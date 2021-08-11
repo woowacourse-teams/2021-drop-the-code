@@ -13,7 +13,7 @@ import static com.wootech.dropthecode.builder.MemberBuilder.dummyMember;
 import static com.wootech.dropthecode.builder.ReviewBuilder.dummyReview;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-public class PendingReviewTest {
+class PendingReviewTest {
 
     @DisplayName("사용자가 리뷰를 취소한 경우 - 성공")
     @Test

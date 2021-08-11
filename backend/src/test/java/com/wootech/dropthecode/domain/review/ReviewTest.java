@@ -17,7 +17,7 @@ import static com.wootech.dropthecode.builder.MemberBuilder.dummyMember;
 import static com.wootech.dropthecode.builder.ReviewBuilder.dummyReview;
 import static org.assertj.core.api.Assertions.*;
 
-public class ReviewTest {
+class ReviewTest {
 
     @DisplayName("Student Id, Teacher Id 값 Validation - 성공")
     @Test
@@ -239,7 +239,7 @@ public class ReviewTest {
         review.updateElapsedTime();
 
         // then
-        assertThat(original).isEqualTo(0L);
+        assertThat(original).isZero();
     }
 
     @Test

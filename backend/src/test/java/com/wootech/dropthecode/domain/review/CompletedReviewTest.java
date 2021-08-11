@@ -14,7 +14,7 @@ import static com.wootech.dropthecode.builder.ReviewBuilder.dummyReview;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class CompletedReviewTest {
+class CompletedReviewTest {
 
     @DisplayName("Finished 상태 변경이 가능한 경우 - 성공")
     @Test

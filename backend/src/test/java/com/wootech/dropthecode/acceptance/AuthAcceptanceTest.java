@@ -20,7 +20,7 @@ import static org.mockito.Mockito.doThrow;
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE;
 
 @DisplayName("Auth 관련 인수 테스트")
-public class AuthAcceptanceTest extends AcceptanceTest {
+class AuthAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("OAuth 로그인 - 로그인 성공")

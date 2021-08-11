@@ -82,6 +82,6 @@ class TeacherProfileTest {
         // then
         assertThat(teacherProfile.getTitle()).isEqualTo("탈퇴한 사용자입니다.");
         assertThat(teacherProfile.getContent()).isEqualTo("내용 없음");
-        assertThat(teacherProfile.getCareer()).isEqualTo(0);
+        assertThat(teacherProfile.getCareer()).isZero();
     }
 }

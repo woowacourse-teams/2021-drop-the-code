@@ -39,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(MemberController.class)
-public class MemberControllerTest extends RestApiDocumentTest {
+class MemberControllerTest extends RestApiDocumentTest {
 
     @Autowired
     private MemberController memberController;

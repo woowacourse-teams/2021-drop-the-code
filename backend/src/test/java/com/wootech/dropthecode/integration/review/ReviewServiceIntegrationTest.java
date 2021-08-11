@@ -32,7 +32,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @ActiveProfiles("test")
-public class ReviewServiceIntegrationTest {
+class ReviewServiceIntegrationTest {
 
     @Autowired
     private ReviewService reviewService;
@@ -125,7 +125,7 @@ public class ReviewServiceIntegrationTest {
         Optional<Review> foundReview = reviewRepository.findById(savedReview.getId());
 
         // then
-        assertThat(foundReview.isPresent()).isEqualTo(false);
+        assertThat(foundReview.isPresent()).isFalse();
     }
 
     @ParameterizedTest
@@ -149,7 +149,7 @@ public class ReviewServiceIntegrationTest {
                 .isInstanceOf(ReviewException.class);
 
         Optional<Review> foundReview = reviewRepository.findById(savedReview.getId());
-        assertThat(foundReview.isPresent()).isEqualTo(true);
+        assertThat(foundReview.isPresent()).isTrue();
     }
 
     @Test
@@ -172,6 +172,6 @@ public class ReviewServiceIntegrationTest {
                 .isInstanceOf(AuthorizationException.class);
 
         Optional<Review> foundReview = reviewRepository.findById(savedReview.getId());
-        assertThat(foundReview.isPresent()).isEqualTo(true);
+        assertThat(foundReview.isPresent()).isTrue();
     }
 }

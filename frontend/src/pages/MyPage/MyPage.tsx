@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { useHistory } from "react-router-dom";
 
@@ -128,7 +128,7 @@ const MyPage = () => {
             </Flex>
           </Profile>
         </Flex>
-        <Suspense fallback={<Loading />}>{isReviewer && <MyReviewerInfo reviewerId={user.id} />}</Suspense>
+        {isReviewer && <MyReviewerInfo reviewerId={user.id} />}
       </FlexSpaceBetween>
       <ul
         css={{
@@ -151,7 +151,7 @@ const MyPage = () => {
         ))}
       </ul>
 
-      <Suspense fallback={<Loading />}>{activeTab && <ReviewList id={user.id} mode={activeTab} />}</Suspense>
+      {activeTab && <ReviewList id={user.id} mode={activeTab} />}
       <Button
         themeColor="secondary"
         css={{ margin: "1.875rem 0", fontSize: "0.875rem", color: COLOR.GRAY_500 }}

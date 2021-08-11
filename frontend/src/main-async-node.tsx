@@ -1,9 +1,6 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { BrowserRouter } from "react-router-dom";
 
-import axios from "axios";
 import { ThemeProvider } from "styled-components";
 
 import App from "App";
@@ -13,11 +10,10 @@ import ModalProvider from "components/ModalProvider/ModalProvider";
 import ToastProvider from "components/ToastProvider/ToastProvider";
 import { THEME } from "theme/theme";
 
-axios.defaults.baseURL = process.env.SERVER_BASE_URL;
-
 const queryClient = new QueryClient();
 
-ReactDOM.render(
+// eslint-disable-next-line react/display-name
+export default () => (
   <React.StrictMode>
     <ThemeProvider theme={THEME}>
       <ToastProvider>
@@ -25,14 +21,11 @@ ReactDOM.render(
           <AuthProvider>
             <ModalProvider>
               <GlobalStyle />
-              <BrowserRouter>
-                <App />
-              </BrowserRouter>
+              <App />
             </ModalProvider>
           </AuthProvider>
         </QueryClientProvider>
       </ToastProvider>
     </ThemeProvider>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );

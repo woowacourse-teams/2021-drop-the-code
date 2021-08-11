@@ -1,7 +1,5 @@
-import { Suspense } from "react";
 import { useParams } from "react-router-dom";
 
-import Loading from "components/Loading/Loading";
 import ReviewerInfoContainer from "components/Reviewer/ReviewerInfoContainer/ReviewerInfoContainer";
 
 const ReviewerDetail = () => {
@@ -10,9 +8,7 @@ const ReviewerDetail = () => {
   return (
     <>
       <h2>리뷰어 정보</h2>
-      <Suspense fallback={<Loading />}>
-        <ReviewerInfoContainer reviewerId={Number(reviewerId)} />
-      </Suspense>
+      <ReviewerInfoContainer reviewerId={Number(reviewerId)} />
     </>
   );
 };

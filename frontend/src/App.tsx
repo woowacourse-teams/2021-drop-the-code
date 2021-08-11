@@ -11,28 +11,26 @@ const App = () => {
   const { isAuthenticated } = useAuthContext();
 
   return (
-    <>
-      <Switch>
-        {ROUTE.map(({ path, Component, isPrivate, exact }) => (
-          <AuthRoute
-            isPrivate={isPrivate}
-            isAuthenticated={isAuthenticated}
-            key={path}
-            path={path}
-            redirectTo={PATH.MAIN}
-            exact={exact}
-          >
-            <Header />
-            <main>
-              <Component />
-            </main>
-          </AuthRoute>
-        ))}
-        <Route path={PATH.NOT_FOUND}>
-          <NotFound />
-        </Route>
-      </Switch>
-    </>
+    <Switch>
+      {ROUTE.map(({ path, Component, isPrivate, exact }) => (
+        <AuthRoute
+          isPrivate={isPrivate}
+          isAuthenticated={isAuthenticated}
+          key={path}
+          path={path}
+          redirectTo={PATH.MAIN}
+          exact={exact}
+        >
+          <Header />
+          <main>
+            <Component />
+          </main>
+        </AuthRoute>
+      ))}
+      <Route path={PATH.NOT_FOUND}>
+        <NotFound />
+      </Route>
+    </Switch>
   );
 };
 

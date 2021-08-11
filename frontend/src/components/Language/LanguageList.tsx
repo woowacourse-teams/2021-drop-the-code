@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useEffect } from "react";
 
+import Loading from "components/Loading/Loading";
 import Button from "components/shared/Button/Button";
 import { Flex, FlexAlignCenter } from "components/shared/Flexbox/Flexbox";
 import useLanguageList from "hooks/useLanguageList";
@@ -12,13 +13,16 @@ interface Props {
 }
 
 const LanguageList = ({ filterLanguage, filterSkills, onSetFilterLanguage, onSetFilterSkills }: Props) => {
-  const { languages } = useLanguageList();
+  const { languages, isLoading } = useLanguageList();
   // TODO: 텅빈화면
-  if (languages?.length === 0) return <></>;
 
   useEffect(() => {
-    if (languages && !filterLanguage) onSetFilterLanguage(languages[0].language.name);
-  }, []);
+    if (languages && languages.length > 0 && !filterLanguage) onSetFilterLanguage(languages[0].language.name);
+  }, [languages]);
+
+  if (languages?.length === 0) return <></>;
+
+  if (isLoading) return <Loading />;
 
   return (
     <Flex css={{ flex: "1", flexDirection: "column" }}>

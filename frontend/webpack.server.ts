@@ -1,16 +1,16 @@
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
-import HtmlWebpackPlugin from "html-webpack-plugin";
-import webpack from "webpack";
+import webpack, { WebpackPluginInstance } from "webpack";
+import nodeExternals from "webpack-node-externals";
 
 import path from "path";
 
 const config: webpack.Configuration = {
-  entry: "./src/index.tsx",
+  target: "node",
+  entry: "./src/server.tsx",
+  devtool: false,
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "[name].[chunkhash].js",
-    publicPath: "/",
-    clean: true,
+    filename: "server.js",
   },
   module: {
     rules: [
@@ -41,17 +41,10 @@ const config: webpack.Configuration = {
       },
     ],
   },
+
   resolve: { extensions: [".js", ".ts", ".tsx"], modules: [path.join(__dirname, "src"), "node_modules"] },
-  plugins: [
-    new HtmlWebpackPlugin({ template: "public/index.html", favicon: "public/favicon.ico" }),
-    new ForkTsCheckerWebpackPlugin(),
-    new webpack.EnvironmentPlugin([
-      "GITHUB_OAUTH_CLIENT_ID",
-      "GITHUB_OAUTH_REDIRECT_URL",
-      "CLIENT_BASE_URL",
-      "SERVER_BASE_URL",
-    ]),
-  ],
+  plugins: [new ForkTsCheckerWebpackPlugin()],
+  externals: [nodeExternals() as WebpackPluginInstance],
 };
 
 export default config;

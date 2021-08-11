@@ -29,14 +29,12 @@ const ReviewerSearch = () => {
       <h2>리뷰어 찾기</h2>
       <Flex css={{ flexDirection: "column", width: "100%" }}>
         <Flex>
-          <Suspense fallback={<Loading />}>
-            <LanguageList
-              filterLanguage={filterLanguage}
-              filterSkills={filterSkills}
-              onSetFilterLanguage={setFilterLanguage}
-              onSetFilterSkills={setFilterSkills}
-            />
-          </Suspense>
+          <LanguageList
+            filterLanguage={filterLanguage}
+            filterSkills={filterSkills}
+            onSetFilterLanguage={setFilterLanguage}
+            onSetFilterSkills={setFilterSkills}
+          />
           <FlexEnd css={{ flexDirection: "column" }}>
             <div css={{ marginBottom: "0.625rem" }}>
               <MenuItemButton
@@ -67,14 +65,12 @@ const ReviewerSearch = () => {
           {/* <option id="3">추천순</option> */}
         </Select>
       </div>
-      <Suspense fallback={<Loading />}>
-        <ReviewerList
-          filterLanguage={filterLanguage}
-          filterSkills={filterSkills}
-          filterCareer={filterCareer}
-          sort={sort}
-        />
-      </Suspense>
+      <ReviewerList
+        filterLanguage={filterLanguage}
+        filterSkills={filterSkills}
+        filterCareer={filterCareer}
+        sort={sort}
+      />
     </>
   );
 };

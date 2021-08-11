@@ -45,7 +45,7 @@
   "settings": {
     "import/resolver": {
       "webpack": {
-        "config": "webpack.common.ts"
+        "config": "webpack.client.ts"
       }
     }
   }

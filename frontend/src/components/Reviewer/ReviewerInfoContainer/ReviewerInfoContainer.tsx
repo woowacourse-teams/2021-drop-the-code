@@ -73,11 +73,7 @@ const ReviewerInfoContainer = ({ reviewerId }: Props) => {
                 )}
               </Button>
             </FlexCenter>
-            {isReviewListOpen && (
-              <Suspense fallback={<Loading />}>
-                <ReviewList id={reviewerId} mode="TEACHER" />
-              </Suspense>
-            )}
+            {isReviewListOpen && <ReviewList id={reviewerId} mode="TEACHER" />}
             <FlexCenter css={{ width: "100%", margin: "2.5rem 0" }}>
               <Button
                 themeColor="secondary"
@@ -96,11 +92,7 @@ const ReviewerInfoContainer = ({ reviewerId }: Props) => {
                 )}
               </Button>
             </FlexCenter>
-            {isFeedbackListOpen && (
-              <Suspense fallback={<Loading />}>
-                <FeedbackList teacherId={reviewerId} />
-              </Suspense>
-            )}
+            {isFeedbackListOpen && <FeedbackList teacherId={reviewerId} />}
           </div>
         </Flex>
       )}

@@ -13,14 +13,7 @@ import ModalProvider from "components/ModalProvider/ModalProvider";
 import ToastProvider from "components/ToastProvider/ToastProvider";
 import { THEME } from "theme/theme";
 
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      suspense: true,
-      retry: false,
-    },
-  },
-});
+export const queryClient = new QueryClient();
 
 interface Props {
   children?: React.ReactNode;
@@ -31,16 +24,14 @@ const AllTheProviders = ({ children }: Props) => {
     <ThemeProvider theme={THEME}>
       <ToastProvider>
         <QueryClientProvider client={queryClient}>
-          <Suspense fallback={<Loading />}>
-            <AuthProvider>
-              <ModalProvider>
-                <GlobalStyle />
-                <BrowserRouter>
-                  <ErrorBoundary>{children}</ErrorBoundary>
-                </BrowserRouter>
-              </ModalProvider>
-            </AuthProvider>
-          </Suspense>
+          <AuthProvider>
+            <ModalProvider>
+              <GlobalStyle />
+              <BrowserRouter>
+                <ErrorBoundary>{children}</ErrorBoundary>
+              </BrowserRouter>
+            </ModalProvider>
+          </AuthProvider>
         </QueryClientProvider>
       </ToastProvider>
     </ThemeProvider>

@@ -24,13 +24,7 @@ export const parameters = {
   },
 };
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      suspense: true,
-    },
-  },
-});
+const queryClient = new QueryClient();
 
 export const decorators = [
   (Story) => (
@@ -38,17 +32,15 @@ export const decorators = [
       <QueryClientProvider client={queryClient}>
         <GlobalStyle />
         <MemoryRouter>
-          <Suspense fallback={<Loading />}>
-            <ToastProvider>
-              <AuthProvider>
-                <ModalProvider>
-                  <main>
-                    <Story />
-                  </main>
-                </ModalProvider>
-              </AuthProvider>
-            </ToastProvider>
-          </Suspense>
+          <ToastProvider>
+            <AuthProvider>
+              <ModalProvider>
+                <main>
+                  <Story />
+                </main>
+              </ModalProvider>
+            </AuthProvider>
+          </ToastProvider>
         </MemoryRouter>
       </QueryClientProvider>
     </ThemeProvider>

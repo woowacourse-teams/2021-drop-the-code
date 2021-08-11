@@ -90,14 +90,12 @@ const MyReviewerEdit = ({ reviewer }: Props) => {
         validators={reviewerRegisterValidators}
         css={{ marginTop: "1.25rem", width: "100%" }}
       >
-        <Suspense fallback={<Loading />}>
-          <SpecPicker
-            filterLanguage={filterLanguage}
-            specs={specs}
-            onSetFilterLanguage={setFilterLanguage}
-            onSetSpecs={setSpecs}
-          />
-        </Suspense>
+        <SpecPicker
+          filterLanguage={filterLanguage}
+          specs={specs}
+          onSetFilterLanguage={setFilterLanguage}
+          onSetSpecs={setSpecs}
+        />
         <Flex css={{ margin: "1.25rem 0 ", width: "100%" }}>
           <div css={{ flexGrow: 5, marginRight: "1.25rem" }}>
             <InputField

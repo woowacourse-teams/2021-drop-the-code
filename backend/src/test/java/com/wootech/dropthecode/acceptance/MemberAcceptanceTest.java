@@ -10,7 +10,6 @@ import com.wootech.dropthecode.dto.response.LoginResponse;
 import com.wootech.dropthecode.dto.response.MemberResponse;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.transaction.annotation.Transactional;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

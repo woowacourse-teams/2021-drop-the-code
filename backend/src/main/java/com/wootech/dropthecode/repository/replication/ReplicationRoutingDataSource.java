@@ -22,10 +22,11 @@ public class ReplicationRoutingDataSource extends AbstractRoutingDataSource {
                                  .collect(Collectors.toList())
         );
     }
+
     @Override
     protected Object determineCurrentLookupKey() {
         boolean isReadOnly = TransactionSynchronizationManager.isCurrentTransactionReadOnly();
-        if(isReadOnly) {
+        if (isReadOnly) {
             logger.info("Connection Slave");
             return dataSourceNameList.getOne();
         } else {

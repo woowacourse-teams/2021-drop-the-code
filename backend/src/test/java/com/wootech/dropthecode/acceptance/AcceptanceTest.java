@@ -13,7 +13,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import org.junit.jupiter.api.BeforeEach;
 
@@ -52,6 +51,10 @@ class AcceptanceTest {
         return 로그인되어_있음(name);
     }
 
+    /**
+     * COMMENT
+     * 기존 방법에서 Role이 업데이트 된 멤버가 리턴되지 않은 부분 수정
+     */
     protected LoginResponse 리뷰어_로그인되어_있음(String name) {
         LoginResponse loginMember = 로그인되어_있음(name);
         선생님_등록_요청(loginMember, 선생님_기본_등록_정보());

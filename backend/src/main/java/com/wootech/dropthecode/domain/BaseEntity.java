@@ -27,11 +27,11 @@ public abstract class BaseEntity {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    public BaseEntity(LocalDateTime createdAt) {
+    protected BaseEntity(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public BaseEntity(Long id, LocalDateTime createdAt) {
+    protected BaseEntity(Long id, LocalDateTime createdAt) {
         this.id = id;
         this.createdAt = createdAt;
     }

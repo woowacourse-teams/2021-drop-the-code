@@ -115,13 +115,9 @@ public class TeacherService {
         return new TeacherPaginationResponse(teacherProfileResponses, teacherProfilePage.getTotalPages());
     }
 
+    @Transactional(readOnly = true)
     public TeacherProfileResponse findTeacherResponseById(Long id) {
-        return TeacherProfileResponse.from(findTeacherProfileById(id));
-    }
-
-    public TeacherProfile findTeacherProfileById(Long id) {
-        return teacherProfileRepository.findById(id)
-                                       .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 리뷰어의 ID 입니다."));
+        return TeacherProfileResponse.from(findById(id));
     }
 
     @Transactional

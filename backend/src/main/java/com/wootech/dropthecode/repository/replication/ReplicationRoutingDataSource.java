@@ -17,15 +17,16 @@ public class ReplicationRoutingDataSource extends AbstractRoutingDataSource {
         dataSourceNameList = new CircularList<>(
                 targetDataSources.keySet()
                                  .stream()
-                                 .filter(key -> key.toString().contains("slave"))
-                                 .map(key -> key.toString())
+                                 .map(Object::toString)
+                                 .filter(string -> string.contains("slave"))
                                  .collect(Collectors.toList())
         );
     }
+
     @Override
     protected Object determineCurrentLookupKey() {
         boolean isReadOnly = TransactionSynchronizationManager.isCurrentTransactionReadOnly();
-        if(isReadOnly) {
+        if (isReadOnly) {
             logger.info("Connection Slave");
             return dataSourceNameList.getOne();
         } else {

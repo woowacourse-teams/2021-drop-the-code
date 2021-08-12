@@ -32,7 +32,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @ActiveProfiles("test")
-public class ReviewServiceIntegrationTest {
+class ReviewServiceIntegrationTest {
 
     @Autowired
     private ReviewService reviewService;
@@ -92,13 +92,14 @@ public class ReviewServiceIntegrationTest {
 
         ReviewRequest request =
                 new ReviewRequest(savedStudent.getId(), savedTeacher.getId(), "new title", "new content", "new pr link");
+        Long originalReviewId = originalReview.getId();
 
         // when
         // then
-        assertThatThrownBy(() -> reviewService.updateReview(loginMember, originalReview.getId(), request))
+        assertThatThrownBy(() -> reviewService.updateReview(loginMember, originalReviewId, request))
                 .isInstanceOf(AuthorizationException.class);
 
-        Review updatedReview = reviewRepository.findById(originalReview.getId()).get();
+        Review updatedReview = reviewRepository.findById(originalReviewId).get();
 
         // then
         assertThat(updatedReview).extracting("title").isEqualTo("original title");
@@ -125,7 +126,7 @@ public class ReviewServiceIntegrationTest {
         Optional<Review> foundReview = reviewRepository.findById(savedReview.getId());
 
         // then
-        assertThat(foundReview.isPresent()).isEqualTo(false);
+        assertThat(foundReview).isEmpty();
     }
 
     @ParameterizedTest
@@ -142,14 +143,15 @@ public class ReviewServiceIntegrationTest {
 
         Review review = dummyReview(teacher, student, "original title", "original content", "original pr link", 0L, progress);
         Review savedReview = reviewRepository.save(review);
+        Long savedReviewId = savedReview.getId();
 
         // when
         // then
-        assertThatThrownBy(() -> reviewService.cancelRequest(loginMember, savedReview.getId()))
+        assertThatThrownBy(() -> reviewService.cancelRequest(loginMember, savedReviewId))
                 .isInstanceOf(ReviewException.class);
 
-        Optional<Review> foundReview = reviewRepository.findById(savedReview.getId());
-        assertThat(foundReview.isPresent()).isEqualTo(true);
+        Optional<Review> foundReview = reviewRepository.findById(savedReviewId);
+        assertThat(foundReview).isPresent();
     }
 
     @Test
@@ -165,13 +167,14 @@ public class ReviewServiceIntegrationTest {
 
         Review review = dummyReview(teacher, student, "original title", "original content", "original pr link", 0L, Progress.PENDING);
         Review savedReview = reviewRepository.save(review);
+        Long savedReviewId = savedReview.getId();
 
         // when
         // then
-        assertThatThrownBy(() -> reviewService.cancelRequest(loginMember, savedReview.getId()))
+        assertThatThrownBy(() -> reviewService.cancelRequest(loginMember, savedReviewId))
                 .isInstanceOf(AuthorizationException.class);
 
-        Optional<Review> foundReview = reviewRepository.findById(savedReview.getId());
-        assertThat(foundReview.isPresent()).isEqualTo(true);
+        Optional<Review> foundReview = reviewRepository.findById(savedReviewId);
+        assertThat(foundReview).isPresent();
     }
 }

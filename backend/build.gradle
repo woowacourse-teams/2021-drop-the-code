@@ -157,7 +157,7 @@ sonarqube {
 }
 
 jacoco {
-    toolVersion = '0.8.5'
+    toolVersion = '0.8.7'
 }
 
 jacocoTestReport {
@@ -200,8 +200,8 @@ jacocoTestCoverageVerification {
 
     violationRules {
         rule {
-            enabled = true // 이 rule을 적용할 것이다.
-            element = 'CLASS' // class 단위로
+            enabled = true
+            element = 'CLASS'
 
             limit {
                 counter = 'BRANCH'

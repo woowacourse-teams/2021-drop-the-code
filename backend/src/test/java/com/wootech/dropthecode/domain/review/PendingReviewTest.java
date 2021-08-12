@@ -13,7 +13,7 @@ import static com.wootech.dropthecode.builder.MemberBuilder.dummyMember;
 import static com.wootech.dropthecode.builder.ReviewBuilder.dummyReview;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-public class PendingReviewTest {
+class PendingReviewTest {
 
     @DisplayName("사용자가 리뷰를 취소한 경우 - 성공")
     @Test
@@ -21,9 +21,9 @@ public class PendingReviewTest {
         Member teacher = dummyMember(1L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.TEACHER, null);
         Member student = dummyMember(2L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.STUDENT, null);
 
-        Review review = dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.PENDING);
+        PendingReview review = new PendingReview(dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.PENDING));
 
-        assertThatCode(() -> new PendingReview(review).cancel(2L)).doesNotThrowAnyException();
+        assertThatCode(() -> review.cancel(2L)).doesNotThrowAnyException();
     }
 
     @DisplayName("시용자가 리뷰를 취소한 경우 - PENDING 이 아닐 경우 실패")
@@ -43,9 +43,9 @@ public class PendingReviewTest {
         Member teacher = dummyMember(1L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.TEACHER, null);
         Member student = dummyMember(2L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.STUDENT, null);
 
-        Review review = dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.PENDING);
+        PendingReview review = new PendingReview(dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.PENDING));
 
-        assertThatCode(() -> new PendingReview(review).cancel(3L)).isInstanceOf(AuthorizationException.class);
+        assertThatCode(() -> review.cancel(3L)).isInstanceOf(AuthorizationException.class);
     }
 
     @DisplayName("선생님이 리뷰를 거절한 경우 - 성공")
@@ -54,9 +54,9 @@ public class PendingReviewTest {
         Member teacher = dummyMember(1L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.TEACHER, null);
         Member student = dummyMember(2L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.STUDENT, null);
 
-        Review review = dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.PENDING);
+        PendingReview review = new PendingReview(dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.PENDING));
 
-        assertThatCode(() -> new PendingReview(review).deny(1L)).doesNotThrowAnyException();
+        assertThatCode(() -> review.deny(1L)).doesNotThrowAnyException();
     }
 
     @DisplayName("선생님이 리뷰를 거절한 경우 - PENDING 이 아닐 경우 실패")
@@ -76,9 +76,9 @@ public class PendingReviewTest {
         Member teacher = dummyMember(1L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.TEACHER, null);
         Member student = dummyMember(2L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.STUDENT, null);
 
-        Review review = dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.PENDING);
+        PendingReview review = new PendingReview(dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.PENDING));
 
-        assertThatCode(() -> new PendingReview(review).deny(3L)).isInstanceOf(AuthorizationException.class);
+        assertThatCode(() -> review.deny(3L)).isInstanceOf(AuthorizationException.class);
     }
 
     @DisplayName("선생님이 리뷰를 수락한 경우 - 성공")
@@ -87,9 +87,9 @@ public class PendingReviewTest {
         Member teacher = dummyMember(1L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.TEACHER, null);
         Member student = dummyMember(2L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.STUDENT, null);
 
-        Review review = dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.PENDING);
+        PendingReview review = new PendingReview(dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.PENDING));
 
-        assertThatCode(() -> new PendingReview(review).accept(1L)).doesNotThrowAnyException();
+        assertThatCode(() -> review.accept(1L)).doesNotThrowAnyException();
     }
 
     @DisplayName("시용자가 리뷰를 수락한 경우 - PENDING 이 아닐 경우 실패")
@@ -109,8 +109,9 @@ public class PendingReviewTest {
         Member teacher = dummyMember(1L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.TEACHER, null);
         Member student = dummyMember(2L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.STUDENT, null);
 
-        Review review = dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.PENDING);
+        PendingReview review = new PendingReview(dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.PENDING));
 
-        assertThatCode(() -> new PendingReview(review).accept(3L)).isInstanceOf(AuthorizationException.class);
+        assertThatCode(() -> review.accept(3L))
+                .isInstanceOf(AuthorizationException.class);
     }
 }

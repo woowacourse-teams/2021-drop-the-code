@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @DisplayName("멤버 관련 인수 테스트")
-public class MemberAcceptanceTest extends AcceptanceTest {
+class MemberAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("로그인 한 유저 정보 조회 성공")
@@ -56,13 +56,39 @@ public class MemberAcceptanceTest extends AcceptanceTest {
     }
 
     @Test
-    @DisplayName("멤버 삭제 성공")
+    @DisplayName("멤버 삭제 성공 - 학생")
     void deleteMemberSuccess() {
         // given
         LoginResponse loginResponse = 학생_로그인되어_있음("air");
 
         // when
         ExtractableResponse<Response> response = 멤버_삭제_요청(loginResponse);
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
+    }
+
+    @Test
+    @DisplayName("멤버 삭제 성공 - 선생님")
+    void deleteTeacherMemberSuccess() {
+        // given
+        LoginResponse loginResponse = 리뷰어_로그인되어_있음("air");
+
+        // when
+        ExtractableResponse<Response> response = 멤버_삭제_요청(loginResponse);
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
+    }
+
+    @Test
+    @DisplayName("[쉬운 테스트를 위한 메서드]- 멤버 id로 삭제 성공")
+    void deleteMemberWithId() {
+        // given
+        LoginResponse loginResponse = 리뷰어_로그인되어_있음("air");
+
+        // when
+        ExtractableResponse<Response> response = 멤버ID로_삭제_요청(loginResponse.getId());
 
         // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
@@ -279,6 +305,33 @@ public class MemberAcceptanceTest extends AcceptanceTest {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
 
+    @Test
+    @DisplayName("선생님 등록 정보 수정")
+    void updateTeacherProfile() {
+        // given
+        LoginResponse teacher = 리뷰어_로그인되어_있음("air");
+        TeacherRegistrationRequest teacherRegistrationRequest = 수정할_선생님_등록_정보();
+
+        // when
+        ExtractableResponse<Response> response = 선생님_정보_수정_요청(teacher, teacherRegistrationRequest);
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
+    }
+
+    @Test
+    @DisplayName("선생님 등록 취소")
+    void deleteTeacherRegistration() {
+        // given
+        LoginResponse teacher = 리뷰어_로그인되어_있음("air");
+
+        // when
+        ExtractableResponse<Response> response = 선생님_등록_취소_요청(teacher);
+
+        // then
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.NO_CONTENT.value());
+    }
+
     public static ExtractableResponse<Response> 선생님_등록_요청(LoginResponse loginResponse, TeacherRegistrationRequest request) {
         return RestAssured.given()
                           .log().all()
@@ -287,6 +340,19 @@ public class MemberAcceptanceTest extends AcceptanceTest {
                           .body(request)
                           .when()
                           .post("/teachers")
+                          .then()
+                          .log().all()
+                          .extract();
+    }
+
+    public static ExtractableResponse<Response> 선생님_정보_수정_요청(LoginResponse loginResponse, TeacherRegistrationRequest request) {
+        return RestAssured.given()
+                          .log().all()
+                          .header("Authorization", "Bearer " + loginResponse.getAccessToken())
+                          .contentType(APPLICATION_JSON_VALUE)
+                          .body(request)
+                          .when()
+                          .put("/teachers/me")
                           .then()
                           .log().all()
                           .extract();
@@ -309,6 +375,27 @@ public class MemberAcceptanceTest extends AcceptanceTest {
                           .header("Authorization", "Bearer " + loginResponse.getAccessToken())
                           .when()
                           .delete("/members/me")
+                          .then()
+                          .log().all()
+                          .extract();
+    }
+
+    private ExtractableResponse<Response> 멤버ID로_삭제_요청(Long id) {
+        return RestAssured.given()
+                          .log().all()
+                          .when()
+                          .delete("/members/{id}", id)
+                          .then()
+                          .log().all()
+                          .extract();
+    }
+
+    private ExtractableResponse<Response> 선생님_등록_취소_요청(LoginResponse loginResponse) {
+        return RestAssured.given()
+                          .log().all()
+                          .header("Authorization", "Bearer " + loginResponse.getAccessToken())
+                          .when()
+                          .delete("/teachers/me")
                           .then()
                           .log().all()
                           .extract();
@@ -343,6 +430,13 @@ public class MemberAcceptanceTest extends AcceptanceTest {
         return 정삭적인_리뷰어_정보(techSpecJava, techSpecJavascript);
     }
 
+    public static TeacherRegistrationRequest 수정할_선생님_등록_정보() {
+        TechSpec techSpecKotlin = 정삭적인_리뷰어_언어_기술_스택_Kotlin();
+        TechSpec techSpecJavascript = 정삭적인_리뷰어_언어_기술_스택_Javascript();
+        return 수정할_리뷰어_정보(techSpecKotlin, techSpecJavascript);
+    }
+
+
     public static TechSpec 정삭적인_리뷰어_언어_기술_스택_Java() {
         return TechSpec.builder()
                        .language("java")
@@ -362,6 +456,22 @@ public class MemberAcceptanceTest extends AcceptanceTest {
                                          .title("네이버 백엔드 개발자")
                                          .content("열심히 리뷰하겠습니다!")
                                          .career(3)
+                                         .techSpecs(Arrays.asList(techSpec))
+                                         .build();
+    }
+
+    public static TechSpec 정삭적인_리뷰어_언어_기술_스택_Kotlin() {
+        return TechSpec.builder()
+                       .language("kotlin")
+                       .skills(Collections.singletonList("spring"))
+                       .build();
+    }
+
+    public static TeacherRegistrationRequest 수정할_리뷰어_정보(TechSpec... techSpec) {
+        return TeacherRegistrationRequest.builder()
+                                         .title("배민 백엔드 개발자")
+                                         .content("열심히 리뷰하겠습니다!")
+                                         .career(5)
                                          .techSpecs(Arrays.asList(techSpec))
                                          .build();
     }

@@ -3,19 +3,21 @@ package com.wootech.dropthecode.dto.response;
 import java.util.List;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class LanguageSkillsResponse {
 
     /**
      * 프로그래밍 언어
      */
-    private final LanguageResponse language;
+    private LanguageResponse language;
 
     /**
      * 프로그래밍 기술
      */
-    private final List<SkillResponse> skills;
+    private List<SkillResponse> skills;
 
     public LanguageSkillsResponse(LanguageResponse language, List<SkillResponse> skills) {
         this.language = language;

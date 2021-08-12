@@ -6,7 +6,6 @@ import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.dto.response.MemberResponse;
 import com.wootech.dropthecode.repository.MemberRepository;
-import com.wootech.dropthecode.repository.TeacherProfileRepository;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

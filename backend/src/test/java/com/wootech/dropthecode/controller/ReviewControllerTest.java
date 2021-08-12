@@ -52,7 +52,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ReviewController.class)
-public class ReviewControllerTest extends RestApiDocumentTest {
+class ReviewControllerTest extends RestApiDocumentTest {
 
     @Autowired
     private ReviewController reviewController;

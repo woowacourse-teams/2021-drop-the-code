@@ -48,15 +48,22 @@ class AcceptanceTest {
     }
 
     protected LoginResponse 학생_로그인되어_있음(String name) {
-        ExtractableResponse<Response> response = 로그인_요청(name);
-        return response.as(LoginResponse.class);
+        return 로그인되어_있음(name);
     }
 
+    /**
+     * COMMENT
+     * 기존 방법에서 Role이 업데이트 된 멤버가 리턴되지 않은 부분 수정
+     */
     protected LoginResponse 리뷰어_로그인되어_있음(String name) {
-        ExtractableResponse<Response> response = 로그인_요청(name);
-        LoginResponse loginMember = response.as(LoginResponse.class);
+        LoginResponse loginMember = 로그인되어_있음(name);
         선생님_등록_요청(loginMember, 선생님_기본_등록_정보());
-        return loginMember;
+        return 로그인되어_있음(name);
+    }
+
+    private LoginResponse 로그인되어_있음(String name) {
+        ExtractableResponse<Response> response = 로그인_요청(name);
+        return response.as(LoginResponse.class);
     }
 
     protected LoginResponse 유효하지_않은_로그인() {

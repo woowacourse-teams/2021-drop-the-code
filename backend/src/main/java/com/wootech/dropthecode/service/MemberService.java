@@ -4,7 +4,6 @@ import javax.persistence.EntityNotFoundException;
 
 import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Member;
-import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.dto.response.MemberResponse;
 import com.wootech.dropthecode.repository.MemberRepository;
 import com.wootech.dropthecode.repository.TeacherProfileRepository;
@@ -55,9 +54,13 @@ public class MemberService {
         member.delete();
         save(member);
 
-        if (member.hasRole(Role.TEACHER)) {
-            teacherProfileRepository.delete(member.getTeacherProfile());
-        }
+        /**
+         * COMMENT
+         * member.delete()에서 항상 Role을 DELETED로 바꿔 로직을 타지 않는 것 같음
+         */
+        //        if (member.hasRole(Role.TEACHER)) {
+        //            teacherProfileRepository.delete(member.getTeacherProfile());
+        //        }
 
         teacherLanguageService.deleteAllWithTeacher(member.getTeacherProfile());
         teacherSkillService.deleteAllWithTeacher(member.getTeacherProfile());

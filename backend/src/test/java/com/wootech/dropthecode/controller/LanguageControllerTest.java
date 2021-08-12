@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(LanguageController.class)
-public class LanguageControllerTest extends RestApiDocumentTest {
+class LanguageControllerTest extends RestApiDocumentTest {
 
     @Autowired
     private LanguageController languageController;

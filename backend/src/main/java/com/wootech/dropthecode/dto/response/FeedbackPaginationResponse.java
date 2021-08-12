@@ -4,18 +4,20 @@ import java.util.List;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class FeedbackPaginationResponse {
     /**
      * 피드백 목록
      */
-    private final List<FeedbackResponse> feedbacks;
+    private List<FeedbackResponse> feedbacks;
 
     /**
      * 총 페이지 수
      */
-    private final Integer pageCount;
+    private Integer pageCount;
 
     @Builder
     public FeedbackPaginationResponse(List<FeedbackResponse> feedbacks, Integer pageCount) {

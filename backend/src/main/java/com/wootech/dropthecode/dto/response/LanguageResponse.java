@@ -3,19 +3,21 @@ package com.wootech.dropthecode.dto.response;
 import com.wootech.dropthecode.domain.Language;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class LanguageResponse {
 
     /**
      * 프로그래밍 언어 Id
      */
-    private final Long id;
+    private Long id;
 
     /**
      * 프로그래밍 언어 이름
      */
-    private final String name;
+    private String name;
 
     public LanguageResponse(Long id, String name) {
         this.id = id;

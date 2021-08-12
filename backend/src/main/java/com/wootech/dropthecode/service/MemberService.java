@@ -6,7 +6,6 @@ import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.dto.response.MemberResponse;
 import com.wootech.dropthecode.repository.MemberRepository;
-import com.wootech.dropthecode.repository.TeacherProfileRepository;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,13 +15,11 @@ public class MemberService {
     private final TeacherLanguageService teacherLanguageService;
     private final TeacherSkillService teacherSkillService;
     private final MemberRepository memberRepository;
-    private final TeacherProfileRepository teacherProfileRepository;
 
-    public MemberService(TeacherLanguageService teacherLanguageService, TeacherSkillService teacherSkillService, MemberRepository memberRepository, TeacherProfileRepository teacherProfileRepository) {
+    public MemberService(TeacherLanguageService teacherLanguageService, TeacherSkillService teacherSkillService, MemberRepository memberRepository) {
         this.teacherLanguageService = teacherLanguageService;
         this.teacherSkillService = teacherSkillService;
         this.memberRepository = memberRepository;
-        this.teacherProfileRepository = teacherProfileRepository;
     }
 
     @Transactional(readOnly = true)
@@ -53,14 +50,6 @@ public class MemberService {
         Member member = findById(loginMember.getId());
         member.delete();
         save(member);
-
-        /**
-         * COMMENT
-         * member.delete()에서 항상 Role을 DELETED로 바꿔 로직을 타지 않는 것 같음
-         */
-        //        if (member.hasRole(Role.TEACHER)) {
-        //            teacherProfileRepository.delete(member.getTeacherProfile());
-        //        }
 
         teacherLanguageService.deleteAllWithTeacher(member.getTeacherProfile());
         teacherSkillService.deleteAllWithTeacher(member.getTeacherProfile());

@@ -17,6 +17,7 @@ import useToastContext from "hooks/useToastContext";
 import { QUERY_KEY } from "utils/constants/key";
 import { SUCCESS_MESSAGE } from "utils/constants/message";
 import { PATH } from "utils/constants/path";
+import { PROGRESS } from "utils/constants/progress";
 
 import useAuthContext from "./useAuthContext";
 
@@ -167,14 +168,6 @@ const useReview = (reviewId: number) => {
   const isTeacher = teacher.id === user?.id;
   const isAnonymous = !(isStudent || isTeacher);
 
-  const progress = {
-    PENDING: "대기중",
-    DENIED: "거절됨",
-    ON_GOING: "진행중",
-    TEACHER_COMPLETED: "확인중",
-    FINISHED: "완료",
-  };
-
   const nextProgress =
     currentProgress === "ON_GOING" ? "리뷰 완료" : currentProgress === "TEACHER_COMPLETED" ? "리뷰 종료" : null;
 
@@ -183,7 +176,7 @@ const useReview = (reviewId: number) => {
     computed: {
       status: { isPending, isDenied, isOnGoing, isTeacherCompleted, isFinished },
       role: { isStudent, isTeacher, isAnonymous },
-      progress: progress[currentProgress],
+      progress: PROGRESS[currentProgress],
       nextProgress,
     },
     mutation: {

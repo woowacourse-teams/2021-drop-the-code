@@ -20,7 +20,7 @@ public class ChattingController {
     // 클라이언트에서 /publish/messages로 보내면 여기서 처리됨. 채팅 방을 구독 중인 사람들한테 다 뿌려줌
     @MessageMapping("/messages")
     public void chat(ChatRequest chatRequest) {
-        chattingService.create(chatRequest);
+        chattingService.save(chatRequest);
         simpMessagingTemplate.convertAndSend("/subscribe/rooms/" + chatRequest.getRoomId(), chatRequest.getMessage());
     }
 }

@@ -22,11 +22,11 @@ public class ChattingService {
     }
 
     @Transactional
-    public void create(ChatRequest chatRequest) {
-        Member teacher = memberService.findById(chatRequest.getReceiverId());
-        Member student = memberService.findById(chatRequest.getSenderId());
+    public void save(ChatRequest chatRequest) {
+        Member sender = memberService.findById(chatRequest.getSenderId());
+        Member receiver = memberService.findById(chatRequest.getReceiverId());
         Room room = roomService.findById(chatRequest.getRoomId());
-        Chat chat = new Chat(room, chatRequest.getMessage());
+        Chat chat = new Chat(room, sender, receiver, chatRequest.getMessage());
         chatRepository.save(chat);
     }
 }

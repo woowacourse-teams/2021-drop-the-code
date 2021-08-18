@@ -16,6 +16,12 @@ public class ChatRequest {
     private Long senderId;
 
     /**
+     * 수신자 id
+     */
+    @NotNull
+    private Long receiverId;
+
+    /**
      * 채팅방 id
      */
     @NotNull
@@ -27,8 +33,9 @@ public class ChatRequest {
     @NotBlank
     private String message;
 
-    public ChatRequest(Long senderId, Long roomId, String message) {
+    public ChatRequest(Long senderId, Long receiverId, Long roomId, String message) {
         this.senderId = senderId;
+        this.receiverId = receiverId;
         this.roomId = roomId;
         this.message = message;
     }

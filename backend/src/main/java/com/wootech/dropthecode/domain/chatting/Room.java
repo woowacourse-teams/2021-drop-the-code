@@ -23,11 +23,23 @@ public class Room extends BaseEntity {
     private Member student;
 
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OrderBy("createdAt desc")
     private List<Chat> chats;
 
     @Builder
     public Room(Member teacher, Member student) {
         this.teacher = teacher;
         this.student = student;
+    }
+
+    public Member getPartner(Long id) {
+        if (student.hasSameId(id)) {
+            return teacher;
+        }
+        return student;
+    }
+
+    public Chat getLatestChat() {
+        return chats.get(0);
     }
 }

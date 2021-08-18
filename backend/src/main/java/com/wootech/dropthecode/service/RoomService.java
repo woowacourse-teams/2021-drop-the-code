@@ -1,5 +1,6 @@
 package com.wootech.dropthecode.service;
 
+import java.util.List;
 import javax.persistence.EntityNotFoundException;
 
 import com.wootech.dropthecode.domain.chatting.Room;
@@ -36,5 +37,9 @@ public class RoomService {
     public Room findById(Long roomId) {
         return roomRepository.findById(roomId)
                              .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 방입니다."));
+    }
+
+    public List<Room> findAllByMemberId(Long id) {
+        return roomRepository.findByTeacherIdOrStudentId(id, id);
     }
 }

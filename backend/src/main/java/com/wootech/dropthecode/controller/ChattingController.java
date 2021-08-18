@@ -1,10 +1,15 @@
 package com.wootech.dropthecode.controller;
 
+import java.util.List;
+
 import com.wootech.dropthecode.dto.request.ChatRequest;
+import com.wootech.dropthecode.dto.response.LatestChatsResponse;
 import com.wootech.dropthecode.service.ChattingService;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,5 +27,10 @@ public class ChattingController {
     public void chat(ChatRequest chatRequest) {
         chattingService.save(chatRequest);
         simpMessagingTemplate.convertAndSend("/subscribe/rooms/" + chatRequest.getRoomId(), chatRequest.getMessage());
+    }
+
+    @GetMapping("/messages/{id}")
+    public List<LatestChatsResponse> findAllLatestChats(@PathVariable Long id) {
+        return chattingService.findAllLatestChats(id);
     }
 }

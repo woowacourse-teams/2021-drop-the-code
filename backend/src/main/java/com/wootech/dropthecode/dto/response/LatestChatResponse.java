@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class LatestChatsResponse {
+public class LatestChatResponse {
     /**
      * 채팅 상대방 id
      */
@@ -38,7 +38,7 @@ public class LatestChatsResponse {
     private LocalDateTime createdAt;
 
     @Builder
-    public LatestChatsResponse(Long id, String name, String imageUrl, String content, LocalDateTime createdAt) {
+    public LatestChatResponse(Long id, String name, String imageUrl, String content, LocalDateTime createdAt) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
@@ -46,13 +46,13 @@ public class LatestChatsResponse {
         this.createdAt = createdAt;
     }
 
-    public static LatestChatsResponse from(Member partner, Chat latestChat) {
-        return LatestChatsResponse.builder()
-                                  .id(partner.getId())
-                                  .name(partner.getName())
-                                  .imageUrl(partner.getImageUrl())
-                                  .content(latestChat.getContent())
-                                  .createdAt(latestChat.getCreatedAt())
-                                  .build();
+    public static LatestChatResponse from(Member partner, Chat latestChat) {
+        return LatestChatResponse.builder()
+                                 .id(partner.getId())
+                                 .name(partner.getName())
+                                 .imageUrl(partner.getImageUrl())
+                                 .content(latestChat.getContent())
+                                 .createdAt(latestChat.getCreatedAt())
+                                 .build();
     }
 }

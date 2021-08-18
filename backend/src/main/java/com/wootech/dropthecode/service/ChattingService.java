@@ -4,12 +4,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.wootech.dropthecode.domain.BaseEntity;
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.domain.chatting.Chat;
 import com.wootech.dropthecode.domain.chatting.Room;
 import com.wootech.dropthecode.dto.request.ChatRequest;
-import com.wootech.dropthecode.dto.response.LatestChatsResponse;
+import com.wootech.dropthecode.dto.response.ChatResponse;
+import com.wootech.dropthecode.dto.response.LatestChatResponse;
 import com.wootech.dropthecode.repository.ChatRepository;
 
 import org.springframework.stereotype.Service;
@@ -36,13 +36,22 @@ public class ChattingService {
         chatRepository.save(chat);
     }
 
-    public List<LatestChatsResponse> findAllLatestChats(Long id) {
+    public List<LatestChatResponse> findAllLatestChats(Long id) {
         Member member = memberService.findById(id);
         List<Room> rooms = roomService.findAllByMemberId(member.getId());
 
         return rooms.stream()
-                    .map(room -> LatestChatsResponse.from(room.getPartner(id), room.getLatestChat()))
-                    .sorted(Comparator.comparing(LatestChatsResponse::getCreatedAt).reversed())
+                    .map(room -> LatestChatResponse.from(room.getPartner(id), room.getLatestChat()))
+                    .sorted(Comparator.comparing(LatestChatResponse::getCreatedAt).reversed())
                     .collect(Collectors.toList());
+    }
+
+    public List<ChatResponse> findAllChats(Long roomId) {
+        Room room = roomService.findById(roomId);
+        List<Chat> chats = room.getChats();
+
+        return chats.stream()
+             .map(chat -> ChatResponse.from(chat))
+             .collect(Collectors.toList());
     }
 }

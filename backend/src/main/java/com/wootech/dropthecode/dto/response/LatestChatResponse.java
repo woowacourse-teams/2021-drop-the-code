@@ -30,7 +30,7 @@ public class LatestChatResponse {
     /**
      * 가장 최근 메시지 내용
      */
-    private String content;
+    private String latestMessage;
 
     /**
      * 가장 최근 메시지의 생성 시간
@@ -38,11 +38,11 @@ public class LatestChatResponse {
     private LocalDateTime createdAt;
 
     @Builder
-    public LatestChatResponse(Long id, String name, String imageUrl, String content, LocalDateTime createdAt) {
+    public LatestChatResponse(Long id, String name, String imageUrl, String latestMessage, LocalDateTime createdAt) {
         this.id = id;
         this.name = name;
         this.imageUrl = imageUrl;
-        this.content = content;
+        this.latestMessage = latestMessage;
         this.createdAt = createdAt;
     }
 
@@ -51,7 +51,7 @@ public class LatestChatResponse {
                                  .id(partner.getId())
                                  .name(partner.getName())
                                  .imageUrl(partner.getImageUrl())
-                                 .content(latestChat.getContent())
+                                 .latestMessage(latestChat.getContent())
                                  .createdAt(latestChat.getCreatedAt())
                                  .build();
     }

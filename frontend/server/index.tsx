@@ -16,6 +16,8 @@ import Html from "./Html";
 const app = express();
 
 app.use(express.static(path.join(__dirname, "../client")));
+app.use("/favicon.ico", express.static(path.join(__dirname, "../../public/favicon.ico")));
+
 app.get("*", (req, res) => {
   const sheet = new ServerStyleSheet();
 

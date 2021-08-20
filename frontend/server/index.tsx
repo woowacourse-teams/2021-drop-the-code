@@ -15,6 +15,15 @@ import Html from "./Html";
 
 const app = express();
 
+let keepAlive = true;
+
+app.use(function (req, res, next) {
+  if (keepAlive) {
+    res.set("Connection", "close");
+  }
+  next();
+});
+
 app.use(express.static(path.join(__dirname, "../client")));
 app.use("/favicon.ico", express.static(path.join(__dirname, "../../public/favicon.ico")));
 
@@ -49,4 +58,16 @@ app.get("*", (req, res) => {
   );
 });
 
-app.listen(3000, () => console.log("Server started http://localhost:3000"));
+const server = app.listen(3000, () => {
+  process.send?.("ready");
+  console.log("Server started http://localhost:3000");
+});
+
+process.on("SIGINT", function () {
+  keepAlive = false;
+
+  server.close(() => {
+    console.log("Server closed");
+    process.exit(0);
+  });
+});

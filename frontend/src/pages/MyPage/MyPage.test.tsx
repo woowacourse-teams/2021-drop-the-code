@@ -6,13 +6,14 @@ import { reviewers } from "__mock__/data/reviewers";
 import { mockingAnonymousAuth, mockingStudentAuth, mockingTeacherAuth } from "__mock__/utils/mockingAuth";
 import { mockingToken } from "__mock__/utils/mockingToken";
 import { fireEvent, render, screen } from "__mock__/utils/testUtils";
+import { waitForLoadingToBeRemoved } from "__mock__/utils/wait";
 import App from "App";
 import Main from "pages/Main/Main";
 import MyPage from "pages/MyPage/MyPage";
 import { SUCCESS_MESSAGE } from "utils/constants/message";
 import { PATH } from "utils/constants/path";
 
-const { findByText, findByRole } = screen;
+const { findByText, findByRole, getByText } = screen;
 
 describe("마이페이지 테스트", () => {
   describe("로그인 하지 않은경우", () => {
@@ -83,14 +84,15 @@ describe("마이페이지 테스트", () => {
     });
 
     it("리뷰어 정보가 화면에 나타난다.", async () => {
+      await waitForLoadingToBeRemoved();
       const title = await findByText(new RegExp(reviewers[0].title));
-      const career = await findByText(new RegExp(String(reviewers[0].career + "년")));
-
+      const career = getByText(new RegExp(String(reviewers[0].career + "년")));
       expect(title).toBeVisible();
       expect(career).toBeVisible();
     });
 
     it("리뷰어 정보를 삭제 할 수 있다.", async () => {
+      await waitForLoadingToBeRemoved();
       const deleteButton = await findByRole("button", { name: "삭제" });
       fireEvent.click(deleteButton);
 
@@ -102,6 +104,7 @@ describe("마이페이지 테스트", () => {
     });
 
     it("리뷰어 정보를 수정 할 수 있다.", async () => {
+      await waitForLoadingToBeRemoved();
       const editButton = await findByRole("button", { name: "수정" });
       fireEvent.click(editButton);
 

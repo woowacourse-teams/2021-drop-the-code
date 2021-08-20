@@ -150,7 +150,6 @@ const MyPage = () => {
           </Item>
         ))}
       </ul>
-
       <Suspense fallback={<Loading />}>{activeTab && <ReviewList id={user.id} mode={activeTab} />}</Suspense>
       <Button
         themeColor="secondary"

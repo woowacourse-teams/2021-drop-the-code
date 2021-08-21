@@ -18,9 +18,10 @@ const app = express();
 let keepAlive = true;
 
 app.use(function (req, res, next) {
-  if (keepAlive) {
+  if (!keepAlive) {
     res.set("Connection", "close");
   }
+
   next();
 });
 
@@ -58,9 +59,9 @@ app.get("*", (req, res) => {
   );
 });
 
-const server = app.listen(3000, () => {
+const server = app.listen(process.env.PORT, () => {
   process.send?.("ready");
-  console.log("Server started http://localhost:3000");
+  console.log(`Server started ${process.env.PORT}`);
 });
 
 process.on("SIGINT", function () {

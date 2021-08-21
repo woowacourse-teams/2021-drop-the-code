@@ -41,6 +41,7 @@ const config: webpack.Configuration = {
       "GITHUB_OAUTH_REDIRECT_URL",
       "CLIENT_BASE_URL",
       "SERVER_BASE_URL",
+      "PORT",
     ]),
   ],
 };

@@ -1,7 +1,11 @@
 /*global process, module*/
 
-const isDevelopment = process.env.NODE_ENV === "development";
-const isProduction = process.env.NODE_ENV === "production";
+const NODE_ENV = process.env.NODE_ENV;
+
+if (!NODE_ENV) throw Error("NODE_ENV environment variable is not defined");
+
+const isDevelopment = NODE_ENV === "development";
+const isProduction = NODE_ENV === "production";
 
 const presets = [
   isProduction && [

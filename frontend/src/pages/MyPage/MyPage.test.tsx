@@ -6,11 +6,15 @@ import { reviewers } from "__mock__/data/reviewers";
 import { mockingAnonymousAuth, mockingStudentAuth, mockingTeacherAuth } from "__mock__/utils/mockingAuth";
 import { mockingToken } from "__mock__/utils/mockingToken";
 import { fireEvent, render, screen } from "__mock__/utils/testUtils";
-import App from "App";
+import { waitForLoadingToBeRemoved } from "__mock__/utils/wait";
+import AuthRoute from "components/Auth/AuthRoute/AuthRoute";
+import Header from "components/Header/Header";
 import Main from "pages/Main/Main";
 import MyPage from "pages/MyPage/MyPage";
+import NotFound from "pages/NotFound/NotFound";
 import { SUCCESS_MESSAGE } from "utils/constants/message";
 import { PATH } from "utils/constants/path";
+import { ROUTE } from "utils/constants/route";
 
 const { findByText, findByRole } = screen;
 
@@ -21,7 +25,19 @@ describe("마이페이지 테스트", () => {
 
       render(
         <MemoryRouter initialEntries={["/mypage"]}>
-          <App />
+          <Switch>
+            {ROUTE.map(({ path, Component, isPrivate, exact }) => (
+              <AuthRoute isPrivate={isPrivate} key={path} path={path} redirectTo={PATH.MAIN} exact={exact}>
+                <Header />
+                <main>
+                  <Component />
+                </main>
+              </AuthRoute>
+            ))}
+            <Route path={PATH.NOT_FOUND}>
+              <NotFound />
+            </Route>
+          </Switch>
         </MemoryRouter>
       );
 
@@ -75,17 +91,17 @@ describe("마이페이지 테스트", () => {
   });
 
   describe("사용자가 리뷰어인 경우", () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       mockingToken();
       mockingTeacherAuth();
 
       render(<MyPage />);
+      await waitForLoadingToBeRemoved();
     });
 
     it("리뷰어 정보가 화면에 나타난다.", async () => {
-      const title = await findByText(new RegExp(reviewers[0].title));
+      const title = await findByText(new RegExp(reviewers[0].title), {});
       const career = await findByText(new RegExp(String(reviewers[0].career + "년")));
-
       expect(title).toBeVisible();
       expect(career).toBeVisible();
     });
@@ -104,7 +120,6 @@ describe("마이페이지 테스트", () => {
     it("리뷰어 정보를 수정 할 수 있다.", async () => {
       const editButton = await findByRole("button", { name: "수정" });
       fireEvent.click(editButton);
-
       const language = await findByText(languages[0].language.name);
       fireEvent.click(language);
 

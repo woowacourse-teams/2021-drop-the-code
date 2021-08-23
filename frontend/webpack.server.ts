@@ -8,14 +8,14 @@ import common from "./webpack.common";
 dotenv.config({ path: ".env.production" });
 
 const config = merge(common, {
-  entry: "./src",
+  entry: "./server",
+  target: "node",
   output: {
-    path: path.resolve(__dirname, "dist/client"),
+    path: path.resolve(__dirname, "dist/server"),
     filename: "[name].js",
     publicPath: "/",
     clean: true,
   },
-  devtool: false,
 });
 
 export default config;

@@ -64,7 +64,7 @@ const MyReviewerInfo = ({ reviewerId }: Props) => {
   const { open } = useModalContext();
   const toast = useToastContext();
 
-  const { data } = useQuery([QUERY_KEY.GET_REVIEWER, reviewerId], async () => {
+  const { data, isLoading } = useQuery([QUERY_KEY.GET_REVIEWER, reviewerId], async () => {
     const response = await getReviewer(reviewerId);
 
     if (!response.isSuccess) {
@@ -92,7 +92,7 @@ const MyReviewerInfo = ({ reviewerId }: Props) => {
     });
   });
 
-  if (deleteReviewerMutation.isLoading) return <Loading />;
+  if (deleteReviewerMutation.isLoading || isLoading) return <Loading />;
 
   return (
     <>

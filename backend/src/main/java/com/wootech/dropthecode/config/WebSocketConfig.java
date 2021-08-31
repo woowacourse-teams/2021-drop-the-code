@@ -1,6 +1,10 @@
 package com.wootech.dropthecode.config;
 
+import com.wootech.dropthecode.controller.auth.ChattingAuthenticationInterceptor;
+import com.wootech.dropthecode.controller.auth.WebSocketHandShakeInterceptor;
+
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
@@ -9,6 +13,15 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 @EnableWebSocketMessageBroker //메시지 브로커가 지원하는 'WebSocket 메시지 처리'를 활성화한다.
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+
+    private final ChattingAuthenticationInterceptor chattingAuthenticationInterceptor;
+    private final WebSocketHandShakeInterceptor webSocketHandShakeInterceptor;
+
+    public WebSocketConfig(ChattingAuthenticationInterceptor chattingAuthenticationInterceptor, WebSocketHandShakeInterceptor webSocketHandShakeInterceptor) {
+        this.chattingAuthenticationInterceptor = chattingAuthenticationInterceptor;
+        this.webSocketHandShakeInterceptor = webSocketHandShakeInterceptor;
+    }
+
     // 메세지 브로커를 설정한다.
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
@@ -25,7 +38,17 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws-connection")
+//                .addInterceptors(webSocketHandShakeInterceptor)
                 .setAllowedOrigins("chrome-extension://ggnhohnkfcpcanfekomdkjffnfcjnjam")
                 .withSockJS();
     }
+
+
+    // 토큰 인증을 위한 인터셉터를 등록
+    @Override
+    public void configureClientInboundChannel(ChannelRegistration registration) {
+        registration.interceptors(chattingAuthenticationInterceptor);
+    }
+
+
 }

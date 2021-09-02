@@ -11,13 +11,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.util.StringUtils;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import redis.embedded.RedisServer;
 
-@Slf4j
 @Profile("test")
 @Configuration
 public class EmbeddedRedisConfig {
+
+    private static final Logger log = LoggerFactory.getLogger(EmbeddedRedisConfig.class);
 
     @Value("${spring.redis.port}")
     private int redisPort;

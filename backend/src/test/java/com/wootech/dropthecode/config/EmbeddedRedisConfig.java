@@ -11,8 +11,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.util.StringUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import redis.embedded.RedisServer;
 
+@Slf4j
 @Profile("test")
 @Configuration
 public class EmbeddedRedisConfig {
@@ -81,8 +83,9 @@ public class EmbeddedRedisConfig {
             }
 
         } catch (Exception e) {
+            log.error("EmbeddedRedis 실행 중 에러 발생", e);
         }
 
-        return !StringUtils.isEmpty(pidInfo.toString());
+        return StringUtils.hasText(pidInfo.toString());
     }
 }

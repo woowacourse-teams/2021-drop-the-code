@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import com.wootech.dropthecode.ControllerTest;
 import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.dto.TechSpec;
 import com.wootech.dropthecode.dto.request.FeedbackRequest;
@@ -14,13 +15,9 @@ import com.wootech.dropthecode.dto.response.LoginResponse;
 import com.wootech.dropthecode.dto.response.MemberResponse;
 import com.wootech.dropthecode.dto.response.ReviewResponse;
 import com.wootech.dropthecode.exception.AuthenticationException;
-import com.wootech.dropthecode.service.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import org.junit.jupiter.api.DisplayName;
@@ -36,9 +33,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.web.reactive.function.BodyInserters.fromFormData;
 
-@ActiveProfiles("test")
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class AuthenticationInterceptorTest {
+class AuthenticationInterceptorTest extends ControllerTest {
     private static final String BEARER = "Bearer ";
     private static final String VALID_ACCESS_TOKEN = "valid.access.token";
     private static final String INVALID_ACCESS_TOKEN = "invalid.access.token";
@@ -46,24 +41,6 @@ class AuthenticationInterceptorTest {
 
     @Autowired
     private WebTestClient webTestClient;
-
-    @MockBean
-    private OauthService oauthService;
-
-    @MockBean
-    private AuthService authService;
-
-    @MockBean
-    private LanguageService languageService;
-
-    @MockBean
-    private TeacherService teacherService;
-
-    @MockBean
-    private MemberService memberService;
-
-    @MockBean
-    private ReviewService reviewService;
 
     @Nested
     @DisplayName("인터셉터 거치지 않는 요청 확인")

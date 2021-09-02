@@ -7,11 +7,8 @@ import com.wootech.dropthecode.dto.request.FeedbackSearchCondition;
 import com.wootech.dropthecode.dto.response.FeedbackPaginationResponse;
 import com.wootech.dropthecode.dto.response.FeedbackResponse;
 import com.wootech.dropthecode.dto.response.ProfileResponse;
-import com.wootech.dropthecode.service.FeedbackService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Pageable;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 
@@ -27,14 +24,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(FeedbackController.class)
 class FeedbackControllerTest extends RestApiDocumentTest {
 
     @Autowired
     FeedbackController feedbackController;
-
-    @MockBean
-    FeedbackService feedbackService;
 
     @BeforeEach
     void setUp(RestDocumentationContextProvider provider) {

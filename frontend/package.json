@@ -96,7 +96,6 @@
     "react-query": "^3.18.1",
     "react-router-dom": "^5.2.0",
     "styled-components": "^5.3.0",
-    "styled-normalize": "^8.0.7",
     "styled-reset": "^4.3.4"
   }
 }

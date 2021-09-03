@@ -27,19 +27,16 @@ const Menu = styled.div`
   box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
   overflow: auto;
   right: 0;
-  padding: 1.875rem;
   z-index: 1;
   transition: box-shadow 0.3s;
-  :hover {
-    box-shadow: ${({ theme }) => theme.common.boxShadow.pressed};
-  }
 `;
 
 export interface Props extends Omit<ButtonProps, "active" | "onClick"> {
   contents?: (props: () => void) => ReactNode;
+  onClick?: () => void;
 }
 
-const MenuItemButton = ({ contents, children, ...props }: Props) => {
+const MenuItemButton = ({ contents, onClick, children, ...props }: Props) => {
   const [isOpen, setOpen] = useState(false);
 
   const close = () => {
@@ -53,7 +50,7 @@ const MenuItemButton = ({ contents, children, ...props }: Props) => {
   };
 
   return (
-    <Inner>
+    <Inner onClick={onClick}>
       <Button
         {...props}
         onClick={() => {

@@ -38,13 +38,12 @@ const Inner = styled.button<InnerProps>`
     `};
 
   :hover {
-    box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
+    box-shadow: ${({ theme, hover }) => (hover ? theme.common.boxShadow.primary : "")};
   }
 
   :active {
-    background-color: ${({ theme, themeColor = "primary" }) => css`
-      ${theme.components.button[themeColor].activeBg};
-    `};
+    background-color: ${({ theme, themeColor = "primary", active }) =>
+      active ? theme.components.button[themeColor].activeBg : ""};
   }
 
   :disabled {
@@ -55,7 +54,6 @@ const Inner = styled.button<InnerProps>`
     }
 
     cursor: auto;
-
     color: ${COLOR.GRAY_400};
   }
 `;

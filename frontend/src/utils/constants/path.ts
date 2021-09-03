@@ -8,5 +8,6 @@ export const PATH = {
   REVIEW_REQUEST: "/review/request/:reviewerId",
   REDIRECT_OAUTH: "/redirect/oauth",
   GUIDE: "/guide",
+  CHATTING: "/chatting",
   NOT_FOUND: "*",
 };

@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
+import com.wootech.dropthecode.config.JpaConfig;
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.domain.Progress;
 import com.wootech.dropthecode.domain.Role;
@@ -15,17 +16,16 @@ import com.wootech.dropthecode.dto.ReviewSummary;
 import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -36,12 +36,10 @@ import static com.wootech.dropthecode.builder.MemberBuilder.dummyMember;
 import static com.wootech.dropthecode.builder.ReviewBuilder.dummyReview;
 import static com.wootech.dropthecode.builder.TeacherProfileBuilder.dummyTeacherProfile;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @ActiveProfiles("test")
-@SpringBootTest(webEnvironment = RANDOM_PORT)
-@Transactional
-@AutoConfigureTestEntityManager
+@Import(JpaConfig.class)
+@DataJpaTest
 class ReviewRepositoryCustomImplTest {
 
     @Autowired

@@ -2,6 +2,7 @@ package com.wootech.dropthecode.integration.review;
 
 import java.util.Optional;
 
+import com.wootech.dropthecode.IntegrationTest;
 import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.domain.Progress;
@@ -16,8 +17,6 @@ import com.wootech.dropthecode.service.ReviewService;
 import com.wootech.dropthecode.util.DatabaseCleanup;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -30,9 +29,7 @@ import static com.wootech.dropthecode.builder.ReviewBuilder.dummyReview;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-@ActiveProfiles("test")
-class ReviewServiceIntegrationTest {
+class ReviewServiceIntegrationTest extends IntegrationTest {
 
     @Autowired
     private ReviewService reviewService;

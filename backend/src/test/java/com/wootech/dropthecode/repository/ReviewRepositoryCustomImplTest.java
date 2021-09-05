@@ -15,13 +15,17 @@ import com.wootech.dropthecode.dto.ReviewSummary;
 import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -32,9 +36,12 @@ import static com.wootech.dropthecode.builder.MemberBuilder.dummyMember;
 import static com.wootech.dropthecode.builder.ReviewBuilder.dummyReview;
 import static com.wootech.dropthecode.builder.TeacherProfileBuilder.dummyTeacherProfile;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
-@DataJpaTest
 @ActiveProfiles("test")
+@SpringBootTest(webEnvironment = RANDOM_PORT)
+@Transactional
+@AutoConfigureTestEntityManager
 class ReviewRepositoryCustomImplTest {
 
     @Autowired
@@ -42,6 +49,9 @@ class ReviewRepositoryCustomImplTest {
 
     @Autowired
     private ReviewRepository reviewRepository;
+
+    @MockBean
+    private AuditingEntityListener auditingEntityListener;
 
     private Member airTe;
     private Member allieTe;
@@ -62,6 +72,7 @@ class ReviewRepositoryCustomImplTest {
 
     @BeforeEach
     void setUp() {
+
         // given
         airTe = dummyMember("oauth1", "email1@gmail.com", "name1", "s3://imageUrl1",
                 "github url1", Role.TEACHER, LocalDateTime.now());

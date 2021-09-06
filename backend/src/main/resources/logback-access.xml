@@ -14,7 +14,7 @@
     </springProfile>
 
     <!--    Production    -->
-    <springProfile name="prod">
+    <springProfile name="prod, dev">
         <include resource="appender/access-file-appender.xml"/>
         <appender-ref ref="ACCESS_FILE"/>
     </springProfile>

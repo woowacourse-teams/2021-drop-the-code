@@ -33,12 +33,13 @@ public class RoomService {
         return savedRoom.getId();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Room findById(Long roomId) {
         return roomRepository.findById(roomId)
                              .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 방입니다."));
     }
 
+    @Transactional(readOnly = true)
     public List<Room> findAllByMemberId(Long id) {
         return roomRepository.findByTeacherIdOrStudentId(id, id);
     }

@@ -36,14 +36,13 @@ public class ChattingService {
         chatRepository.save(chat);
     }
 
+    @Transactional(readOnly = true)
     public List<LatestChatResponse> findAllLatestChats(Long id) {
         Member member = memberService.findById(id);
         List<Room> rooms = roomService.findAllByMemberId(member.getId());
 
-        // TODO: 해당 유저가 채팅 방 목록을 하나도 가지지 않는 경우 처리
-
         return rooms.stream()
-                    .map(room -> LatestChatResponse.from(room.getPartner(id), room.getLatestChat()))
+                    .map(room -> LatestChatResponse.of(room.getPartner(id), room.getLatestChat()))
                     .sorted(Comparator.comparing(LatestChatResponse::getCreatedAt).reversed())
                     .collect(Collectors.toList());
     }

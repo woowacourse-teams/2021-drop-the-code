@@ -46,7 +46,7 @@ public class LatestChatResponse {
         this.createdAt = createdAt;
     }
 
-    public static LatestChatResponse from(Member partner, Chat latestChat) {
+    public static LatestChatResponse of(Member partner, Chat latestChat) {
         return LatestChatResponse.builder()
                                  .id(partner.getId())
                                  .name(partner.getName())

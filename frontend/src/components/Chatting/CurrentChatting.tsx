@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 import { singleChatting } from "__mock__/data/chatting";
+import LeftSingleMessage from "components/Chatting/LeftSingleMessage";
+import RightSingleMessage from "components/Chatting/RightSingleMessage";
 import FormProvider from "components/FormProvider/FormProvider";
 import Avatar from "components/shared/Avatar/Avatar";
 import Button from "components/shared/Button/Button";
 import { COLOR } from "utils/constants/color";
 
-import LeftSingleMessage from "./LeftSingleMessage";
-import RightSingleMessage from "./RightSingleMessage";
 // import useAuthContext from "hooks/useAuthContext";
 // import useChattingList from "hooks/useChattingList";
 

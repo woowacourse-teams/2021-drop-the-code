@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-@Profile({"local-init"})
+@Profile({"local-init", "prod-init"})
 @Component
 public class DataInitializer implements ApplicationRunner {
     private static final Random random = new Random();
@@ -61,6 +61,11 @@ public class DataInitializer implements ApplicationRunner {
                 .collect(Collectors.toMap(Skill::getId, Function.identity()));
 
         insertLanguageSkill(languageMap, skillMap);
+
+        String property = System.getProperty("spring.profiles.active");
+        if (!property.contains("local")) {
+           return;
+        }
 
         Map<Long, Member> memberMap = insertMember()
                 .stream()

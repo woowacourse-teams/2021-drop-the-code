@@ -38,12 +38,12 @@ const Inner = styled.button<InnerProps>`
     `};
 
   :hover {
-    box-shadow: ${({ theme, hover }) => (hover ? theme.common.boxShadow.primary : "")};
+    box-shadow: ${({ theme, hover }) => (hover ? theme.common.boxShadow.primary : "none")};
   }
 
   :active {
     background-color: ${({ theme, themeColor = "primary", active }) =>
-      active ? theme.components.button[themeColor].activeBg : ""};
+      active ? theme.components.button[themeColor].activeBg : "none"};
   }
 
   :disabled {

@@ -70,7 +70,7 @@ const DropDownMenu = () => {
             {children}
           </MenuLink>
         ))}
-      <LineDivider></LineDivider>
+      <LineDivider />
       <Logout onClick={() => logout()}>로그아웃</Logout>
     </Inner>
   );

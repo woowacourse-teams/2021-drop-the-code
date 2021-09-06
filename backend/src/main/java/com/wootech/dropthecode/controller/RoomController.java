@@ -20,10 +20,8 @@ public class RoomController {
     }
 
     @GetMapping("/rooms")
-    public ResponseEntity<Void> createOrGet(@ModelAttribute @Valid RoomRequest roomRequest) {
+    public ResponseEntity<Long> createOrGet(@ModelAttribute @Valid RoomRequest roomRequest) {
         Long id = roomService.getOrCreate(roomRequest);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                             .header("Location", "/rooms/" + id)
-                             .build();
+        return ResponseEntity.ok(id);
     }
 }

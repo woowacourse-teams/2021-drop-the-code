@@ -12,7 +12,7 @@ import static com.wootech.dropthecode.builder.MemberBuilder.dummyMember;
 import static com.wootech.dropthecode.builder.ReviewBuilder.dummyReview;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-public class OnGoingReviewTest {
+class OnGoingReviewTest {
 
     @DisplayName("Teacher Completed 상태 변경이 가능한 경우 - 성공")
     @Test
@@ -20,9 +20,9 @@ public class OnGoingReviewTest {
         Member teacher = dummyMember(1L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.TEACHER, null);
         Member student = dummyMember(2L, "1000", "Jinho", "jh8579@gmail.com", "s3://jh8579", "github url", Role.STUDENT, null);
 
-        Review review = dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.ON_GOING);
+        OnGoingReview review = new OnGoingReview(dummyReview(teacher, student, "test title", "test content", "github/3", 0L, Progress.ON_GOING));
 
-        assertThatCode(() -> new OnGoingReview(review).complete(1L)).doesNotThrowAnyException();
+        assertThatCode(() -> review.complete(1L)).doesNotThrowAnyException();
     }
 
     @DisplayName("Teacher Completed 상태 변경이 가능한 경우 - 실패")

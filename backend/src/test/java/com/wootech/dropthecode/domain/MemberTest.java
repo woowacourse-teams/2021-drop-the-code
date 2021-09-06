@@ -100,6 +100,6 @@ class MemberTest {
         assertThat(member.getImageUrl()).isEqualTo("https://static.thenounproject.com/png/994628-200.png");
         assertThat(member.getTeacherProfile().getTitle()).isEqualTo("탈퇴한 사용자입니다.");
         assertThat(member.getTeacherProfile().getContent()).isEqualTo("내용 없음");
-        assertThat(member.getTeacherProfile().getCareer()).isEqualTo(0);
+        assertThat(member.getTeacherProfile().getCareer()).isZero();
     }
 }

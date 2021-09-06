@@ -6,11 +6,8 @@ import com.wootech.dropthecode.dto.response.AccessTokenResponse;
 import com.wootech.dropthecode.dto.response.LoginResponse;
 import com.wootech.dropthecode.exception.AuthenticationException;
 import com.wootech.dropthecode.exception.OauthTokenRequestException;
-import com.wootech.dropthecode.service.OauthService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.test.web.servlet.ResultActions;
@@ -30,14 +27,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(AuthController.class)
 class AuthControllerTest extends RestApiDocumentTest {
 
     @Autowired
     private AuthController authController;
-
-    @MockBean
-    private OauthService oauthService;
 
     @BeforeEach
     void setUp(RestDocumentationContextProvider provider) {

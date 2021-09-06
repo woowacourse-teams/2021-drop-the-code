@@ -1,6 +1,8 @@
 package com.wootech.dropthecode.controller.auth.util;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.Random;
 
 import com.wootech.dropthecode.exception.AuthenticationException;
 
@@ -23,7 +25,10 @@ public class JwtTokenProvider {
     }
 
     public String createRefreshToken() {
-        return createToken("", refreshTokenValidityInMilliseconds);
+        byte[] array = new byte[7];
+        new Random().nextBytes(array);
+        String generatedString = new String(array, StandardCharsets.UTF_8);
+        return createToken(generatedString, refreshTokenValidityInMilliseconds);
     }
 
     public String createToken(String payload, long expireLength) {

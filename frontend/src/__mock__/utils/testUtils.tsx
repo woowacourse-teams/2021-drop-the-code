@@ -16,7 +16,6 @@ import { THEME } from "theme/theme";
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      suspense: true,
       retry: false,
     },
   },

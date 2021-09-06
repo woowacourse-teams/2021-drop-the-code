@@ -1,21 +1,18 @@
 import { useEffect } from "react";
 import { Redirect, Route, RouteProps } from "react-router-dom";
 
+import useAuthContext from "hooks/useAuthContext";
 import useToastContext from "hooks/useToastContext";
 import { ERROR_MESSAGE } from "utils/constants/message";
 
 interface Props extends RouteProps {
   isPrivate?: boolean;
-  isAuthenticated: boolean;
   redirectTo: string;
 }
 
-const PrivateRoute = ({ isAuthenticated, redirectTo, children, ...props }: Omit<Props, "isPrivate">) => (
-  <Route {...props}>{isAuthenticated ? children : <Redirect to={redirectTo} />}</Route>
-);
-
-const AuthRoute = ({ isPrivate, children, redirectTo, isAuthenticated, ...props }: Props) => {
+const AuthRoute = ({ isPrivate, children, redirectTo, ...props }: Props) => {
   const toast = useToastContext();
+  const { isAuthenticated } = useAuthContext();
 
   useEffect(() => {
     if (isPrivate && !isAuthenticated) {
@@ -24,9 +21,7 @@ const AuthRoute = ({ isPrivate, children, redirectTo, isAuthenticated, ...props 
   }, []);
 
   return isPrivate ? (
-    <PrivateRoute redirectTo={redirectTo} isAuthenticated={isAuthenticated} {...props}>
-      {children}
-    </PrivateRoute>
+    <Route {...props}>{isAuthenticated ? children : <Redirect to={redirectTo} />}</Route>
   ) : (
     <Route {...props}>{children}</Route>
   );

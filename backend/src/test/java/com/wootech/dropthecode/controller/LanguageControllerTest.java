@@ -6,11 +6,8 @@ import com.wootech.dropthecode.controller.util.RestDocsMockMvcUtils;
 import com.wootech.dropthecode.dto.response.LanguageResponse;
 import com.wootech.dropthecode.dto.response.LanguageSkillsResponse;
 import com.wootech.dropthecode.dto.response.SkillResponse;
-import com.wootech.dropthecode.service.LanguageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 
@@ -26,14 +23,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(LanguageController.class)
-public class LanguageControllerTest extends RestApiDocumentTest {
+class LanguageControllerTest extends RestApiDocumentTest {
 
     @Autowired
     private LanguageController languageController;
-
-    @MockBean
-    private LanguageService languageService;
 
     @BeforeEach
     void setUp(RestDocumentationContextProvider provider) {

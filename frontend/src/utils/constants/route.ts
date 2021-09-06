@@ -1,14 +1,17 @@
+import { lazy } from "react";
+
 import { RouteShape, NavMenuShape, RoleNavMenuShape } from "types/route";
 
-import Guide from "pages/Guide/Guide";
-import Main from "pages/Main/Main";
-import MyPage from "pages/MyPage/MyPage";
-import RedirectOAuth from "pages/RedirectOAuth/RedirectOAuth";
-import ReviewDetail from "pages/ReviewDetail/ReviewDetail";
-import ReviewerDetail from "pages/ReviewerDetail/ReviewerDetail";
-import ReviewerRegister from "pages/ReviewerRegister/ReviewerRegister";
-import ReviewerSearch from "pages/ReviewerSearch/ReviewerSearch";
 import { PATH } from "utils/constants/path";
+
+const Guide = lazy(() => import("pages/Guide/Guide"));
+const Main = lazy(() => import("pages/Main/Main"));
+const MyPage = lazy(() => import("pages/MyPage/MyPage"));
+const RedirectOAuth = lazy(() => import("pages/RedirectOAuth/RedirectOAuth"));
+const ReviewDetail = lazy(() => import("pages/ReviewDetail/ReviewDetail"));
+const ReviewerDetail = lazy(() => import("pages/ReviewerDetail/ReviewerDetail"));
+const ReviewerRegister = lazy(() => import("pages/ReviewerRegister/ReviewerRegister"));
+const ReviewerSearch = lazy(() => import("pages/ReviewerSearch/ReviewerSearch"));
 
 export const ROUTE: RouteShape[] = [
   { path: PATH.MAIN, Component: Main, isPrivate: false, exact: true },

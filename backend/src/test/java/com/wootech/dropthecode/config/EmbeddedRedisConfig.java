@@ -11,11 +11,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.util.StringUtils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import redis.embedded.RedisServer;
 
 @Profile("test")
 @Configuration
 public class EmbeddedRedisConfig {
+
+    private static final Logger log = LoggerFactory.getLogger(EmbeddedRedisConfig.class);
 
     @Value("${spring.redis.port}")
     private int redisPort;
@@ -81,8 +85,9 @@ public class EmbeddedRedisConfig {
             }
 
         } catch (Exception e) {
+            log.error("EmbeddedRedis 실행 중 에러 발생", e);
         }
 
-        return !StringUtils.isEmpty(pidInfo.toString());
+        return StringUtils.hasText(pidInfo.toString());
     }
 }

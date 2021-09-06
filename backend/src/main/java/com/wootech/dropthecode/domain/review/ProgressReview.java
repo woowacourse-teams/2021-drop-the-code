@@ -1,5 +1,8 @@
 package com.wootech.dropthecode.domain.review;
 
+import lombok.Getter;
+
+@Getter
 public abstract class ProgressReview {
 
     protected final Review review;
@@ -7,10 +10,6 @@ public abstract class ProgressReview {
     protected ProgressReview(Review review) {
         validateSelfProgress(review);
         this.review = review;
-    }
-
-    protected Review getReview() {
-        return review;
     }
 
     protected abstract void validateSelfProgress(Review review);

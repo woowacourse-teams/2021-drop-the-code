@@ -2,28 +2,30 @@ package com.wootech.dropthecode.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class FeedbackResponse {
     /**
      * 피드백 ID
      */
-    private final Long id;
+    private Long id;
 
     /**
      * 피드백 별점 수
      */
-    private final Integer star;
+    private Integer star;
 
     /**
      * 피드백 내용
      */
-    private final String comment;
+    private String comment;
 
     /**
      * 피드백 작성한 유저 정보
      */
-    private final ProfileResponse studentProfile;
+    private ProfileResponse studentProfile;
 
     @Builder
     public FeedbackResponse(Long id, Integer star, String comment, ProfileResponse studentProfile) {

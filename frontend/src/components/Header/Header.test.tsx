@@ -9,12 +9,14 @@ const { queryByRole, findByRole } = screen;
 describe("헤더 컴포넌트 테스트", () => {
   it("로그인 하지 않은 경우 로그인 버튼이 렌더링 된다.", async () => {
     mockingAnonymousAuth();
+
     render(<Header />);
 
     const loginButton = await findByRole("button", { name: "로그인" });
     expect(loginButton).toBeInTheDocument();
 
     const logoutButton = queryByRole("button", { name: "로그아웃" });
+
     expect(logoutButton).not.toBeInTheDocument();
   });
 

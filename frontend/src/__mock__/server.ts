@@ -12,6 +12,9 @@ const requestHandlers = [
   rest.delete("/members/me", (req, res, ctx) => {
     return res(ctx.status(200));
   }),
+  rest.post("/token", (req, res, ctx) => {
+    return res(ctx.status(200));
+  }),
   rest.post("/logout", (req, res, ctx) => {
     return res(ctx.status(200));
   }),

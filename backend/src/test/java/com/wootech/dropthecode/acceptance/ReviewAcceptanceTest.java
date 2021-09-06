@@ -350,7 +350,7 @@ class ReviewAcceptanceTest {
 
             // then
             assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
-            assertThat(result.getPageCount()).isEqualTo(0);
+            assertThat(result.getPageCount()).isZero();
             assertThat(result.getReviews()).isEmpty();
         }
     }

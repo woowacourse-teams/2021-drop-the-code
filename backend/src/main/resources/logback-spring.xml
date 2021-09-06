@@ -23,7 +23,7 @@
         </root>
     </springProfile>
 
-    <springProfile name="prod">
+    <springProfile name="prod, dev">
         <include resource="appender/info-file-appender.xml"/>
         <include resource="appender/error-file-appender.xml"/>
         <include resource="appender/sql-file-appender.xml"/>

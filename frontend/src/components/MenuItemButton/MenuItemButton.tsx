@@ -36,7 +36,7 @@ export interface Props extends Omit<ButtonProps, "active" | "onClick"> {
   onClick?: () => void;
 }
 
-const MenuItemButton = ({ contents, onClick, children, ...props }: Props) => {
+const MenuItemButton = ({ contents, children, ...props }: Props) => {
   const [isOpen, setOpen] = useState(false);
 
   const close = () => {
@@ -50,7 +50,7 @@ const MenuItemButton = ({ contents, onClick, children, ...props }: Props) => {
   };
 
   return (
-    <Inner onClick={onClick}>
+    <Inner>
       <Button
         {...props}
         onClick={() => {

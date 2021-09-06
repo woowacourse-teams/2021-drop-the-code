@@ -1,9 +1,7 @@
-import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 import styled from "styled-components";
 
-import DownArrowSvg from "assets/down-arrow.svg";
 import Logo from "assets/logo.svg";
 import GithubOAuth from "components/Auth/OAuth/GithubOAuth";
 import DropDownMenu from "components/DropDownMenu/DropDownMenu";
@@ -21,17 +19,6 @@ const NavigationButton = styled(Button)`
   font-weight: 900;
 `;
 
-const UpArrow = styled(DownArrowSvg)`
-  transform: rotate(180deg);
-  width: 1rem;
-  height: 1rem;
-  fill: white;
-  position: absolute;
-  top: 40px;
-  right: 22px;
-  z-index: 10;
-`;
-
 const NavigationLink = styled(NavLink)`
   :hover {
     color: ${({ theme }) => theme.common.color.primary};
@@ -44,8 +31,6 @@ const NavigationLink = styled(NavLink)`
 `;
 
 const Header = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
   const { user } = useAuthContext();
   const { open } = useModalContext();
 
@@ -73,14 +58,8 @@ const Header = () => {
       )}
       {!!user && (
         <>
-          <MenuItemButton
-            themeColor="secondary"
-            hover={false}
-            contents={() => <DropDownMenu />}
-            onClick={() => setDropdownOpen(!dropdownOpen)}
-          >
+          <MenuItemButton themeColor="secondary" hover={false} contents={() => <DropDownMenu />}>
             <Avatar imageUrl={user.imageUrl} width="2.5rem" />
-            {dropdownOpen && <UpArrow />}
           </MenuItemButton>
         </>
       )}

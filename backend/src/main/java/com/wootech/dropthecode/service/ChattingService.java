@@ -28,10 +28,10 @@ public class ChattingService {
     }
 
     @Transactional
-    public void save(ChatRequest chatRequest) {
+    public void save(Long roomId, ChatRequest chatRequest) {
         Member sender = memberService.findById(chatRequest.getSenderId());
         Member receiver = memberService.findById(chatRequest.getReceiverId());
-        Room room = roomService.findById(chatRequest.getRoomId());
+        Room room = roomService.findById(roomId);
         Chat chat = new Chat(room, sender, receiver, chatRequest.getMessage());
         chatRepository.save(chat);
     }
@@ -47,6 +47,7 @@ public class ChattingService {
                     .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public List<ChatResponse> findAllChats(Long roomId) {
         Room room = roomService.findById(roomId);
         List<Chat> chats = room.getChats();

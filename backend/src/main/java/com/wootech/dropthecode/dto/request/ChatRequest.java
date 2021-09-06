@@ -22,21 +22,14 @@ public class ChatRequest {
     private Long receiverId;
 
     /**
-     * 채팅방 id
-     */
-    @NotNull
-    private Long roomId;
-
-    /**
      * 메시지 내용
      */
     @NotBlank
     private String message;
 
-    public ChatRequest(Long senderId, Long receiverId, Long roomId, String message) {
+    public ChatRequest(Long senderId, Long receiverId, String message) {
         this.senderId = senderId;
         this.receiverId = receiverId;
-        this.roomId = roomId;
         this.message = message;
     }
 }

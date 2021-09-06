@@ -23,7 +23,7 @@ public class RoomService {
     @Transactional
     public Long getOrCreate(RoomRequest roomRequest) {
         Room room = roomRepository.findByTeacherIdAndStudentId(roomRequest.getTeacherId(), roomRequest.getStudentId())
-                                  .orElse(
+                                  .orElseGet(() ->
                                           new Room(
                                                   memberService.findById(roomRequest.getTeacherId()),
                                                   memberService.findById(roomRequest.getStudentId())

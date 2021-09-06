@@ -50,10 +50,9 @@ const SingleItemInner = styled(FlexCenter)`
 const ChattingList = () => {
   // const { data, selectedChatting, setSelectedChatting } = useChattingList({ id });
 
-  chattingList.sort(function (a, b) {
-    a.createdAt < b.createdAt ? -1 : a.createdAt > b.createdAt ? 1 : 0;
-    return b.createdAt.localeCompare(a.createdAt);
-  });
+  chattingList.sort(
+    (a, b) => new Date(b.createdAt.slice(0, -4)).getTime() - new Date(a.createdAt.slice(0, -4)).getTime()
+  );
 
   return (
     <Inner>

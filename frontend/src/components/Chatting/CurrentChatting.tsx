@@ -62,11 +62,9 @@ const CurrentChatting = () => {
   // const { user } = useAuthContext();
   // const { data, selectedChatting, setSelectedChatting } = useChattingList({ id });
 
-  singleChatting.sort(function (a, b) {
-    a.createdAt < b.createdAt ? -1 : a.createdAt > b.createdAt ? 1 : 0;
-    return a.createdAt.localeCompare(b.createdAt);
-  });
-
+  singleChatting.sort(
+    (a, b) => new Date(a.createdAt.slice(0, -4)).getTime() - new Date(b.createdAt.slice(0, -4)).getTime()
+  );
   const myId = 1;
 
   return (

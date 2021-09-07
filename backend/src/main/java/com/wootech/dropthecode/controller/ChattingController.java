@@ -6,6 +6,7 @@ import com.wootech.dropthecode.dto.response.ChatResponse;
 import com.wootech.dropthecode.dto.response.LatestChatResponse;
 import com.wootech.dropthecode.service.ChattingService;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,12 +21,12 @@ public class ChattingController {
     }
 
     @GetMapping("/messages/{userId}")
-    public List<LatestChatResponse> findAllLatestChats(@PathVariable Long userId) {
-        return chattingService.findAllLatestChats(userId);
+    public ResponseEntity<List<LatestChatResponse>> findAllLatestChats(@PathVariable Long userId) {
+        return ResponseEntity.ok(chattingService.findAllLatestChats(userId));
     }
 
     @GetMapping("/messages")
-    public List<ChatResponse> findAllChats(@RequestParam("roomId") Long roomId) {
-        return chattingService.findAllChats(roomId);
+    public ResponseEntity<List<ChatResponse>> findAllChats(@RequestParam("roomId") Long roomId) {
+        return ResponseEntity.ok(chattingService.findAllChats(roomId));
     }
 }

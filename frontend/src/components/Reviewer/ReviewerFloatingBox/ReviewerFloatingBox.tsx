@@ -58,11 +58,11 @@ const ReviewerFloatingBox = ({ reviewer }: Props) => {
       <ProfileWrapper>
         <AvatarWrapper>
           <Avatar
-            alt={ALT.REVIEWER_PROFILE_AVATAR}
             height="6.25rem"
             imageUrl={imageUrl}
             width="6.25rem"
             css={{ marginBottom: "0.8rem" }}
+            alt={`${name}${ALT.REVIEWER_PROFILE_AVATAR}`}
           />
           <a href={reviewer.githubUrl} target="_blank" rel="noopener noreferrer">
             <FlexAlignCenter>

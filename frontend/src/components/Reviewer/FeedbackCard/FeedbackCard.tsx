@@ -8,6 +8,7 @@ import LightStar from "assets/light-star.svg";
 import Avatar from "components/shared/Avatar/Avatar";
 import { Flex, FlexAlignCenter, FlexCenter } from "components/shared/Flexbox/Flexbox";
 import { COLOR } from "utils/constants/color";
+import { ALT } from "utils/constants/message";
 import { STANDARD } from "utils/constants/standard";
 
 const Item = styled.li`
@@ -42,6 +43,7 @@ const FeedbackCard = ({ id, star, comment, studentProfile }: Feedback) => {
         width="3rem"
         height="3rem"
         css={{ marginRight: "1.25rem", alignSelf: "center" }}
+        alt={`${studentProfile.name}${ALT.REVIEW_REQUESTER_PROFILE_AVATAR}`}
       />
       <Content>
         <FlexAlignCenter css={{ marginBottom: "0.3125rem" }}>

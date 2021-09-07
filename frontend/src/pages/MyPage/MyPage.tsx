@@ -112,7 +112,13 @@ const MyPage = () => {
       <FlexSpaceBetween>
         <Flex css={{ marginBottom: "2.5rem" }}>
           <Profile>
-            <Avatar imageUrl={user.imageUrl} width="6.25rem" height="6.25rem" css={{ marginRight: "1.25rem" }} />
+            <Avatar
+              imageUrl={user.imageUrl}
+              width="6.25rem"
+              height="6.25rem"
+              css={{ marginRight: "1.25rem" }}
+              alt={`${user.name}${ALT.PROFILE_AVATAR}`}
+            />
             <Flex css={{ flexDirection: "column" }}>
               <p>{user.name}</p>
               <p>{user.email}</p>

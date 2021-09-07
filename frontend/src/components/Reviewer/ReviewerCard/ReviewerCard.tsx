@@ -7,6 +7,7 @@ import Avatar from "components/shared/Avatar/Avatar";
 import Chip from "components/shared/Chip/Chip";
 import { Flex, FlexSpaceBetween } from "components/shared/Flexbox/Flexbox";
 import { COLOR } from "utils/constants/color";
+import { ALT } from "utils/constants/message";
 
 const ReviewerLink = styled(Link)`
   margin-bottom: 1.25rem;
@@ -33,10 +34,16 @@ const Title = styled.p`
   font-size: 1.125rem;
 `;
 
-const ReviewerCard = ({ id, imageUrl, career, sumReviewCount, averageReviewTime, title, techSpec }: Reviewer) => (
+const ReviewerCard = ({ id, name, imageUrl, career, sumReviewCount, averageReviewTime, title, techSpec }: Reviewer) => (
   <ReviewerLink to={`/reviewer/${id}`}>
     <Inner>
-      <Avatar imageUrl={imageUrl} width="6.25rem" height="6.25rem" css={{ marginRight: "1.875rem" }} />
+      <Avatar
+        imageUrl={imageUrl}
+        width="6.25rem"
+        height="6.25rem"
+        css={{ marginRight: "1.875rem" }}
+        alt={`${name}${ALT.REVIEWER_PROFILE_AVATAR}`}
+      />
       <FlexSpaceBetween css={{ flexDirection: "column", flex: 1 }}>
         <ChipWrapper>
           <Chip themeColor="career" css={{ fontSize: "0.875rem" }}>

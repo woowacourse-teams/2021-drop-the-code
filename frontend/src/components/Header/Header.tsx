@@ -4,15 +4,20 @@ import styled from "styled-components";
 
 import Logo from "assets/logo.svg";
 import GithubOAuth from "components/Auth/OAuth/GithubOAuth";
+import DropDownMenu from "components/DropDownMenu/DropDownMenu";
+import MenuItemButton from "components/MenuItemButton/MenuItemButton";
+import Avatar from "components/shared/Avatar/Avatar";
 import Button from "components/shared/Button/Button";
 import { FlexCenter } from "components/shared/Flexbox/Flexbox";
 import Navigation from "components/shared/Navigation/Navigation";
 import useAuthContext from "hooks/useAuthContext";
 import useModalContext from "hooks/useModalContext";
 import { PATH } from "utils/constants/path";
-import { NAV_MENU, ROLE_MENU } from "utils/constants/route";
+import { NAV_MENU } from "utils/constants/route";
 
-const NavigationButton = styled(Button)``;
+const NavigationButton = styled(Button)`
+  font-weight: 900;
+`;
 
 const NavigationLink = styled(NavLink)`
   :hover {
@@ -26,7 +31,7 @@ const NavigationLink = styled(NavLink)`
 `;
 
 const Header = () => {
-  const { user, logout } = useAuthContext();
+  const { user } = useAuthContext();
   const { open } = useModalContext();
 
   return (
@@ -41,31 +46,22 @@ const Header = () => {
         </h1>
       }
     >
-      {!!user &&
-        ROLE_MENU.filter(({ isTeacher }) => isTeacher === (user.role === "TEACHER")).map(({ to, children }) => (
-          <NavigationLink key={to} to={to} activeClassName="active">
-            {children}
-          </NavigationLink>
-        ))}
-      {NAV_MENU.filter(({ isPrivate }) => !isPrivate || isPrivate === !!user).map(({ to, children }) => (
+      {NAV_MENU.filter(({ isPrivate }) => !isPrivate).map(({ to, children }) => (
         <NavigationLink key={to} to={to} activeClassName="active">
           {children}
         </NavigationLink>
       ))}
       {!user && (
-        <NavigationButton
-          themeColor="primary"
-          hover={false}
-          css={{ fontWeight: 900 }}
-          onClick={() => open(<GithubOAuth />)}
-        >
+        <NavigationButton themeColor="primary" hover={false} onClick={() => open(<GithubOAuth />)}>
           로그인
         </NavigationButton>
       )}
       {!!user && (
-        <NavigationButton themeColor="primary" hover={false} css={{ fontWeight: 900 }} onClick={() => logout()}>
-          로그아웃
-        </NavigationButton>
+        <>
+          <MenuItemButton themeColor="secondary" hover={false} contents={() => <DropDownMenu />}>
+            <Avatar imageUrl={user.imageUrl} width="2.5rem" />
+          </MenuItemButton>
+        </>
       )}
     </Navigation>
   );

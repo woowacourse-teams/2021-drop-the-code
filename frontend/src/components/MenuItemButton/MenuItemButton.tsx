@@ -25,18 +25,14 @@ const Menu = styled.div`
   background: ${COLOR.WHITE};
   border-radius: ${({ theme }) => theme.common.shape.rounded};
   box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
-  overflow: auto;
   right: 0;
-  padding: 1.875rem;
   z-index: 1;
   transition: box-shadow 0.3s;
-  :hover {
-    box-shadow: ${({ theme }) => theme.common.boxShadow.pressed};
-  }
 `;
 
 export interface Props extends Omit<ButtonProps, "active" | "onClick"> {
   contents?: (props: () => void) => ReactNode;
+  onClick?: () => void;
 }
 
 const MenuItemButton = ({ contents, children, ...props }: Props) => {

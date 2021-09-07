@@ -12,6 +12,7 @@ export interface Props {
 }
 
 const Inner = styled(FlexCenter)`
+  padding: 1.875rem;
   width: 15.625rem;
   height: 8.125rem;
   flex-direction: column;

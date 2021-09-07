@@ -9,5 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoomRepository extends JpaRepository<Room, Long> {
     Optional<Room> findByTeacherIdAndStudentId(Long teacherId, Long studentId);
-    List<Room> findByTeacherIdOrStudentId(Long teacher_id, Long student_id);
+    List<Room> findByTeacherIdOrStudentId(Long teacherId, Long studentId);
 }

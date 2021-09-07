@@ -1,5 +1,7 @@
 import { PropsWithChildren, ReactElement } from "react";
 
+import og from "assets/og.jpg";
+
 const Html = ({ children, styles, title }: PropsWithChildren<{ styles: ReactElement[]; title?: string }>) => {
   return (
     <html lang="ko">
@@ -9,6 +11,10 @@ const Html = ({ children, styles, title }: PropsWithChildren<{ styles: ReactElem
         <link rel="shortcut icon" href="favicon.ico" />
         {styles}
         <title>코드봐줘</title>
+        <meta property="og:description" content="내 코드를 한 단계 성장시켜줄 리뷰어를 만나보세요." />
+        <meta property="og:image" content={og} />
+        <meta property="og:site_name" content="코드봐줘" />
+        <meta property="og:locale" content="ko-KR" />
       </head>
       <body>
         <div id="root">{children}</div>

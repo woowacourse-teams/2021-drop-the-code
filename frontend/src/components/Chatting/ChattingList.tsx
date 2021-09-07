@@ -5,7 +5,7 @@ import Avatar from "components/shared/Avatar/Avatar";
 import { Flex, FlexCenter } from "components/shared/Flexbox/Flexbox";
 // import useChattingList from "hooks/useChattingList";
 import { COLOR } from "utils/constants/color";
-import { formatTimeToPassedTime, removeMillisecond, toPassedTimeString } from "utils/formatter";
+import { formatTimeToPassedTime, removeMillisecond } from "utils/formatter";
 
 const Inner = styled(Flex)`
   max-width: 30rem;

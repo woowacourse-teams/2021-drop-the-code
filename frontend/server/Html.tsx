@@ -1,6 +1,9 @@
 import { PropsWithChildren, ReactElement } from "react";
+import { Route, Switch } from "react-router";
 
 import og from "assets/og.jpg";
+
+import META_ROUTE from "./constants/metaRoute";
 
 const Html = ({ children, styles, title }: PropsWithChildren<{ styles: ReactElement[]; title?: string }>) => {
   return (
@@ -15,6 +18,13 @@ const Html = ({ children, styles, title }: PropsWithChildren<{ styles: ReactElem
         <meta property="og:image" content={og} />
         <meta property="og:site_name" content="코드봐줘" />
         <meta property="og:locale" content="ko-KR" />
+        <Switch>
+          {META_ROUTE.map(({ path, meta }) => (
+            <Route key={path} path={path} exact>
+              {meta}
+            </Route>
+          ))}
+        </Switch>
       </head>
       <body>
         <div id="root">{children}</div>

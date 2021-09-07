@@ -25,7 +25,6 @@ const Menu = styled.div`
   background: ${COLOR.WHITE};
   border-radius: ${({ theme }) => theme.common.shape.rounded};
   box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
-  overflow: auto;
   right: 0;
   z-index: 1;
   transition: box-shadow 0.3s;

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 import styled from "styled-components";
 
+import DownArrowSvg from "assets/down-arrow.svg";
 import useAuthContext from "hooks/useAuthContext";
 import { COLOR } from "utils/constants/color";
 import { NAV_MENU, ROLE_MENU } from "utils/constants/route";
@@ -44,11 +45,22 @@ const Logout = styled.div`
   }
 `;
 
+const UpArrow = styled(DownArrowSvg)`
+  position: absolute;
+  transform: rotate(180deg);
+  top: -0.625rem;
+  right: 1.375rem;
+  width: 1rem;
+  height: 1rem;
+  fill: ${COLOR.WHITE};
+`;
+
 const DropDownMenu = () => {
   const { user, logout } = useAuthContext();
 
   return (
     <Inner>
+      <UpArrow />
       {!!user && (
         <>
           <Welcome>

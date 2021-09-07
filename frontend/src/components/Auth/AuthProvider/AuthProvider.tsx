@@ -81,7 +81,9 @@ const AuthProvider = ({ children }: Props) => {
 
   const isAuthenticated = user !== null || accessToken !== null;
 
-  return <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ isAuthenticated, user, authCheck, login, logout }}>{children}</AuthContext.Provider>
+  );
 };
 
 export default AuthProvider;

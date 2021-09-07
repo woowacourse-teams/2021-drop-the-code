@@ -33,7 +33,7 @@ const ReviewerRegister = () => {
 
   const history = useHistory();
   const queryClient = useQueryClient();
-
+  const { authCheck } = useAuthContext();
   const { revalidate } = useRevalidate();
   const toast = useToastContext();
 
@@ -45,7 +45,7 @@ const ReviewerRegister = () => {
         toast(response.error.message, { type: "error" });
       } else {
         queryClient.invalidateQueries(QUERY_KEY.GET_REVIEWER_LIST);
-        queryClient.invalidateQueries(QUERY_KEY.CHECK_MEMBER);
+        authCheck();
 
         toast(SUCCESS_MESSAGE.API.REVIEWER.REGISTER);
       }

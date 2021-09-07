@@ -5,6 +5,7 @@ import { User } from "types/auth";
 interface AuthContextProps {
   isAuthenticated: boolean;
   user: User | null;
+  authCheck: () => void;
   login: (user: User) => void;
   logout: () => void;
 }

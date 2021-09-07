@@ -4,7 +4,6 @@ export const LOCAL_STORAGE_KEY = {
 };
 
 export const QUERY_KEY = {
-  CHECK_MEMBER: "checkMember",
   OAUTH_LOGIN: "providerName",
   GET_LANGUAGE_LIST: "getLanguageList",
   GET_REVIEWER: "getReviewer",

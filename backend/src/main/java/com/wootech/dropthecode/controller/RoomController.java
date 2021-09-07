@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import com.wootech.dropthecode.dto.request.ChatRequest;
 import com.wootech.dropthecode.dto.request.RoomRequest;
+import com.wootech.dropthecode.dto.response.RoomIdResponse;
 import com.wootech.dropthecode.service.ChattingService;
 import com.wootech.dropthecode.service.RoomService;
 
@@ -32,8 +33,8 @@ public class RoomController {
     }
 
     @GetMapping("/rooms")
-    public ResponseEntity<Long> createOrGet(@ModelAttribute @Valid RoomRequest roomRequest) {
+    public ResponseEntity<RoomIdResponse> createOrGet(@ModelAttribute @Valid RoomRequest roomRequest) {
         Long id = roomService.getOrCreate(roomRequest);
-        return ResponseEntity.ok(id);
+        return ResponseEntity.ok(new RoomIdResponse(id));
     }
 }

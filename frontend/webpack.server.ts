@@ -1,3 +1,4 @@
+import CopyPlugin from "copy-webpack-plugin";
 import dotenv from "dotenv";
 import merge from "webpack-merge";
 
@@ -16,6 +17,19 @@ const config = merge(common, {
     publicPath: "/",
     clean: true,
   },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        {
+          from: "public",
+          to: "../client",
+          filter: (resourcePath) => {
+            return !resourcePath.includes("index.html");
+          },
+        },
+      ],
+    }),
+  ],
 });
 
 export default config;

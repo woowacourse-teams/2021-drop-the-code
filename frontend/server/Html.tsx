@@ -1,5 +1,5 @@
 import { PropsWithChildren, ReactElement } from "react";
-import { Route, Switch } from "react-router";
+import { Route, Switch } from "react-router-dom";
 
 import og from "assets/og.jpg";
 
@@ -11,7 +11,7 @@ const Html = ({ children, styles, title }: PropsWithChildren<{ styles: ReactElem
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="shortcut icon" href="favicon.ico" />
+        <link rel="icon" href="/favicon.ico" />
         {styles}
         <title>코드봐줘</title>
         <meta property="og:description" content="내 코드를 한 단계 성장시켜줄 리뷰어를 만나보세요." />

@@ -1,5 +1,6 @@
 package com.wootech.dropthecode.domain.chatting;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
@@ -24,7 +25,7 @@ public class Room extends BaseEntity {
 
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @OrderBy("createdAt desc")
-    private List<Chat> chats;
+    private List<Chat> chats = new ArrayList<>();
 
     @Builder
     public Room(Member teacher, Member student) {

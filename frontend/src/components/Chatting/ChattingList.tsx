@@ -5,7 +5,7 @@ import Avatar from "components/shared/Avatar/Avatar";
 import { Flex, FlexCenter } from "components/shared/Flexbox/Flexbox";
 // import useChattingList from "hooks/useChattingList";
 import { COLOR } from "utils/constants/color";
-import { toPassedTimeString } from "utils/formatter";
+import { formatTimeToPassedTime, removeMillisecond, toPassedTimeString } from "utils/formatter";
 
 const Inner = styled(Flex)`
   max-width: 30rem;
@@ -50,9 +50,7 @@ const SingleItemInner = styled(FlexCenter)`
 const ChattingList = () => {
   // const { data, selectedChatting, setSelectedChatting } = useChattingList({ id });
 
-  chattingList.sort(
-    (a, b) => new Date(b.createdAt.slice(0, -4)).getTime() - new Date(a.createdAt.slice(0, -4)).getTime()
-  );
+  chattingList.sort((a, b) => removeMillisecond(b.createdAt).getTime() - removeMillisecond(a.createdAt).getTime());
 
   return (
     <Inner>
@@ -63,13 +61,7 @@ const ChattingList = () => {
               <SingleItemInner>
                 <Avatar imageUrl={item.imageUrl} width="2.5rem" css={{ marginRight: "0.625rem" }} />
                 <Content css={{ marginRight: "0.625rem" }}>{item.latestMessage}</Content>
-                <Time>
-                  {toPassedTimeString(
-                    Number(item.createdAt.substr(0, 4)),
-                    Number(item.createdAt.substr(5, 2)),
-                    Number(item.createdAt.substr(8, 2))
-                  )}
-                </Time>
+                <Time>{formatTimeToPassedTime(removeMillisecond(item.createdAt))}</Time>
               </SingleItemInner>
             </ChattingItem>
           ))}

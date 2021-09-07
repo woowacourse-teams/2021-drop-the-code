@@ -7,6 +7,7 @@ import FormProvider from "components/FormProvider/FormProvider";
 import Avatar from "components/shared/Avatar/Avatar";
 import Button from "components/shared/Button/Button";
 import { COLOR } from "utils/constants/color";
+import { removeMillisecond } from "utils/formatter";
 
 // import useAuthContext from "hooks/useAuthContext";
 // import useChattingList from "hooks/useChattingList";
@@ -62,9 +63,8 @@ const CurrentChatting = () => {
   // const { user } = useAuthContext();
   // const { data, selectedChatting, setSelectedChatting } = useChattingList({ id });
 
-  singleChatting.sort(
-    (a, b) => new Date(a.createdAt.slice(0, -4)).getTime() - new Date(b.createdAt.slice(0, -4)).getTime()
-  );
+  singleChatting.sort((a, b) => removeMillisecond(a.createdAt).getTime() - removeMillisecond(b.createdAt).getTime());
+
   const myId = 1;
 
   return (

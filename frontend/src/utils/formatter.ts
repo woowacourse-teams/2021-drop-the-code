@@ -29,7 +29,7 @@ export const toPassedTimeString = (year: number, month: number, date: number) =>
 };
 
 export const removeMillisecond = (time: string) => {
-  return new Date(time.slice(0, -4));
+  return time.slice(0, -4);
 };
 
 export const formatTimeToPassedTime = (time: Date) => {

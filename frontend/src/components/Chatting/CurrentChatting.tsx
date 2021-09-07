@@ -63,7 +63,9 @@ const CurrentChatting = () => {
   // const { user } = useAuthContext();
   // const { data, selectedChatting, setSelectedChatting } = useChattingList({ id });
 
-  singleChatting.sort((a, b) => removeMillisecond(a.createdAt).getTime() - removeMillisecond(b.createdAt).getTime());
+  singleChatting.sort(
+    (a, b) => new Date(removeMillisecond(a.createdAt)).getTime() - new Date(removeMillisecond(b.createdAt)).getTime()
+  );
 
   const myId = 1;
 

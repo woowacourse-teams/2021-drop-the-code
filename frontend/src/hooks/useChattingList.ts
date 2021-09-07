@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 
 import { getChattingList } from "apis/chatting";
 import { QUERY_KEY } from "utils/constants/key";
+import { removeMillisecond } from "utils/formatter";
 
 import useRevalidate from "./useRevalidate";
 import useToastContext from "./useToastContext";
@@ -25,7 +26,9 @@ const useChattingList = ({ id }: Props) => {
       return;
     }
 
-    return response.data;
+    return response.data.map((chatting) => {
+      removeMillisecond(chatting.createdAt);
+    });
   });
 
   return {

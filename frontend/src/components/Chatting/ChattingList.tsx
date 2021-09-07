@@ -50,7 +50,9 @@ const SingleItemInner = styled(FlexCenter)`
 const ChattingList = () => {
   // const { data, selectedChatting, setSelectedChatting } = useChattingList({ id });
 
-  chattingList.sort((a, b) => removeMillisecond(b.createdAt).getTime() - removeMillisecond(a.createdAt).getTime());
+  chattingList.sort(
+    (a, b) => new Date(removeMillisecond(b.createdAt)).getTime() - new Date(removeMillisecond(a.createdAt)).getTime()
+  );
 
   return (
     <Inner>
@@ -61,7 +63,7 @@ const ChattingList = () => {
               <SingleItemInner>
                 <Avatar imageUrl={item.imageUrl} width="2.5rem" css={{ marginRight: "0.625rem" }} />
                 <Content css={{ marginRight: "0.625rem" }}>{item.latestMessage}</Content>
-                <Time>{formatTimeToPassedTime(removeMillisecond(item.createdAt))}</Time>
+                <Time>{formatTimeToPassedTime(new Date(removeMillisecond(item.createdAt)))}</Time>
               </SingleItemInner>
             </ChattingItem>
           ))}

@@ -5,6 +5,7 @@ import javax.persistence.EntityNotFoundException;
 
 import com.wootech.dropthecode.domain.chatting.Room;
 import com.wootech.dropthecode.dto.request.RoomRequest;
+import com.wootech.dropthecode.dto.response.RoomIdResponse;
 import com.wootech.dropthecode.repository.RoomRepository;
 
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class RoomService {
     }
 
     @Transactional
-    public Long getOrCreate(RoomRequest roomRequest) {
+    public RoomIdResponse getOrCreate(RoomRequest roomRequest) {
         Room room = roomRepository.findByTeacherIdAndStudentId(roomRequest.getTeacherId(), roomRequest.getStudentId())
                                   .orElseGet(() ->
                                           new Room(
@@ -30,7 +31,7 @@ public class RoomService {
                                           )
                                   );
         Room savedRoom = roomRepository.save(room);
-        return savedRoom.getId();
+        return new RoomIdResponse(savedRoom.getId());
     }
 
     @Transactional(readOnly = true)

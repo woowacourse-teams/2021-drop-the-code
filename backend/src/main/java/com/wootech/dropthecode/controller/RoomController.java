@@ -34,7 +34,6 @@ public class RoomController {
 
     @GetMapping("/rooms")
     public ResponseEntity<RoomIdResponse> createOrGet(@ModelAttribute @Valid RoomRequest roomRequest) {
-        Long id = roomService.getOrCreate(roomRequest);
-        return ResponseEntity.ok(new RoomIdResponse(id));
+        return ResponseEntity.ok(roomService.getOrCreate(roomRequest));
     }
 }

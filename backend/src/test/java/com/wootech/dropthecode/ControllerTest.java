@@ -35,4 +35,10 @@ public abstract class ControllerTest {
 
     @MockBean
     protected FeedbackService feedbackService;
+
+    @MockBean
+    protected RoomService roomService;
+
+    @MockBean
+    protected ChattingService chattingService;
 }

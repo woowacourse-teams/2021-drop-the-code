@@ -8,7 +8,7 @@ create table chat
     room_id     bigint   not null,
     sender_id   bigint   not null,
     primary key (id)
-) engine=InnoDB
+) engine=InnoDB;
 
 
 create table feedback

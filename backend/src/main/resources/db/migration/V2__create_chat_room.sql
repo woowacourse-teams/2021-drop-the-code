@@ -78,7 +78,7 @@ create table room
     student_id bigint not null,
     teacher_id bigint not null,
     primary key (id)
-) engine=InnoDB
+) engine=InnoDB;
 
 
 create table skill
@@ -126,19 +126,19 @@ create table teacher_skill
 alter table chat
     add constraint fk_room_to_receiver
         foreign key (receiver_id)
-            references member (id)
+            references member (id);
 
 
 alter table chat
     add constraint fk_chat_to_room
         foreign key (room_id)
-            references room (id)
+            references room (id);
 
 
 alter table chat
     add constraint fk_chat_to_sender
         foreign key (sender_id)
-            references member (id)
+            references member (id);
 
 
 alter table feedback
@@ -174,13 +174,13 @@ alter table review
 alter table room
     add constraint fk_room_to_student
         foreign key (student_id)
-            references member (id)
+            references member (id);
 
 
 alter table room
     add constraint fk_room_to_teacher
         foreign key (teacher_id)
-            references member (id)
+            references member (id);
 
 
 alter table teacher_language

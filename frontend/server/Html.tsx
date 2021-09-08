@@ -12,6 +12,13 @@ const Html = ({ children, styles, title }: PropsWithChildren<{ styles: ReactElem
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
+        <link
+          rel="preload"
+          href={process.env.CDN_URL + "/IBMPlexSansKR-Regular.woff2"}
+          as="font"
+          type="font/woff2"
+          crossOrigin={process.env.CDN_URL}
+        />
         {styles}
         <title>코드봐줘</title>
         <meta property="og:description" content="내 코드를 한 단계 성장시켜줄 리뷰어를 만나보세요." />

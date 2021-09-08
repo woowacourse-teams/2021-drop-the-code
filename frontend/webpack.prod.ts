@@ -1,11 +1,9 @@
-import dotenv from "dotenv";
+import DotenvWebpackPlugin from "dotenv-webpack";
 import merge from "webpack-merge";
 
 import path from "path";
 
 import common from "./webpack.common";
-
-dotenv.config({ path: ".env.production" });
 
 const config = merge(common, {
   entry: "./src",
@@ -16,6 +14,11 @@ const config = merge(common, {
     clean: true,
   },
   devtool: false,
+  plugins: [
+    new DotenvWebpackPlugin({
+      path: ".env.production",
+    }),
+  ],
 });
 
 export default config;

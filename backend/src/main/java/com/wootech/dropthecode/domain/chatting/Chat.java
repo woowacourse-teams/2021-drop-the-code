@@ -36,4 +36,8 @@ public class Chat extends BaseEntity {
         this.receiver = receiver;
         this.content = content;
     }
+
+    public Long getRoomId() {
+        return room.getId();
+    }
 }

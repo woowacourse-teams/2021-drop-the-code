@@ -42,6 +42,7 @@ public class ChattingService {
         List<Room> rooms = roomService.findAllByMemberId(member.getId());
 
         return rooms.stream()
+                    .filter(Room::hasMessage)
                     .map(room -> LatestChatResponse.of(room.getPartner(id), room.getLatestChat()))
                     .sorted(Comparator.comparing(LatestChatResponse::getCreatedAt).reversed())
                     .collect(Collectors.toList());
@@ -53,7 +54,7 @@ public class ChattingService {
         List<Chat> chats = room.getChats();
 
         return chats.stream()
-             .map(chat -> ChatResponse.from(chat))
-             .collect(Collectors.toList());
+                    .map(chat -> ChatResponse.from(chat))
+                    .collect(Collectors.toList());
     }
 }

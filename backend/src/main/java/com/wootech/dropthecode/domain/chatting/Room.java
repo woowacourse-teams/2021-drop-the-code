@@ -43,4 +43,8 @@ public class Room extends BaseEntity {
     public Chat getLatestChat() {
         return chats.get(0);
     }
+
+    public boolean hasMessage() {
+        return !chats.isEmpty();
+    }
 }

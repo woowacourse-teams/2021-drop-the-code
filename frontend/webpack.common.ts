@@ -34,16 +34,7 @@ const config: webpack.Configuration = {
     ],
   },
   resolve: { extensions: [".js", ".ts", ".tsx"], modules: [path.join(__dirname, "src"), "node_modules"] },
-  plugins: [
-    new ForkTsCheckerWebpackPlugin(),
-    new webpack.EnvironmentPlugin([
-      "GITHUB_OAUTH_CLIENT_ID",
-      "GITHUB_OAUTH_REDIRECT_URL",
-      "CLIENT_BASE_URL",
-      "SERVER_BASE_URL",
-      "PORT",
-    ]),
-  ],
+  plugins: [new ForkTsCheckerWebpackPlugin()],
 };
 
 export default config;

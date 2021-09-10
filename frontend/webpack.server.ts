@@ -1,12 +1,10 @@
 import CopyPlugin from "copy-webpack-plugin";
-import dotenv from "dotenv";
+import DotenvWebpackPlugin from "dotenv-webpack";
 import merge from "webpack-merge";
 
 import path from "path";
 
 import common from "./webpack.common";
-
-dotenv.config({ path: ".env.production" });
 
 const config = merge(common, {
   entry: "./server",
@@ -28,6 +26,9 @@ const config = merge(common, {
           },
         },
       ],
+    }),
+    new DotenvWebpackPlugin({
+      path: ".env.production",
     }),
   ],
 });

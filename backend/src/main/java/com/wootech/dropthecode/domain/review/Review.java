@@ -10,7 +10,13 @@ import com.wootech.dropthecode.exception.AuthorizationException;
 import com.wootech.dropthecode.exception.ReviewException;
 
 import lombok.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+@Cacheable
+@org.hibernate.annotations.Cache(
+        usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,
+        region = "review"
+)
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -45,7 +51,7 @@ public class Review extends BaseEntity {
     @Column(nullable = false)
     private Progress progress;
 
-    @OneToOne(mappedBy = "review", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "review", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Feedback feedback;
 
     @Builder

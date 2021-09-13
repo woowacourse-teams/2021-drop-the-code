@@ -17,7 +17,13 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+@Cacheable
+@org.hibernate.annotations.Cache(
+        usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,
+        region = "teacherProfile"
+)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EntityListeners(AuditingEntityListener.class)
@@ -46,6 +52,10 @@ public class TeacherProfile {
     @MapsId
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id", unique = true, foreignKey = @ForeignKey(name = "fk_teacherProfile_to_member"))
+    @org.hibernate.annotations.Cache(
+            usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,
+            region = "member"
+    )
     private Member member;
 
     @OneToMany(mappedBy = "teacherProfile", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)

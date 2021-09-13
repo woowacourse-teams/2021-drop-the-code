@@ -4,7 +4,7 @@
 
         <encoder>
             <pattern>
-                [%t{yy-MM-dd} %t{HH:mm:ss}]%n[REQUEST]%n%fullRequest%n[RESPONSE]%n%fullResponse
+                [Occurred Time] - [%t{yyyy-MM-dd} %t{HH:mm:ss}]%n[REQUEST]%n%fullRequest%n[RESPONSE]%n%fullResponse
             </pattern>
         </encoder>
 

@@ -76,6 +76,9 @@ dependencies {
 
     // Cache
     implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'javax.cache:cache-api'
+    implementation 'org.ehcache:ehcache'
+    implementation 'org.hibernate.orm:hibernate-jcache:6.0.0.Alpha9'
 }
 
 task jsonDoclet(type: Javadoc, dependsOn: compileJava) {

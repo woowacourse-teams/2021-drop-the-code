@@ -5,6 +5,7 @@ import javax.persistence.EntityNotFoundException;
 import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.dto.response.MemberResponse;
+import com.wootech.dropthecode.repository.EmitterRepository;
 import com.wootech.dropthecode.repository.MemberRepository;
 
 import org.springframework.stereotype.Service;
@@ -15,17 +16,21 @@ public class MemberService {
     private final TeacherLanguageService teacherLanguageService;
     private final TeacherSkillService teacherSkillService;
     private final MemberRepository memberRepository;
+    private final NotificationService notificationService;
 
-    public MemberService(TeacherLanguageService teacherLanguageService, TeacherSkillService teacherSkillService, MemberRepository memberRepository) {
+    public MemberService(TeacherLanguageService teacherLanguageService, TeacherSkillService teacherSkillService,
+                         MemberRepository memberRepository, NotificationService notificationService) {
         this.teacherLanguageService = teacherLanguageService;
         this.teacherSkillService = teacherSkillService;
         this.memberRepository = memberRepository;
+        this.notificationService = notificationService;
     }
 
     @Transactional(readOnly = true)
     public MemberResponse findByLoginMember(LoginMember loginMember) {
         loginMember.validatesAnonymous();
         Member member = findById(loginMember.getId());
+        notificationService.subscribe(member.getId());
         return MemberResponse.of(member);
     }
 

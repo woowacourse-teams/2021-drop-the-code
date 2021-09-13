@@ -1,6 +1,7 @@
 package com.wootech.dropthecode.builder;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.domain.Role;
@@ -19,6 +20,8 @@ public class MemberBuilder {
                      .imageUrl(imageUrl)
                      .githubUrl(githubUrl)
                      .role(role)
+                     .reviewsAsTeacher(new ArrayList<>())
+                     .reviewsAsStudent(new ArrayList<>())
                      .build();
     }
 
@@ -32,6 +35,8 @@ public class MemberBuilder {
                      .githubUrl(githubUrl)
                      .role(role)
                      .createdAt(createdAt)
+                     .reviewsAsTeacher(new ArrayList<>())
+                     .reviewsAsStudent(new ArrayList<>())
                      .build();
     }
 
@@ -46,6 +51,8 @@ public class MemberBuilder {
                      .githubUrl(githubUrl)
                      .role(role)
                      .teacherProfile(teacherProfile)
+                     .reviewsAsStudent(new ArrayList<>())
+                     .reviewsAsTeacher(new ArrayList<>())
                      .build();
     }
 

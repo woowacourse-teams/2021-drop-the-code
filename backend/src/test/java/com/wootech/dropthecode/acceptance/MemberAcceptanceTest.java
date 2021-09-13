@@ -10,6 +10,7 @@ import com.wootech.dropthecode.dto.response.LoginResponse;
 import com.wootech.dropthecode.dto.response.MemberResponse;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.util.StopWatch;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -287,11 +288,20 @@ class MemberAcceptanceTest extends AcceptanceTest {
     void findTeacherByIdSuccess() {
         // given
         LoginResponse loginResponse = 리뷰어_로그인되어_있음("air");
+
         // when
-        ExtractableResponse<Response> response = 선생님_단일_조회_요청(loginResponse.getId());
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        for (int i = 0; i < 2; i++) {
+            ExtractableResponse<Response> response = 선생님_단일_조회_요청(loginResponse.getId());
+        }
+
+        stopWatch.stop();
+        System.out.println("걸린 시간 : " + stopWatch.getTotalTimeSeconds());
+
 
         // then
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        //        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
 
     @Test

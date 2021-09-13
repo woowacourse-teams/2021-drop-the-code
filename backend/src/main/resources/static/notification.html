@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Notification Test Page</title>
+</head>
+<body>
+<input type="text" id="id"/>
+<button type="button" onclick="login()">로그인</button>
+</body>
+</html>
+<script type="text/javaScript">
+    function login() {
+        const id = document.getElementById('id').value;
+        const eventSource = new EventSource(`/subscribe/` + id);
+        eventSource.onmessage = event => {
+            const data = JSON.parse(event.data);
+            console.log(data);
+        };
+        eventSource.onerror = error => {
+            eventSource.close();
+        };
+    }
+</script>

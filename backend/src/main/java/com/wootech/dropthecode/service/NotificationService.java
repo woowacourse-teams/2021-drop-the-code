@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import com.wootech.dropthecode.domain.Notification;
+import com.wootech.dropthecode.domain.review.Review;
 import com.wootech.dropthecode.dto.response.NotificationResponse;
 import com.wootech.dropthecode.repository.EmitterRepository;
 import com.wootech.dropthecode.repository.NotificationRepository;
@@ -56,7 +57,8 @@ public class NotificationService {
         }
     }
 
-    public void send(Long userId, Notification notification) {
+    public void send(Long userId, Review review, String content) {
+        Notification notification = createNotification(review, content);
         String id = String.valueOf(userId);
         Map<String, SseEmitter> sseEmitters = emitterRepository.findAllStartWithById(id);
         sseEmitters.forEach(
@@ -66,5 +68,14 @@ public class NotificationService {
                     sendToClient(emitter, key, NotificationResponse.from(notification));
                 }
         );
+    }
+
+    private Notification createNotification(Review review, String content) {
+        return Notification.builder()
+                           .content(content)
+                           .review(review)
+                           .url("/reviews/" + review.getId())
+                           .isRead(false)
+                           .build();
     }
 }

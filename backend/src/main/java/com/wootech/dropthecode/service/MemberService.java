@@ -16,21 +16,18 @@ public class MemberService {
     private final TeacherLanguageService teacherLanguageService;
     private final TeacherSkillService teacherSkillService;
     private final MemberRepository memberRepository;
-    private final NotificationService notificationService;
 
     public MemberService(TeacherLanguageService teacherLanguageService, TeacherSkillService teacherSkillService,
-                         MemberRepository memberRepository, NotificationService notificationService) {
+                         MemberRepository memberRepository) {
         this.teacherLanguageService = teacherLanguageService;
         this.teacherSkillService = teacherSkillService;
         this.memberRepository = memberRepository;
-        this.notificationService = notificationService;
     }
 
     @Transactional(readOnly = true)
     public MemberResponse findByLoginMember(LoginMember loginMember) {
         loginMember.validatesAnonymous();
         Member member = findById(loginMember.getId());
-        notificationService.subscribe(member.getId());
         return MemberResponse.of(member);
     }
 

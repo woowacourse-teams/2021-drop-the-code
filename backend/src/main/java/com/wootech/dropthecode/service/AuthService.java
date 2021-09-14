@@ -66,6 +66,7 @@ public class AuthService {
     public void logout(String accessToken) {
         String id = jwtTokenProvider.getPayload(accessToken);
         redisUtil.deleteData(id);
-        emitterRepository.deleteById(Long.parseLong(id));
+        emitterRepository.deleteAllStartWithId(id);
+        emitterRepository.deleteAllEventCacheStartWithId(id);
     }
 }

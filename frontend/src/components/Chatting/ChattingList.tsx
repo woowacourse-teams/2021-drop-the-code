@@ -1,9 +1,11 @@
-import styled from "styled-components";
+import { Dispatch, SetStateAction, useEffect } from "react";
 
-import { chattingList } from "__mock__/data/chatting";
+import styled, { css } from "styled-components";
+
 import Avatar from "components/shared/Avatar/Avatar";
-import { Flex, FlexCenter } from "components/shared/Flexbox/Flexbox";
-// import useChattingList from "hooks/useChattingList";
+import { Flex, FlexAlignCenter, FlexCenter } from "components/shared/Flexbox/Flexbox";
+import useAuthContext from "hooks/useAuthContext";
+import useChattingList from "hooks/useChattingList";
 import { COLOR } from "utils/constants/color";
 import { formatTimeToPassedTime, removeMillisecond } from "utils/formatter";
 
@@ -30,16 +32,16 @@ const Time = styled.div`
   text-align: end;
 `;
 
-const ChattingItem = styled.li`
+const ChattingItem = styled.li<{ active: boolean; hover: boolean }>`
   display: flex;
 
   :hover {
-    background-color: ${COLOR.GRAY_100};
+    background-color: ${({ hover = true }) => (hover ? COLOR.GRAY_100 : null)};
   }
 
-  :active {
-    background-color: ${COLOR.GRAY_200};
-  }
+  background-color: ${({ active = true }) => css`
+    ${active ? COLOR.GRAY_100 : COLOR.WHITE}
+  `};
 `;
 
 const SingleItemInner = styled(FlexCenter)`
@@ -47,26 +49,50 @@ const SingleItemInner = styled(FlexCenter)`
   margin: 0.9375rem 1.25rem;
 `;
 
-const ChattingList = () => {
-  // const { data, selectedChatting, setSelectedChatting } = useChattingList({ id });
+interface Props {
+  selectedRoomId: number | null;
+  setSelectedRoomId: Dispatch<SetStateAction<number | null>>;
+  setSelectedTeacherId: Dispatch<SetStateAction<number | null>>;
+}
 
-  chattingList.sort(
+const ChattingList = ({ selectedRoomId, setSelectedRoomId, setSelectedTeacherId }: Props) => {
+  const { user } = useAuthContext();
+  const { chattingList } = useChattingList(user?.id);
+
+  chattingList?.sort(
     (a, b) => new Date(removeMillisecond(b.createdAt)).getTime() - new Date(removeMillisecond(a.createdAt)).getTime()
   );
+
+  useEffect(() => {
+    setSelectedRoomId(null);
+    setSelectedTeacherId(null);
+  }, []);
 
   return (
     <Inner>
       <ul>
-        {chattingList &&
+        {chattingList.length === 0 ? (
+          <FlexAlignCenter css={{ justifyContent: "center", width: "20rem", height: "100%", color: COLOR.GRAY_500 }}>
+            채팅 목록이 없습니다.
+          </FlexAlignCenter>
+        ) : (
           chattingList.map((item) => (
-            <ChattingItem key={item.id}>
+            <ChattingItem
+              key={item.id}
+              active={item.roomId === selectedRoomId}
+              onClick={() => {
+                setSelectedRoomId(item.roomId);
+                setSelectedTeacherId(item.id);
+              }}
+            >
               <SingleItemInner>
                 <Avatar imageUrl={item.imageUrl} width="2.5rem" css={{ marginRight: "0.625rem" }} />
                 <Content css={{ marginRight: "0.625rem" }}>{item.latestMessage}</Content>
                 <Time>{formatTimeToPassedTime(new Date(removeMillisecond(item.createdAt)))}</Time>
               </SingleItemInner>
             </ChattingItem>
-          ))}
+          ))
+        )}
       </ul>
     </Inner>
   );

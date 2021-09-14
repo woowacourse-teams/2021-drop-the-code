@@ -23,8 +23,15 @@ export interface Props {
   reviewer: Reviewer;
 }
 
-const FloatingMessageButton = ({ reviewer }: Props) => {
-  return <Inner to="/chatting">💬 {reviewer.name}에게 메세지 보내기</Inner>;
-};
+const FloatingMessageButton = ({ reviewer }: Props) => (
+  <Inner
+    to={{
+      pathname: "/chatting",
+      state: { teacherId: reviewer.id, teacherName: reviewer.name, teacherImage: reviewer.imageUrl },
+    }}
+  >
+    💬 {reviewer.name}에게 메세지 보내기
+  </Inner>
+);
 
 export default FloatingMessageButton;

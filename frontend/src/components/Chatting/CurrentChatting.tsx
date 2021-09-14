@@ -1,16 +1,21 @@
+import { Dispatch, SetStateAction, Suspense, useEffect } from "react";
+
+import { nanoid } from "nanoid";
 import styled from "styled-components";
 
-import { singleChatting } from "__mock__/data/chatting";
 import LeftSingleMessage from "components/Chatting/LeftSingleMessage";
 import RightSingleMessage from "components/Chatting/RightSingleMessage";
-import FormProvider from "components/FormProvider/FormProvider";
+import Loading from "components/Loading/Loading";
 import Avatar from "components/shared/Avatar/Avatar";
-import Button from "components/shared/Button/Button";
+import { FlexAlignCenter } from "components/shared/Flexbox/Flexbox";
+import useAuthContext from "hooks/useAuthContext";
+import useChattingConnect from "hooks/useChattingConnect";
+import useChattingList from "hooks/useChattingList";
+import useSingleChatting from "hooks/useSingleChatting";
 import { COLOR } from "utils/constants/color";
 import { removeMillisecond } from "utils/formatter";
 
-// import useAuthContext from "hooks/useAuthContext";
-// import useChattingList from "hooks/useChattingList";
+import CurrentChattingForm from "./CurrentChattingForm";
 
 const Inner = styled.div`
   border: 1px solid ${COLOR.GRAY_200};
@@ -26,95 +31,110 @@ const Title = styled.div`
 `;
 
 const ContentWrapper = styled.div`
-  height: 78vh;
+  height: 72vh;
   padding: 1.25rem;
   overflow-y: scroll;
 `;
+interface Props {
+  selectedRoomId: number | null;
+  selectedTeacherId: number | null;
+  setSelectedRoomId: Dispatch<SetStateAction<number | null>>;
+  setSelectedTeacherId: Dispatch<SetStateAction<number | null>>;
+  teacherId: number;
+  teacherName: string;
+  teacherImage: string;
+}
 
-const InputWrapper = styled.div`
-  position: relative;
-  background-color: white;
-  width: 80%;
-  height: 3.125rem;
-  border: 1px solid ${COLOR.GRAY_200};
-  left: 50%;
-  transform: translateX(-50%);
-  border-radius: 1.25rem;
-`;
+const CurrentChatting = ({
+  selectedRoomId,
+  selectedTeacherId,
+  setSelectedRoomId,
+  setSelectedTeacherId,
+  teacherId,
+  teacherName,
+  teacherImage,
+}: Props) => {
+  const { user } = useAuthContext();
+  if (!user) return <Loading />;
 
-const ChattingInput = styled.input`
-  position: absolute;
-  bottom: 0;
-  left: 0.625rem;
-  width: 85%;
-  height: 100%;
-  padding: 1.25rem;
-  outline: none;
-  border: none;
-`;
+  const { chattingList } = useChattingList(user?.id);
+  const { data } = useSingleChatting(selectedRoomId);
 
-const SubmitButton = styled(Button)`
-  position: absolute;
-  bottom: 0.625rem;
-  right: 0.625rem;
-`;
-
-const CurrentChatting = () => {
-  // const { user } = useAuthContext();
-  // const { data, selectedChatting, setSelectedChatting } = useChattingList({ id });
-
-  singleChatting.sort(
+  data.sort(
     (a, b) => new Date(removeMillisecond(a.createdAt)).getTime() - new Date(removeMillisecond(b.createdAt)).getTime()
   );
 
-  const myId = 1;
+  const isAlreadyMet = chattingList?.filter((chatting) => chatting.id === teacherId);
+
+  useEffect(() => {
+    if (!isAlreadyMet) return;
+
+    // 대화 이력이 있는 상대일 경우, 이미 존재하는 roomId 사용하기
+    if (isAlreadyMet.length > 0) {
+      setSelectedRoomId(isAlreadyMet[0].roomId);
+    }
+  }, []);
+
+  if (teacherId > 0) setSelectedTeacherId(teacherId);
+
+  if (isAlreadyMet.length === 0) {
+    useChattingConnect({ studentId: user.id, teacherId });
+  }
 
   return (
-    <Inner>
-      {singleChatting && (
-        <Title>
-          <Avatar
-            imageUrl={
-              singleChatting[0].senderId === myId
-                ? singleChatting[0].receiverImageUrl
-                : singleChatting[0].senderImageUrl
-            }
-            width="3rem"
-            css={{ marginRight: "0.625rem" }}
-          />
-          <div css={{ marginRight: "0.625rem" }}>
-            {singleChatting[0].senderId === myId ? singleChatting[0].receiverName : singleChatting[0].senderName}와
-            채팅중
-          </div>
-        </Title>
-      )}
-      <ContentWrapper>
-        {singleChatting &&
-          singleChatting.map((chatting) =>
-            chatting.senderId !== myId ? (
-              <LeftSingleMessage
-                key={chatting.createdAt}
-                message={chatting.message}
-                imageUrl={chatting.senderImageUrl}
-              />
-            ) : (
-              <RightSingleMessage
-                key={chatting.createdAt}
-                message={chatting.message}
-                imageUrl={chatting.senderImageUrl}
-              />
-            )
+    <>
+      {/* 리뷰어에게 메시지 보내기를 누르고 들어왔고, 기존 채팅 이력이 있을 경우 */}
+      {data.length > 0 && selectedRoomId ? (
+        <Inner>
+          <Title>
+            <Avatar
+              imageUrl={data[0].senderId === user.id ? data[0].receiverImageUrl : data[0].senderImageUrl}
+              width="3rem"
+              css={{ marginRight: "0.625rem" }}
+            />
+            <div css={{ marginRight: "0.625rem" }}>
+              {data[0].senderId === user.id ? data[0].receiverName : data[0].senderName}와 채팅중
+            </div>
+          </Title>
+          <ContentWrapper>
+            {user &&
+              data.map((chatting) =>
+                chatting.senderId !== user.id ? (
+                  <LeftSingleMessage key={nanoid()} message={chatting.message} imageUrl={chatting.senderImageUrl} />
+                ) : (
+                  <RightSingleMessage key={nanoid()} message={chatting.message} imageUrl={chatting.senderImageUrl} />
+                )
+              )}
+          </ContentWrapper>
+          <Suspense fallback={<Loading />}>
+            <CurrentChattingForm teacherId={selectedTeacherId} />
+          </Suspense>
+        </Inner>
+      ) : (
+        <Inner>
+          {teacherImage && teacherName && teacherId > 0 ? (
+            <>
+              {/* 리뷰어에게 메시지 보내기를 누르고 들어왔고, 기존 채팅 이력이 없는 신규 대화인 경우 */}
+              <Title>
+                <Avatar imageUrl={teacherImage} width="3rem" css={{ marginRight: "0.625rem" }} />
+                <div css={{ marginRight: "0.625rem" }}>{teacherName}와 채팅중</div>
+              </Title>
+              <ContentWrapper></ContentWrapper>
+              <Suspense fallback={<Loading />}>
+                <CurrentChattingForm teacherId={selectedTeacherId} />
+              </Suspense>
+            </>
+          ) : (
+            <>
+              {/* header에서 드롭다운 메뉴 눌러서 바로 들어와서 선택된 방이 없을 경우 */}
+              <FlexAlignCenter css={{ justifyContent: "center", height: "100%", color: COLOR.GRAY_500 }}>
+                채팅방을 선택해주세요...
+              </FlexAlignCenter>
+            </>
           )}
-      </ContentWrapper>
-      <FormProvider submit={() => console.log("submit!")} css={{ paddingTop: "0.9375rem" }}>
-        <InputWrapper>
-          <ChattingInput name="content" placeholder="메시지를 입력하세요." required />
-          <SubmitButton themeColor="secondary" hover={false} active={false}>
-            보내기
-          </SubmitButton>
-        </InputWrapper>
-      </FormProvider>
-    </Inner>
+        </Inner>
+      )}
+    </>
   );
 };
 

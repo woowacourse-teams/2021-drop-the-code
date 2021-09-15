@@ -1,20 +1,27 @@
 package com.wootech.dropthecode.service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import javax.persistence.EntityNotFoundException;
 
+import com.wootech.dropthecode.domain.LoginMember;
+import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.domain.Notification;
 import com.wootech.dropthecode.domain.review.Review;
 import com.wootech.dropthecode.dto.response.NotificationResponse;
+import com.wootech.dropthecode.dto.response.NotificationsResponse;
 import com.wootech.dropthecode.repository.EmitterRepository;
 import com.wootech.dropthecode.repository.NotificationRepository;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @Service
 public class NotificationService {
-    private static final Long DEFAULT_TIMEOUT = 60L * 1000;
+    private static final Long DEFAULT_TIMEOUT = 60L * 1000 * 60;
 
     private final EmitterRepository emitterRepository;
     private final NotificationRepository notificationRepository;
@@ -24,7 +31,8 @@ public class NotificationService {
         this.notificationRepository = notificationRepository;
     }
 
-    public SseEmitter subscribe(Long userId, String lastEventId) {
+    public SseEmitter subscribe(LoginMember loginMember, String lastEventId) {
+        Long userId = loginMember.getId();
         String id = userId + "_" + System.currentTimeMillis();
         SseEmitter emitter = emitterRepository.save(id, new SseEmitter(DEFAULT_TIMEOUT));
 
@@ -57,9 +65,10 @@ public class NotificationService {
         }
     }
 
-    public void send(Long userId, Review review, String content) {
-        Notification notification = createNotification(review, content);
-        String id = String.valueOf(userId);
+    @Transactional
+    public void send(Member receiver, Review review, String content) {
+        Notification notification = createNotification(receiver, review, content);
+        String id = String.valueOf(receiver.getId());
         Map<String, SseEmitter> sseEmitters = emitterRepository.findAllStartWithById(id);
         sseEmitters.forEach(
                 (key, emitter) -> {
@@ -70,12 +79,32 @@ public class NotificationService {
         );
     }
 
-    private Notification createNotification(Review review, String content) {
+    private Notification createNotification(Member receiver, Review review, String content) {
         return Notification.builder()
+                           .receiver(receiver)
                            .content(content)
                            .review(review)
                            .url("/reviews/" + review.getId())
                            .isRead(false)
                            .build();
+    }
+
+    @Transactional
+    public NotificationsResponse findAllById(LoginMember loginMember) {
+        List<NotificationResponse> responses = notificationRepository.findAllByReceiverId(loginMember.getId()).stream()
+                                                                     .map(NotificationResponse::from)
+                                                                     .collect(Collectors.toList());
+        long unreadCount = responses.stream()
+                                    .filter(notification -> !notification.isRead())
+                                    .count();
+
+        return NotificationsResponse.of(responses, unreadCount);
+    }
+
+    @Transactional
+    public void readNotification(Long id) {
+        Notification notification = notificationRepository.findById(id)
+                                                          .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 알림입니다."));
+        notification.read();
     }
 }

@@ -55,7 +55,7 @@ public class ReviewService {
                               .progress(Progress.PENDING)
                               .build();
         Review savedReview = reviewRepository.save(review);
-        notificationService.send(teacher.getId(), savedReview, "새로운 리뷰 요청이 도착했습니다!");
+        notificationService.send(teacher, savedReview, "새로운 리뷰 요청이 도착했습니다!");
 
         return savedReview.getId();
     }
@@ -105,14 +105,14 @@ public class ReviewService {
     public void denyReview(LoginMember loginMember, Long id) {
         Review review = findById(id);
         new PendingReview(review).deny(loginMember.getId());
-        notificationService.send(review.getStudent().getId(), review, "리뷰 요청이 거절되었습니다.");
+        notificationService.send(review.getStudent(), review, "리뷰 요청이 거절되었습니다.");
     }
 
     @Transactional
     public void acceptReview(LoginMember loginMember, Long id) {
         Review review = findById(id);
         new PendingReview(review).accept(loginMember.getId());
-        notificationService.send(review.getStudent().getId(), review, "리뷰 요청이 수락되었습니다.");
+        notificationService.send(review.getStudent(), review, "리뷰 요청이 수락되었습니다.");
     }
 
     @Transactional
@@ -120,7 +120,7 @@ public class ReviewService {
         Review review = findById(id);
         new OnGoingReview(review).complete(loginMember.getId());
         teacherService.updateAverageReviewTime(loginMember.getId(), review.calculateElapsedTime());
-        notificationService.send(review.getStudent().getId(), review, "리뷰가 완료되었습니다. 리뷰어에 대한 피드백을 입력해주세요.");
+        notificationService.send(review.getStudent(), review, "리뷰가 완료되었습니다. 리뷰어에 대한 피드백을 입력해주세요.");
     }
 
     @Transactional
@@ -128,7 +128,7 @@ public class ReviewService {
         Review review = findById(id);
         feedbackService.create(review, feedbackRequest);
         new CompletedReview(review).finish(loginMember.getId());
-        notificationService.send(review.getTeacher().getId(), review, "모든 리뷰가 완료되었습니다. 피드백을 확인해주세요");
+        notificationService.send(review.getTeacher(), review, "모든 리뷰가 완료되었습니다. 피드백을 확인해주세요");
     }
 
     @Transactional

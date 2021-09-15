@@ -34,6 +34,8 @@ public class QNotification extends EntityPathBase<Notification> {
 
     public final BooleanPath isRead = createBoolean("isRead");
 
+    public final QMember receiver;
+
     public final com.wootech.dropthecode.domain.review.QReview review;
 
     //inherited
@@ -59,6 +61,7 @@ public class QNotification extends EntityPathBase<Notification> {
 
     public QNotification(Class<? extends Notification> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.receiver = inits.isInitialized("receiver") ? new QMember(forProperty("receiver"), inits.get("receiver")) : null;
         this.review = inits.isInitialized("review") ? new com.wootech.dropthecode.domain.review.QReview(forProperty("review"), inits.get("review")) : null;
     }
 

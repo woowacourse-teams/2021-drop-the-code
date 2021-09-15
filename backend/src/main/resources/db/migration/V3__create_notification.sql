@@ -1,6 +1,7 @@
 create table notification
 (
     id          bigint   not null auto_increment,
+    receiver_id bigint   not null,
     review_id   bigint   not null,
     content     varchar(255) not null,
     url         varchar(255),
@@ -9,6 +10,11 @@ create table notification
     updated_at  datetime(6),
     primary key (id)
 ) engine=InnoDB;
+
+alter table notification
+    add constraint fk_notification_to_receiver
+        foreign key (receiver_id)
+            references member (id);
 
 alter table notification
     add constraint fk_notification_to_review

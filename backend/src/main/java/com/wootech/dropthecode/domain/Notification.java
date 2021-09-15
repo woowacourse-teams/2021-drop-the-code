@@ -15,6 +15,10 @@ import lombok.NoArgsConstructor;
 public class Notification extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "fk_notification_to_receiver"))
+    private Member receiver;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "fk_notification_to_review"))
     private Review review;
 
@@ -25,11 +29,15 @@ public class Notification extends BaseEntity {
     private boolean isRead;
 
     @Builder
-    public Notification(Review review, String content, String url, boolean isRead) {
+    public Notification(Member receiver, Review review, String content, String url, boolean isRead) {
+        this.receiver = receiver;
         this.review = review;
         this.content = content;
         this.url = url;
         this.isRead = isRead;
     }
 
+    public void read() {
+        this.isRead = true;
+    }
 }

@@ -117,30 +117,24 @@ const CurrentChattingForm = ({ teacherId }: Props) => {
   };
 
   return (
-    <>
-      {!data ? (
-        <Loading />
-      ) : (
-        <FormProvider
-          submit={({ content }) => {
-            sendMessage({
-              roomId: data.roomId,
-              senderId: user.id,
-              receiverId: teacherId,
-              content,
-            });
-          }}
-          css={{ paddingTop: "0.9375rem" }}
-        >
-          <InputWrapper>
-            <ChattingInput name="content" placeholder={PLACE_HOLDER.CHATTING.CONTENT} required />
-            <SubmitButton themeColor="secondary" hover={false} active={false}>
-              보내기
-            </SubmitButton>
-          </InputWrapper>
-        </FormProvider>
-      )}
-    </>
+    <FormProvider
+      submit={({ content }) => {
+        sendMessage({
+          roomId: data.roomId,
+          senderId: user.id,
+          receiverId: teacherId,
+          content,
+        });
+      }}
+      css={{ paddingTop: "0.9375rem" }}
+    >
+      <InputWrapper>
+        <ChattingInput name="content" placeholder={PLACE_HOLDER.CHATTING.CONTENT} required />
+        <SubmitButton themeColor="secondary" hover={false} active={false}>
+          보내기
+        </SubmitButton>
+      </InputWrapper>
+    </FormProvider>
   );
 };
 

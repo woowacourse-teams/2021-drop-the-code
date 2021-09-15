@@ -81,60 +81,62 @@ const CurrentChatting = ({
     useChattingConnect({ studentId: user.id, teacherId });
   }
 
+  {
+    /* 리뷰어에게 메시지 보내기를 누르고 들어왔고, 기존 채팅 이력이 있을 경우 */
+  }
+  if (data.length > 0 && selectedRoomId)
+    return (
+      <Inner>
+        <Title>
+          <Avatar
+            imageUrl={data[0].senderId === user.id ? data[0].receiverImageUrl : data[0].senderImageUrl}
+            width="3rem"
+            css={{ marginRight: "0.625rem" }}
+          />
+          <div css={{ marginRight: "0.625rem" }}>
+            {data[0].senderId === user.id ? data[0].receiverName : data[0].senderName}와 채팅중
+          </div>
+        </Title>
+        <ContentWrapper>
+          {user &&
+            data.map((chatting) =>
+              chatting.senderId !== user.id ? (
+                <LeftSingleMessage key={nanoid()} message={chatting.message} imageUrl={chatting.senderImageUrl} />
+              ) : (
+                <RightSingleMessage key={nanoid()} message={chatting.message} imageUrl={chatting.senderImageUrl} />
+              )
+            )}
+        </ContentWrapper>
+        <Suspense fallback={<Loading />}>
+          <CurrentChattingForm teacherId={selectedTeacherId} />
+        </Suspense>
+      </Inner>
+    );
+
+  {
+    /* 리뷰어에게 메시지 보내기를 누르고 들어왔고, 기존 채팅 이력이 없는 신규 대화인 경우 */
+  }
+  if (teacherImage && teacherName && teacherId > 0)
+    return (
+      <Inner>
+        <Title>
+          <Avatar imageUrl={teacherImage} width="3rem" css={{ marginRight: "0.625rem" }} />
+          <div css={{ marginRight: "0.625rem" }}>{teacherName}와 채팅중</div>
+        </Title>
+        <ContentWrapper></ContentWrapper>
+        <Suspense fallback={<Loading />}>
+          <CurrentChattingForm teacherId={selectedTeacherId} />
+        </Suspense>
+      </Inner>
+    );
+
+  {
+    /* header에서 드롭다운 메뉴 눌러서 바로 들어와서 선택된 방이 없을 경우 */
+  }
   return (
-    <>
-      {/* 리뷰어에게 메시지 보내기를 누르고 들어왔고, 기존 채팅 이력이 있을 경우 */}
-      {data.length > 0 && selectedRoomId ? (
-        <Inner>
-          <Title>
-            <Avatar
-              imageUrl={data[0].senderId === user.id ? data[0].receiverImageUrl : data[0].senderImageUrl}
-              width="3rem"
-              css={{ marginRight: "0.625rem" }}
-            />
-            <div css={{ marginRight: "0.625rem" }}>
-              {data[0].senderId === user.id ? data[0].receiverName : data[0].senderName}와 채팅중
-            </div>
-          </Title>
-          <ContentWrapper>
-            {user &&
-              data.map((chatting) =>
-                chatting.senderId !== user.id ? (
-                  <LeftSingleMessage key={nanoid()} message={chatting.message} imageUrl={chatting.senderImageUrl} />
-                ) : (
-                  <RightSingleMessage key={nanoid()} message={chatting.message} imageUrl={chatting.senderImageUrl} />
-                )
-              )}
-          </ContentWrapper>
-          <Suspense fallback={<Loading />}>
-            <CurrentChattingForm teacherId={selectedTeacherId} />
-          </Suspense>
-        </Inner>
-      ) : (
-        <Inner>
-          {teacherImage && teacherName && teacherId > 0 ? (
-            <>
-              {/* 리뷰어에게 메시지 보내기를 누르고 들어왔고, 기존 채팅 이력이 없는 신규 대화인 경우 */}
-              <Title>
-                <Avatar imageUrl={teacherImage} width="3rem" css={{ marginRight: "0.625rem" }} />
-                <div css={{ marginRight: "0.625rem" }}>{teacherName}와 채팅중</div>
-              </Title>
-              <ContentWrapper></ContentWrapper>
-              <Suspense fallback={<Loading />}>
-                <CurrentChattingForm teacherId={selectedTeacherId} />
-              </Suspense>
-            </>
-          ) : (
-            <>
-              {/* header에서 드롭다운 메뉴 눌러서 바로 들어와서 선택된 방이 없을 경우 */}
-              <FlexAlignCenter css={{ justifyContent: "center", height: "100%", color: COLOR.GRAY_500 }}>
-                채팅방을 선택해주세요...
-              </FlexAlignCenter>
-            </>
-          )}
-        </Inner>
-      )}
-    </>
+    <FlexAlignCenter css={{ justifyContent: "center", height: "100%", color: COLOR.GRAY_500 }}>
+      채팅방을 선택해주세요...
+    </FlexAlignCenter>
   );
 };
 

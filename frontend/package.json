@@ -6,14 +6,15 @@
   "scripts": {
     "start": "webpack serve --node-env development --config webpack.dev.ts",
     "serve": "node dist/server/main.js",
-    "build": "concurrently  \"npm run build-client\" \"npm run build-server\"",
+    "build": "npm run build-client && npm run build-server",
     "build-client": "webpack --node-env production --config webpack.prod.ts",
     "build-server": "webpack --node-env production --config webpack.server.ts",
     "sb": "start-storybook -p 6006",
     "build-sb": "build-storybook",
     "test": "jest --watch",
     "test-all": "jest",
-    "prepare": "cd .. && husky install frontend/.husky"
+    "prepare": "cd .. && husky install frontend/.husky",
+    "bundle-analyze": "npm run build-client && webpack-bundle-analyzer dist/client/stats.json"
   },
   "repository": {
     "type": "git",
@@ -61,13 +62,14 @@
     "@types/react-router-dom": "^5.1.8",
     "@types/styled-components": "^5.1.11",
     "@types/webpack": "^5.28.0",
+    "@types/webpack-bundle-analyzer": "^4.4.1",
     "@types/webpack-dev-server": "^3.11.4",
+    "@types/webpack-manifest-plugin": "^3.0.5",
     "@typescript-eslint/eslint-plugin": "^4.28.1",
     "@typescript-eslint/parser": "^4.28.1",
     "babel-loader": "^8.2.2",
     "babel-plugin-styled-components": "^1.13.1",
     "babel-preset-minify": "^0.5.1",
-    "concurrently": "^6.2.1",
     "copy-webpack-plugin": "^9.0.1",
     "core-js": "^3.15.2",
     "dotenv-webpack": "^7.0.3",
@@ -86,8 +88,10 @@
     "ts-node": "^10.0.0",
     "typescript": "^4.3.5",
     "webpack": "^5.41.1",
+    "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^3.11.2",
+    "webpack-manifest-plugin": "^4.0.2",
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {

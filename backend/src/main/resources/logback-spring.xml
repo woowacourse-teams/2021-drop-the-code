@@ -2,32 +2,35 @@
 <configuration scan="true" scanPeriod="10 seconds">
 
     <!--    Log Level Color Setting    -->
-    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="clr"
+                    converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
     <conversionRule conversionWord="wEx"
                     converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
 
+    <!--    Log Pattern Setting    -->
     <property name="CONSOLE_LOG_PATTERN"
               value="%clr([%-5p]) %clr([%-40.40logger{0}]){cyan} %clr(:){faint} %m%n"/>
+    <property name="INFO_LOG_PATTERN"
+              value="[Occurred Time] - [%d{yyyy-MM-dd HH:mm:ss}] [%-5p] [%-40.40logger{0}] - %m%n"/>
+
+    <include resource="appender/all-console-appender.xml"/>
+    <include resource="appender/info-file-appender.xml"/>
+    <include resource="appender/error-file-appender.xml"/>
+    <include resource="appender/sql-file-appender.xml"/>
 
     <springProfile name="test">
-        <include resource="appender/all-console-appender.xml"/>
         <root level="INFO">
             <appender-ref ref="CONSOLE_APPENDER"/>
         </root>
     </springProfile>
 
     <springProfile name="local">
-        <include resource="appender/all-console-appender.xml"/>
         <root level="INFO">
             <appender-ref ref="CONSOLE_APPENDER"/>
         </root>
     </springProfile>
 
     <springProfile name="prod, dev">
-        <include resource="appender/info-file-appender.xml"/>
-        <include resource="appender/error-file-appender.xml"/>
-        <include resource="appender/sql-file-appender.xml"/>
-
         <logger name="com.wootech.dropthecode.repository.replication.ReplicationRoutingDataSource" level="DEBUG">
             <appender-ref ref="SQL_FILE"/>
         </logger>
@@ -44,7 +47,7 @@
             <appender-ref ref="SQL_FILE"/>
         </logger>
 
-        <root level="DEBUG">
+        <root level="INFO">
             <appender-ref ref="INFO_FILE"/>
             <appender-ref ref="ERROR_FILE"/>
         </root>

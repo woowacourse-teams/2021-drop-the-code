@@ -69,10 +69,10 @@ public class NotificationService {
     public void send(Member receiver, Review review, String content) {
         Notification notification = createNotification(receiver, review, content);
         String id = String.valueOf(receiver.getId());
+        notificationRepository.save(notification);
         Map<String, SseEmitter> sseEmitters = emitterRepository.findAllStartWithById(id);
         sseEmitters.forEach(
                 (key, emitter) -> {
-                    notificationRepository.save(notification);
                     emitterRepository.saveEventCache(key, notification);
                     sendToClient(emitter, key, NotificationResponse.from(notification));
                 }

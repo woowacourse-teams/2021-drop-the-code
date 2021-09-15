@@ -63,21 +63,21 @@ class NotificationControllerTest extends RestApiDocumentTest {
                                     .content("새로운 리뷰 요청이 도착했습니다!")
                                     .url("/reviews/3")
                                     .createdAt(LocalDateTime.now().plusDays(3))
-                                    .isRead(false)
+                                    .read(false)
                                     .build(),
                 NotificationResponse.builder()
                                     .id(15L)
                                     .content("리뷰 요청이 수락되었습니다.")
                                     .url("/reviews/2")
                                     .createdAt(LocalDateTime.now().plusDays(1))
-                                    .isRead(false)
+                                    .read(false)
                                     .build(),
                 NotificationResponse.builder()
                                     .id(10L)
                                     .content("리뷰가 완료되었습니다. 리뷰어에 대한 피드백을 입력해주세요.")
                                     .url("/reviews/1")
                                     .createdAt(LocalDateTime.now())
-                                    .isRead(true)
+                                    .read(true)
                                     .build()
         );
         NotificationsResponse notificationsResponse = new NotificationsResponse(notificationResponses, 2L);

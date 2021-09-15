@@ -35,15 +35,15 @@ public class NotificationResponse {
     /**
      * 알림 읽음 여부
      */
-    private boolean isRead;
+    private boolean read;
 
     @Builder
-    public NotificationResponse(Long id, String content, String url, LocalDateTime createdAt, boolean isRead) {
+    public NotificationResponse(Long id, String content, String url, LocalDateTime createdAt, boolean read) {
         this.id = id;
         this.content = content;
         this.url = url;
         this.createdAt = LocalDateTimeToArray.convert(createdAt);
-        this.isRead = isRead;
+        this.read = read;
     }
 
     public static NotificationResponse from(Notification notification) {
@@ -52,7 +52,7 @@ public class NotificationResponse {
                                    .content(notification.getContent())
                                    .url(notification.getUrl())
                                    .createdAt(notification.getCreatedAt())
-                                   .isRead(notification.isRead())
+                                   .read(notification.isRead())
                                    .build();
     }
 }

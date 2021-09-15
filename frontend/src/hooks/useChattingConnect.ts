@@ -18,12 +18,10 @@ const useChattingConnect = ({ studentId, teacherId }: Props) => {
   const { data } = useQuery([QUERY_KEY.GET_CHATTING_CONNECT, studentId, teacherId], async () => {
     const response = await revalidate(() => getChattingConnect(studentId, teacherId));
     if (!response.isSuccess) {
-      console.log("에러", response.error);
       toast(response.error.message, { type: "error" });
 
       return;
     }
-    console.log("성공", response.data);
     return response.data;
   });
 

@@ -1,6 +1,7 @@
+import { studentAuth } from "__mock__/data/auth";
 import { mockingStudentAuth, mockingTeacherAuth, mockingAnonymousAuth } from "__mock__/utils/mockingAuth";
 import { mockingToken } from "__mock__/utils/mockingToken";
-import { render, screen } from "__mock__/utils/testUtils";
+import { render, screen, fireEvent } from "__mock__/utils/testUtils";
 
 import Header from "./Header";
 
@@ -25,6 +26,12 @@ describe("헤더 컴포넌트 테스트", () => {
     mockingToken();
 
     render(<Header />);
+
+    const avatar = await screen.findByRole("img", {
+      name: `${studentAuth.name}님`,
+    });
+
+    fireEvent.click(avatar);
 
     const reviewerRegisterButton = await findByRole("link", { name: "리뷰어 등록하기" });
     expect(reviewerRegisterButton).toBeInTheDocument();

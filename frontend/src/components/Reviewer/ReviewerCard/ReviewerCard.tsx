@@ -35,43 +35,45 @@ const Title = styled.p`
 `;
 
 const ReviewerCard = ({ id, name, imageUrl, career, sumReviewCount, averageReviewTime, title, techSpec }: Reviewer) => (
-  <ReviewerLink to={`/reviewer/${id}`}>
-    <Inner>
-      <Avatar
-        imageUrl={imageUrl}
-        width="6.25rem"
-        height="6.25rem"
-        css={{ marginRight: "1.875rem" }}
-        alt={`${name}${ALT.REVIEWER_PROFILE_AVATAR}`}
-      />
-      <FlexSpaceBetween css={{ flexDirection: "column", flex: 1 }}>
-        <ChipWrapper>
-          <Chip themeColor="career" css={{ fontSize: "0.875rem" }}>
-            <p>경력 {career}년차</p>
-          </Chip>
-          <Chip themeColor="count" css={{ fontSize: "0.875rem" }}>
-            <p>누적 리뷰 {sumReviewCount}회</p>
-          </Chip>
-          {!!averageReviewTime && (
-            <Chip themeColor="averageReview" css={{ fontSize: "0.875rem" }}>
-              <p>평균 답변 {averageReviewTime}일</p>
+  <li>
+    <ReviewerLink to={`/reviewer/${id}`}>
+      <Inner>
+        <Avatar
+          imageUrl={imageUrl}
+          width="6.25rem"
+          height="6.25rem"
+          css={{ marginRight: "1.875rem" }}
+          alt={`${name}${ALT.REVIEWER_PROFILE_AVATAR}`}
+        />
+        <FlexSpaceBetween css={{ flexDirection: "column", flex: 1 }}>
+          <ChipWrapper>
+            <Chip themeColor="career" css={{ fontSize: "0.875rem" }}>
+              <p>경력 {career}년차</p>
             </Chip>
-          )}
-        </ChipWrapper>
-        <Flex>
-          <Title>{title}</Title>
-        </Flex>
-        <Flex css={{ flexDirection: "column" }}>
-          <p css={{ color: COLOR.GRAY_500, paddingBottom: "0.3125rem" }}>
-            {`언어: ${[...techSpec.languages.map((language) => language.name)].join(", ")}`}
-          </p>
-          <p css={{ color: COLOR.GRAY_500 }}>
-            {`기술 스택: ${[...techSpec.skills.map((skill) => skill.name)].join(", ")}`}
-          </p>
-        </Flex>
-      </FlexSpaceBetween>
-    </Inner>
-  </ReviewerLink>
+            <Chip themeColor="count" css={{ fontSize: "0.875rem" }}>
+              <p>누적 리뷰 {sumReviewCount}회</p>
+            </Chip>
+            {!!averageReviewTime && (
+              <Chip themeColor="averageReview" css={{ fontSize: "0.875rem" }}>
+                <p>평균 답변 {averageReviewTime}일</p>
+              </Chip>
+            )}
+          </ChipWrapper>
+          <Flex>
+            <Title>{title}</Title>
+          </Flex>
+          <Flex css={{ flexDirection: "column" }}>
+            <p css={{ color: COLOR.GRAY_500, paddingBottom: "0.3125rem" }}>
+              {`언어: ${[...techSpec.languages.map((language) => language.name)].join(", ")}`}
+            </p>
+            <p css={{ color: COLOR.GRAY_500 }}>
+              {`기술 스택: ${[...techSpec.skills.map((skill) => skill.name)].join(", ")}`}
+            </p>
+          </Flex>
+        </FlexSpaceBetween>
+      </Inner>
+    </ReviewerLink>
+  </li>
 );
 
 export default ReviewerCard;

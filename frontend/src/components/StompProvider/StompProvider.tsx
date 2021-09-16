@@ -37,7 +37,6 @@ const StompProvider = ({ children }: Props) => {
       reconnectDelay: 5000,
     });
 
-    console.log("connect", stompClient.current.state, roomId);
     stompClient.current.connect(
       {},
       () => {

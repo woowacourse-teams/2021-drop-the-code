@@ -5,8 +5,6 @@ node_modules
 dist
 storybook-static
 
-stats.json
-
 # env
 .env.development
 .env.production

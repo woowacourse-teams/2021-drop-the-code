@@ -12,6 +12,7 @@ import GlobalStyle from "components/GlobalStyle/GlobalStyle";
 import Header from "components/Header/Header";
 import Loading from "components/Loading/Loading";
 import ModalProvider from "components/ModalProvider/ModalProvider";
+import StompProvider from "components/StompProvider/StompProvider";
 import ToastProvider from "components/ToastProvider/ToastProvider";
 import NotFound from "pages/NotFound/NotFound";
 import { THEME } from "theme/theme";
@@ -35,24 +36,26 @@ const App = () => (
         <QueryClientProvider client={queryClient}>
           <Suspense fallback={<Loading />}>
             <AuthProvider>
-              <ModalProvider>
-                <GlobalStyle />
-                <Suspense fallback={<Loading />}>
-                  <Switch>
-                    {ROUTE.map(({ path, Component, isPrivate, exact }) => (
-                      <AuthRoute isPrivate={isPrivate} key={path} path={path} redirectTo={PATH.MAIN} exact={exact}>
-                        <Header />
-                        <main>
-                          <Component />
-                        </main>
-                      </AuthRoute>
-                    ))}
-                    <Route path={PATH.NOT_FOUND}>
-                      <NotFound />
-                    </Route>
-                  </Switch>
-                </Suspense>
-              </ModalProvider>
+              <StompProvider>
+                <ModalProvider>
+                  <GlobalStyle />
+                  <Suspense fallback={<Loading />}>
+                    <Switch>
+                      {ROUTE.map(({ path, Component, isPrivate, exact }) => (
+                        <AuthRoute isPrivate={isPrivate} key={path} path={path} redirectTo={PATH.MAIN} exact={exact}>
+                          <Header />
+                          <main>
+                            <Component />
+                          </main>
+                        </AuthRoute>
+                      ))}
+                      <Route path={PATH.NOT_FOUND}>
+                        <NotFound />
+                      </Route>
+                    </Switch>
+                  </Suspense>
+                </ModalProvider>
+              </StompProvider>
             </AuthProvider>
           </Suspense>
         </QueryClientProvider>

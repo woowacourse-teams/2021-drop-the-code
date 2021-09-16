@@ -11,7 +11,7 @@ interface ApiFailure<T> {
   code: number;
 }
 
-export type Response<T> = ApiSuccess<T> | ApiFailure<{ message: string }>;
+export type Response<T> = ApiSuccess<T> | ApiFailure<{ errorMessage: string }>;
 
 const apiClient = {
   get: async <T>(url: string, config?: AxiosRequestConfig): Promise<Response<T>> => {

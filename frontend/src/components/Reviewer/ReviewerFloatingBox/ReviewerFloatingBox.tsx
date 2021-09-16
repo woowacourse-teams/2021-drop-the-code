@@ -18,7 +18,7 @@ const Inner = styled(Flex)`
   position: -webkit-sticky;
   position: sticky;
   top: 12.5rem;
-  height: 14.375rem;
+  height: 13rem;
   padding: 1.25rem;
   border-radius: ${({ theme }) => theme.common.shape.rounded};
   box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
@@ -30,6 +30,7 @@ const ProfileWrapper = styled(Flex)`
 
 const AvatarWrapper = styled(Flex)`
   flex-direction: column;
+  align-items: center;
 `;
 
 const ChipWrapper = styled(Flex)`

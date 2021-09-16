@@ -32,7 +32,7 @@ const useReview = (reviewId: number) => {
     const response = await getReview(reviewId);
 
     if (!response.isSuccess) {
-      toast(response.error.message, { type: "error" });
+      toast(response.error.errorMessage, { type: "error" });
 
       history.push(PATH.MAIN);
       return;
@@ -46,7 +46,7 @@ const useReview = (reviewId: number) => {
       const response = await cancelReview(reviewId);
 
       if (!response.isSuccess) {
-        toast(response.error.message, { type: "error" });
+        toast(response.error.errorMessage, { type: "error" });
       } else {
         queryClient.invalidateQueries(QUERY_KEY.GET_REVIEW);
 
@@ -62,7 +62,7 @@ const useReview = (reviewId: number) => {
       const response = await denyReview(reviewId);
 
       if (!response.isSuccess) {
-        toast(response.error.message, { type: "error" });
+        toast(response.error.errorMessage, { type: "error" });
       } else {
         queryClient.invalidateQueries(QUERY_KEY.GET_REVIEW);
 
@@ -78,7 +78,7 @@ const useReview = (reviewId: number) => {
       const response = await acceptReview(reviewId);
 
       if (!response.isSuccess) {
-        toast(response.error.message, { type: "error" });
+        toast(response.error.errorMessage, { type: "error" });
       } else {
         queryClient.invalidateQueries(QUERY_KEY.GET_REVIEW);
 
@@ -94,7 +94,7 @@ const useReview = (reviewId: number) => {
       const response = await editReview(reviewId, reviewRequestFormData);
 
       if (!response.isSuccess) {
-        toast(response.error.message, { type: "error" });
+        toast(response.error.errorMessage, { type: "error" });
       } else {
         queryClient.invalidateQueries(QUERY_KEY.GET_REVIEW);
 
@@ -110,7 +110,7 @@ const useReview = (reviewId: number) => {
       const response = await completeReview(reviewId);
 
       if (!response.isSuccess) {
-        toast(response.error.message, { type: "error" });
+        toast(response.error.errorMessage, { type: "error" });
       } else {
         queryClient.invalidateQueries(QUERY_KEY.GET_REVIEW);
 
@@ -126,7 +126,7 @@ const useReview = (reviewId: number) => {
       const response = await finishReview(reviewId, reviewFeedback);
 
       if (!response.isSuccess) {
-        toast(response.error.message, { type: "error" });
+        toast(response.error.errorMessage, { type: "error" });
       } else {
         queryClient.invalidateQueries(QUERY_KEY.GET_REVIEW);
 

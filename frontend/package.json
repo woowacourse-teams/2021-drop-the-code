@@ -60,6 +60,7 @@
     "@types/react": "^17.0.11",
     "@types/react-dom": "^17.0.8",
     "@types/react-router-dom": "^5.1.8",
+    "@types/stompjs": "^2.3.5",
     "@types/styled-components": "^5.1.11",
     "@types/webpack": "^5.28.0",
     "@types/webpack-bundle-analyzer": "^4.4.1",
@@ -95,6 +96,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "@stomp/stompjs": "^6.1.2",
     "axios": "^0.21.1",
     "express": "^4.17.1",
     "nanoid": "^3.1.23",

@@ -9,7 +9,7 @@ const useLanguageList = () => {
   const { data: languages } = useQuery(QUERY_KEY.GET_LANGUAGE_LIST, async () => {
     const response = await getLanguageList();
     if (!response.isSuccess) {
-      toast(response.error.message, { type: "error" });
+      toast(response.error.errorMessage, { type: "error" });
 
       return;
     }

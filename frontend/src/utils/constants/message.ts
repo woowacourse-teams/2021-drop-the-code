@@ -71,6 +71,9 @@ export const PLACE_HOLDER = {
   REVIEWER_FEEDBACK: {
     CONTENT: "리뷰어에 대한 솔직한 피드백을 남겨주세요.",
   },
+  CHATTING: {
+    CONTENT: "메시지를 입력하세요.",
+  },
 };
 
 export const ALT = {

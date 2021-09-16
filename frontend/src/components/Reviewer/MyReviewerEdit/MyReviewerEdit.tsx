@@ -52,7 +52,7 @@ const MyReviewerEdit = ({ reviewer }: Props) => {
       const response = await editReviewer(reviewerEditFormData);
 
       if (!response.isSuccess) {
-        toast(response.error.message);
+        toast(response.error.errorMessage);
       } else {
         close();
         toast(SUCCESS_MESSAGE.API.REVIEWER.EDIT);

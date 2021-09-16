@@ -6,6 +6,10 @@ export const getChattingList = (id: number) => {
   return apiClient.get<ChattingHistory[]>(`/messages/${id}`);
 };
 
-export const getChatting = (roomId: number) => {
-  return apiClient.get<SingleChatting[]>(`/messages/${roomId}`);
+export const getChattingConnect = (studentId: number, teacherId: number) => {
+  return apiClient.get<{ roomId: number }>(`/rooms?studentId=${studentId}&teacherId=${teacherId}`);
+};
+
+export const getSingleChatting = (queryString: string) => {
+  return apiClient.get<SingleChatting[]>(`/messages${queryString}`);
 };

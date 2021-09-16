@@ -2,6 +2,7 @@ export interface ChattingHistory {
   id: number;
   name: string;
   imageUrl: string;
+  roomId: number;
   latestMessage: string;
   createdAt: string;
 }

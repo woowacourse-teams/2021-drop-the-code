@@ -11,6 +11,7 @@ import useToastContext from "hooks/useToastContext";
 import { QUERY_KEY } from "utils/constants/key";
 
 import FeedbackList from "../FeedbackList/FeedbackList";
+import FloatingMessageButton from "../FloatingMessageBox/FloatingMessageBox";
 
 interface Props {
   reviewerId: number;
@@ -23,7 +24,7 @@ const ReviewerInfoContainer = ({ reviewerId }: Props) => {
     const response = await getReviewer(reviewerId);
 
     if (!response.isSuccess) {
-      toast(response.error.message, { type: "error" });
+      toast(response.error.errorMessage, { type: "error" });
 
       return;
     }
@@ -36,7 +37,10 @@ const ReviewerInfoContainer = ({ reviewerId }: Props) => {
       {data && (
         <Flex css={{ marginBottom: "3.125rem" }}>
           <div css={{ width: "18.75rem", marginRight: "6.25rem" }}>
-            <ReviewerFloatingBox reviewer={data} />
+            <div>
+              <ReviewerFloatingBox reviewer={data} />
+            </div>
+            <FloatingMessageButton reviewer={data} />
           </div>
           <div css={{ flex: 1 }}>
             <ContentBox title={data.title} css={{ minHeight: "31.25rem", marginBottom: "1.875rem" }}>

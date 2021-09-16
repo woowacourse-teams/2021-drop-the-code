@@ -1,19 +1,20 @@
 import { useQuery } from "react-query";
 
-import { getChattingList } from "apis/chatting";
+import { getSingleChatting } from "apis/chatting";
 import { QUERY_KEY } from "utils/constants/key";
+import { toURLSearchParams } from "utils/formatter";
 
 import useRevalidate from "./useRevalidate";
 import useToastContext from "./useToastContext";
 
-const useChattingList = (id?: number) => {
+const useSingleChatting = (roomId: number | null) => {
   const { revalidate } = useRevalidate();
   const toast = useToastContext();
 
-  const { data } = useQuery([QUERY_KEY.GET_CHATTING_LIST, id], async () => {
-    if (!id) return;
+  const { data } = useQuery([QUERY_KEY.GET_SINGLE_CHATTING, roomId], async () => {
+    if (!roomId) return [];
 
-    const response = await revalidate(() => getChattingList(id));
+    const response = await revalidate(() => getSingleChatting(toURLSearchParams({ roomId })));
     if (!response.isSuccess) {
       toast(response.error.errorMessage, { type: "error" });
 
@@ -24,8 +25,8 @@ const useChattingList = (id?: number) => {
   });
 
   return {
-    chattingList: data || [],
+    data: data || [],
   };
 };
 
-export default useChattingList;
+export default useSingleChatting;

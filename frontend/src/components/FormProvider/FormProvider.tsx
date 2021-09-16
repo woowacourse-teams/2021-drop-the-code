@@ -50,6 +50,7 @@ const FormProvider = ({ submit, validators, children, ...props }: Props) => {
     if (!isValid) return;
 
     submit(values);
+    setValues({});
   };
 
   const register = (name: string, initialValue: string | number | undefined = "") => {

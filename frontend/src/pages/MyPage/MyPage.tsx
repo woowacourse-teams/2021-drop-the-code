@@ -84,7 +84,7 @@ const MyPage = () => {
       const response = await deleteAuth();
 
       if (!response.isSuccess) {
-        toast(response.error.message, { type: "error" });
+        toast(response.error.errorMessage, { type: "error" });
       } else {
         toast(SUCCESS_MESSAGE.API.AUTH.DELETE);
 
@@ -112,7 +112,13 @@ const MyPage = () => {
       <FlexSpaceBetween>
         <Flex css={{ marginBottom: "2.5rem" }}>
           <Profile>
-            <Avatar imageUrl={user.imageUrl} width="6.25rem" height="6.25rem" css={{ marginRight: "1.25rem" }} />
+            <Avatar
+              imageUrl={user.imageUrl}
+              width="6.25rem"
+              height="6.25rem"
+              css={{ marginRight: "1.25rem" }}
+              alt={`${user.name}${ALT.PROFILE_AVATAR}`}
+            />
             <Flex css={{ flexDirection: "column" }}>
               <p>{user.name}</p>
               <p>{user.email}</p>
@@ -150,7 +156,6 @@ const MyPage = () => {
           </Item>
         ))}
       </ul>
-
       <Suspense fallback={<Loading />}>{activeTab && <ReviewList id={user.id} mode={activeTab} />}</Suspense>
       <Button
         themeColor="secondary"

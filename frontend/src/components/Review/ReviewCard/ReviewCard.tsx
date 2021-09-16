@@ -65,29 +65,33 @@ const RequestTime = styled.div`
   text-align: right;
 `;
 
-export const progress = {
-  PENDING: "대기중",
-  DENIED: "거절됨",
-  ON_GOING: "진행중",
-  TEACHER_COMPLETED: "확인중",
-  FINISHED: "완료",
-};
+const ReviewCard = ({ id, title, content, progress, createdAt, ...props }: Review) => {
+  const status = {
+    PENDING: "대기중",
+    DENIED: "거절됨",
+    ON_GOING: "진행중",
+    TEACHER_COMPLETED: "확인중",
+    FINISHED: "완료",
+  };
 
-const ReviewCard = ({ id, title, content, progress, createdAt }: Review) => (
-  <ReviewLink to={`/review/${id}`}>
-    <Inner>
-      <Progress progress={progress}>
-        <p>{PROGRESS[progress]}</p>
-      </Progress>
-      <ContentWrapper>
-        <Title>{title}</Title>
-        <Content>{content}</Content>
-      </ContentWrapper>
-      <RequestTime>
-        <p>{toPassedTimeString(...createdAt)}</p>
-      </RequestTime>
-    </Inner>
-  </ReviewLink>
-);
+  return (
+    <li {...props}>
+      <ReviewLink to={`/review/${id}`}>
+        <Inner>
+          <Progress progress={progress}>
+            <p>{status[progress]}</p>
+          </Progress>
+          <ContentWrapper>
+            <Title>{title}</Title>
+            <Content>{content}</Content>
+          </ContentWrapper>
+          <RequestTime>
+            <p>{toPassedTimeString(...createdAt)}</p>
+          </RequestTime>
+        </Inner>
+      </ReviewLink>
+    </li>
+  );
+};
 
 export default ReviewCard;

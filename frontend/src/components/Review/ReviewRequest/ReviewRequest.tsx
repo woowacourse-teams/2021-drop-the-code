@@ -48,7 +48,7 @@ const ReviewRequest = ({ reviewerId }: Props) => {
       const response = await requestReview(reviewRequestFormData);
 
       if (!response.isSuccess) {
-        toast(response.error.message);
+        toast(response.error.errorMessage, { type: "error" });
       } else {
         close();
         toast(SUCCESS_MESSAGE.API.REVIEW.REQUEST);
@@ -60,7 +60,7 @@ const ReviewRequest = ({ reviewerId }: Props) => {
     })
   );
 
-  if (mutation.isLoading) return <Loading />;
+  if (mutation.isLoading || !user) return <Loading />;
 
   return (
     <Inner>
@@ -107,7 +107,7 @@ const ReviewRequest = ({ reviewerId }: Props) => {
           css={{ minHeight: "12.5rem" }}
         />
         <Flex css={{ margin: "1.25rem 0 2.5rem" }}>
-          {user && <SubmitButton css={{ marginLeft: "auto" }}>요청</SubmitButton>}
+          {<SubmitButton css={{ marginLeft: "auto" }}>요청</SubmitButton>}
         </Flex>
       </FormProvider>
     </Inner>

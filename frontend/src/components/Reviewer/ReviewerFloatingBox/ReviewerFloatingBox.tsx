@@ -18,7 +18,7 @@ const Inner = styled(Flex)`
   position: -webkit-sticky;
   position: sticky;
   top: 12.5rem;
-  height: 14.375rem;
+  height: 13rem;
   padding: 1.25rem;
   border-radius: ${({ theme }) => theme.common.shape.rounded};
   box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
@@ -30,6 +30,7 @@ const ProfileWrapper = styled(Flex)`
 
 const AvatarWrapper = styled(Flex)`
   flex-direction: column;
+  align-items: center;
 `;
 
 const ChipWrapper = styled(Flex)`
@@ -58,11 +59,11 @@ const ReviewerFloatingBox = ({ reviewer }: Props) => {
       <ProfileWrapper>
         <AvatarWrapper>
           <Avatar
-            alt={ALT.REVIEWER_PROFILE_AVATAR}
             height="6.25rem"
             imageUrl={imageUrl}
             width="6.25rem"
             css={{ marginBottom: "0.8rem" }}
+            alt={`${name}${ALT.REVIEWER_PROFILE_AVATAR}`}
           />
           <a href={reviewer.githubUrl} target="_blank" rel="noopener noreferrer">
             <FlexAlignCenter>

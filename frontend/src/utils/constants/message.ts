@@ -71,6 +71,9 @@ export const PLACE_HOLDER = {
   REVIEWER_FEEDBACK: {
     CONTENT: "리뷰어에 대한 솔직한 피드백을 남겨주세요.",
   },
+  CHATTING: {
+    CONTENT: "메시지를 입력하세요.",
+  },
 };
 
 export const ALT = {
@@ -78,6 +81,8 @@ export const ALT = {
     "리뷰어는 리뷰를 남긴 후, 하단의 리뷰완료 버튼을 눌러주세요. 리뷰 요청인은 리뷰를 받은 후 리뷰 종료 버튼을 눌러주세요.",
   GITHUB_LOGIN_BUTTON: "깃허브 로그인 버튼 이미지",
   REVIEWER_PROFILE_AVATAR: "리뷰어 프로필 이미지",
+  REVIEW_REQUESTER_PROFILE_AVATAR: "리뷰 요청인 프로필 이미지",
+  PROFILE_AVATAR: "프로필 이미지",
   GITHUB_LOGO: "깃허브 로고 이미지",
   NO_REVIEW: "리뷰 없음 이미지",
   NO_FEEDBACK: "피드백 없음 이미지",

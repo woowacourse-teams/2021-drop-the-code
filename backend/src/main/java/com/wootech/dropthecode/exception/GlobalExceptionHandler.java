@@ -13,12 +13,11 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(Exception e) {
@@ -78,10 +77,10 @@ public class GlobalExceptionHandler {
     }
 
     private void infoLogging(Exception e) {
-        logger.info(e.getMessage(), e);
+        log.info(e.getMessage(), e);
     }
 
     private void errorLogging(Exception e) {
-        logger.error(e.getMessage(), e);
+        log.error(e.getMessage(), e);
     }
 }

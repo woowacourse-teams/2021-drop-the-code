@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 import axios from "axios";
 import { User } from "types/auth";
@@ -27,30 +27,20 @@ const AuthProvider = ({ children }: Props) => {
   const { revalidate } = useRevalidate();
   const queryClient = useQueryClient();
 
-  axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+  const authCheck = async () => {
+    const response = await revalidate(() => checkMember());
 
-  const { data } = useQuery(
-    QUERY_KEY.CHECK_MEMBER,
-    async () => {
-      const response = await revalidate(() => checkMember());
+    if (!response.isSuccess) {
+      removeAccessToken();
+      removeRefreshToken();
 
-      if (!response.isSuccess) {
-        removeAccessToken();
-        removeRefreshToken();
-
-        return;
-      }
-
-      return { ...response.data };
-    },
-    {
-      refetchInterval: false,
-      refetchIntervalInBackground: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      refetchOnWindowFocus: false,
+      return;
     }
-  );
+
+    if (!accessToken || !refreshToken) return;
+
+    login({ ...response.data, accessToken, refreshToken });
+  };
 
   const login = (user: User) => {
     const { accessToken, refreshToken } = user;
@@ -68,11 +58,11 @@ const AuthProvider = ({ children }: Props) => {
       if (response.isSuccess) {
         queryClient.invalidateQueries(QUERY_KEY.OAUTH_LOGIN);
 
-        removeAccessToken();
-        removeRefreshToken();
-
         setUser(null);
       }
+
+      removeAccessToken();
+      removeRefreshToken();
 
       return response;
     });
@@ -83,19 +73,17 @@ const AuthProvider = ({ children }: Props) => {
   };
 
   useEffect(() => {
+    if (!accessToken) return;
     axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+
+    authCheck();
   }, [accessToken]);
-
-  useEffect(() => {
-    if (!data) return;
-    if (!accessToken || !refreshToken) return;
-
-    login({ ...data, accessToken, refreshToken });
-  }, [data]);
 
   const isAuthenticated = user !== null || accessToken !== null;
 
-  return <AuthContext.Provider value={{ isAuthenticated, user: user, login, logout }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ isAuthenticated, user, authCheck, login, logout }}>{children}</AuthContext.Provider>
+  );
 };
 
 export default AuthProvider;

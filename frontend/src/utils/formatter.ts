@@ -27,3 +27,15 @@ export const toPassedTimeString = (year: number, month: number, date: number) =>
   if (30 <= totalPassedDates && totalPassedDates < 365) return `${Math.floor(totalPassedDates % 30)}개월 전`;
   if (365 < totalPassedDates) return `${Math.floor(totalPassedDates % 365)}년 전`;
 };
+
+export const removeMillisecond = (time: string) => {
+  return time.slice(0, -4);
+};
+
+export const formatTimeToPassedTime = (time: Date) => {
+  const year = time.getFullYear();
+  const month = time.getMonth() + 1;
+  const date = time.getDate();
+
+  return toPassedTimeString(Number(year), Number(month), Number(date));
+};

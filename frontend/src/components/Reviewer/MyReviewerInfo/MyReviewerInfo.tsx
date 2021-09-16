@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery } from "react-query";
 
 import styled, { css } from "styled-components";
 
@@ -10,6 +10,7 @@ import Loading from "components/Loading/Loading";
 import MyReviewerEdit from "components/Reviewer/MyReviewerEdit/MyReviewerEdit";
 import Button from "components/shared/Button/Button";
 import { Flex, FlexCenter, FlexEnd } from "components/shared/Flexbox/Flexbox";
+import useAuthContext from "hooks/useAuthContext";
 import useModalContext from "hooks/useModalContext";
 import useRevalidate from "hooks/useRevalidate";
 import useToastContext from "hooks/useToastContext";
@@ -60,15 +61,16 @@ interface Props {
 
 const MyReviewerInfo = ({ reviewerId }: Props) => {
   const [openContent, setOpenContent] = useState(false);
+  const { authCheck } = useAuthContext();
 
   const { open } = useModalContext();
   const toast = useToastContext();
 
-  const { data } = useQuery([QUERY_KEY.GET_REVIEWER, reviewerId], async () => {
+  const { data, isLoading } = useQuery([QUERY_KEY.GET_REVIEWER, reviewerId], async () => {
     const response = await getReviewer(reviewerId);
 
     if (!response.isSuccess) {
-      toast(response.error.message, { type: "error" });
+      toast(response.error.errorMessage, { type: "error" });
 
       return;
     }
@@ -77,7 +79,6 @@ const MyReviewerInfo = ({ reviewerId }: Props) => {
   });
 
   const { revalidate } = useRevalidate();
-  const queryClient = useQueryClient();
 
   const deleteReviewerMutation = useMutation(() => {
     return revalidate(async () => {
@@ -85,14 +86,14 @@ const MyReviewerInfo = ({ reviewerId }: Props) => {
 
       if (response.isSuccess) {
         toast(SUCCESS_MESSAGE.API.REVIEWER.DELETE);
-        queryClient.invalidateQueries(QUERY_KEY.CHECK_MEMBER);
+        authCheck();
       }
 
       return response;
     });
   });
 
-  if (deleteReviewerMutation.isLoading) return <Loading />;
+  if (deleteReviewerMutation.isLoading || isLoading) return <Loading />;
 
   return (
     <>

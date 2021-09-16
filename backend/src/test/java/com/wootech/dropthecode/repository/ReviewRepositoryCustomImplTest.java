@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
+import com.wootech.dropthecode.config.JpaConfig;
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.domain.Progress;
 import com.wootech.dropthecode.domain.Role;
@@ -17,10 +18,13 @@ import com.wootech.dropthecode.dto.request.ReviewSearchCondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.test.context.ActiveProfiles;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -33,8 +37,9 @@ import static com.wootech.dropthecode.builder.ReviewBuilder.dummyReview;
 import static com.wootech.dropthecode.builder.TeacherProfileBuilder.dummyTeacherProfile;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
 @ActiveProfiles("test")
+@Import(JpaConfig.class)
+@DataJpaTest
 class ReviewRepositoryCustomImplTest {
 
     @Autowired
@@ -42,6 +47,9 @@ class ReviewRepositoryCustomImplTest {
 
     @Autowired
     private ReviewRepository reviewRepository;
+
+    @MockBean
+    private AuditingEntityListener auditingEntityListener;
 
     private Member airTe;
     private Member allieTe;
@@ -62,6 +70,7 @@ class ReviewRepositoryCustomImplTest {
 
     @BeforeEach
     void setUp() {
+
         // given
         airTe = dummyMember("oauth1", "email1@gmail.com", "name1", "s3://imageUrl1",
                 "github url1", Role.TEACHER, LocalDateTime.now());

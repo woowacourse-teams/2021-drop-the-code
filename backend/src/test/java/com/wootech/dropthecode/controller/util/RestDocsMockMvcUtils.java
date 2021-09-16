@@ -3,6 +3,7 @@ package com.wootech.dropthecode.controller.util;
 import java.util.Arrays;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.wootech.dropthecode.exception.GlobalExceptionHandler;
 
 import org.springframework.boot.test.context.TestConfiguration;
@@ -32,7 +33,7 @@ public class RestDocsMockMvcUtils {
 
     private static final String PUBLIC_AUTHORIZATION = "Resource is public.";
 
-    public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().registerModule(new JavaTimeModule());
 
     private static final Snippet[] SUCCESS_SNIPPETS = new Snippet[]{
             HttpDocumentation.httpRequest(),

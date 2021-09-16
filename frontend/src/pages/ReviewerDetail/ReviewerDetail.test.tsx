@@ -4,7 +4,7 @@ import { reviewers } from "__mock__/data/reviewers";
 import { reviews } from "__mock__/data/reviews";
 import { mockingStudentAuth, mockingTeacherAuth } from "__mock__/utils/mockingAuth";
 import { mockingToken } from "__mock__/utils/mockingToken";
-import { render, screen, fireEvent } from "__mock__/utils/testUtils";
+import { render, screen, fireEvent, waitFor } from "__mock__/utils/testUtils";
 import ReviewerDetail from "pages/ReviewerDetail/ReviewerDetail";
 
 const { findAllByText, findByText } = screen;
@@ -28,17 +28,6 @@ describe("리뷰어 상세페이지 테스트", () => {
     expect(reviewerTitle).toBeInTheDocument();
   });
 
-  it("리뷰 목록 확인하기 버튼을 클릭하면 리뷰 목록을 확인할 수 있다.", async () => {
-    mockReviewerDetail();
-
-    const showReviewButton = await findByText("리뷰 목록 확인하기");
-    fireEvent.click(showReviewButton);
-
-    const reviewContents = await findAllByText(reviews[0].content);
-
-    expect(reviewContents[0]).toBeInTheDocument();
-  });
-
   it("리뷰어가 내가 아닌경우 리뷰 요청하기 버튼을 클릭할 수 있다.", async () => {
     mockingToken();
     mockingStudentAuth();
@@ -46,7 +35,7 @@ describe("리뷰어 상세페이지 테스트", () => {
 
     const reviewRequestButton = await findByText("리뷰 요청하기");
 
-    expect(reviewRequestButton).toBeEnabled();
+    await waitFor(() => expect(reviewRequestButton).toBeEnabled());
   });
 
   it("리뷰어가 나인경우 리뷰 요청하기 버튼이 리뷰 요청 버튼을 클릭할 수 없다.", async () => {
@@ -56,6 +45,6 @@ describe("리뷰어 상세페이지 테스트", () => {
 
     const reviewRequestButton = await findByText("리뷰 요청하기");
 
-    expect(reviewRequestButton).toBeDisabled();
+    await waitFor(() => expect(reviewRequestButton).toBeDisabled());
   });
 });

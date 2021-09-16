@@ -1,8 +1,8 @@
-import { ReactElement, ReactNode } from "react";
+import { LazyExoticComponent, ReactNode } from "react";
 
 export interface RouteShape {
   path: string;
-  Component: () => ReactElement;
+  Component: LazyExoticComponent;
   isPrivate: boolean;
   exact: boolean;
 }

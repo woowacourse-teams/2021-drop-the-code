@@ -13,12 +13,8 @@ import com.wootech.dropthecode.dto.request.TeacherFilterRequest;
 import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
 import com.wootech.dropthecode.dto.response.*;
 import com.wootech.dropthecode.exception.TeacherException;
-import com.wootech.dropthecode.service.MemberService;
-import com.wootech.dropthecode.service.TeacherService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.data.util.ClassTypeInformation;
@@ -38,17 +34,10 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(MemberController.class)
 class MemberControllerTest extends RestApiDocumentTest {
 
     @Autowired
     private MemberController memberController;
-
-    @MockBean
-    private TeacherService teacherService;
-
-    @MockBean
-    private MemberService memberService;
 
     @BeforeEach
     void setUp(RestDocumentationContextProvider provider) {

@@ -13,7 +13,7 @@ import { Flex, FlexCenter, FlexSpaceBetween } from "components/shared/Flexbox/Fl
 import useModalContext from "hooks/useModalContext";
 import useReview from "hooks/useReview";
 import { COLOR } from "utils/constants/color";
-import { PLACE_HOLDER } from "utils/constants/message";
+import { ALT, PLACE_HOLDER } from "utils/constants/message";
 import { STANDARD } from "utils/constants/standard";
 import reviewFeedBackValidators from "utils/validators/reviewFeedBackValidators";
 
@@ -73,7 +73,12 @@ const ReviewFeedback = ({ id: reviewId, teacherProfile }: Pick<Review, "id" | "t
   return (
     <Inner>
       <Title>{name}님의 리뷰 평가하기</Title>
-      <Avatar imageUrl={imageUrl} width="6rem" css={{ marginBottom: "1.25rem" }} />
+      <Avatar
+        imageUrl={imageUrl}
+        width="6rem"
+        css={{ marginBottom: "1.25rem" }}
+        alt={`${name}${ALT.REVIEWER_PROFILE_AVATAR}`}
+      />
       <FormProvider
         submit={({ content }) => {
           finish({ star, comment: content });

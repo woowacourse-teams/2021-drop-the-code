@@ -12,6 +12,7 @@ import TextareaField from "components/FormProvider/TextareaField";
 import SpecPicker from "components/Language/SpecPicker";
 import Loading from "components/Loading/Loading";
 import { Flex } from "components/shared/Flexbox/Flexbox";
+import useAuthContext from "hooks/useAuthContext";
 import useModalContext from "hooks/useModalContext";
 import useRevalidate from "hooks/useRevalidate";
 import useToastContext from "hooks/useToastContext";
@@ -40,24 +41,24 @@ const MyReviewerEdit = ({ reviewer }: Props) => {
   const [filterLanguage, setFilterLanguage] = useState<string | null>(null);
   const [specs, setSpecs] = useState<Specs>({});
 
+  const queryClient = useQueryClient();
   const { revalidate } = useRevalidate();
   const { close } = useModalContext();
   const toast = useToastContext();
-
-  const queryClient = useQueryClient();
+  const { authCheck } = useAuthContext();
 
   const mutation = useMutation((reviewerEditFormData: ReviewerRegisterFormData) =>
     revalidate(async () => {
       const response = await editReviewer(reviewerEditFormData);
 
       if (!response.isSuccess) {
-        toast(response.error.message);
+        toast(response.error.errorMessage);
       } else {
         close();
         toast(SUCCESS_MESSAGE.API.REVIEWER.EDIT);
 
         queryClient.invalidateQueries([QUERY_KEY.GET_REVIEWER, reviewer.id]);
-        queryClient.invalidateQueries(QUERY_KEY.CHECK_MEMBER);
+        authCheck();
       }
 
       return response;

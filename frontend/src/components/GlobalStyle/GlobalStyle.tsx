@@ -1,16 +1,16 @@
 import { createGlobalStyle } from "styled-components";
-import normalize from "styled-normalize";
 import reset from "styled-reset";
 
 import { COLOR } from "utils/constants/color";
 
 const GlobalStyle = createGlobalStyle`
-  ${normalize}
   ${reset}
 
   @font-face {
     font-family: 'IBMPlexSansKR-Regular';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+    src: url(${process.env.CDN_URL + "/IBMPlexSansKR-Regular.woff2"}) format('woff2'),
+    url(${process.env.CDN_URL + "/IBMPlexSansKR-Regular.woff"}) format('woff');
+ 
     font-weight: normal;
     font-style: normal;
   }
@@ -40,6 +40,12 @@ const GlobalStyle = createGlobalStyle`
     font-size: 1.625rem;
     font-weight: 600;
     margin: 1.5rem 0;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 1.2rem 0;
   }
 
   button {

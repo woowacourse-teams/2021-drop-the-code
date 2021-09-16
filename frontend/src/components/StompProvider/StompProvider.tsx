@@ -45,6 +45,7 @@ const StompProvider = ({ children }: Props) => {
 
         stompClient.current.subscribe(`/subscribe/rooms/${roomId}`, () => {
           console.log("subscribed");
+
           queryClient.invalidateQueries(QUERY_KEY.GET_CHATTING_LIST);
           queryClient.invalidateQueries(QUERY_KEY.GET_SINGLE_CHATTING);
         });

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { MutableRefObject, useEffect } from "react";
 
 import styled from "styled-components";
 
@@ -36,9 +36,10 @@ const SubmitButton = styled(Button)`
 
 interface Props {
   teacherId: number | null;
+  chattingContainer: MutableRefObject<HTMLDivElement | null>;
 }
 
-const CurrentChattingForm = ({ teacherId }: Props) => {
+const CurrentChattingForm = ({ teacherId, chattingContainer }: Props) => {
   const { user } = useAuthContext();
   const { sendMessage, connect } = useStompContext();
 
@@ -50,6 +51,10 @@ const CurrentChattingForm = ({ teacherId }: Props) => {
 
     connect(data.roomId);
   }, [data]);
+
+  useEffect(() => {
+    chattingContainer.current?.scrollTo(0, chattingContainer.current.scrollHeight);
+  }, [teacherId]);
 
   if (!user || !data) return <Loading />;
 

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, Suspense, useEffect } from "react";
+import { Dispatch, SetStateAction, Suspense, useEffect, useRef } from "react";
 
 import { nanoid } from "nanoid";
 import styled from "styled-components";
@@ -58,6 +58,8 @@ const CurrentChatting = ({
   const { chattingList } = useChattingList(user?.id);
   const { data } = useSingleChatting(selectedRoomId);
 
+  const chattingContainer = useRef<HTMLDivElement | null>(null);
+
   data.sort((b, a) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
   const isAlreadyMet = chattingList.filter((chatting) => chatting.id === teacherId);
@@ -72,6 +74,10 @@ const CurrentChatting = ({
 
     if (teacherId && teacherId > 0) setSelectedTeacherId(teacherId);
   }, []);
+
+  useEffect(() => {
+    chattingContainer.current?.scrollTo(0, chattingContainer.current.scrollHeight);
+  }, [data]);
 
   if (!user) return <Loading />;
 
@@ -89,7 +95,7 @@ const CurrentChatting = ({
             {data[0].senderId === user.id ? data[0].receiverName : data[0].senderName}와 채팅중
           </div>
         </Title>
-        <ContentWrapper>
+        <ContentWrapper ref={chattingContainer}>
           {user &&
             data.map((chatting) =>
               chatting.senderId !== user.id ? (
@@ -100,7 +106,7 @@ const CurrentChatting = ({
             )}
         </ContentWrapper>
         <Suspense fallback={<Loading />}>
-          <CurrentChattingForm teacherId={selectedTeacherId} />
+          <CurrentChattingForm chattingContainer={chattingContainer} teacherId={selectedTeacherId} />
         </Suspense>
       </Inner>
     );
@@ -115,7 +121,7 @@ const CurrentChatting = ({
         </Title>
         <ContentWrapper />
         <Suspense fallback={<Loading />}>
-          <CurrentChattingForm teacherId={selectedTeacherId} />
+          <CurrentChattingForm chattingContainer={chattingContainer} teacherId={selectedTeacherId} />
         </Suspense>
       </Inner>
     );

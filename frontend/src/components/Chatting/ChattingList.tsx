@@ -8,7 +8,7 @@ import useAuthContext from "hooks/useAuthContext";
 import useChattingList from "hooks/useChattingList";
 import useStompContext from "hooks/useStompContext";
 import { COLOR } from "utils/constants/color";
-import { formatTimeToPassedTime, removeMillisecond } from "utils/formatter";
+import { formatTimeToPassedTime } from "utils/formatter";
 
 const Inner = styled(Flex)`
   max-width: 30rem;
@@ -90,7 +90,7 @@ const ChattingList = ({ selectedRoomId, setSelectedRoomId, setSelectedTeacherId 
               <SingleItemInner>
                 <Avatar imageUrl={item.imageUrl} width="2.5rem" css={{ marginRight: "0.625rem" }} />
                 <Content css={{ marginRight: "0.625rem" }}>{item.latestMessage}</Content>
-                <Time>{formatTimeToPassedTime(new Date(removeMillisecond(item.createdAt)))}</Time>
+                <Time>{formatTimeToPassedTime(new Date(item.createdAt))}</Time>
               </SingleItemInner>
             </ChattingItem>
           ))

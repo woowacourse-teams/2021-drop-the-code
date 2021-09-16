@@ -63,21 +63,33 @@ const RequestTime = styled.div`
   text-align: right;
 `;
 
-const ReviewCard = ({ id, title, content, progress, createdAt }: Review) => (
-  <ReviewLink to={`/review/${id}`}>
-    <Inner>
-      <Progress progress={progress}>
-        <p>{progress !== "FINISHED" ? "진행중" : "완료"}</p>
-      </Progress>
-      <ContentWrapper>
-        <Title>{title}</Title>
-        <Content>{content}</Content>
-      </ContentWrapper>
-      <RequestTime>
-        <p>{toPassedTimeString(...createdAt)}</p>
-      </RequestTime>
-    </Inner>
-  </ReviewLink>
-);
+const ReviewCard = ({ id, title, content, progress, createdAt, ...props }: Review) => {
+  const status = {
+    PENDING: "대기중",
+    DENIED: "거절됨",
+    ON_GOING: "진행중",
+    TEACHER_COMPLETED: "확인중",
+    FINISHED: "완료",
+  };
+
+  return (
+    <li {...props}>
+      <ReviewLink to={`/review/${id}`}>
+        <Inner>
+          <Progress progress={progress}>
+            <p>{status[progress]}</p>
+          </Progress>
+          <ContentWrapper>
+            <Title>{title}</Title>
+            <Content>{content}</Content>
+          </ContentWrapper>
+          <RequestTime>
+            <p>{toPassedTimeString(...createdAt)}</p>
+          </RequestTime>
+        </Inner>
+      </ReviewLink>
+    </li>
+  );
+};
 
 export default ReviewCard;

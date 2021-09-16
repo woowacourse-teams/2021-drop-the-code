@@ -42,6 +42,12 @@ const GlobalStyle = createGlobalStyle`
     margin: 1.5rem 0;
   }
 
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 1.2rem 0;
+  }
+
   button {
     background: none;
   }

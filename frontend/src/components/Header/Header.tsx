@@ -59,7 +59,7 @@ const Header = () => {
       {!!user && (
         <>
           <MenuItemButton themeColor="secondary" hover={false} contents={() => <DropDownMenu />}>
-            <Avatar imageUrl={user.imageUrl} width="2.5rem" />
+            <Avatar imageUrl={user.imageUrl} alt={`${user.name}님`} width="2.5rem" />
           </MenuItemButton>
         </>
       )}

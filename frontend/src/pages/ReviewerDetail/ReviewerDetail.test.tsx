@@ -28,17 +28,6 @@ describe("리뷰어 상세페이지 테스트", () => {
     expect(reviewerTitle).toBeInTheDocument();
   });
 
-  it("리뷰 목록 확인하기 버튼을 클릭하면 리뷰 목록을 확인할 수 있다.", async () => {
-    mockReviewerDetail();
-
-    const showReviewButton = await findByText("리뷰 목록 확인하기");
-    fireEvent.click(showReviewButton);
-
-    const reviewContents = await findAllByText(reviews[0].content);
-
-    expect(reviewContents[0]).toBeInTheDocument();
-  });
-
   it("리뷰어가 내가 아닌경우 리뷰 요청하기 버튼을 클릭할 수 있다.", async () => {
     mockingToken();
     mockingStudentAuth();

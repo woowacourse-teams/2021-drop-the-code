@@ -1,9 +1,14 @@
 import { PropsWithChildren, ReactElement } from "react";
 import { Route, Switch } from "react-router-dom";
 
+import fs from "fs";
+import path from "path";
+
 import og from "assets/og.jpg";
 
 import META_ROUTE from "./constants/metaRoute";
+
+const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, "../client/manifest.json"), "utf8"));
 
 const Html = ({ children, styles, title }: PropsWithChildren<{ styles: ReactElement[]; title?: string }>) => {
   return (
@@ -32,10 +37,12 @@ const Html = ({ children, styles, title }: PropsWithChildren<{ styles: ReactElem
             </Route>
           ))}
         </Switch>
+        <script defer src={manifest["main.js"]}></script>
+        <script defer src={manifest["core.js"]}></script>
+        <script defer src={manifest["common.js"]}></script>
       </head>
       <body>
         <div id="root">{children}</div>
-        <script async src="/main.js"></script>
       </body>
     </html>
   );

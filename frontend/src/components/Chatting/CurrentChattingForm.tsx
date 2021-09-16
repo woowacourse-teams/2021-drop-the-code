@@ -1,7 +1,5 @@
-import { useEffect, useRef } from "react";
-import { useQueryClient } from "react-query";
+import { useEffect } from "react";
 
-import { Stomp, CompatClient } from "@stomp/stompjs";
 import styled from "styled-components";
 
 import FormProvider from "components/FormProvider/FormProvider";
@@ -10,7 +8,7 @@ import Loading from "components/Loading/Loading";
 import Button from "components/shared/Button/Button";
 import useAuthContext from "hooks/useAuthContext";
 import useChattingConnect from "hooks/useChattingConnect";
-import { QUERY_KEY } from "utils/constants/key";
+import useStompContext from "hooks/useStompContext";
 import { PLACE_HOLDER } from "utils/constants/message";
 
 const InputWrapper = styled.div`
@@ -36,85 +34,24 @@ const SubmitButton = styled(Button)`
   right: 0.625rem;
 `;
 
-interface Message {
-  roomId: number;
-  senderId: number;
-  receiverId: number | null;
-  content: string;
-}
-
 interface Props {
   teacherId: number | null;
 }
 
 const CurrentChattingForm = ({ teacherId }: Props) => {
   const { user } = useAuthContext();
-  const queryClient = useQueryClient();
+  const { sendMessage, connect } = useStompContext();
 
   // roomId 만드는 연결
   const { data } = useChattingConnect({ studentId: user?.id, teacherId });
 
-  if (!user || !data) return <Loading />;
-
-  const stompClient = useRef<CompatClient | null>(null);
-
   useEffect(() => {
-    const socket = new WebSocket(`ws://${process.env.SOCKET_URL}/ws-connection`);
-    stompClient.current = Stomp.over(socket);
+    if (!data) return;
 
-    connect();
+    connect(data.roomId);
+  }, [data]);
 
-    return () => disconnect();
-  }, []);
-
-  const connect = () => {
-    if (!stompClient.current) return;
-
-    stompClient.current.configure({
-      reconnectDelay: 5000,
-    });
-
-    stompClient.current.connect(
-      {},
-      () => {
-        if (!stompClient.current) return;
-
-        stompClient.current.subscribe(`/subscribe/rooms/${data?.roomId}`, () => {
-          console.log("subscribed");
-        });
-        console.log("connected");
-      },
-      () => console.log("connection error")
-    );
-  };
-
-  const sendMessage = ({ roomId, senderId, receiverId, content }: Message) => {
-    if (!stompClient.current) return;
-
-    stompClient.current.send(
-      `/publish/rooms/${roomId}`,
-      {},
-      JSON.stringify({
-        message: content,
-        senderId: senderId,
-        receiverId: receiverId,
-      })
-    );
-
-    queryClient.invalidateQueries(QUERY_KEY.GET_CHATTING_LIST);
-    queryClient.invalidateQueries(QUERY_KEY.GET_SINGLE_CHATTING);
-  };
-
-  const disconnect = () => {
-    if (!stompClient.current) return;
-
-    stompClient.current.disconnect(() => {
-      if (!stompClient.current) return;
-
-      stompClient.current.deactivate();
-      console.log("disconnected");
-    });
-  };
+  if (!user || !data) return <Loading />;
 
   return (
     <FormProvider

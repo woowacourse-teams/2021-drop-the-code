@@ -6,6 +6,7 @@ import Avatar from "components/shared/Avatar/Avatar";
 import { Flex, FlexAlignCenter, FlexCenter } from "components/shared/Flexbox/Flexbox";
 import useAuthContext from "hooks/useAuthContext";
 import useChattingList from "hooks/useChattingList";
+import useStompContext from "hooks/useStompContext";
 import { COLOR } from "utils/constants/color";
 import { formatTimeToPassedTime, removeMillisecond } from "utils/formatter";
 
@@ -32,7 +33,7 @@ const Time = styled.div`
   text-align: end;
 `;
 
-const ChattingItem = styled.li<{ active: boolean; hover: boolean }>`
+const ChattingItem = styled.li<{ active?: boolean; hover?: boolean }>`
   display: flex;
 
   :hover {
@@ -56,12 +57,11 @@ interface Props {
 }
 
 const ChattingList = ({ selectedRoomId, setSelectedRoomId, setSelectedTeacherId }: Props) => {
+  const { disconnect } = useStompContext();
   const { user } = useAuthContext();
   const { chattingList } = useChattingList(user?.id);
 
-  chattingList?.sort(
-    (a, b) => new Date(removeMillisecond(b.createdAt)).getTime() - new Date(removeMillisecond(a.createdAt)).getTime()
-  );
+  chattingList.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
   useEffect(() => {
     setSelectedRoomId(null);
@@ -81,6 +81,8 @@ const ChattingList = ({ selectedRoomId, setSelectedRoomId, setSelectedTeacherId 
               key={item.id}
               active={item.roomId === selectedRoomId}
               onClick={() => {
+                disconnect();
+
                 setSelectedRoomId(item.roomId);
                 setSelectedTeacherId(item.id);
               }}

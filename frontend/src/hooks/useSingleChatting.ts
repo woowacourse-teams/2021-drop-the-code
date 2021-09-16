@@ -12,14 +12,16 @@ const useSingleChatting = (roomId: number | null) => {
   const toast = useToastContext();
 
   const { data } = useQuery([QUERY_KEY.GET_SINGLE_CHATTING, roomId], async () => {
+    if (!roomId) return [];
+
     const response = await revalidate(() => getSingleChatting(toURLSearchParams({ roomId })));
     if (!response.isSuccess) {
-      toast(response.error.message, { type: "error" });
+      toast(response.error.errorMessage, { type: "error" });
 
       return;
     }
 
-    return response.data;
+    return response.data.map((item) => ({ ...item, createdAt: item.createdAt + "Z" }));
   });
 
   return {

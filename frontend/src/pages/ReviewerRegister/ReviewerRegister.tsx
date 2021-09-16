@@ -42,7 +42,7 @@ const ReviewerRegister = () => {
       const response = await registerReviewer(reviewerRegisterFormData);
 
       if (!response.isSuccess) {
-        toast(response.error.message, { type: "error" });
+        toast(response.error.errorMessage, { type: "error" });
       } else {
         queryClient.invalidateQueries(QUERY_KEY.GET_REVIEWER_LIST);
         authCheck();

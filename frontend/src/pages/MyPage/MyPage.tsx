@@ -84,7 +84,7 @@ const MyPage = () => {
       const response = await deleteAuth();
 
       if (!response.isSuccess) {
-        toast(response.error.message, { type: "error" });
+        toast(response.error.errorMessage, { type: "error" });
       } else {
         toast(SUCCESS_MESSAGE.API.AUTH.DELETE);
 

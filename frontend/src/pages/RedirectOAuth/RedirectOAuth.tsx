@@ -25,7 +25,7 @@ const RedirectOAuth = () => {
       const response = await oauthLogin(toURLSearchParams({ providerName, code }));
 
       if (!response.isSuccess) {
-        toast(response.error.message, { type: "error" });
+        toast(response.error.errorMessage, { type: "error" });
 
         return;
       }

@@ -26,7 +26,7 @@ const useReviewList = ({ id, mode }: Props) => {
       getReviewList(id, mode, toURLSearchParams({ page, size: 5, sort: ["createdAt,desc"] }))
     );
     if (!response.isSuccess) {
-      toast(response.error.message, { type: "error" });
+      toast(response.error.errorMessage, { type: "error" });
 
       return;
     }

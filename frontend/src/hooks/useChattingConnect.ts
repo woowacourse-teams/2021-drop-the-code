@@ -16,9 +16,11 @@ const useChattingConnect = ({ studentId, teacherId }: Props) => {
   const toast = useToastContext();
 
   const { data } = useQuery([QUERY_KEY.GET_CHATTING_CONNECT, studentId, teacherId], async () => {
+    if (!studentId || !teacherId) return;
+
     const response = await revalidate(() => getChattingConnect(studentId, teacherId));
     if (!response.isSuccess) {
-      toast(response.error.message, { type: "error" });
+      toast(response.error.errorMessage, { type: "error" });
 
       return;
     }

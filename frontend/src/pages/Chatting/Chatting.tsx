@@ -10,7 +10,7 @@ const Chatting = () => {
   const [selectedRoomId, setSelectedRoomId] = useState<number | null>(null);
   const [selectedTeacherId, setSelectedTeacherId] = useState<number | null>(null);
 
-  const location = useLocation<{ teacherId: number; teacherImage: string; teacherName: string }>();
+  const { state } = useLocation<{ teacherId: number; teacherImage: string; teacherName: string }>();
 
   return (
     <Flex>
@@ -27,9 +27,9 @@ const Chatting = () => {
           selectedTeacherId={selectedTeacherId}
           setSelectedRoomId={setSelectedRoomId}
           setSelectedTeacherId={setSelectedTeacherId}
-          teacherId={location.state ? location.state.teacherId : -1}
-          teacherImage={location.state && location.state.teacherImage}
-          teacherName={location.state && location.state.teacherName}
+          teacherId={state?.teacherId}
+          teacherImage={state?.teacherImage}
+          teacherName={state?.teacherName}
         />
       </Suspense>
     </Flex>

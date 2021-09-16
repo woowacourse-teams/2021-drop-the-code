@@ -48,7 +48,7 @@ const ReviewRequest = ({ reviewerId }: Props) => {
       const response = await requestReview(reviewRequestFormData);
 
       if (!response.isSuccess) {
-        toast(response.error.message);
+        toast(response.error.errorMessage, { type: "error" });
       } else {
         close();
         toast(SUCCESS_MESSAGE.API.REVIEW.REQUEST);

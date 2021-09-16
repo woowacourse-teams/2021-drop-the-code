@@ -9,11 +9,9 @@ import Loading from "components/Loading/Loading";
 import Avatar from "components/shared/Avatar/Avatar";
 import { FlexAlignCenter } from "components/shared/Flexbox/Flexbox";
 import useAuthContext from "hooks/useAuthContext";
-import useChattingConnect from "hooks/useChattingConnect";
 import useChattingList from "hooks/useChattingList";
 import useSingleChatting from "hooks/useSingleChatting";
 import { COLOR } from "utils/constants/color";
-import { removeMillisecond } from "utils/formatter";
 
 import CurrentChattingForm from "./CurrentChattingForm";
 
@@ -35,14 +33,15 @@ const ContentWrapper = styled.div`
   padding: 1.25rem;
   overflow-y: scroll;
 `;
+
 interface Props {
   selectedRoomId: number | null;
   selectedTeacherId: number | null;
   setSelectedRoomId: Dispatch<SetStateAction<number | null>>;
   setSelectedTeacherId: Dispatch<SetStateAction<number | null>>;
-  teacherId: number;
-  teacherName: string;
-  teacherImage: string;
+  teacherId?: number;
+  teacherName?: string;
+  teacherImage?: string;
 }
 
 const CurrentChatting = ({
@@ -55,16 +54,13 @@ const CurrentChatting = ({
   teacherImage,
 }: Props) => {
   const { user } = useAuthContext();
-  if (!user) return <Loading />;
 
   const { chattingList } = useChattingList(user?.id);
   const { data } = useSingleChatting(selectedRoomId);
 
-  data.sort(
-    (a, b) => new Date(removeMillisecond(a.createdAt)).getTime() - new Date(removeMillisecond(b.createdAt)).getTime()
-  );
+  data.sort((b, a) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
-  const isAlreadyMet = chattingList?.filter((chatting) => chatting.id === teacherId);
+  const isAlreadyMet = chattingList.filter((chatting) => chatting.id === teacherId);
 
   useEffect(() => {
     if (!isAlreadyMet) return;
@@ -73,17 +69,13 @@ const CurrentChatting = ({
     if (isAlreadyMet.length > 0) {
       setSelectedRoomId(isAlreadyMet[0].roomId);
     }
+
+    if (teacherId && teacherId > 0) setSelectedTeacherId(teacherId);
   }, []);
 
-  if (teacherId > 0) setSelectedTeacherId(teacherId);
+  if (!user) return <Loading />;
 
-  if (isAlreadyMet.length === 0) {
-    useChattingConnect({ studentId: user.id, teacherId });
-  }
-
-  {
-    /* 리뷰어에게 메시지 보내기를 누르고 들어왔고, 기존 채팅 이력이 있을 경우 */
-  }
+  /* 리뷰어에게 메시지 보내기를 누르고 들어왔고, 기존 채팅 이력이 있을 경우 */
   if (data.length > 0 && selectedRoomId)
     return (
       <Inner>
@@ -113,26 +105,22 @@ const CurrentChatting = ({
       </Inner>
     );
 
-  {
-    /* 리뷰어에게 메시지 보내기를 누르고 들어왔고, 기존 채팅 이력이 없는 신규 대화인 경우 */
-  }
-  if (teacherImage && teacherName && teacherId > 0)
+  /* 리뷰어에게 메시지 보내기를 누르고 들어왔고, 기존 채팅 이력이 없는 신규 대화인 경우 */
+  if (teacherId && teacherImage && teacherName && teacherId > 0)
     return (
       <Inner>
         <Title>
           <Avatar imageUrl={teacherImage} width="3rem" css={{ marginRight: "0.625rem" }} />
           <div css={{ marginRight: "0.625rem" }}>{teacherName}와 채팅중</div>
         </Title>
-        <ContentWrapper></ContentWrapper>
+        <ContentWrapper />
         <Suspense fallback={<Loading />}>
           <CurrentChattingForm teacherId={selectedTeacherId} />
         </Suspense>
       </Inner>
     );
 
-  {
-    /* header에서 드롭다운 메뉴 눌러서 바로 들어와서 선택된 방이 없을 경우 */
-  }
+  /* header에서 드롭다운 메뉴 눌러서 바로 들어와서 선택된 방이 없을 경우 */
   return (
     <FlexAlignCenter css={{ justifyContent: "center", height: "100%", color: COLOR.GRAY_500 }}>
       채팅방을 선택해주세요...

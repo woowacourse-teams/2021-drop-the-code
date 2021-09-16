@@ -37,7 +37,7 @@ const useReviewerList = (options: Options) => {
     );
 
     if (!response.isSuccess) {
-      toast(response.error.message, { type: "error" });
+      toast(response.error.errorMessage, { type: "error" });
 
       return;
     }

@@ -37,7 +37,7 @@ const ReviewerInfoContainer = ({ reviewerId }: Props) => {
     const response = await getReviewer(reviewerId);
 
     if (!response.isSuccess) {
-      toast(response.error.message, { type: "error" });
+      toast(response.error.errorMessage, { type: "error" });
 
       return;
     }

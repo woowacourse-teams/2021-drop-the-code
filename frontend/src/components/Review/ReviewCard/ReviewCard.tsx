@@ -5,6 +5,7 @@ import { Progress as ProgressShape, Review } from "types/review";
 
 import { Flex, FlexAlignCenter } from "components/shared/Flexbox/Flexbox";
 import { COLOR } from "utils/constants/color";
+import { PROGRESS } from "utils/constants/progress";
 import { toPassedTimeString } from "utils/formatter";
 
 const ReviewLink = styled(Link)`
@@ -29,7 +30,8 @@ interface ProgressProps {
 const Progress = styled.div<ProgressProps>`
   width: 4.375rem;
   font-weight: 900;
-  color: ${({ theme, progress }) => (progress !== "FINISHED" ? theme.common.color.primary : COLOR.BLACK)};
+  color: ${({ theme, progress }) =>
+    progress !== "FINISHED" && progress !== "DENIED" ? theme.common.color.primary : COLOR.BLACK};
   margin-right: 1.25rem;
 `;
 

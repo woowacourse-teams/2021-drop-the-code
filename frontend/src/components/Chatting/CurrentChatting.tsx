@@ -12,6 +12,7 @@ import useAuthContext from "hooks/useAuthContext";
 import useChattingList from "hooks/useChattingList";
 import useSingleChatting from "hooks/useSingleChatting";
 import { COLOR } from "utils/constants/color";
+import { ALT } from "utils/constants/message";
 
 import CurrentChattingForm from "./CurrentChattingForm";
 
@@ -90,6 +91,9 @@ const CurrentChatting = ({
             imageUrl={data[0].senderId === user.id ? data[0].receiverImageUrl : data[0].senderImageUrl}
             width="3rem"
             css={{ marginRight: "0.625rem" }}
+            alt={`${data[0].senderId === user.id ? data[0].receiverImageUrl : data[0].senderImageUrl} ${
+              ALT.PROFILE_AVATAR
+            }`}
           />
           <div css={{ marginRight: "0.625rem" }}>
             {data[0].senderId === user.id ? data[0].receiverName : data[0].senderName}와 채팅중
@@ -116,7 +120,12 @@ const CurrentChatting = ({
     return (
       <Inner>
         <Title>
-          <Avatar imageUrl={teacherImage} width="3rem" css={{ marginRight: "0.625rem" }} />
+          <Avatar
+            imageUrl={teacherImage}
+            width="3rem"
+            css={{ marginRight: "0.625rem" }}
+            alt={`${teacherId} ${ALT.PROFILE_AVATAR}`}
+          />
           <div css={{ marginRight: "0.625rem" }}>{teacherName}와 채팅중</div>
         </Title>
         <ContentWrapper />

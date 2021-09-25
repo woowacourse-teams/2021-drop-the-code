@@ -1,6 +1,7 @@
 import { Story, Meta } from "@storybook/react";
 
 import Avatar, { Props } from "components/shared/Avatar/Avatar";
+import { ALT } from "utils/constants/message";
 
 export default {
   title: "components/shared/Avatar",
@@ -15,5 +16,5 @@ Basic.args = {
   width: "100px",
   height: "100px",
   imageUrl: "https://avatars.githubusercontent.com/u/52202474?v=4",
-  alt: "리뷰어 프로필 이미지",
+  alt: ALT.REVIEWER_PROFILE_AVATAR,
 };

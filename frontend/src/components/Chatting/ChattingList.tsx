@@ -8,6 +8,7 @@ import useAuthContext from "hooks/useAuthContext";
 import useChattingList from "hooks/useChattingList";
 import useStompContext from "hooks/useStompContext";
 import { COLOR } from "utils/constants/color";
+import { ALT } from "utils/constants/message";
 import { formatTimeToPassedTime } from "utils/formatter";
 
 const Inner = styled(Flex)`
@@ -88,7 +89,12 @@ const ChattingList = ({ selectedRoomId, setSelectedRoomId, setSelectedTeacherId 
               }}
             >
               <SingleItemInner>
-                <Avatar imageUrl={item.imageUrl} width="2.5rem" css={{ marginRight: "0.625rem" }} />
+                <Avatar
+                  imageUrl={item.imageUrl}
+                  width="2.5rem"
+                  css={{ marginRight: "0.625rem" }}
+                  alt={`${item.id} ${ALT.PROFILE_AVATAR}`}
+                />
                 <Content css={{ marginRight: "0.625rem" }}>{item.latestMessage}</Content>
                 <Time>{formatTimeToPassedTime(new Date(item.createdAt))}</Time>
               </SingleItemInner>

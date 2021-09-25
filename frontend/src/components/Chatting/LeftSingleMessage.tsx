@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Avatar from "components/shared/Avatar/Avatar";
 import { Flex } from "components/shared/Flexbox/Flexbox";
 import { COLOR } from "utils/constants/color";
+import { ALT } from "utils/constants/message";
 
 const Inner = styled.div`
   position: relative;
@@ -34,6 +35,7 @@ const LeftSingleMessage = ({ message, imageUrl }: Props) => {
         imageUrl={imageUrl}
         width="2rem"
         height="2rem"
+        alt={`대화상대 ${ALT.PROFILE_AVATAR}`}
         css={{ position: "absolute", bottom: "0.3125rem", marginRight: "0.625rem" }}
       />
     </Inner>

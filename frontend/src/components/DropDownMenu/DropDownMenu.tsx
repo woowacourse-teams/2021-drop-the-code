@@ -72,13 +72,13 @@ const DropDownMenu = () => {
       )}
       {!!user &&
         ROLE_MENU.filter(({ isTeacher }) => isTeacher === (user.role === "TEACHER")).map(({ to, children }) => (
-          <MenuLink key={to} to={to}>
+          <MenuLink key={to} to={to} aria-labelledby={`${children} 메뉴`}>
             {children}
           </MenuLink>
         ))}
       {!!user &&
         NAV_MENU.filter(({ isPrivate }) => isPrivate).map(({ to, children }) => (
-          <MenuLink key={to} to={to}>
+          <MenuLink key={to} to={to} aria-labelledby={`${children} 메뉴`}>
             {children}
           </MenuLink>
         ))}

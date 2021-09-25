@@ -40,14 +40,14 @@ const Header = () => {
         <h1>
           <Link to={PATH.MAIN}>
             <FlexCenter>
-              <Logo width={200} height={50} />
+              <Logo width={200} height={50} aria-label="코드봐줘 로고" />
             </FlexCenter>
           </Link>
         </h1>
       }
     >
       {NAV_MENU.filter(({ isPrivate }) => !isPrivate).map(({ to, children }) => (
-        <NavigationLink key={to} to={to} activeClassName="active">
+        <NavigationLink key={to} to={to} activeClassName="active" aria-labelledby={`네비게이션 메뉴${children}`}>
           {children}
         </NavigationLink>
       ))}

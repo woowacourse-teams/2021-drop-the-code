@@ -4,6 +4,7 @@ import com.wootech.dropthecode.controller.auth.util.JwtTokenProvider;
 import com.wootech.dropthecode.controller.auth.util.RedisUtil;
 import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Member;
+import com.wootech.dropthecode.domain.Token;
 import com.wootech.dropthecode.dto.request.RefreshTokenRequest;
 import com.wootech.dropthecode.dto.response.AccessTokenResponse;
 import com.wootech.dropthecode.exception.AuthenticationException;
@@ -54,9 +55,9 @@ public class AuthService {
             throw new AuthenticationException("refresh token이 유효하지 않습니다.");
         }
 
-        String newAccessToken = jwtTokenProvider.createAccessToken(id);
+        Token newAccessToken = jwtTokenProvider.createAccessToken(id);
 
-        return new AccessTokenResponse(newAccessToken);
+        return new AccessTokenResponse(newAccessToken.getValue());
     }
 
     @Transactional

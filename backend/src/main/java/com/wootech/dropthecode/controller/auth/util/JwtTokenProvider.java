@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Random;
 
+import com.wootech.dropthecode.domain.Token;
 import com.wootech.dropthecode.exception.AuthenticationException;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -20,15 +21,17 @@ public class JwtTokenProvider {
     @Value("${jwt.token.secret-key:secret-key}")
     private String secretKey;
 
-    public String createAccessToken(String payload) {
-        return createToken(payload, accessTokenValidityInMilliseconds);
+    public Token createAccessToken(String payload) {
+        String value = createToken(payload, accessTokenValidityInMilliseconds);
+        return new Token(value, accessTokenValidityInMilliseconds);
     }
 
-    public String createRefreshToken() {
+    public Token createRefreshToken() {
         byte[] array = new byte[7];
         new Random().nextBytes(array);
         String generatedString = new String(array, StandardCharsets.UTF_8);
-        return createToken(generatedString, refreshTokenValidityInMilliseconds);
+        String value = createToken(generatedString, refreshTokenValidityInMilliseconds);
+        return new Token(value, refreshTokenValidityInMilliseconds);
     }
 
     public String createToken(String payload, long expireLength) {

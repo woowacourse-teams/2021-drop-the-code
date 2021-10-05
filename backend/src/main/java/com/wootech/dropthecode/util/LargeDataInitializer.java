@@ -19,11 +19,12 @@ import com.wootech.dropthecode.repository.bridge.TeacherSkillRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Profile({"pt-init"})
 @Component
 public class LargeDataInitializer {
-    public static final Integer REPEAT_COUNT = 50_000;
+    public static final Integer REPEAT_COUNT = 10_000;
 
     private final MemberRepository memberRepository;
     private final TeacherProfileRepository teacherProfileRepository;
@@ -46,6 +47,7 @@ public class LargeDataInitializer {
         this.languageSkillRepository = languageSkillRepository;
     }
 
+    @Transactional
     @Bean
     public void initialize() {
         Map<Long, Language> languageMap = insertLanguage()

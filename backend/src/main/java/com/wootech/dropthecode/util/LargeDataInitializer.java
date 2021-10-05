@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Profile({"pt-init"})
 @Component
 public class LargeDataInitializer {
-    public static final Integer REPEAT_COUNT = 10_000;
+    public static final Integer REPEAT_COUNT = 50_000;
 
     private final MemberRepository memberRepository;
     private final TeacherProfileRepository teacherProfileRepository;
@@ -94,6 +94,7 @@ public class LargeDataInitializer {
             );
             teacherSkillRepository.saveAll(teacherSkills);
 
+            insertReview(memberMap, i);
         }
     }
 
@@ -184,44 +185,36 @@ public class LargeDataInitializer {
 
     private void insertReview(Map<Long, Member> memberMap, long i) {
         List<Review> reviews = Arrays.asList(
-                dummyReview(memberMap.get(3L + i), memberMap.get(2L+ i), "[1단계 - 자동차 경주 구현] 에어(김준서) 미션 제출합니다.", "안녕하세요! 에어라고 해요! 많이 부족하겠지만 잘 부탁드려요!!\n" +
+                dummyReview(memberMap.get(3L + i * 6), memberMap.get(2L+ i * 6), "[1단계 - 자동차 경주 구현] 에어(김준서) 미션 제출합니다.", "안녕하세요! 에어라고 해요! 많이 부족하겠지만 잘 부탁드려요!!\n" +
                         "코드 리뷰를 한 번도 받아본 적 없어서 많이 떨리지만 기대도 많이 되네요 ㅎㅎ", "https://github.com/woowacourse/java-racingcar/pull/159", 3L, Progress.ON_GOING),
 
-                dummyReview(memberMap.get(4L+ i), memberMap.get(2L+ i), "[1단계 - 로또 구현] 에어(김준서) 미션 제출합니다.", "안녕하세요! 에어라고해요! 반갑습니다\n" +
+                dummyReview(memberMap.get(4L+ i * 6), memberMap.get(2L+ i * 6), "[1단계 - 로또 구현] 에어(김준서) 미션 제출합니다.", "안녕하세요! 에어라고해요! 반갑습니다\n" +
                         "코드 리뷰 잘 부탁드릴게요 ㅎㅎ\n" +
                         "\n" +
                         "이번에 난생 처음으로 테스트코드부터 구현해봤어요. 처음이라 조금 어색한 느낌도 들고 맞게 한지는 모르겠지만 열심히 해봤습니다!\n" +
                         "이번 코드 리뷰를 통해서도 많이 성장할 수 있을 것 같아서 기대되네요 ㅎㅎ\n" +
                         "많은 피드백 부탁드려요", "https://github.com/woowacourse/java-lotto/pull/268", 2L, Progress.ON_GOING),
 
-                dummyReview(memberMap.get(5L+ i), memberMap.get(2L+ i), "[2단계 - todo list] 에어(김준서) 미션 제출합니다.", "안녕하세요! 에어입니다!\n" +
+                dummyReview(memberMap.get(5L+ i * 6), memberMap.get(2L+ i * 6), "[2단계 - todo list] 에어(김준서) 미션 제출합니다.", "안녕하세요! 에어입니다!\n" +
                         "자바스크립트 정말 알듯말듯 하네요.", "https://github.com/woowacourse/js-todo-list-step2/pull/6", 1L, Progress.ON_GOING),
 
-                dummyReview(memberMap.get(6L+ i), memberMap.get(2L+ i), "[1단계 - 블랙잭 구현] 에어(김준서) 미션 제출합니다. ", "안녕하세요!!  에어라고 해요! 잘 부탁드립니다\n스스로 고칠 것이 너무 많이 보이는 것 같아요ㅠㅠ\n" +
+                dummyReview(memberMap.get(6L+ i * 6), memberMap.get(2L+ i * 6), "[1단계 - 블랙잭 구현] 에어(김준서) 미션 제출합니다. ", "안녕하세요!!  에어라고 해요! 잘 부탁드립니다\n스스로 고칠 것이 너무 많이 보이는 것 같아요ㅠㅠ\n" +
                         "이번 코드 리뷰를 통해서도 많이 배울 것을 기대하고 있습니다! ㅎㅎ 많은 피드백 부탁드려요~~\n" +
                         "리뷰를 통해 좋은 코드로 변화시켜보고 싶습니다. 많은 힌트와 리뷰 부탁드릴게요!!\n", "https://github.com/woowacourse/java-blackjack/pull/141", 3L, Progress.TEACHER_COMPLETED),
 
-                dummyReview(memberMap.get(7L+ i), memberMap.get(2L+ i), "[1, 2, 3단계 - 체스] 에어(김준서) 미션 제출합니다. ", "안녕하세요! 에어입니다! 잘 부탁드려요\n" +
-                        "많이 어렵고 막막하더라고요\n" +
-                        "도움을 받으면서 고쳐나가려고 해요!! \n" +
-                        "많이 피드백 해주세요!", "https://github.com/woowacourse/java-chess/pull/190", 2L, Progress.TEACHER_COMPLETED),
-
-                dummyReview(memberMap.get(9L+ i), memberMap.get(2L+ i), "[Spring 지하철 노선도 관리 - 1, 2단계] 에어(김준서) 미션 제출합니다. ", "안녕하세요! 에어라고 해요! 피드백 잘 부탁드립니다\n" +
-                        "테스트 코드도 적용해봤는데, 테스트 코드는 아직 감이 잘 안오네요.. 테스트끼리 뭔가 의존적인 느낌도 들고 제대로 한지 잘 모르겠어요. 테스트 부분도 잘 봐주시면 감사하겠습니다!!", "https://github.com/woowacourse/atdd-subway-map/pull/71", 3L, Progress.FINISHED),
-
-                dummyReview(memberMap.get(2L+ i), memberMap.get(4L+ i), "리뷰 상태 업데이트 기능 구현", "기능 구현\n" +
+                dummyReview(memberMap.get(2L+ i * 6), memberMap.get(4L+ i * 6), "리뷰 상태 업데이트 기능 구현", "기능 구현\n" +
                         "리뷰 상태 업데이트\n" +
                         "변경 사항\n" +
                         "도메인에서 상태 업데이트가 필요한데 final로 정의된 부분 모두 수정\n" +
                         "고려 사항\n" +
                         "TeacherProfile ID와 Member ID가 통합된 경우 바뀔 수 있는 부분이 있는 지 확인해야함", "https://github.com/woowacourse-teams/2021-drop-the-code/pull/157", 2L, Progress.ON_GOING),
 
-                dummyReview(memberMap.get(2L+ i), memberMap.get(6L+ i), "리뷰 생성 기능 구현", "놓친 부분 있으면 마구마구 말씀해주십쇼!!!!!!!\n" +
+                dummyReview(memberMap.get(2L+ i * 6), memberMap.get(6L+ i * 6), "리뷰 생성 기능 구현", "놓친 부분 있으면 마구마구 말씀해주십쇼!!!!!!!\n" +
                         "\n" +
                         "고려해야 할 부분\n" +
                         "리뷰 생성 시 추가적인 예외 처리가 필요한 부분이 있는지 확인해야 할 것 같음", "https://github.com/woowacourse-teams/2021-drop-the-code/pull/163", 1L, Progress.ON_GOING),
 
-                dummyReview(memberMap.get(2L+ i), memberMap.get(4L+ i), "TeacherProfilie DB에 Member ID 적용되지 않는 버그 수정", "변경사항\n" +
+                dummyReview(memberMap.get(2L+ i * 6), memberMap.get(4L+ i * 6), "TeacherProfilie DB에 Member ID 적용되지 않는 버그 수정", "변경사항\n" +
                         "반복문으로 Member Id 지정해주는 코드 추가\n" +
                         "@TaewanKimmmm 파피 피드백 적용\n" +
                         "데이터 초기화 방법\n" +
@@ -235,24 +228,24 @@ public class LargeDataInitializer {
                         "실행하면 DB 초기화 됨\n" +
                         "다시 Jenkins-deploy.sh 실행", "https://github.com/woowacourse-teams/2021-drop-the-code/pull/158", 2L, Progress.ON_GOING),
 
-                dummyReview(memberMap.get(2L+ i), memberMap.get(4L+ i), "review 데이터 초기화 코드 추가", "기능 구현\n" +
+                dummyReview(memberMap.get(2L+ i * 6), memberMap.get(4L+ i * 6), "review 데이터 초기화 코드 추가", "기능 구현\n" +
                         "Review 더미 데이터 초기화하는 코드 추가", "https://github.com/woowacourse-teams/2021-drop-the-code/pull/150", 3L, Progress.ON_GOING),
 
-                dummyReview(memberMap.get(2L+ i), memberMap.get(6L+ i), "ReviewController 응답 헤더의 URI 수정", "ReviewController 응답 헤더의 URI 수정", "https://github.com/woowacourse-teams/2021-drop-the-code/pull/171", 3L, Progress.TEACHER_COMPLETED),
+                dummyReview(memberMap.get(2L+ i * 6), memberMap.get(6L+ i * 6), "ReviewController 응답 헤더의 URI 수정", "ReviewController 응답 헤더의 URI 수정", "https://github.com/woowacourse-teams/2021-drop-the-code/pull/171", 3L, Progress.TEACHER_COMPLETED),
 
-                dummyReview(memberMap.get(2L+ i), memberMap.get(6L+ i), "members/me, 리뷰어 상세 조회, 리뷰어 전체 조회 시 응답에 github url 필드 추가", "추가했습니다~", "https://github.com/woowacourse-teams/2021-drop-the-code/pull/198", 1L, Progress.TEACHER_COMPLETED),
+                dummyReview(memberMap.get(2L+ i * 6), memberMap.get(6L+ i * 6), "members/me, 리뷰어 상세 조회, 리뷰어 전체 조회 시 응답에 github url 필드 추가", "추가했습니다~", "https://github.com/woowacourse-teams/2021-drop-the-code/pull/198", 1L, Progress.TEACHER_COMPLETED),
 
-                dummyReview(memberMap.get(2L+ i), memberMap.get(3L+ i), "API 문서화", "rest docs 적용", "https://github.com/woowacourse-teams/2021-drop-the-code/pull/37", 2L, Progress.FINISHED),
+                dummyReview(memberMap.get(2L+ i * 6), memberMap.get(3L+ i * 6), "API 문서화", "rest docs 적용", "https://github.com/woowacourse-teams/2021-drop-the-code/pull/37", 2L, Progress.FINISHED),
 
-                dummyReview(memberMap.get(2L+ i), memberMap.get(3L+ i), "리뷰어 단일 조회", "리뷰어 단일 조회 기능 구현", "https://github.com/woowacourse-teams/2021-drop-the-code/pull/164", 2L, Progress.FINISHED),
+                dummyReview(memberMap.get(2L+ i * 6), memberMap.get(3L+ i * 6), "리뷰어 단일 조회", "리뷰어 단일 조회 기능 구현", "https://github.com/woowacourse-teams/2021-drop-the-code/pull/164", 2L, Progress.FINISHED),
 
-                dummyReview(memberMap.get(2L+ i), memberMap.get(3L+ i), "리뷰어 목록 조회 예외 및 테스트 코드 작성", "목록 조회 시 발생 가능한 예외 처리\n" +
+                dummyReview(memberMap.get(2L+ i * 6), memberMap.get(3L+ i * 6), "리뷰어 목록 조회 예외 및 테스트 코드 작성", "목록 조회 시 발생 가능한 예외 처리\n" +
                         "필수 필드값(ex. langauge)이 없는 경우\n" +
                         "DB에 없는 언어 혹은 기술을 입력한 경우\n" +
                         "허용하지 않은 정렬 조건, 즉 TeacherProfile이 필드로 갖고 있지 않은 값으로 정렬을 하려고 할 경우\n" +
                         "@MapsId를 이용하여 TeacherID와 MemberID를 하나의 키로 결합", "https://github.com/woowacourse-teams/2021-drop-the-code/pull/156", 3L, Progress.FINISHED),
 
-                dummyReview(memberMap.get(2L+ i), memberMap.get(3L+ i), "Logback으로 Error 로그, Info 로그 남기기", "로깅 적용!", "https://github.com/woowacourse-teams/2021-drop-the-code/pull/182", 3L, Progress.FINISHED)
+                dummyReview(memberMap.get(2L+ i * 6), memberMap.get(3L+ i * 6), "Logback으로 Error 로그, Info 로그 남기기", "로깅 적용!", "https://github.com/woowacourse-teams/2021-drop-the-code/pull/182", 3L, Progress.FINISHED)
         );
         reviewRepository.saveAll(reviews);
     }

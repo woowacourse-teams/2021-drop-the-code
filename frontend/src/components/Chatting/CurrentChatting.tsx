@@ -137,9 +137,11 @@ const CurrentChatting = ({
 
   /* header에서 드롭다운 메뉴 눌러서 바로 들어와서 선택된 방이 없을 경우 */
   return (
-    <FlexAlignCenter css={{ justifyContent: "center", height: "100%", color: COLOR.GRAY_500 }}>
-      채팅방을 선택해주세요...
-    </FlexAlignCenter>
+    <Inner>
+      <FlexAlignCenter css={{ justifyContent: "center", height: "100%", color: COLOR.GRAY_500 }}>
+        채팅방을 선택해주세요...
+      </FlexAlignCenter>
+    </Inner>
   );
 };
 

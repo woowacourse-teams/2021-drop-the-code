@@ -25,7 +25,7 @@ import org.springframework.core.env.Profiles;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-@Profile({"local-init", "prod-init"})
+@Profile("local-init")
 @Component
 public class DataInitializer implements ApplicationRunner {
     private static final Random random = new Random();

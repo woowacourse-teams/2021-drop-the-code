@@ -110,7 +110,11 @@ const CurrentChatting = ({
             )}
         </ContentWrapper>
         <Suspense fallback={<Loading />}>
-          <CurrentChattingForm chattingContainer={chattingContainer} teacherId={selectedTeacherId} />
+          <CurrentChattingForm
+            chattingContainer={chattingContainer}
+            teacherId={selectedTeacherId}
+            setSelectedRoomId={setSelectedRoomId}
+          />
         </Suspense>
       </Inner>
     );
@@ -130,7 +134,11 @@ const CurrentChatting = ({
         </Title>
         <ContentWrapper />
         <Suspense fallback={<Loading />}>
-          <CurrentChattingForm chattingContainer={chattingContainer} teacherId={selectedTeacherId} />
+          <CurrentChattingForm
+            chattingContainer={chattingContainer}
+            teacherId={selectedTeacherId}
+            setSelectedRoomId={setSelectedRoomId}
+          />
         </Suspense>
       </Inner>
     );

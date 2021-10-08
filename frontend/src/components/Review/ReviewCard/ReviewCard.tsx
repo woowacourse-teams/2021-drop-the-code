@@ -5,7 +5,6 @@ import { Progress as ProgressShape, Review } from "types/review";
 
 import { Flex, FlexAlignCenter } from "components/shared/Flexbox/Flexbox";
 import { COLOR } from "utils/constants/color";
-import { PROGRESS } from "utils/constants/progress";
 import { toPassedTimeString } from "utils/formatter";
 
 const ReviewLink = styled(Link)`

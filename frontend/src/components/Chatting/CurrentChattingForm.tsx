@@ -1,7 +1,8 @@
-import { MutableRefObject, useEffect } from "react";
+import { Dispatch, SetStateAction, MutableRefObject, useEffect } from "react";
 
 import styled from "styled-components";
 
+import { queryClient } from "__mock__/utils/testUtils";
 import FormProvider from "components/FormProvider/FormProvider";
 import InputField from "components/FormProvider/InputField";
 import Loading from "components/Loading/Loading";
@@ -9,6 +10,7 @@ import Button from "components/shared/Button/Button";
 import useAuthContext from "hooks/useAuthContext";
 import useChattingConnect from "hooks/useChattingConnect";
 import useStompContext from "hooks/useStompContext";
+import { QUERY_KEY } from "utils/constants/key";
 import { PLACE_HOLDER } from "utils/constants/message";
 
 const InputWrapper = styled.div`
@@ -37,9 +39,10 @@ const SubmitButton = styled(Button)`
 interface Props {
   teacherId: number | null;
   chattingContainer: MutableRefObject<HTMLDivElement | null>;
+  setSelectedRoomId: Dispatch<SetStateAction<number | null>>;
 }
 
-const CurrentChattingForm = ({ teacherId, chattingContainer }: Props) => {
+const CurrentChattingForm = ({ teacherId, chattingContainer, setSelectedRoomId }: Props) => {
   const { user } = useAuthContext();
   const { sendMessage, connect } = useStompContext();
 
@@ -67,6 +70,10 @@ const CurrentChattingForm = ({ teacherId, chattingContainer }: Props) => {
           receiverId: teacherId,
           content,
         });
+
+        setSelectedRoomId(data.roomId);
+        queryClient.invalidateQueries(QUERY_KEY.GET_CHATTING_LIST);
+        queryClient.invalidateQueries(QUERY_KEY.GET_SINGLE_CHATTING);
       }}
       css={{ paddingTop: "0.9375rem" }}
     >

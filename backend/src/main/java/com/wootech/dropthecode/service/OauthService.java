@@ -7,6 +7,7 @@ import java.util.Map;
 import com.wootech.dropthecode.controller.auth.util.JwtTokenProvider;
 import com.wootech.dropthecode.controller.auth.util.RedisUtil;
 import com.wootech.dropthecode.domain.Member;
+import com.wootech.dropthecode.domain.Token;
 import com.wootech.dropthecode.domain.oauth.InMemoryProviderRepository;
 import com.wootech.dropthecode.domain.oauth.OauthAttributes;
 import com.wootech.dropthecode.domain.oauth.OauthProvider;
@@ -50,10 +51,10 @@ public class OauthService {
 
         Member member = saveOrUpdate(userProfile);
 
-        String accessToken = jwtTokenProvider.createAccessToken(String.valueOf(member.getId()));
-        String refreshToken = jwtTokenProvider.createRefreshToken();
+        Token accessToken = jwtTokenProvider.createAccessToken(String.valueOf(member.getId()));
+        Token refreshToken = jwtTokenProvider.createRefreshToken();
 
-        redisUtil.setData(String.valueOf(member.getId()), refreshToken);
+        redisUtil.setDataExpire(String.valueOf(member.getId()), refreshToken.getValue(), refreshToken.getExpiredTime());
 
         return LoginResponse.builder()
                             .id(member.getId())
@@ -63,8 +64,8 @@ public class OauthService {
                             .githubUrl(member.getGithubUrl())
                             .role(member.getRole())
                             .tokenType(BEARER_TYPE)
-                            .accessToken(accessToken)
-                            .refreshToken(refreshToken)
+                            .accessToken(accessToken.getValue())
+                            .refreshToken(refreshToken.getValue())
                             .build();
     }
 

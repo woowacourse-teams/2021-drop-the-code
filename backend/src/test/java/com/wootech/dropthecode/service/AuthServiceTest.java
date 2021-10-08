@@ -4,6 +4,7 @@ import com.wootech.dropthecode.controller.auth.util.JwtTokenProvider;
 import com.wootech.dropthecode.controller.auth.util.RedisUtil;
 import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Role;
+import com.wootech.dropthecode.domain.Token;
 import com.wootech.dropthecode.dto.request.RefreshTokenRequest;
 import com.wootech.dropthecode.dto.response.AccessTokenResponse;
 import com.wootech.dropthecode.exception.AuthenticationException;
@@ -93,7 +94,7 @@ class AuthServiceTest {
         given(jwtTokenProvider.validateToken(anyString())).willReturn(true);
         given(jwtTokenProvider.getPayload(anyString())).willReturn("1");
         given(redisUtil.getData(anyString())).willReturn(refreshToken);
-        given(jwtTokenProvider.createAccessToken(anyString())).willReturn(newAccessToken);
+        given(jwtTokenProvider.createAccessToken(anyString())).willReturn(new Token(newAccessToken, 1L));
 
         // when
         AccessTokenResponse response = authService.refreshAccessToken(accessToken, new RefreshTokenRequest(refreshToken));
@@ -140,7 +141,7 @@ class AuthServiceTest {
         given(jwtTokenProvider.validateToken(anyString())).willReturn(true);
         given(jwtTokenProvider.getPayload(anyString())).willReturn("1");
         given(redisUtil.getData(anyString())).willReturn(refreshToken);
-        given(jwtTokenProvider.createAccessToken(anyString())).willReturn(newAccessToken);
+        given(jwtTokenProvider.createAccessToken(anyString())).willReturn(new Token(newAccessToken, 1L));
 
         // when
         AccessTokenResponse response = authService.refreshAccessToken(accessToken, new RefreshTokenRequest(refreshToken));

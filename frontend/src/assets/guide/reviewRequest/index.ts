@@ -7,3 +7,4 @@ export { default as reviewRequestGuide6 } from "assets/guide/reviewRequest/revie
 export { default as reviewRequestGuide7 } from "assets/guide/reviewRequest/review-request-guide-7.png";
 export { default as reviewRequestGuide8 } from "assets/guide/reviewRequest/review-request-guide-8.png";
 export { default as reviewRequestGuide9 } from "assets/guide/reviewRequest/review-request-guide-9.png";
+export { default as reviewRequestGuide10 } from "assets/guide/reviewRequest/review-request-guide-10.png";

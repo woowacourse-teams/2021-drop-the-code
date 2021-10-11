@@ -1,0 +1,9 @@
+export { default as reviewerGuide1 } from "assets/guide/reviewer/reviewer-guide-1.png";
+export { default as reviewerGuide2 } from "assets/guide/reviewer/reviewer-guide-2.png";
+export { default as reviewerGuide3 } from "assets/guide/reviewer/reviewer-guide-3.png";
+export { default as reviewerGuide4 } from "assets/guide/reviewer/reviewer-guide-4.png";
+export { default as reviewerGuide5 } from "assets/guide/reviewer/reviewer-guide-5.png";
+export { default as reviewerGuide6 } from "assets/guide/reviewer/reviewer-guide-6.png";
+export { default as reviewerGuide7 } from "assets/guide/reviewer/reviewer-guide-7.png";
+export { default as reviewerGuide8 } from "assets/guide/reviewer/reviewer-guide-8.png";
+export { default as reviewerGuide9 } from "assets/guide/reviewer/reviewer-guide-9.png";

@@ -29,6 +29,8 @@ public class NotificationController {
     @GetMapping(value = "/subscribe", produces = "text/event-stream")
     public SseEmitter subscribe(@Login LoginMember loginMember,
                                 @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
+        System.out.println("=======sse request");
+        System.out.println(loginMember.getId());
         return notificationService.subscribe(loginMember, lastEventId);
     }
 

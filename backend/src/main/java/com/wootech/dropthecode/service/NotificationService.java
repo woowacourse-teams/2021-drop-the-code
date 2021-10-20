@@ -39,8 +39,12 @@ public class NotificationService {
         emitter.onCompletion(() -> emitterRepository.deleteById(id));
         emitter.onTimeout(() -> emitterRepository.deleteById(id));
 
+        System.out.println("====sse 2");
+
         // 503 에러를 방지하기 위한 더미 이벤트 전송
         sendToClient(emitter, id, "EventStream Created. [userId=" + userId + "]");
+
+        System.out.println("====sse 3");
 
         // 클라이언트가 미수신한 Event 목록이 존재할 경우 전송하여 Event 유실을 예방
         if (!lastEventId.isEmpty()) {
@@ -49,6 +53,8 @@ public class NotificationService {
                   .filter(entry -> lastEventId.compareTo(entry.getKey()) < 0)
                   .forEach(entry -> sendToClient(emitter, entry.getKey(), entry.getValue()));
         }
+
+        System.out.println("====sse 4");
 
         return emitter;
     }

@@ -1,0 +1,6 @@
+[2021-10-20 19:56:50] [ReplicationRoutingDataSource] - Connection Master
+[2021-10-20 19:56:52] [ReplicationRoutingDataSource] - Connection Master
+[2021-10-20 19:56:53] [ReplicationRoutingDataSource] - Connection Master
+[2021-10-20 23:28:33] [ReplicationRoutingDataSource] - Connection Master
+[2021-10-20 23:28:35] [ReplicationRoutingDataSource] - Connection Master
+[2021-10-20 23:28:36] [ReplicationRoutingDataSource] - Connection Master

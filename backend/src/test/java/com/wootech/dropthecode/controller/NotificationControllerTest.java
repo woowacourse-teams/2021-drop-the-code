@@ -44,8 +44,8 @@ class NotificationControllerTest extends RestApiDocumentTest {
 
         // when
         ResultActions result = this.restDocsMockMvc.perform(
-                get("/subscribe")
-                        .with(userToken())
+                get("/subscribe/1")
+//                        .with(userToken())
                         .accept(MediaType.TEXT_EVENT_STREAM_VALUE)
                         .header("Last-Event-ID", "1_1631593143664"));
 

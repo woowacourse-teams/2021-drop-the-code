@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import redis.embedded.RedisServer;
 
 @Profile("test")
-@Configuration
+//@Configuration
 public class EmbeddedRedisConfig {
 
     private static final Logger log = LoggerFactory.getLogger(EmbeddedRedisConfig.class);

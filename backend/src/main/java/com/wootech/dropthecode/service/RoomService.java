@@ -23,7 +23,7 @@ public class RoomService {
 
     private final RedisMessageListenerContainer redisMessageListener;
     private final RedisSubscriber redisSubscriber;
-    private Map<String, ChannelTopic> topics;
+    private final Map<String, ChannelTopic> topics;
 
     public RoomService(RedisMessageListenerContainer redisMessageListener, RedisSubscriber redisSubscriber, MemberService memberService, RoomRepository roomRepository) {
         this.redisMessageListener = redisMessageListener;
@@ -52,11 +52,12 @@ public class RoomService {
 
     private void addRedisMessageListener(Room savedRoom) {
         String roomId = "/rooms/" + savedRoom.getId();
-        ChannelTopic topic = topics.get(roomId);
-        if (topic == null)
-            topic = new ChannelTopic(roomId);
-        redisMessageListener.addMessageListener(redisSubscriber, topic);
-        topics.put(roomId, topic);
+
+        if (!topics.containsKey(roomId)) {
+            ChannelTopic topic = new ChannelTopic(roomId);
+            redisMessageListener.addMessageListener(redisSubscriber, topic);
+            topics.put(roomId, topic);
+        }
     }
 
     @Transactional(readOnly = true)

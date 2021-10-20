@@ -16,7 +16,7 @@
         </root>
     </springProfile>
 
-    <springProfile name="local">
+    <springProfile name="local, prod">
         <include resource="appender/all-console-appender.xml"/>
         <root level="INFO">
             <appender-ref ref="CONSOLE_APPENDER"/>

@@ -8,7 +8,7 @@
                datePattern="yyyy-MM-dd"/>
 
     <!--    Local    -->
-    <springProfile name="local">
+    <springProfile name="local, prod">
         <include resource="appender/all-console-appender.xml"/>
         <appender-ref ref="CONSOLE_APPENDER"/>
     </springProfile>

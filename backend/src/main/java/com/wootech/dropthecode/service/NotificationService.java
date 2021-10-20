@@ -61,10 +61,16 @@ public class NotificationService {
 
     private void sendToClient(SseEmitter emitter, String id, Object data) {
         try {
-            emitter.send(SseEmitter.event()
-                                   .id(id)
-                                   .name("sse")
-                                   .data(data));
+            SseEmitter.SseEventBuilder event = SseEmitter.event();
+            System.out.println("===complete event");
+            SseEmitter.SseEventBuilder id1 = event.id(id);
+            System.out.println("===complete id");
+            SseEmitter.SseEventBuilder sse = id1.name("sse");
+            System.out.println("===complete name");
+            SseEmitter.SseEventBuilder data1 = sse.data(data);
+            System.out.println("===complete data");
+            System.out.println(data.toString());
+            emitter.send(data1);
         } catch (IOException exception) {
             emitterRepository.deleteById(id);
             throw new RuntimeException("연결 오류!");
@@ -76,10 +82,16 @@ public class NotificationService {
         Notification notification = createNotification(receiver, review, content);
         String id = String.valueOf(receiver.getId());
         notificationRepository.save(notification);
+        System.out.println("====SSSSEEEE");
+        System.out.println(id);
         Map<String, SseEmitter> sseEmitters = emitterRepository.findAllStartWithById(id);
+        for (String k : sseEmitters.keySet()) {
+            System.out.println(k + " " + sseEmitters.get(k).toString());
+        }
         sseEmitters.forEach(
                 (key, emitter) -> {
                     emitterRepository.saveEventCache(key, notification);
+                    System.out.println("===save event cache");
                     sendToClient(emitter, key, NotificationResponse.from(notification));
                 }
         );

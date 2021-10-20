@@ -72,25 +72,25 @@ public class LargeDataInitializer {
             insertTeacherLanguage(languageMap, i, teacherMap);
 
             List<TeacherSkill> teacherSkills = Arrays.asList(
-                    new TeacherSkill(teacherMap.get(1L + i), skillMap.get(2L)),
-                    new TeacherSkill(teacherMap.get(1L + i), skillMap.get(3L)),
-                    new TeacherSkill(teacherMap.get(1L + i), skillMap.get(5L)),
+                    new TeacherSkill(teacherMap.get(1L + i * 6), skillMap.get(2L)),
+                    new TeacherSkill(teacherMap.get(1L + i * 6), skillMap.get(3L)),
+                    new TeacherSkill(teacherMap.get(1L + i * 6), skillMap.get(5L)),
 
-                    new TeacherSkill(teacherMap.get(2L + i), skillMap.get(1L)),
-                    new TeacherSkill(teacherMap.get(2L + i), skillMap.get(2L)),
+                    new TeacherSkill(teacherMap.get(2L + i * 6), skillMap.get(1L)),
+                    new TeacherSkill(teacherMap.get(2L + i * 6), skillMap.get(2L)),
 
-                    new TeacherSkill(teacherMap.get(3L + i), skillMap.get(1L)),
-                    new TeacherSkill(teacherMap.get(3L + i), skillMap.get(4L)),
+                    new TeacherSkill(teacherMap.get(3L + i * 6), skillMap.get(1L)),
+                    new TeacherSkill(teacherMap.get(3L + i * 6), skillMap.get(4L)),
 
-                    new TeacherSkill(teacherMap.get(4L + i), skillMap.get(3L)),
-                    new TeacherSkill(teacherMap.get(4L + i), skillMap.get(4L)),
-                    new TeacherSkill(teacherMap.get(4L + i), skillMap.get(5L)),
+                    new TeacherSkill(teacherMap.get(4L + i * 6), skillMap.get(3L)),
+                    new TeacherSkill(teacherMap.get(4L + i * 6), skillMap.get(4L)),
+                    new TeacherSkill(teacherMap.get(4L + i * 6), skillMap.get(5L)),
 
-                    new TeacherSkill(teacherMap.get(5L + i), skillMap.get(4L)),
-                    new TeacherSkill(teacherMap.get(5L + i), skillMap.get(5L)),
+                    new TeacherSkill(teacherMap.get(5L + i * 6), skillMap.get(4L)),
+                    new TeacherSkill(teacherMap.get(5L + i * 6), skillMap.get(5L)),
 
-                    new TeacherSkill(teacherMap.get(6L + i), skillMap.get(4L)),
-                    new TeacherSkill(teacherMap.get(6L + i), skillMap.get(5L))
+                    new TeacherSkill(teacherMap.get(6L + i * 6), skillMap.get(4L)),
+                    new TeacherSkill(teacherMap.get(6L + i * 6), skillMap.get(5L))
             );
             teacherSkillRepository.saveAll(teacherSkills);
 
@@ -100,28 +100,28 @@ public class LargeDataInitializer {
 
     private void insertTeacherLanguage(Map<Long, Language> languageMap, long i, Map<Long, TeacherProfile> teacherMap) {
         List<TeacherLanguage> teacherLanguages = Arrays.asList(
-                new TeacherLanguage(teacherMap.get(1L + i), languageMap.get(1L)),
-                new TeacherLanguage(teacherMap.get(1L + i), languageMap.get(2L)),
-                new TeacherLanguage(teacherMap.get(1L + i), languageMap.get(3L)),
+                new TeacherLanguage(teacherMap.get(1L + 6 * i), languageMap.get(1L)),
+                new TeacherLanguage(teacherMap.get(1L + 6 * i), languageMap.get(2L)),
+                new TeacherLanguage(teacherMap.get(1L + 6 * i), languageMap.get(3L)),
 
-                new TeacherLanguage(teacherMap.get(2L + i), languageMap.get(1L)),
-                new TeacherLanguage(teacherMap.get(2L + i), languageMap.get(5L)),
+                new TeacherLanguage(teacherMap.get(2L + 6 * i), languageMap.get(1L)),
+                new TeacherLanguage(teacherMap.get(2L + 6 * i), languageMap.get(5L)),
 
-                new TeacherLanguage(teacherMap.get(3L + i), languageMap.get(1L)),
-                new TeacherLanguage(teacherMap.get(3L + i), languageMap.get(3L)),
-                new TeacherLanguage(teacherMap.get(3L + i), languageMap.get(4L)),
+                new TeacherLanguage(teacherMap.get(3L + 6 * i), languageMap.get(1L)),
+                new TeacherLanguage(teacherMap.get(3L + 6 * i), languageMap.get(3L)),
+                new TeacherLanguage(teacherMap.get(3L + 6 * i), languageMap.get(4L)),
 
-                new TeacherLanguage(teacherMap.get(4L + i), languageMap.get(1L)),
-                new TeacherLanguage(teacherMap.get(4L + i), languageMap.get(2L)),
-                new TeacherLanguage(teacherMap.get(4L + i), languageMap.get(3L)),
-                new TeacherLanguage(teacherMap.get(4L + i), languageMap.get(4L)),
+                new TeacherLanguage(teacherMap.get(4L + 6 * i), languageMap.get(1L)),
+                new TeacherLanguage(teacherMap.get(4L + 6 * i), languageMap.get(2L)),
+                new TeacherLanguage(teacherMap.get(4L + 6 * i), languageMap.get(3L)),
+                new TeacherLanguage(teacherMap.get(4L + 6 * i), languageMap.get(4L)),
 
-                new TeacherLanguage(teacherMap.get(5L + i), languageMap.get(1L)),
-                new TeacherLanguage(teacherMap.get(5L + i), languageMap.get(3L)),
+                new TeacherLanguage(teacherMap.get(5L + 6 * i), languageMap.get(1L)),
+                new TeacherLanguage(teacherMap.get(5L + 6 * i), languageMap.get(3L)),
 
-                new TeacherLanguage(teacherMap.get(6L + i), languageMap.get(1L)),
-                new TeacherLanguage(teacherMap.get(6L + i), languageMap.get(3L)),
-                new TeacherLanguage(teacherMap.get(6L + i), languageMap.get(5L))
+                new TeacherLanguage(teacherMap.get(6L + 6 * i), languageMap.get(1L)),
+                new TeacherLanguage(teacherMap.get(6L + 6 * i), languageMap.get(3L)),
+                new TeacherLanguage(teacherMap.get(6L + 6 * i), languageMap.get(5L))
         );
         teacherLanguageRepository.saveAll(teacherLanguages);
     }

@@ -26,10 +26,11 @@ public class NotificationController {
     /**
      * @title 로그인 한 유저 sse 연결
      */
-    @GetMapping(value = "/subscribe", produces = "text/event-stream")
-    public SseEmitter subscribe(@Login LoginMember loginMember,
+    @GetMapping(value = "/subscribe/{userId}", produces = "text/event-stream")
+    public SseEmitter subscribe(@PathVariable Long userId,
                                 @RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
         System.out.println("=======sse request");
+        LoginMember loginMember = new LoginMember(userId);
         System.out.println(loginMember.getId());
         return notificationService.subscribe(loginMember, lastEventId);
     }

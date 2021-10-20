@@ -16,7 +16,7 @@
         // 클라이언트의 요청으로 생성된 EventStream은 서버에서 연결을 종료(서버에서의 EventStream 타임아웃 만료, 서버 재시작 등)하지 않는 한 계속 유지된다.
         // 만약, 언급한 이유로 서버로부터 연결이 종료된다면 브라우저 레벨에서 자동으로 새로운 EventStream의 생성을 시도하며,
         // 서버가 정상적인 상태라면 새롭게 생성된 EventStream은 다시 유효하게 작동하게 된다.
-        const eventSource = new EventSource(`/subscribe`);
+        const eventSource = new EventSource(`/subscribe/` + id);
         // TODO access-token 헤더에 넣어야지 작동
         eventSource.addEventListener("sse", function (event) {
             console.log(event.data);

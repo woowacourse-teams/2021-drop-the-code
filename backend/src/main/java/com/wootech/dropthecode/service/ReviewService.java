@@ -43,7 +43,7 @@ public class ReviewService {
 
     @Transactional
     public Long create(LoginMember loginMember, ReviewRequest reviewRequest) {
-        loginMember.validatesAuthorityToReview(reviewRequest.getStudentId());
+//        loginMember.validatesAuthorityToReview(reviewRequest.getStudentId());
         Member teacher = memberService.findById(reviewRequest.getTeacherId());
         Member student = memberService.findById(reviewRequest.getStudentId());
         Review review = Review.builder()

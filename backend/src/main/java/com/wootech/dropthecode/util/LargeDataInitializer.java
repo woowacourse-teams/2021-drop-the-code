@@ -21,6 +21,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Profile({"pt-init"})
 @Component
 public class LargeDataInitializer {
@@ -50,6 +53,9 @@ public class LargeDataInitializer {
     @Transactional
     @Bean
     public void initialize() {
+
+        log.info("언어 및 스킬 데이터 삽입 시작");
+
         Map<Long, Language> languageMap = insertLanguage()
                 .stream()
                 .collect(Collectors.toMap(Language::getId, Function.identity()));
@@ -61,6 +67,9 @@ public class LargeDataInitializer {
         insertLanguageSkill(languageMap, skillMap);
 
         for (long i = 0; i < REPEAT_COUNT; i++) {
+
+            log.info("멤버, 티쳐, 리뷰 데이터 {} 번째 삽입", i);
+
             Map<Long, Member> memberMap = insertMember()
                     .stream()
                     .collect(Collectors.toMap(Member::getId, Function.identity()));

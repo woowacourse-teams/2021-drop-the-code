@@ -36,6 +36,8 @@ public class QReview extends EntityPathBase<Review> {
     //inherited
     public final NumberPath<Long> id = _super.id;
 
+    public final SetPath<com.wootech.dropthecode.domain.Notification, com.wootech.dropthecode.domain.QNotification> notifications = this.<com.wootech.dropthecode.domain.Notification, com.wootech.dropthecode.domain.QNotification>createSet("notifications", com.wootech.dropthecode.domain.Notification.class, com.wootech.dropthecode.domain.QNotification.class, PathInits.DIRECT2);
+
     public final EnumPath<com.wootech.dropthecode.domain.Progress> progress = createEnum("progress", com.wootech.dropthecode.domain.Progress.class);
 
     public final StringPath prUrl = createString("prUrl");

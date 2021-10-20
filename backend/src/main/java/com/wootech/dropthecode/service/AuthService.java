@@ -8,6 +8,7 @@ import com.wootech.dropthecode.domain.Token;
 import com.wootech.dropthecode.dto.request.RefreshTokenRequest;
 import com.wootech.dropthecode.dto.response.AccessTokenResponse;
 import com.wootech.dropthecode.exception.AuthenticationException;
+import com.wootech.dropthecode.repository.EmitterRepository;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,11 +18,13 @@ public class AuthService {
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberService memberService;
     private final RedisUtil redisUtil;
+    private final EmitterRepository emitterRepository;
 
-    public AuthService(JwtTokenProvider jwtTokenProvider, MemberService memberService, RedisUtil redisUtil) {
+    public AuthService(JwtTokenProvider jwtTokenProvider, MemberService memberService, RedisUtil redisUtil, EmitterRepository emitterRepository) {
         this.jwtTokenProvider = jwtTokenProvider;
         this.memberService = memberService;
         this.redisUtil = redisUtil;
+        this.emitterRepository = emitterRepository;
     }
 
     public void validatesAccessToken(String accessToken) {
@@ -64,5 +67,7 @@ public class AuthService {
     public void logout(String accessToken) {
         String id = jwtTokenProvider.getPayload(accessToken);
         redisUtil.deleteData(id);
+        emitterRepository.deleteAllStartWithId(id);
+        emitterRepository.deleteAllEventCacheStartWithId(id);
     }
 }

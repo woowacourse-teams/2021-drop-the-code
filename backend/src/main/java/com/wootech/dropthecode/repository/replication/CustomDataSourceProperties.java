@@ -15,6 +15,7 @@ public class CustomDataSourceProperties {
     private String url;
     private String username;
     private String password;
+    private int maximumPoolSize;
     private final Map<String, Slave> slave = new HashMap<>();
 
     @Getter

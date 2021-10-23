@@ -72,7 +72,7 @@ public class TeacherFilterRepositoryImpl extends Querydsl4RepositorySupport impl
                                                       .where(teacherProfile.id.in(
                                                               JPAExpressions.select(teacherProfile.id)
                                                                             .from(teacherLanguage)
-                                                                            .where(teacherLanguage.id.eq(language.getId()))));
+                                                                            .where(teacherLanguage.language.id.eq(language.getId()))));
         BooleanBuilder builder = new BooleanBuilder();
         builder.and(teacherProfile.career.goe(career));
 

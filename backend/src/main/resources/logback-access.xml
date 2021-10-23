@@ -10,7 +10,7 @@
               value="[Occurred Time] - [%t{yyyy-MM-dd} %t{HH:mm:ss}] REQUEST AND RESPONSE%n[REQUEST]%n%fullRequest%n[RESPONSE]%n%fullResponse"/>
 
     <!--    Local    -->
-    <springProfile name="local">
+    <springProfile name="prod, local">
         <include resource="appender/all-console-appender.xml"/>
         <appender-ref ref="CONSOLE_APPENDER"/>
     </springProfile>

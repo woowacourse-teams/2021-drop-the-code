@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @Profile({"pt-init"})
 @Component
 public class LargeDataInitializer {
-    public static final Integer REPEAT_COUNT = 50_000;
+    public static final Integer REPEAT_COUNT = 25_000;
 
     private final MemberRepository memberRepository;
     private final TeacherProfileRepository teacherProfileRepository;

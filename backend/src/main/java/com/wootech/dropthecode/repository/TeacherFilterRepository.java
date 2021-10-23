@@ -11,5 +11,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface TeacherFilterRepository {
 
-    Page<TeacherProfile> findAll(List<Language> languages, List<Skill> skills, int career, Pageable pageable);
+    Page<TeacherProfile> findAll(Language language, List<Skill> skills, int career, Pageable pageable);
 }

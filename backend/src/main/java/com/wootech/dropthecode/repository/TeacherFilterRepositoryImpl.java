@@ -75,7 +75,7 @@ public class TeacherFilterRepositoryImpl extends Querydsl4RepositorySupport impl
         final JPAQuery<Long> query = getQueryFactory().select(teacherProfile.id)
                                                       .from(teacherProfile)
                                                       .where(teacherProfile.id.in(
-                                                              JPAExpressions.select(teacherProfile.id)
+                                                              JPAExpressions.select(teacherLanguage.teacherProfile.id)
                                                                             .from(teacherLanguage)
                                                                             .where(teacherLanguage.language.id.eq(language.getId()))));
         BooleanBuilder builder = new BooleanBuilder();

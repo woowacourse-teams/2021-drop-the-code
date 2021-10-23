@@ -1,10 +1,12 @@
 package com.wootech.dropthecode.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.wootech.dropthecode.domain.Language;
@@ -18,6 +20,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
 
 import static com.wootech.dropthecode.domain.QLanguage.language;
 import static com.wootech.dropthecode.domain.QSkill.skill;
@@ -41,6 +44,12 @@ public class TeacherFilterRepositoryImpl extends Querydsl4RepositorySupport impl
     }
 
     private List<TeacherProfile> findAllByIds(Page<Long> teacherIds, Pageable pageable) {
+        List<Long> ids = teacherIds.getContent();
+
+        if (CollectionUtils.isEmpty(ids)) {
+            return new ArrayList<>();
+        }
+
         final JPAQuery<TeacherProfile> query = getQueryFactory().select(teacherProfile)
                                                                 .from(teacherProfile).distinct()
                                                                 .innerJoin(teacherProfile.languages, teacherLanguage).fetchJoin()
@@ -48,7 +57,7 @@ public class TeacherFilterRepositoryImpl extends Querydsl4RepositorySupport impl
                                                                 .leftJoin(teacherProfile.skills, teacherSkill).fetchJoin()
                                                                 .leftJoin(teacherSkill.skill, skill).fetchJoin()
                                                                 .innerJoin(teacherProfile.member).fetchJoin()
-                                                                .where(teacherProfile.id.in(teacherIds.getContent()));
+                                                                .where(teacherProfile.id.in(ids));
 
         for (Sort.Order order : pageable.getSort()) {
             PathBuilder<TeacherProfile> orderByExpression = new PathBuilder<>(TeacherProfile.class, "teacherProfile");

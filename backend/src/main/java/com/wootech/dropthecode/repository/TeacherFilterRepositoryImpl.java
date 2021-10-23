@@ -6,11 +6,10 @@ import java.util.List;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
-import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.PathBuilder;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.wootech.dropthecode.domain.Language;
-import com.wootech.dropthecode.domain.QLanguage;
 import com.wootech.dropthecode.domain.Skill;
 import com.wootech.dropthecode.domain.TeacherProfile;
 import com.wootech.dropthecode.repository.support.Querydsl4RepositorySupport;
@@ -70,20 +69,20 @@ public class TeacherFilterRepositoryImpl extends Querydsl4RepositorySupport impl
     private Page<Long> findTeacherProfileIdsByPageable(Language language, List<Skill> skills, int career, Pageable pageable) {
         final JPAQuery<Long> query = getQueryFactory().select(teacherProfile.id)
                                                       .from(teacherProfile)
-                                                      .innerJoin(teacherProfile.languages, teacherLanguage)
-                                                      .innerJoin(teacherLanguage.language, QLanguage.language);
-
+                                                      .where(teacherProfile.id.in(
+                                                              JPAExpressions.select(teacherProfile.id)
+                                                                            .from(teacherLanguage)
+                                                                            .where(teacherLanguage.id.eq(language.getId()))));
         BooleanBuilder builder = new BooleanBuilder();
-        builder.and(QLanguage.language.eq(language));
+        builder.and(teacherProfile.career.goe(career));
+
         if (!skills.isEmpty()) {
             query.leftJoin(teacherProfile.skills, teacherSkill)
                  .leftJoin(teacherSkill.skill, skill);
             builder.and(skill.in(skills));
         }
-        builder.and(teacherProfile.career.goe(career));
 
         query.where(builder);
-
         return applyPagination(pageable, query);
     }
 }

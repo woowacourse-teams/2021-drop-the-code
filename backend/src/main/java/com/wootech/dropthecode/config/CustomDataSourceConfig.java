@@ -26,7 +26,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
-@Profile("prod-temp-exclude")
+@Profile("prod")
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 @EnableConfigurationProperties(CustomDataSourceProperties.class)
 public class CustomDataSourceConfig {
@@ -40,13 +40,14 @@ public class CustomDataSourceConfig {
     }
 
     public DataSource createDataSource(String url) {
-        return DataSourceBuilder.create()
-                                .type(HikariDataSource.class)
-                                .url(url)
-                                .driverClassName("com.mysql.cj.jdbc.Driver")
-                                .username(databaseProperty.getUsername())
-                                .password(databaseProperty.getPassword())
-                                .build();
+        HikariDataSource hikariDataSource = new HikariDataSource();
+        hikariDataSource.setUsername(databaseProperty.getUsername());
+        hikariDataSource.setPassword(databaseProperty.getPassword());
+        hikariDataSource.setJdbcUrl(url);
+        hikariDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        hikariDataSource.setMaximumPoolSize(databaseProperty.getMaximumPoolSize());
+
+        return hikariDataSource;
     }
 
     @Bean

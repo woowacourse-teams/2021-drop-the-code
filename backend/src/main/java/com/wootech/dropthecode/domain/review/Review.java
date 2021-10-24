@@ -10,13 +10,7 @@ import com.wootech.dropthecode.exception.AuthorizationException;
 import com.wootech.dropthecode.exception.ReviewException;
 
 import lombok.*;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-@Cacheable
-@org.hibernate.annotations.Cache(
-        usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,
-        region = "review"
-)
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

@@ -8,13 +8,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-@Cacheable
-@org.hibernate.annotations.Cache(
-        usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,
-        region = "feedback"
-)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity

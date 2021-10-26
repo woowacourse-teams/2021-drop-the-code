@@ -1,13 +1,12 @@
 import { MemoryRouter, Route } from "react-router-dom";
 
 import { reviewers } from "__mock__/data/reviewers";
-import { reviews } from "__mock__/data/reviews";
 import { mockingStudentAuth, mockingTeacherAuth } from "__mock__/utils/mockingAuth";
 import { mockingToken } from "__mock__/utils/mockingToken";
-import { render, screen, fireEvent, waitFor } from "__mock__/utils/testUtils";
+import { render, screen, waitFor } from "__mock__/utils/testUtils";
 import ReviewerDetail from "pages/ReviewerDetail/ReviewerDetail";
 
-const { findAllByText, findByText } = screen;
+const { findByText } = screen;
 
 const mockReviewerDetail = () => {
   render(

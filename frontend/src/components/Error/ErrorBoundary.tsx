@@ -20,7 +20,6 @@ export default class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    // TODO: Reporting service 등록
     console.error("Uncaught error in Error Boundary:", error, errorInfo);
   }
 

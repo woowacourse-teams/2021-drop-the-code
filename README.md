@@ -12,10 +12,10 @@
 [![스크린샷 2021-10-26 오후 7 54 42](https://user-images.githubusercontent.com/32974201/138864126-7b0e7270-1095-4219-9067-efd8d418567c.png)](https://www.youtube.com/watch?v=-Tzk_A2uaoM)
 
 ## 인프라 구조
-![인프라 이미지](https://lh3.googleusercontent.com/WvHUM3poBJHO_k0mNkLYwOvgEGajNdGskwdovTOjdFYZHzzTaGaSeJC191iNyBez-H87hY9J6hRnvmlPazPFsr8)
+![인프라 이미지](https://user-images.githubusercontent.com/32974201/138865160-6c7f7696-6e3f-4514-af61-f0f458138d2d.png)
 
 ## 기술 스택
-![기술 스택 이미지](https://lh5.googleusercontent.com/J9ABODhhRsGs_6uuKaxk34dnLfDhDfslAFaPlPuoYzD51lUq9ZRebpzyRCq4ZEo92RoBwIXoj6ezyhUMWcNxHd4)
+![기술 스택 이미지](https://user-images.githubusercontent.com/32974201/138865301-704021e3-e4d5-42b6-b996-dba24191f43a.png)
 
 ## 팀원 소개
 

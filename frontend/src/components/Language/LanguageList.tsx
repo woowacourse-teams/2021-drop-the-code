@@ -13,7 +13,7 @@ interface Props {
 
 const LanguageList = ({ filterLanguage, filterSkills, onSetFilterLanguage, onSetFilterSkills }: Props) => {
   const { languages } = useLanguageList();
-  // TODO: 텅빈화면
+
   if (languages?.length === 0) return <></>;
 
   useEffect(() => {

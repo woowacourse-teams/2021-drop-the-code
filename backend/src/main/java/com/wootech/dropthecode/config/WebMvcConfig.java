@@ -38,11 +38,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(new AuthenticationInterceptor(authService))
                 .addPathPatterns("/teachers", "/teachers/me", "/members/me", "/reviews", "/reviews/**", "/logout", "/notifications/**");
         registry.addInterceptor(new GetAuthenticationInterceptor(authService))
-                .addPathPatterns("/reviews/student/**", "/members/me", "/subscribe", "/notifications");
+                .addPathPatterns("/reviews/student/**", "/members/me", "/subscribe", "/notifications", "/token/chatting");
     }
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(new LoginMemberArgumentResolver(authService));
     }
+
+
 }

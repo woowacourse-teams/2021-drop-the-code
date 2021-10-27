@@ -55,4 +55,13 @@ public class AuthController {
         authService.logout(accessToken);
         return ResponseEntity.noContent().build();
     }
+
+    /**
+     * @title 웹 소켓 연결용 토큰 발급
+     */
+    @GetMapping("/token/chatting")
+    public ResponseEntity<AccessTokenResponse> getChattingToken(HttpServletRequest request) {
+        String accessToken = AuthorizationExtractor.extract(request);
+        return ResponseEntity.ok(authService.createChattingToken(accessToken));
+    }
 }

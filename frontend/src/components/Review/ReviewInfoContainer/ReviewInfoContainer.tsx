@@ -6,7 +6,7 @@ import notification from "assets/notification.png";
 import Confirm from "components/Confirm/Confirm";
 import Button from "components/shared/Button/Button";
 import ContentBox from "components/shared/ContentBox/ContentBox";
-import { FlexAlignCenter, Flex, FlexCenter } from "components/shared/Flexbox/Flexbox";
+import { FlexAlignCenter, Flex, FlexCenter, FlexSpaceBetween } from "components/shared/Flexbox/Flexbox";
 import useModalContext from "hooks/useModalContext";
 import useReview from "hooks/useReview";
 import { COLOR } from "utils/constants/color";
@@ -25,7 +25,8 @@ const PrUrl = styled.a`
   margin-bottom: 0.625rem;
 `;
 
-const Info = styled(Flex)`
+const Info = styled(FlexSpaceBetween)`
+  width: 34.375rem;
   font-size: 14px;
   color: ${COLOR.GRAY_500};
 `;
@@ -35,6 +36,10 @@ const Profile = styled(FlexAlignCenter)`
   color: ${COLOR.GRAY_500};
 `;
 
+const RequestDetail = styled.p`
+  margin-left: 0.625rem;
+  display: inline-block;
+`;
 interface Props {
   reviewId: number;
 }
@@ -62,16 +67,19 @@ const ReviewInfoContainer = ({ reviewId }: Props) => {
               <Title css={{ marginBottom: "1.25rem" }}>{review.title}</Title>
               <Info>
                 <Profile>
-                  신청자:
-                  <p css={{ marginRight: "1.25rem" }}>{review.studentProfile.name}</p>
+                  요청자:
+                  <RequestDetail>{review.studentProfile.name}</RequestDetail>
                 </Profile>
                 <Link to={`/reviewer/${review.teacherProfile.id}`}>
                   <Profile>
                     리뷰어:
-                    <p css={{ marginRight: "1.25rem" }}>{review.teacherProfile.name}</p>
+                    <RequestDetail>{review.teacherProfile.name}</RequestDetail>
                   </Profile>
                 </Link>
-                <p css={{ width: "5.625rem" }}>{review.createdAt.join(".")}</p>
+                <div>
+                  요청일:
+                  <RequestDetail>{review.createdAt.join(".")}</RequestDetail>
+                </div>
               </Info>
             </Flex>
             <p>{progress}</p>

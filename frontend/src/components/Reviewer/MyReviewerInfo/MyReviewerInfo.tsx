@@ -33,7 +33,7 @@ interface OpenContent {
 }
 
 const ContentTitle = styled.div`
-  min-width: 1.875rem;
+  min-width: 2.1875rem;
   margin-right: 1.25rem;
   color: ${COLOR.GRAY_600};
   font-weight: 700;

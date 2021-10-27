@@ -30,6 +30,7 @@ const ChipWrapper = styled(Flex)`
 `;
 
 const Title = styled.p`
+  width: 100%;
   font-weight: 900;
   font-size: 1.125rem;
 `;

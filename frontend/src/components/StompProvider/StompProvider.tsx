@@ -29,6 +29,7 @@ const StompProvider = ({ children }: Props) => {
   };
 
   const connect = (roomId: number) => {
+    
     stompClient.current = Stomp.over(() => {
       return new WebSocket(process.env.SOCKET_URL as string);
     });

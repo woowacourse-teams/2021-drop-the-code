@@ -5,6 +5,7 @@ import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.dto.response.AccessTokenResponse;
 import com.wootech.dropthecode.dto.response.LoginResponse;
 import com.wootech.dropthecode.exception.AuthenticationException;
+import com.wootech.dropthecode.exception.AuthorizationException;
 import com.wootech.dropthecode.exception.OauthTokenRequestException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -194,7 +195,7 @@ class AuthControllerTest extends RestApiDocumentTest {
     @DisplayName("웹 소켓 연결용 토큰 발급 - 유저의 토큰이 유효하지 않은 경우")
     void getChattingTokenWithInvalidUserToken() throws Exception {
         // given
-        doThrow(new HandshakeFailureException("Uncaught failure for request"))
+        doThrow(new AuthenticationException("access token이 유효하지 않습니다."))
                 .when(authService).createChattingToken(anyString());
 
         // when
@@ -202,6 +203,6 @@ class AuthControllerTest extends RestApiDocumentTest {
                 .with(userToken()));
 
         // then
-        result.andExpect(status().is5xxServerError());
+        result.andExpect(status().isUnauthorized());
     }
 }

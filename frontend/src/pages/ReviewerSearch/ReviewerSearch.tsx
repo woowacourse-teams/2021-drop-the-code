@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { useEffect, Suspense } from "react";
 
 import { ReviewerSortOption } from "types/reviewer";
 
@@ -23,6 +23,10 @@ const ReviewerSearch = () => {
     setFilterCareer,
     setSort,
   } = useReviewerListOptions();
+
+  useEffect(() => {
+    if (!sort) setSort("career,desc");
+  }, []);
 
   return (
     <>
@@ -64,7 +68,6 @@ const ReviewerSearch = () => {
           <option value="career,desc">경력 많은순</option>
           <option value="averageReviewTime,asc">리뷰 빠른순</option>
           <option value="sumReviewCount,desc">리뷰 많은순</option>
-          {/* <option id="3">추천순</option> */}
         </Select>
       </div>
       <Suspense fallback={<Loading />}>

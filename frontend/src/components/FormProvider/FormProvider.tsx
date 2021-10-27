@@ -29,7 +29,7 @@ const FormProvider = ({ submit, validators, children, ...props }: Props) => {
       validator(value);
 
       setErrorMessages((prevState) => ({ ...prevState, [name]: null }));
-    } catch (error) {
+    } catch (error: any) {
       setErrorMessages((prevState) => ({ ...prevState, [name]: error.message }));
     }
 

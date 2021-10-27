@@ -96,13 +96,13 @@ public class TeacherService {
 
     @Transactional(readOnly = true)
     public TeacherPaginationResponse findAll(TeacherFilterRequest teacherFilterRequest, Pageable pageable) {
-        List<Language> languages = findLanguageByNames(Collections.singletonList(teacherFilterRequest.getTechSpec()), languageService
-                .findAllToMap());
+        Language language = findLanguageByNames(Collections.singletonList(teacherFilterRequest.getTechSpec()), languageService
+                .findAllToMap()).get(0);
         List<Skill> skills = findSkillsByNames(Collections.singletonList(teacherFilterRequest.getTechSpec()), skillService
                 .findAllToMap());
 
         Page<TeacherProfile> teacherProfilePage = teacherProfileRepository.findAll(
-                languages,
+                language,
                 skills,
                 teacherFilterRequest.getCareer(),
                 pageable

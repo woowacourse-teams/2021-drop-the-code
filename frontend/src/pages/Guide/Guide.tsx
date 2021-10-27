@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+import * as reviewerGuide from "assets/guide/reviewer";
 import * as reviewRequestGuide from "assets/guide/reviewRequest";
 import studentImage from "assets/student.svg";
 import teacherImage from "assets/teacher.svg";
@@ -82,7 +83,7 @@ const Guide = () => {
           onClick={() => {
             open(
               <Carousel>
-                {Object.values(reviewRequestGuide).map((guide) => (
+                {Object.values(reviewerGuide).map((guide) => (
                   <img key={guide} src={guide} alt={ALT.REVIEW_REQUEST_GUIDE} />
                 ))}
               </Carousel>

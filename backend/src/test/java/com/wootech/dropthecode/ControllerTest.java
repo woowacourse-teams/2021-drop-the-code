@@ -41,4 +41,7 @@ public abstract class ControllerTest {
 
     @MockBean
     protected ChattingService chattingService;
+
+    @MockBean
+    protected NotificationService notificationService;
 }

@@ -11,3 +11,5 @@ storybook-static
 
 # test
 coverage
+
+.DS_Store

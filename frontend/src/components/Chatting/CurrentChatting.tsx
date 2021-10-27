@@ -12,6 +12,7 @@ import useAuthContext from "hooks/useAuthContext";
 import useChattingList from "hooks/useChattingList";
 import useSingleChatting from "hooks/useSingleChatting";
 import { COLOR } from "utils/constants/color";
+import { ALT } from "utils/constants/message";
 
 import CurrentChattingForm from "./CurrentChattingForm";
 
@@ -90,6 +91,9 @@ const CurrentChatting = ({
             imageUrl={data[0].senderId === user.id ? data[0].receiverImageUrl : data[0].senderImageUrl}
             width="3rem"
             css={{ marginRight: "0.625rem" }}
+            alt={`${data[0].senderId === user.id ? data[0].receiverImageUrl : data[0].senderImageUrl} ${
+              ALT.PROFILE_AVATAR
+            }`}
           />
           <div css={{ marginRight: "0.625rem" }}>
             {data[0].senderId === user.id ? data[0].receiverName : data[0].senderName}와 채팅중
@@ -106,7 +110,11 @@ const CurrentChatting = ({
             )}
         </ContentWrapper>
         <Suspense fallback={<Loading />}>
-          <CurrentChattingForm chattingContainer={chattingContainer} teacherId={selectedTeacherId} />
+          <CurrentChattingForm
+            chattingContainer={chattingContainer}
+            teacherId={selectedTeacherId}
+            setSelectedRoomId={setSelectedRoomId}
+          />
         </Suspense>
       </Inner>
     );
@@ -116,21 +124,32 @@ const CurrentChatting = ({
     return (
       <Inner>
         <Title>
-          <Avatar imageUrl={teacherImage} width="3rem" css={{ marginRight: "0.625rem" }} />
+          <Avatar
+            imageUrl={teacherImage}
+            width="3rem"
+            css={{ marginRight: "0.625rem" }}
+            alt={`${teacherId} ${ALT.PROFILE_AVATAR}`}
+          />
           <div css={{ marginRight: "0.625rem" }}>{teacherName}와 채팅중</div>
         </Title>
         <ContentWrapper />
         <Suspense fallback={<Loading />}>
-          <CurrentChattingForm chattingContainer={chattingContainer} teacherId={selectedTeacherId} />
+          <CurrentChattingForm
+            chattingContainer={chattingContainer}
+            teacherId={selectedTeacherId}
+            setSelectedRoomId={setSelectedRoomId}
+          />
         </Suspense>
       </Inner>
     );
 
   /* header에서 드롭다운 메뉴 눌러서 바로 들어와서 선택된 방이 없을 경우 */
   return (
-    <FlexAlignCenter css={{ justifyContent: "center", height: "100%", color: COLOR.GRAY_500 }}>
-      채팅방을 선택해주세요...
-    </FlexAlignCenter>
+    <Inner>
+      <FlexAlignCenter css={{ justifyContent: "center", height: "100%", color: COLOR.GRAY_500 }}>
+        채팅방을 선택해주세요...
+      </FlexAlignCenter>
+    </Inner>
   );
 };
 

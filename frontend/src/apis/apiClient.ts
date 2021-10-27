@@ -22,7 +22,7 @@ const apiClient = {
         isSuccess: true,
         data: response.data,
       };
-    } catch (error) {
+    } catch (error: any) {
       return {
         isSuccess: false,
         error: error.response.data,
@@ -38,7 +38,7 @@ const apiClient = {
         isSuccess: true,
         data: response.data,
       };
-    } catch (error) {
+    } catch (error: any) {
       return {
         isSuccess: false,
         error: error.response.data,
@@ -54,7 +54,7 @@ const apiClient = {
         isSuccess: true,
         data: response.data,
       };
-    } catch (error) {
+    } catch (error: any) {
       return {
         isSuccess: false,
         error: error.response.data,
@@ -70,7 +70,7 @@ const apiClient = {
         isSuccess: true,
         data: response.data,
       };
-    } catch (error) {
+    } catch (error: any) {
       return {
         isSuccess: false,
         error: error.response.data,
@@ -86,7 +86,7 @@ const apiClient = {
         isSuccess: true,
         data: response.data,
       };
-    } catch (error) {
+    } catch (error: any) {
       return {
         isSuccess: false,
         error: error.response.data,

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Avatar from "components/shared/Avatar/Avatar";
 import { Flex } from "components/shared/Flexbox/Flexbox";
 import { COLOR } from "utils/constants/color";
+import { ALT } from "utils/constants/message";
 
 const Inner = styled(Flex)`
   justify-content: flex-end;
@@ -36,6 +37,7 @@ const RightSingleMessage = ({ message, imageUrl }: Props) => {
         imageUrl={imageUrl}
         width="2rem"
         height="2rem"
+        alt={ALT.MY_PROFILE_AVATAR}
         css={{ position: "absolute", bottom: "0.875rem", marginLeft: "0.625rem" }}
       />
     </Inner>

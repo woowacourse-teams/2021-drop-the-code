@@ -82,11 +82,13 @@ export const ALT = {
   GITHUB_LOGIN_BUTTON: "깃허브 로그인 버튼 이미지",
   REVIEWER_PROFILE_AVATAR: "리뷰어 프로필 이미지",
   REVIEW_REQUESTER_PROFILE_AVATAR: "리뷰 요청인 프로필 이미지",
+  MY_PROFILE_AVATAR: "내 프로필 이미지",
   PROFILE_AVATAR: "프로필 이미지",
   GITHUB_LOGO: "깃허브 로고 이미지",
   NO_REVIEW: "리뷰 없음 이미지",
   NO_FEEDBACK: "피드백 없음 이미지",
   REVIEW_REQUEST_GUIDE: "리뷰 요청 가이드 이미지",
+  NOT_FOUND: "404 NOT FOUND 이미지",
 };
 
 export const CONFIRM = {

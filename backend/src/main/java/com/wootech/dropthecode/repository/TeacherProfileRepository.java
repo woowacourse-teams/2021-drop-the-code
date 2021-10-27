@@ -1,11 +1,15 @@
 package com.wootech.dropthecode.repository;
 
-import com.wootech.dropthecode.domain.Member;
+import java.util.Optional;
+
 import com.wootech.dropthecode.domain.TeacherProfile;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TeacherProfileRepository extends JpaRepository<TeacherProfile, Long>, TeacherFilterRepository {
 
-    Boolean existsTeacherProfileByMember(Member member);
+    @EntityGraph(attributePaths = {"languages.language", "skills.skill"}, type = EntityGraph.EntityGraphType.LOAD)
+    @Override
+    Optional<TeacherProfile> findById(Long id);
 }

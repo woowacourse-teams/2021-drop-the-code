@@ -23,7 +23,8 @@ export const toPassedTimeString = (year: number, month: number, date: number) =>
 
   if (totalPassedDates === 0) return "오늘";
   if (0 < totalPassedDates && totalPassedDates < 7) return `${totalPassedDates}일 전`;
-  if (7 <= totalPassedDates && totalPassedDates < 30) return `${Math.floor(totalPassedDates % 7)}주 전`;
+  if (7 <= totalPassedDates && totalPassedDates < 30)
+    return `${totalPassedDates % 7 === 0 ? `1` : Math.floor(totalPassedDates % 7)}주 전`;
   if (30 <= totalPassedDates && totalPassedDates < 365) return `${Math.floor(totalPassedDates % 30)}개월 전`;
   if (365 < totalPassedDates) return `${Math.floor(totalPassedDates % 365)}년 전`;
 };
@@ -37,5 +38,5 @@ export const formatTimeToPassedTime = (time: Date) => {
   const month = time.getMonth() + 1;
   const date = time.getDate();
 
-  return toPassedTimeString(Number(year), Number(month), Number(date));
+  return toPassedTimeString(year, month, date);
 };

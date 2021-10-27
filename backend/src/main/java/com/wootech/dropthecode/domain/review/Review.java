@@ -2,7 +2,9 @@ package com.wootech.dropthecode.domain.review;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.*;
 
 import com.wootech.dropthecode.domain.*;
@@ -45,8 +47,11 @@ public class Review extends BaseEntity {
     @Column(nullable = false)
     private Progress progress;
 
-    @OneToOne(mappedBy = "review", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "review", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Feedback feedback;
+
+    @OneToMany(mappedBy = "review", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private Set<Notification> notifications = new HashSet<>();
 
     @Builder
     public Review(Member teacher, Member student, String title, String content, String prUrl, Long elapsedTime, Progress progress, LocalDateTime createdAt) {

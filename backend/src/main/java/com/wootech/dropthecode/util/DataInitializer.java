@@ -20,6 +20,8 @@ import com.wootech.dropthecode.repository.bridge.TeacherSkillRepository;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,7 +40,9 @@ public class DataInitializer implements ApplicationRunner {
     private final TeacherSkillRepository teacherSkillRepository;
     private final LanguageSkillRepository languageSkillRepository;
 
-    public DataInitializer(MemberRepository memberRepository, TeacherProfileRepository teacherProfileRepository, LanguageRepository languageRepository, SkillRepository skillRepository, ReviewRepository reviewRepository, TeacherLanguageRepository teacherLanguageRepository, TeacherSkillRepository teacherSkillRepository, LanguageSkillRepository languageSkillRepository) {
+    private final Environment environment;
+
+    public DataInitializer(MemberRepository memberRepository, TeacherProfileRepository teacherProfileRepository, LanguageRepository languageRepository, SkillRepository skillRepository, ReviewRepository reviewRepository, TeacherLanguageRepository teacherLanguageRepository, TeacherSkillRepository teacherSkillRepository, LanguageSkillRepository languageSkillRepository, Environment environment) {
         this.memberRepository = memberRepository;
         this.teacherProfileRepository = teacherProfileRepository;
         this.languageRepository = languageRepository;
@@ -47,6 +51,7 @@ public class DataInitializer implements ApplicationRunner {
         this.teacherLanguageRepository = teacherLanguageRepository;
         this.teacherSkillRepository = teacherSkillRepository;
         this.languageSkillRepository = languageSkillRepository;
+        this.environment = environment;
     }
 
     @Override
@@ -62,9 +67,8 @@ public class DataInitializer implements ApplicationRunner {
 
         insertLanguageSkill(languageMap, skillMap);
 
-        String property = System.getProperty("spring.profiles.active");
-        if (!property.contains("local")) {
-           return;
+        if (!environment.acceptsProfiles(Profiles.of("local-init"))) {
+            return;
         }
 
         Map<Long, Member> memberMap = insertMember()

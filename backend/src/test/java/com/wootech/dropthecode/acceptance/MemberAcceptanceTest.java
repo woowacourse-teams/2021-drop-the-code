@@ -285,8 +285,10 @@ class MemberAcceptanceTest extends AcceptanceTest {
     @Test
     @DisplayName("선생님 단일 조회 성공")
     void findTeacherByIdSuccess() {
+
         // given
         LoginResponse loginResponse = 리뷰어_로그인되어_있음("air");
+
         // when
         ExtractableResponse<Response> response = 선생님_단일_조회_요청(loginResponse.getId());
 
@@ -334,93 +336,77 @@ class MemberAcceptanceTest extends AcceptanceTest {
 
     public static ExtractableResponse<Response> 선생님_등록_요청(LoginResponse loginResponse, TeacherRegistrationRequest request) {
         return RestAssured.given()
-                          .log().all()
                           .header("Authorization", "Bearer " + loginResponse.getAccessToken())
                           .contentType(APPLICATION_JSON_VALUE)
                           .body(request)
                           .when()
                           .post("/teachers")
                           .then()
-                          .log().all()
                           .extract();
     }
 
     public static ExtractableResponse<Response> 선생님_정보_수정_요청(LoginResponse loginResponse, TeacherRegistrationRequest request) {
         return RestAssured.given()
-                          .log().all()
                           .header("Authorization", "Bearer " + loginResponse.getAccessToken())
                           .contentType(APPLICATION_JSON_VALUE)
                           .body(request)
                           .when()
                           .put("/teachers/me")
                           .then()
-                          .log().all()
                           .extract();
     }
 
     private ExtractableResponse<Response> 로그인_한_유저_정보_조회_요청(LoginResponse loginResponse) {
         return RestAssured.given()
-                          .log().all()
                           .header("Authorization", "Bearer " + loginResponse.getAccessToken())
                           .when()
                           .get("/members/me")
                           .then()
-                          .log().all()
                           .extract();
     }
 
     private ExtractableResponse<Response> 멤버_삭제_요청(LoginResponse loginResponse) {
         return RestAssured.given()
-                          .log().all()
                           .header("Authorization", "Bearer " + loginResponse.getAccessToken())
                           .when()
                           .delete("/members/me")
                           .then()
-                          .log().all()
                           .extract();
     }
 
     private ExtractableResponse<Response> 멤버ID로_삭제_요청(Long id) {
         return RestAssured.given()
-                          .log().all()
                           .when()
                           .delete("/members/{id}", id)
                           .then()
-                          .log().all()
                           .extract();
     }
 
     private ExtractableResponse<Response> 선생님_등록_취소_요청(LoginResponse loginResponse) {
         return RestAssured.given()
-                          .log().all()
                           .header("Authorization", "Bearer " + loginResponse.getAccessToken())
                           .when()
                           .delete("/teachers/me")
                           .then()
-                          .log().all()
                           .extract();
     }
 
     private ExtractableResponse<Response> 선생님_전체_목록_조회_요청(String language) {
         return RestAssured.given()
-                          .log().all()
                           .contentType(ContentType.JSON)
                           .when()
                           .param("language", language)
                           .get("/teachers")
                           .then()
-                          .log().all()
                           .extract();
     }
 
     private ExtractableResponse<Response> 선생님_단일_조회_요청(Long id) {
         return RestAssured.given()
-                          .log().all()
                           .contentType(ContentType.JSON)
                           .when()
                           .get("/teachers/" + id)
                           .then()
-                          .log().all()
                           .extract();
     }
 

@@ -219,3 +219,11 @@ include::{snippets}/feedback-controller-test/find-all-feedback-test/auto-section
 - /feedbacks?studentId={studentId}&sort=star,asc 피드백 작성한 유저의 Id를 기준으로 별점 오름차순으로 조회 +
 - /feedbacks?studentId={studentId}&sort=star,desc 피드백 작성한 유저의 Id를 기준으로 별점 내림차순으로 조회 +
 |===
+
+== Notification API
+
+include::{snippets}/notification-controller-test/sse/auto-section.adoc[]
+
+include::{snippets}/notification-controller-test/find-all-notification/auto-section.adoc[]
+
+include::{snippets}/notification-controller-test/read-notification/auto-section.adoc[]

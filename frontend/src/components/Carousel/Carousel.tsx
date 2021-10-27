@@ -5,7 +5,6 @@ import styled, { css } from "styled-components";
 import NextCarouselArrow from "assets/next-carousel-arrow.svg";
 import PrevCarouselArrow from "assets/prev-carousel-arrow.svg";
 import { Flex, FlexCenter } from "components/shared/Flexbox/Flexbox";
-import { COLOR } from "utils/constants/color";
 
 export interface Props {
   children: JSX.Element[];

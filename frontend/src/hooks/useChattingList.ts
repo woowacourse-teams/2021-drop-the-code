@@ -20,7 +20,7 @@ const useChattingList = (id?: number) => {
       return;
     }
 
-    return response.data.map((item) => ({ ...item, createdAt: item.createdAt + "Z" }));
+    return response.data;
   });
 
   return {

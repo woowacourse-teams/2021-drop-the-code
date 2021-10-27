@@ -37,7 +37,7 @@ public class Member extends BaseEntity {
     @Column(nullable = false)
     private Role role;
 
-    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "member", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private TeacherProfile teacherProfile;
 
     @OneToMany(mappedBy = "teacher", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
@@ -99,5 +99,9 @@ public class Member extends BaseEntity {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public void addReviewAsTeacher(Review review) {
+        reviewsAsTeacher.add(review);
     }
 }

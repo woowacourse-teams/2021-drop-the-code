@@ -1,0 +1,37 @@
+<config xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+        xmlns='http://www.ehcache.org/v3'
+        xmlns:jsr107='http://www.ehcache.org/v3/jsr107'
+        xsi:schemaLocation="
+        http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.0.xsd
+        http://www.ehcache.org/v3/jsr107 http://www.ehcache.org/schema/ehcache-107-ext-3.0.xsd">
+
+    <service>
+        <jsr107:defaults enable-management="true" enable-statistics="true"/>
+    </service>
+
+    <cache-template name="default">
+        <expiry>
+            <!-- 캐시 만료 시간[TimeToIdle] -->
+            <tti unit="minutes">10</tti>
+        </expiry>
+
+        <!-- 캐시에 최대 몇 개까지 유지할 것인가 -->
+        <heap>100</heap>
+    </cache-template>
+
+    <!-- Language 와 같이 한 번 저장하면 지워지지 않는 캐시-->
+    <cache-template name="eternal">
+        <!-- 캐시에 최대 몇 개까지 유지할 것인가 -->
+        <heap>100</heap>
+    </cache-template>
+
+    <cache alias="language" uses-template="eternal"></cache>
+    <cache alias="skill" uses-template="eternal"></cache>
+    <cache alias="member" uses-template="default"></cache>
+    <cache alias="teacherProfile" uses-template="default"></cache>
+    <cache alias="review" uses-template="default"></cache>
+    <cache alias="teacherSkill" uses-template="default"></cache>
+    <cache alias="teacherLanguage" uses-template="default"></cache>
+    <cache alias="languageSkill" uses-template="default"></cache>
+    <cache alias="feedback" uses-template="default"></cache>
+</config>

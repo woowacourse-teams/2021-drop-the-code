@@ -1,63 +1,28 @@
-# 코드봐줘
+
+<p align="center"><img width="180" justify-content="center" alt="스크린샷 2021-10-26 오후 7 35 40" src="https://user-images.githubusercontent.com/67591151/138861683-9230361a-2acd-4c90-bfaa-692be538b109.png"></p>
 
 ## 서비스소개
 
-- 리뷰어 매칭 서비스
+![스크린샷 2021-10-26 오후 7 31 39](https://user-images.githubusercontent.com/32974201/138860916-21ee4fd2-76a2-40ae-a8c0-7d0a958c4ce7.png)
 
-## 팀원소개
+## 서비스 이용 가이드
 
-|  [브랜](https://github.com/seojihwan)  |  [신세한탄](https://github.com/shinsehantan)  |  [시드](https://github.com/hsik0225)  |  [알리](https://github.com/jh8579)  |  [파피](https://github.com/TaewanKimmmm)  |  [에어](https://github.com/KJunseo)  
+* [서비스 이용 가이드](https://dropthecode.co.kr/guide)
+* 서비스 이용 가이드 (영상버전) - 아래 이미지 클릭!
+[![스크린샷 2021-10-26 오후 7 54 42](https://user-images.githubusercontent.com/32974201/138864126-7b0e7270-1095-4219-9067-efd8d418567c.png)](https://www.youtube.com/watch?v=-Tzk_A2uaoM)
+
+## 인프라 구조
+![인프라 이미지](https://user-images.githubusercontent.com/32974201/138865160-6c7f7696-6e3f-4514-af61-f0f458138d2d.png)
+
+## 기술 스택
+![기술 스택 이미지](https://user-images.githubusercontent.com/32974201/138865301-704021e3-e4d5-42b6-b996-dba24191f43a.png)
+
+## 팀원 소개
+
+|  [브랜](https://github.com/seojihwan)  |  [신세한탄](https://github.com/shinsehantan)  |  [시드](https://github.com/hsik0225)  |  [알리](https://github.com/jh8579)  |  [파피](https://github.com/TaewanKimmmm)  |  [에어](https://github.com/KJunseo)
 | :----------: |  :--------:  |  :---------: |  :---------: | :---------: |  :---------: |
 | <img src="https://avatars.githubusercontent.com/u/52202474?s=400&v=4" width=200px alt="_"/> | <img src="https://avatars.githubusercontent.com/u/67591151?s=400&v=4" width=200px alt="_"/> | <img src="https://avatars.githubusercontent.com/u/56301069?s=400&v=4" width=200px alt="_"/> | <img src="https://avatars.githubusercontent.com/u/32974201?s=400&v=4" width=200px alt="_"> | <img src="https://avatars.githubusercontent.com/u/50273712?s=400&v=4" width=200px alt="_"> | <img src="https://avatars.githubusercontent.com/u/45876793?s=400&v=4" width=200px alt="_"> |
 
 ## 팀문화
 
-탄력 근무제: 새벽에 일하는 크루들..
-
-반말 문화: 유대감 형성에 아주 큰 기여
-
-## 업데이트내역
-
-### 2021.08.10 - v1.0.0
-
-- 인증
-    - 깃허브 로그인
-    - 로그아웃
-- 조회
-    - 리뷰어 목록 조회
-    - 히스토리 조회
-    - 피드백 목록 조회
-- 리뷰 요청
-- 리뷰어 등록
-- 리뷰 진행
-    - 리뷰어: 거절, 수락, 완료
-    - 신청자: 수정, 삭제, 피드백
-- 가이드
-    - 리뷰 요청 방법
-
-## 사용 기술
-
-- 백엔드
-    - Java
-    - Spring Boot, Spring MVC, Spring data jpa, Spring webclient
-    - JPA, QueryDsl, Redisson
-    - JWT, OAuth2
-    - Junit5, Auto REST Docs, Mockito, restassured
-    - Gradle
-    - Intellij
-- 프론트엔드
-    - TypeScript
-    - React, ReactQuery
-    - StyledComponents
-    - Figma
-    - StoryBook
-- 인프라
-    - aws ec2, s3, cloudfront, cloudwatch, load balancer
-    - nginx
-    - Let's Encrypt
-    - docker
-    - mysql(replication 적용), redis
-    - jenkins
-    - sonarqube, jacoco
-    - flyway
-    - git
+![팀 문화 이미지](https://user-images.githubusercontent.com/32974201/138860622-f91468c9-1608-420f-99a3-4749b05f12c9.png)

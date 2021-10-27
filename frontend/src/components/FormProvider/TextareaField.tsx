@@ -16,7 +16,13 @@ const TextareaField = ({ name, initialValue, ...props }: Props) => {
   }, []);
 
   return (
-    <Textarea value={values[name]} name={name} errorMessage={errorMessages[name]} onChange={onChange} {...props} />
+    <Textarea
+      value={values[name] || ""}
+      name={name}
+      errorMessage={errorMessages[name]}
+      onChange={onChange}
+      {...props}
+    />
   );
 };
 

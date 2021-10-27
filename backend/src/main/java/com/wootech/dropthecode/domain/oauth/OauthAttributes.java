@@ -7,10 +7,18 @@ public enum OauthAttributes {
     GITHUB("github") {
         @Override
         public UserProfile of(Map<String, Object> attributes) {
+            String email = (String) attributes.get("email");
+            String name = (String) attributes.get("name");
+            if (email == null) {
+                email = "등록되지 않은 이메일";
+            }
+            if (name == null) {
+                name = "등록되지 않은 이름";
+            }
             return UserProfile.builder()
                               .oauthId(String.valueOf(attributes.get("id")))
-                              .email((String) attributes.getOrDefault("email", ""))
-                              .name((String) attributes.get("name"))
+                              .email(email)
+                              .name(name)
                               .imageUrl((String) attributes.get("avatar_url"))
                               .githubUrl((String) attributes.get("html_url"))
                               .build();

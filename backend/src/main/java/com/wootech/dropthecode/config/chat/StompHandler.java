@@ -1,4 +1,4 @@
-package com.wootech.dropthecode.config;
+package com.wootech.dropthecode.config.chat;
 
 import java.util.Map;
 

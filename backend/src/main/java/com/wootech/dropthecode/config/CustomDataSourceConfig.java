@@ -13,7 +13,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,13 +39,14 @@ public class CustomDataSourceConfig {
     }
 
     public DataSource createDataSource(String url) {
-        return DataSourceBuilder.create()
-                                .type(HikariDataSource.class)
-                                .url(url)
-                                .driverClassName("com.mysql.cj.jdbc.Driver")
-                                .username(databaseProperty.getUsername())
-                                .password(databaseProperty.getPassword())
-                                .build();
+        HikariDataSource hikariDataSource = new HikariDataSource();
+        hikariDataSource.setUsername(databaseProperty.getUsername());
+        hikariDataSource.setPassword(databaseProperty.getPassword());
+        hikariDataSource.setJdbcUrl(url);
+        hikariDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        hikariDataSource.setMaximumPoolSize(databaseProperty.getMaximumPoolSize());
+
+        return hikariDataSource;
     }
 
     @Bean

@@ -26,6 +26,10 @@ public class Language extends BaseEntity {
     private String name;
 
     @OneToMany(mappedBy = "language", fetch = FetchType.LAZY)
+    @org.hibernate.annotations.Cache(
+            usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,
+            region = "languageSkill"
+    )
     private List<LanguageSkill> skills = new ArrayList<>();
 
     @OneToMany(mappedBy = "language", fetch = FetchType.LAZY)

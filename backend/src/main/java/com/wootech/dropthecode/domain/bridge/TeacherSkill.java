@@ -8,13 +8,7 @@ import com.wootech.dropthecode.domain.TeacherProfile;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-@Cacheable
-@org.hibernate.annotations.Cache(
-        usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE,
-        region = "teacherSkill"
-)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity

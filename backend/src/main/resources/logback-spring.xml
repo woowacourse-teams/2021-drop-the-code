@@ -24,7 +24,7 @@
         </root>
     </springProfile>
 
-    <springProfile name="local">
+    <springProfile name="local, pt-init">
         <root level="INFO">
             <appender-ref ref="CONSOLE_APPENDER"/>
         </root>

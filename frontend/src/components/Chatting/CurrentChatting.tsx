@@ -7,7 +7,7 @@ import LeftSingleMessage from "components/Chatting/LeftSingleMessage";
 import RightSingleMessage from "components/Chatting/RightSingleMessage";
 import Loading from "components/Loading/Loading";
 import Avatar from "components/shared/Avatar/Avatar";
-import { FlexAlignCenter } from "components/shared/Flexbox/Flexbox";
+import { Flex, FlexAlignCenter } from "components/shared/Flexbox/Flexbox";
 import useAuthContext from "hooks/useAuthContext";
 import useChattingList from "hooks/useChattingList";
 import useSingleChatting from "hooks/useSingleChatting";
@@ -29,10 +29,16 @@ const Title = styled.div`
   box-shadow: ${({ theme }) => theme.common.boxShadow.primary};
 `;
 
-const ContentWrapper = styled.div`
+const ContentWrapper = styled(Flex)`
+  flex-direction: column;
+  justify-content: flex-start;
   height: 72vh;
   padding: 1.25rem;
   overflow-y: scroll;
+
+  & > :first-child {
+    margin-top: auto;
+  }
 `;
 
 interface Props {

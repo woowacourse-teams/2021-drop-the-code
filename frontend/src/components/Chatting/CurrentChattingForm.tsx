@@ -9,6 +9,7 @@ import Loading from "components/Loading/Loading";
 import Button from "components/shared/Button/Button";
 import useAuthContext from "hooks/useAuthContext";
 import useChattingConnect from "hooks/useChattingConnect";
+import useChattingConnectToken from "hooks/useChattingConnectToken";
 import useStompContext from "hooks/useStompContext";
 import { QUERY_KEY } from "utils/constants/key";
 import { PLACE_HOLDER } from "utils/constants/message";
@@ -44,20 +45,28 @@ interface Props {
 
 const CurrentChattingForm = ({ teacherId, chattingContainer, setSelectedRoomId }: Props) => {
   const { user } = useAuthContext();
-  const { sendMessage, connect } = useStompContext();
+  const { sendMessage, connect, disconnect } = useStompContext();
 
+  // 인증 후 연결용 token을 받는 연결
+  const { connectToken } = useChattingConnectToken();
   // roomId 만드는 연결
   const { data } = useChattingConnect({ studentId: user?.id, teacherId });
 
   useEffect(() => {
-    if (!data) return;
+    if (!connectToken || !data) return;
 
-    connect(data.roomId);
+    connect(data.roomId, connectToken);
   }, [data]);
 
   useEffect(() => {
     chattingContainer.current?.scrollTo(0, chattingContainer.current.scrollHeight);
   }, [teacherId]);
+
+  useEffect(() => {
+    return () => {
+      disconnect();
+    };
+  }, []);
 
   if (!user || !data) return <Loading />;
 

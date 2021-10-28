@@ -14,4 +14,5 @@ export const QUERY_KEY = {
   GET_CHATTING_LIST: "getChattingList",
   GET_CHATTING_CONNECT: "getChattingConnect",
   GET_SINGLE_CHATTING: "getChatting",
+  GET_CHATTING_CONNECT_TOKEN: "getChattingConnectToken",
 };

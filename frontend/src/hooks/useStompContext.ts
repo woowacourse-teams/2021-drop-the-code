@@ -6,7 +6,7 @@ import { Message } from "components/StompProvider/StompProvider";
 
 interface Stomp {
   stompClient: MutableRefObject<CompatClient | null>;
-  connect: (roomId: number) => void;
+  connect: (roomId: number, connectToken: string) => void;
   disconnect: () => void;
   sendMessage: (message: Message) => void;
 }

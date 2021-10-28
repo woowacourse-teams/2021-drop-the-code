@@ -19,7 +19,6 @@ interface Props {
 
 const StompProvider = ({ children }: Props) => {
   const stompClient = useRef<CompatClient | null>(null);
-
   const queryClient = useQueryClient();
 
   const disconnect = () => {
@@ -28,10 +27,11 @@ const StompProvider = ({ children }: Props) => {
     stompClient.current.disconnect();
   };
 
-  const connect = (roomId: number) => {
-    
+  const connect = (roomId: number, connectToken: string) => {
+    if (!connectToken) return;
+
     stompClient.current = Stomp.over(() => {
-      return new WebSocket(process.env.SOCKET_URL as string);
+      return new WebSocket(`${process.env.SOCKET_URL}?${connectToken}`);
     });
 
     stompClient.current.configure({
@@ -56,20 +56,34 @@ const StompProvider = ({ children }: Props) => {
     );
   };
 
+  const waitForConnecting = (socket: { readyState: number }, callback: { (): void }) => {
+    setTimeout(() => {
+      if (socket.readyState === WebSocket.OPEN) {
+        callback();
+      } else {
+        waitForConnecting(socket, callback);
+      }
+    }, 1);
+  };
+
   const sendMessage = ({ roomId, senderId, receiverId, content }: Message) => {
     if (!stompClient.current) return;
 
     if (stompClient.current.state !== 0) return;
 
-    stompClient.current.send(
-      `/publish/rooms/${roomId}`,
-      {},
-      JSON.stringify({
-        message: content,
-        senderId: senderId,
-        receiverId: receiverId,
-      })
-    );
+    waitForConnecting(stompClient.current.ws, () => {
+      if (!stompClient.current) return;
+
+      stompClient.current.send(
+        `/publish/rooms/${roomId}`,
+        {},
+        JSON.stringify({
+          message: content,
+          senderId: senderId,
+          receiverId: receiverId,
+        })
+      );
+    });
   };
 
   return (

@@ -5,12 +5,14 @@ import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.dto.response.AccessTokenResponse;
 import com.wootech.dropthecode.dto.response.LoginResponse;
 import com.wootech.dropthecode.exception.AuthenticationException;
+import com.wootech.dropthecode.exception.AuthorizationException;
 import com.wootech.dropthecode.exception.OauthTokenRequestException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.web.socket.server.HandshakeFailureException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -173,5 +175,34 @@ class AuthControllerTest extends RestApiDocumentTest {
 
         // then
         result.andExpect(status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("웹 소켓 연결용 토큰 발급 - 유저의 토큰이 유효한 경우")
+    void getChattingToken() throws Exception {
+        // given
+        given(authService.createChattingToken(anyString())).willReturn(new AccessTokenResponse(CHATTING_TOKEN));
+
+        // when
+        ResultActions result = this.restDocsMockMvc.perform(get("/token/chatting")
+                .with(userToken()));
+
+        // then
+        result.andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("웹 소켓 연결용 토큰 발급 - 유저의 토큰이 유효하지 않은 경우")
+    void getChattingTokenWithInvalidUserToken() throws Exception {
+        // given
+        doThrow(new AuthenticationException("access token이 유효하지 않습니다."))
+                .when(authService).createChattingToken(anyString());
+
+        // when
+        ResultActions result = this.failRestDocsMockMvc.perform(get("/token/chatting")
+                .with(userToken()));
+
+        // then
+        result.andExpect(status().isUnauthorized());
     }
 }

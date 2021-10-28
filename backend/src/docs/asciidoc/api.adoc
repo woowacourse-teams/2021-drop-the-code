@@ -224,6 +224,14 @@ include::{snippets}/feedback-controller-test/find-all-feedback-test/auto-section
 
 include::{snippets}/notification-controller-test/sse/auto-section.adoc[]
 
+include::{snippets}/notification-controller-test/sse/auto-section.adoc[]
+
 include::{snippets}/notification-controller-test/find-all-notification/auto-section.adoc[]
 
 include::{snippets}/notification-controller-test/read-notification/auto-section.adoc[]
+
+== WebSocket Token API
+
+include::{snippets}/auth-controller-test/get-chatting-token/auto-section.adoc[]
+
+include::{snippets}/auth-controller-test/get-chatting-token-with-invalid-user-token/http-response.adoc[]

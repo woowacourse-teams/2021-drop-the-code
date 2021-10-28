@@ -70,4 +70,11 @@ public class AuthService {
         emitterRepository.deleteAllStartWithId(id);
         emitterRepository.deleteAllEventCacheStartWithId(id);
     }
+
+    @Transactional
+    public AccessTokenResponse createChattingToken(String accessToken) {
+        String id = jwtTokenProvider.getPayload(accessToken);
+        String token = jwtTokenProvider.createToken(id, 30000);
+        return new AccessTokenResponse(token);
+    }
 }

@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 import com.wootech.dropthecode.domain.bridge.TeacherLanguage;
 import com.wootech.dropthecode.domain.bridge.TeacherSkill;
+import com.wootech.dropthecode.dto.request.TeacherRegistrationRequest;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -80,6 +81,11 @@ public class TeacherProfile {
         this.title = title;
         this.content = content;
         this.career = career;
+    }
+
+    public TeacherProfile update(TeacherRegistrationRequest teacherRegistrationRequest) {
+        update(teacherRegistrationRequest.getTitle(), teacherRegistrationRequest.getContent(), teacherRegistrationRequest.getCareer());
+        return this;
     }
 
     public void updateReviewCountAndTime(Long newReviewTime) {

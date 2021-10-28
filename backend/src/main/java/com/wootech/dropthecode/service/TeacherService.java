@@ -65,12 +65,19 @@ public class TeacherService {
             throw new TeacherException("이미 리뷰어로 등록된 사용자입니다.");
         }
 
+        if (member.hasRole(Role.DELETED)) {
+            throw new TeacherException("회원 탈퇴한 사용자입니다.");
+        }
+
         Map<String, Language> languageMap = languageService.findAllToMap();
         List<Language> languages = findLanguageByNames(teacherRegistrationRequest.getTechSpecs(), languageMap);
         List<Skill> skills = findSkillsByNames(teacherRegistrationRequest.getTechSpecs(), skillService.findAllToMap());
         teacherRegistrationRequest.validateSkillsInLanguage(languageMap);
 
-        TeacherProfile teacher = save(teacherRegistrationRequest.toTeacherProfileWithMember(member));
+        final TeacherProfile teacher = teacherProfileRepository.findById(loginMember.getId())
+                                                               .map(teacherProfile -> teacherProfile.update(teacherRegistrationRequest))
+                                                               .orElseGet(() -> save(teacherRegistrationRequest.toTeacherProfileWithMember(member)));
+
         teacherLanguageService.saveAllWithTeacher(languages, teacher);
         teacherSkillService.saveAllWithTeacher(skills, teacher);
         member.setRole(Role.TEACHER);

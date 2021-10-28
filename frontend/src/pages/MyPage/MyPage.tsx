@@ -107,7 +107,7 @@ const MyPage = () => {
   return (
     <>
       <Flex>
-        <h2 css={{ fontWeight: 900 }}>{user.name}님 안녕하세요!</h2>
+        <h2 css={{ width: "100%", fontWeight: 900 }}>{user.name}님 안녕하세요!</h2>
       </Flex>
       <FlexSpaceBetween>
         <Flex css={{ marginBottom: "2.5rem" }}>

@@ -7,6 +7,7 @@ import java.util.Map;
 import com.wootech.dropthecode.controller.auth.util.JwtTokenProvider;
 import com.wootech.dropthecode.controller.auth.util.RedisUtil;
 import com.wootech.dropthecode.domain.Member;
+import com.wootech.dropthecode.domain.Role;
 import com.wootech.dropthecode.domain.Token;
 import com.wootech.dropthecode.domain.oauth.InMemoryProviderRepository;
 import com.wootech.dropthecode.domain.oauth.OauthAttributes;
@@ -74,6 +75,10 @@ public class OauthService {
                                         .map(entity -> entity.update(
                                                 userProfile.getEmail(), userProfile.getName(), userProfile.getImageUrl()))
                                         .orElseGet(userProfile::toMember);
+
+        if (member.hasRole(Role.DELETED)) {
+            member.setRole(Role.STUDENT);
+        }
         return memberRepository.save(member);
     }
 

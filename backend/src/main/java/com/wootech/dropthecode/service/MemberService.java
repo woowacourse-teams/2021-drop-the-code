@@ -5,7 +5,6 @@ import javax.persistence.EntityNotFoundException;
 import com.wootech.dropthecode.domain.LoginMember;
 import com.wootech.dropthecode.domain.Member;
 import com.wootech.dropthecode.dto.response.MemberResponse;
-import com.wootech.dropthecode.repository.EmitterRepository;
 import com.wootech.dropthecode.repository.MemberRepository;
 
 import org.springframework.stereotype.Service;

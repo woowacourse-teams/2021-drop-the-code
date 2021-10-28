@@ -13,3 +13,7 @@ export const getChattingConnect = (studentId: number, teacherId: number) => {
 export const getSingleChatting = (queryString: string) => {
   return apiClient.get<SingleChatting[]>(`/messages${queryString}`);
 };
+
+export const getChattingConnectToken = () => {
+  return apiClient.get<{ accessToken: string }>("/token/chatting");
+};
